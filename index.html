@@ -4,15 +4,15 @@ layout: default
 
 <div>
 <h2>STAT/MATH/CS 395: Statistical Learning</h2>
-<b>Location</b>: PURH G13<br>
-<b>Time</b>: Tuesday, Thursday 13:30-14:45<br>
-<b>E-mail</b>: tarnold2@richmond.edu<br>
-<b>Office Hours</b>: Tuesday, Thursday 10:30-12:00 <br>
-<b>Syllabus</b>: <a href="assets/syllabus/syllabus.pdf">syllabus.pdf</a> <br>
+Location: PURH G13<br>
+Time: Tuesday, Thursday 13:30-14:45<br>
+E-mail: tarnold2@richmond.edu<br>
+Office Hours: Tuesday, Thursday 10:30-12:00 <br>
+Syllabus: <a href="assets/syllabus/syllabus.pdf">syllabus.pdf</a> <br>
 </div>
 
 <div class="posts">
-  <h3>Class Notes</h3>
+  <h3>CLASS NOTES</h3>
 {% for post in site.posts reversed %}
     <h3><strong>{{ post.date | date: "%Y-%m-%d" }}</strong>&nbsp;&nbsp;<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
 {% endfor %}
