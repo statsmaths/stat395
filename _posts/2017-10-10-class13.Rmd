@@ -69,8 +69,8 @@ rownames(beta)[which((beta != 0))]
 
 ```{r}
 beta <- coef(model, s = model$lambda.1se)
-sprintf("%s (%s)", rownames(beta)[which((beta != 0))],
-                   sign(beta)[which((beta != 0))])
+paste(rownames(beta)[which((beta != 0))], " (",
+      sign(beta)[which((beta != 0))], ")", sep = "")
 ```
 
 ```{r}
@@ -94,8 +94,8 @@ plot(model)
 
 ```{r}
 beta <- coef(model, s = model$lambda.1se)
-sprintf("%s (%s)", rownames(beta)[which((beta != 0))],
-                   sign(beta)[which((beta != 0))])
+paste(rownames(beta)[which((beta != 0))], " (",
+      sign(beta)[which((beta != 0))], ")", sep = "")
 ```
 
 ```{r}
