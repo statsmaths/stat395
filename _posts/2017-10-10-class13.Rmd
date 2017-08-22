@@ -1,0 +1,141 @@
+---
+title: "Class 13: Congratulations, You've Won $1M!"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-10-10-class13/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# text processing packages
+library(tokenizers)
+library(stringi)
+library(smodels)
+```
+
+```{r, message = FALSE}
+spam <- read_csv("~/files/ml_data/spam.csv")
+```
+
+```{r}
+stri_wrap(spam$text[500], width = 60)
+```
+
+```{r}
+token_list <- tokenize_words(spam$text)
+token_list[500]
+```
+
+```{r}
+token_df <- term_list_to_df(token_list)
+filter(token_df, id == 500)
+```
+
+```{r}
+X <- term_df_to_matrix(token_df)
+dim(X)
+```
+
+```{r}
+colnames(X)[1:10]
+X[1:10,1:10]
+```
+
+```{r}
+X_train <- X[spam$train_id == "train",]
+X_valid <- X[spam$train_id == "valid",]
+y_train <- spam$class[spam$train_id == "train"]
+y_valid <- spam$class[spam$train_id == "valid"]
+```
+
+```{r, message = FALSE}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train)
+plot(model)
+```
+
+```{r}
+beta <- coef(model, s = model$lambda.min)
+rownames(beta)[which((beta != 0))]
+```
+
+```{r}
+beta <- coef(model, s = model$lambda.1se)
+sprintf("%s (%s)", rownames(beta)[which((beta != 0))],
+                   sign(beta)[which((beta != 0))])
+```
+
+```{r}
+y_valid_pred <- as.numeric(predict(model, X_valid, type = "response") > 0.5)
+mean(y_valid == y_valid_pred)
+```
+
+## Modify the features
+
+```{r}
+X <- term_df_to_matrix(token_df, min_df = 0.03)
+y <- spam$class
+X_train <- X[spam$train_id == "train",]
+X_valid <- X[spam$train_id == "valid",]
+y_train <- spam$class[spam$train_id == "train"]
+y_valid <- spam$class[spam$train_id == "valid"]
+
+model <- cv.glmnet(X_train, y_train)
+plot(model)
+```
+
+```{r}
+beta <- coef(model, s = model$lambda.1se)
+sprintf("%s (%s)", rownames(beta)[which((beta != 0))],
+                   sign(beta)[which((beta != 0))])
+```
+
+```{r}
+y_valid_pred <- as.numeric(predict(model, X_valid, type = "response") > 0.5)
+mean(y_valid == y_valid_pred)
+```
+
+## Negative examples
+
+```{r}
+table(y_valid = y_valid, y_valid_pred = y_valid_pred)
+```
+
+```{r}
+y_pred <- as.numeric(predict(model, X, type = "response") > 0.5)
+these_rows <- which(spam$train_id == "valid" &
+                    y != y_pred &
+                    y == 1)
+cat(stri_wrap(spam$text[these_rows], exdent = 5), sep = "\n")
+```
+
+```{r}
+y_pred <- as.numeric(predict(model, X, type = "response") > 0.5)
+these_rows <- which(spam$train_id == "valid" &
+                    y != y_pred &
+                    y == 0)
+cat(stri_wrap(spam$text[these_rows], exdent = 5), sep = "\n")
+```
+
+## Visualization
+
+```{r}
+library(irlba)
+X_pca <- prcomp_irlba(X_train, n = 2)$x
+qplot(X_pca[,1], X_pca[,2], color = factor(y_train),
+      alpha = I(0.3)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  theme_minimal()
+```
+
+
+
+

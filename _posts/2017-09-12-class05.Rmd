@@ -1,0 +1,198 @@
+---
+title: "Class 05: Spatial Analysis of Income (with Matrices!)"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-09-12-class05/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+```
+
+
+## Matrix Formulation of Linear Models
+
+The multivariate linear regression model is, on the surface,
+only a slight generalization of the simple linear regression model:
+
+$$y_i = x_{1,i} \beta_1 + x_{2,i} \beta_2 + \cdots + x_{1,p} \beta_p + \epsilon_i$$
+
+The statistical estimation problem now becomes one of estimating the $p$
+components of the multivariate vector $\beta$.
+
+A sample can be re-written in terms of the vector $x_i$
+(the vector of covariates for a single observation):
+
+$$y_i = x_{i}^t \beta + \epsilon_i$$
+
+In matrix notation, we can write the linear model simultaneously
+for all observations:
+
+$$ \left(\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_n\end{array}\right) =
+  \left(\begin{array}{cccc}x_{1,1}&x_{2,1}&\cdots&x_{p,1}\\
+                           x_{1,2}&\ddots&&x_{p,2}\\
+                           \vdots&&\ddots&\vdots\\
+                           x_{1,n}&x_{2,n}&\cdots&x_{p,n}\\\end{array}\right)
+  \left(\begin{array}{c}\beta_1\\ \beta_2\\ \vdots\\ \beta_p\end{array}\right) +
+  \left(\begin{array}{c}\epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\end{array}\right) $$
+
+
+Which can be compactly written as:
+
+$$ y = X \beta + \epsilon $$
+
+For reference, note the following equation yields these dimensions:
+
+$$ y \in \mathbb{R}^n $$
+$$ X \in \mathbb{R}^{n \times p} $$
+$$ \beta \in \mathbb{R}^p $$
+$$ \epsilon \in \mathbb{R}^n $$
+
+
+```{r}
+X <- model.matrix(~ cbsa_name , data = ma[,-c(1:3)])
+y <- ma$median_income
+
+head(X)
+```
+
+```{r}
+head(ma$cbsa_name)
+```
+
+```{r}
+y_train <- y[ma$train_id == "train"]
+y_valid <- y[ma$train_id == "valid"]
+X_train <- X[ma$train_id == "train",]
+X_valid <- X[ma$train_id == "valid",]
+```
+
+```{r}
+beta <- lm.fit(X_train, y_train)$coef
+beta
+```
+
+```{r}
+pred <- X %*% beta
+length(pred)
+dim(ma)
+```
+
+```{r}
+ma$median_income <- pred
+```
+
+```{r}
+library(methods)
+library(MatrixModels)
+X <- model.Matrix(~ cbsa_name , data = ma[,-c(1:3)], sparse = TRUE)
+X[1:10,]
+```
+
+```{r}
+X_train <- X[ma$train_id == "train",]
+X_valid <- X[ma$train_id == "valid",]
+```
+
+```{r}
+beta <- MatrixModels:::lm.fit.sparse(X_train, y_train)
+beta
+```
+
+
+```{r}
+library(forcats)
+model <- lm(median_income ~ fct_lump(cbsa_name, 10), data = acs)
+model
+```
+
+
+## Matrices in R
+
+```{r}
+A <- matrix(sample(1:99, 25), 5, 5)
+A
+b <- matrix(sample(1:99, 5))
+b
+```
+
+Element-wise arithmetic is assumed by default:
+
+```{r}
+A + A
+```
+
+Matrix products require you to use `%*%`:
+
+```{r}
+A %*% A
+```
+
+```{r}
+A %*% b
+```
+
+```{r}
+A[2:3, 1:2]
+```
+
+```{r}
+A[,1:2]
+```
+
+```{r}
+A[,1]
+```
+
+```{r}
+A[,1][1]
+```
+
+```{r}
+A[1:5 > 3,]
+```
+
+## Linear Models with Matrices - Part II
+
+```{r, message = FALSE}
+acs <- read_csv("~/files/ml_data/tract_median_income.csv")
+```
+
+```{r}
+y <- acs$median_income
+
+X <- as.matrix(select(acs, lon, lat))
+X[1:10,]
+```
+
+```{r}
+X_train <- X[acs$train_id == "train", ]
+X_valid <- X[acs$train_id == "valid", ]
+y_train <- y[acs$train_id == "train"]
+y_valid <- y[acs$train_id == "valid"]
+```
+
+```{r}
+lm.fit(X_train, y_train)$coef
+```
+
+```{r}
+beta <- lm.fit(cbind(1, X_train), y_train)$coef
+beta
+```
+
+```{r}
+beta <- lm.fit(cbind(1, X_train), y_train)$coef
+sqrt( mean( (cbind(1, X_valid) %*% beta - y_valid)^2))
+```
+
+
+
+
+

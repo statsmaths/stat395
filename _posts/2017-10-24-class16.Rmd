@@ -1,0 +1,250 @@
+  ---
+title: "Class 16: Lilacs and Tigerlilys and Buttcups! Oh My!"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-10-24-class16/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(methods)
+```
+
+```{r, message = FALSE}
+flowers <- read_csv("~/files/ml_data/flowers17.csv")
+X <- read_rds("~/files/ml_data/flowers17_X.rds")
+X <- X[flowers$class %in% 1:10,,,]
+flowers <- flowers[flowers$class %in% 1:10,]
+```
+
+```{r, fig.asp=0.75, fig.width=10}
+par(mar = c(0,0,0,0))
+par(mfrow = c(3, 4))
+for (i in sample(which(flowers$class == 2), 12)) {
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  rasterImage(X[i,,,],0,0,1,1)
+}
+```
+
+```{r, fig.asp=0.75, fig.width=10}
+par(mar = c(0,0,0,0))
+par(mfrow = c(3, 4))
+for (i in 1:10) {
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  i <- sample(which(flowers$class == i), 1)
+  rasterImage(X[i,,,],0,0,1,1)
+  text(0.5, 0.1, flowers$class_name[i], cex = 3, col = "salmon")
+}
+```
+
+```{r}
+i <- 3
+red <- as.numeric(X[i,,,1])
+green <- as.numeric(X[i,,,2])
+blue <- as.numeric(X[i,,,3])
+hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
+head(hsv)
+```
+
+```{r}
+color_vals <- c(hsv(1, 0, seq(0, 1, by = 0.2)),
+                hsv(seq(0, 0.9, by = 0.1), 1, 1))
+plot(seq_along(color_vals), seq_along(color_vals),
+     col = color_vals, pch = 19, cex = 5)
+```
+
+
+```{r}
+color <- rep("#000000", nrow(hsv))
+
+index <- which(hsv[,2] < 0.2)
+color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
+
+index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
+color[index] <- hsv(round(hsv[index,1],1), 1, 1)
+
+table(factor(color, levels = color_vals))
+```
+
+```{r}
+X_hsv <- matrix(0, ncol = length(color_vals),
+                   nrow = nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  red <- as.numeric(X[i,,,1])
+  green <- as.numeric(X[i,,,2])
+  blue <- as.numeric(X[i,,,3])
+  hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
+
+  color <- rep("#000000", nrow(hsv))
+
+  index <- which(hsv[,2] < 0.2)
+  color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
+
+  index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
+  color[index] <- hsv(round(hsv[index,1],1), 1, 1)
+
+  X_hsv[i,] <- table(factor(color, levels = color_vals))
+  #cat(sprintf("Done with %03d of %03d\n", i, nrow(flowers)))
+}
+```
+
+```{r}
+y <- flowers$class
+
+X_train <- X_hsv[flowers$train_id == "train",]
+X_valid <- X_hsv[flowers$train_id == "valid",]
+y_train <- y[flowers$train_id == "train"]
+y_valid <- y[flowers$train_id == "valid"]
+```
+
+
+```{r, message = FALSE}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+plot(model)
+```
+
+```{r}
+pred <- as.numeric(predict(model, newx = X_hsv,
+                           type = "class"))
+
+tapply(pred == y, flowers$train_id, mean)
+table(pred[flowers$train_id == "valid"],
+      y[flowers$train_id == "valid"])
+```
+
+## More colors
+
+
+```{r}
+color_vals <- c(hsv(1, 0, seq(0, 1, by = 0.2)),
+                hsv(seq(0, 0.9, by = 0.01), 1, 1))
+```
+
+```{r}
+X_hsv <- matrix(0, ncol = length(color_vals),
+                   nrow = nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  red <- as.numeric(X[i,,,1])
+  green <- as.numeric(X[i,,,2])
+  blue <- as.numeric(X[i,,,3])
+  hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
+
+  color <- rep("#000000", nrow(hsv))
+
+  index <- which(hsv[,2] < 0.2)
+  color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
+
+  index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
+  color[index] <- hsv(round(hsv[index,1], 2), 1, 1)
+
+  X_hsv[i,] <- table(factor(color, levels = color_vals))
+  #cat(sprintf("Done with %03d of %03d\n", i, nrow(flowers)))
+}
+```
+
+```{r}
+y <- flowers$class
+
+X_train <- X_hsv[flowers$train_id == "train",]
+X_valid <- X_hsv[flowers$train_id == "valid",]
+y_train <- y[flowers$train_id == "train"]
+y_valid <- y[flowers$train_id == "valid"]
+```
+
+
+```{r, message = FALSE, warning = FALSE}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial",
+                   alpha = 0.2)
+plot(model)
+```
+
+```{r}
+pred <- as.numeric(predict(model, newx = X_hsv,
+                           type = "class"))
+
+tapply(pred == y, flowers$train_id, mean)
+table(pred[flowers$train_id == "valid"],
+      y[flowers$train_id == "valid"])
+```
+
+## Texture
+
+```{r, fig.asp = 1}
+i <- 8
+bw <- (X[i,,,1] + X[i,,,2] + X[i,,,3]) / 3
+plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+rasterImage(bw,0,0,1,1)
+```
+
+```{r, fig.asp = 1}
+edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
+plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+rasterImage(edge,0,0,1,1)
+```
+
+```{r}
+mean_edge <- rep(0, nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  bw <- (X[i,,,1] + X[i,,,2] + X[i,,,3]) / 3
+  edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
+  mean_edge[i] <- mean(edge > 0.1)
+}
+```
+
+```{r}
+qplot(flowers$class_name, mean_edge, geom = "blank") +
+  geom_boxplot() +
+  coord_flip()
+```
+
+```{r}
+mean_edge_mid <- rep(0, nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  bw <- (X[i,,,1] + X[i,,,2] + X[i,,,3]) / 3
+  edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
+  mean_edge_mid[i] <- mean(edge[75:148,75:148] > 0.1)
+}
+```
+
+```{r}
+qplot(flowers$class_name, mean_edge_mid, geom = "blank") +
+  geom_boxplot() +
+  coord_flip()
+```
+
+
+```{r}
+X_edge <- cbind(X_hsv, mean_edge, mean_edge_mid)
+y <- flowers$class
+
+X_train <- X_edge[flowers$train_id == "train",]
+X_valid <- X_edge[flowers$train_id == "valid",]
+y_train <- y[flowers$train_id == "train"]
+y_valid <- y[flowers$train_id == "valid"]
+```
+
+
+```{r, message = FALSE, warning = FALSE}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial",
+                   alpha = 0.2)
+plot(model)
+```
+
+```{r}
+pred <- as.numeric(predict(model, newx = X_edge,
+                           type = "class"))
+
+tapply(pred == y, flowers$train_id, mean)
+table(pred[flowers$train_id == "valid"],
+      y[flowers$train_id == "valid"])
+```
+

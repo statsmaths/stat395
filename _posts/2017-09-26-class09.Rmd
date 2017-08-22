@@ -1,0 +1,146 @@
+---
+title: "Class 09: Up in the Air"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-09-26-class09/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+```
+
+
+```{r, message = FALSE}
+air <- read_csv("~/files/ml_data/flights.csv")
+```
+
+
+```{r}
+library(tree)
+model <- tree(factor(delayed) ~ month + day + weekday + arr_hour +
+                        dep_hour + origin + dest + distance + carrier,
+                      data = air, subset = train_id == "train",
+              control = tree.control(nobs = nrow(air), mindev = 0.001))
+```
+
+
+```{r}
+par(mar = c(0,0,0,0))
+plot(model, type = "uniform")
+text(model, cex = 0.7, col = "purple")
+```
+
+```{r, message = FALSE}
+library(randomForest)
+model <- randomForest(factor(delayed) ~ dep_hour + arr_hour,
+                      data = air, subset = train_id == "train",
+                      ntree = 20, maxnodes = 3, mtry = 1)
+```
+
+```{r}
+obj <- predict(model, newdata = air, predict.all = TRUE)$individual
+```
+
+```{r}
+air$delayed_pred <- obj[,3]
+qplot(dep_hour, arr_hour, data = air, color = factor(delayed_pred)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+```{r}
+air$delayed_pred <- predict(model, newdata = air)
+qplot(dep_hour, arr_hour, data = air, color = factor(delayed_pred)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+```{r}
+tapply(air$delayed == air$delayed_pred, air$train_id, mean)
+```
+
+
+```{r}
+library(forcats)
+air$dest <- fct_lump(air$dest, 52)
+air$origin <- fct_lump(air$origin, 52)
+air$carrier <- factor(air$carrier)
+model <- randomForest(factor(delayed) ~ month + day + weekday +
+                         arr_hour + dep_hour + distance +
+                         origin + carrier,
+                      data = air,
+                      ntree = 100, maxnodes = 10, mtry = 4,
+                      subset = train_id == "train")
+```
+
+```{r}
+importance(model)
+```
+
+
+```{r}
+air$delayed_pred <- predict(model, newdata = air)
+tapply(air$delayed == air$delayed_pred, air$train_id, mean)
+```
+
+```{r}
+table(pred = air$delayed_pred, actual = air$delayed)
+```
+
+
+
+```{r, message = FALSE}
+ames <- read_csv("~/files/ml_data/ames.csv")
+```
+
+```{r}
+X <- model.matrix(~ . -1 , data = ames[,-c(1:3)])
+y <- ames$saleprice
+
+y_train <- y[ames$train_id == "train"]
+y_valid <- y[ames$train_id == "valid"]
+X_train <- X[ames$train_id == "train",]
+X_valid <- X[ames$train_id == "valid",]
+```
+
+```{r, warning = FALSE, message = FALSE}
+library(xgboost)
+model <- xgboost(data = X_train, label = y_train,
+                 max_depth = 2, eta = 0.01, nthread = 2,
+                 nrounds = 10, objective = "reg:linear",
+                 verbose = 1)
+```
+
+```{r, warning = FALSE}
+y_valid_pred <- predict(model, newdata = X_valid)
+sqrt(mean((y_valid - y_valid_pred)^2))
+```
+
+```{r}
+data_train <- xgb.DMatrix(data = X_train, label = y_train)
+data_valid <- xgb.DMatrix(data = X_valid, label = y_valid)
+```
+
+```{r}
+watchlist <- list(train=data_train, valid=data_valid)
+
+model <- xgb.train(data = data_train,
+                 max_depth = 3, eta = 1, nthread = 2,
+                 nrounds = 100, objective = "reg:linear",
+                 watchlist = watchlist)
+```
+
+```{r}
+importance_matrix <- xgb.importance(model = model)
+importance_matrix[,1] <- colnames(X)[as.numeric(importance_matrix[[1]]) + 1]
+importance_matrix
+```
+
+
+
+
+

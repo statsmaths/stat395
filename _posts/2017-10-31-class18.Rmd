@@ -1,0 +1,135 @@
+---
+title: "Class 18: Faster, Higher, Stronger (and Deeper!)"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-10-31-class18/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(methods)
+library(keras)
+```
+
+```{r, message = FALSE}
+mnist <- read_csv("~/files/ml_data/mnist10.csv")
+X <- read_rds("~/files/ml_data/mnist10_X.rds")
+X <- array(X, dim = c(dim(X), 1))
+y <- mnist$class
+
+X_train <- X[mnist$train_id == "train",,,,drop = FALSE]
+y_train <- to_categorical(y[mnist$train_id == "train"], num_classes = 10)
+```
+
+```{r}
+model <- keras_model_sequential()
+model %>%
+  layer_conv_2d(filters = 32, kernel_size = c(2,2),
+                  strides = c(2,2),
+                  input_shape = c(28, 28, 1)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_dropout(rate = 0.5) %>%
+
+  layer_flatten() %>%
+  layer_dense(units = 10) %>%
+  layer_activation(activation = "softmax")
+
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
+
+model
+```
+
+```{r}
+history <- model %>%
+  fit(X_train, y_train, epochs = 10,
+      validation_split = 0.1)
+plot(history)
+```
+
+## Double Convolution
+
+```{r}
+model <- keras_model_sequential()
+model %>%
+  layer_conv_2d(filters = 32, kernel_size = c(3, 3),
+                  input_shape = c(28, 28, 1)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_conv_2d(filters = 32, kernel_size = c(3,3)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_dropout(rate = 0.5) %>%
+
+  layer_flatten() %>%
+  layer_dense(units = 128) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 10) %>%
+  layer_activation(activation = "softmax")
+
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
+
+model
+```
+
+```{r}
+history <- model %>%
+  fit(X_train, y_train, epochs = 1,
+      validation_split = 0.1)
+plot(history)
+```
+
+## Negative examples again
+
+```{r}
+y_pred <- predict_classes(model, X)
+table(y[mnist$train_id == "train"], y_pred[mnist$train_id == "train"])
+```
+
+```{r, fig.asp=0.75, fig.width=10}
+par(mar = c(0,0,0,0))
+par(mfrow = c(10, 10))
+for (i in sample(which(y_pred != y), 100)) {
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  rasterImage(X[i,,,],0,0,1,1)
+  text(0.1,0.1,y[i],col="blue", cex = 3)
+  text(0.9,0.1,y_pred[i],col="red", cex = 3)
+  box()
+}
+```
+
+## Visualize the kernels
+
+
+```{r}
+layer <- get_layer(model, index = 1)
+dim(layer$get_weights()[[1]])
+dim(layer$get_weights()[[2]])
+```
+
+```{r, fig.asp = 2, fig.width = 8}
+par(mar = c(0,0,0,0))
+par(mfrow = c(8, 4))
+for (i in 1:32) {
+  wg <- layer$get_weights()[[1]][,,,i]
+  im <- abs(wg) / max(abs(wg))
+  sg <- sign(wg)
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  rasterImage(im,0,0,1,1,interpolate=FALSE)
+  box()
+  text(row(sg) / 3 - 1/6, col(sg) / 3 - 1/6,
+       label = sg, col = "salmon", cex = 3)
+}
+```
+

@@ -1,0 +1,176 @@
+---
+title: "Class 02: Sleepy Mammals and Other Zoo Animals"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-08-31-class02/")
+``
+
+## Basic R
+
+Now, I want to throw you all into the format for the class and
+get you started with how assignments will work. This document,
+as well as all of your assignments, is written in a format
+called **Rmarkdown**. At the moment we are looking at the
+source code; if you are familiar with markdown, it is just a
+specific flavor of the basic standard.
+
+We can turn markdown into a number of other formats. If I
+hit the preview button above, it will display what the
+HTML version of the document looks like. I'll usually
+export this HTML version and put it on the class website
+as it is slightly cleaner than the raw format here.
+
+The powerful feature of **Rmarkdown** is that we can intermix
+code into the document and actually run it in real time. To
+do this, we enclose code blocks with three backticks, and
+preface the first one with r in squiggly brackets. The code
+will get run when we hit the Preview or Knit buttons, but
+we can also run just this block by hitting the play button to
+the right of the block. Here, let's add 1 and 1 together:
+
+```{r}
+1 + 1
+```
+
+The output is written directly to the document. This is the
+reason I'll often use the raw format in class; it allows us
+to modify the code and see the changes as they run.
+
+Next, we'll load some libraries into R. These are collections
+of functions written by third-parties. We will see how to
+install these in a bit. The curly braces part of the code
+block accepts several options. Notably, here we turn off
+messages as the packages produce quite a bit of verbose
+output that we do not need to worry about.
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+```
+
+Next, let's load in a small dataset to work with today.
+This data consists of the average number of hours per
+day that various species are awake. We'll read the data
+set in from my website:
+
+```{r, message = FALSE}
+msleep <- read_csv("~/files/ml_data/msleep.csv")
+```
+
+Once this code has been run, you should see the dataset
+pop up in the upper right hand corner of the screen.
+Clicking on it opens up a spreedsheet-like view of the
+data.
+
+Particularly important are the first two columns, as
+most datasets that we work with this semester will have
+these columns as well. The first is just an id; the
+second indicates whether this is a sample where you
+know the response or have to predict the response.
+Your goal is to use the data with visible responses
+to predict the responses you do not know.
+
+Here, the most straightforward relationship in the data is
+that between the logarithm of bodyweight and the number
+of hours spent awake. We will use the `qplot` function
+to visualize this relationship. The `qplot` function
+takes the name of the x-variable, the name of the
+y-variable, and the dataset the variables reside inside.
+The function is quite smart and will choose by default
+the most appropriate plot to use. Here it gives a
+scatterplot:
+
+```{r}
+qplot(bodywt_log, awake, data = msleep)
+```
+
+The missing values are those points where you need to produce
+predictions.
+
+It seems like there is a positive relationship between body
+weight and hours spent awake. We can add a best-fit line to
+the plot to model this relationship. Adding things to a
+`qplot` graphic literally involves using the `+` sign and
+adding the results of other functions. Here we use `geom_smooth`
+with an option to make the smooth strictly linear:
+
+```{r}
+qplot(bodywt_log, awake, data = msleep) +
+  geom_smooth(method = "lm")
+```
+
+We can fit the exact some model analytically, rather than graphically,
+by calling the `lm` function directly. Here we use an R formula: the
+response variable (thing we want to predict), followed by the `~`
+sign, followed by the predictor variable. As with the graphics command,
+we need to indicate which dataset is being used. The output shows
+the slope and intercept of the best-fit-line.
+
+```{r}
+model <- lm(awake ~ bodywt_log, data = msleep)
+model
+```
+
+The function `predict` will give us the predicted values implied
+by this line:
+
+```{r}
+predict(model, newdata = msleep)
+```
+
+Columns of the dataset `msleep` can be referenced by
+using the dataset name, followed by a dollar sign and
+the name of the variable. So, for example, here are the
+hours spent awake:
+
+```{r}
+msleep$awake
+```
+
+The `NA`'s correspond to the missing values we want to predict.
+Similarly, we can add a new variable by simply referencing it
+with the `$` and assigning it to something. Here, we add those
+predictions back into the msleep dataset:
+
+```{r}
+msleep$awake_pred <- predict(model, msleep)
+```
+
+Click on the msleep dataset again to verify that there is a
+new column of predictions. Notice that these are filled in
+for all values.
+
+Now, we use the `select` function to pick just a few
+variables from `msleep` and save this as a new dataset.
+The select function takes the name of the dataset first,
+followed by whatever variable names we want to keep. Here
+we include just the observation id and our prediction:
+
+```{r}
+submit <- select(msleep, obs_id, awake_pred)
+```
+
+Look at the `submit` dataset and verify that it is what
+you would expect.
+
+Finally, the `write_csv` function will save a dataset
+to a file. Each of the columns will be seperated by a
+comma (that's what the 'c' stands for in csv) and the
+rows will be seperated by a new line:
+
+```{r}
+write_csv(submit, "class01_submit.csv")
+```
+
+This is the kind of file I expect you to produce for
+each class assignment. Notice that we've created predictions
+for all of the data, even though we already know some of the
+values. It is often easier to do this and avoids the mistake
+of predicting on the wrong set. Of course, I'll only grade
+you on the set that you were not able to see.
+

@@ -1,0 +1,162 @@
+---
+title: "Class 04: Buying Property in The Golden State"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-09-07-class04/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r, message = FALSE}
+ca <- read_csv("~/files/ml_data/ca_house_price.csv")
+```
+
+```{r}
+avg <- mean(ca$median_house_value, na.rm = TRUE)
+sqrt(tapply((ca$median_house_value - avg)^2,
+            ca$train_id, mean))
+```
+
+```{r, message = FALSE, warning = FALSE}
+qplot(mean_household_income, median_house_value, data = ca) +
+  geom_smooth(method = "lm")
+```
+
+
+```{r, message = FALSE, warning = FALSE}
+qplot(mean_household_income, median_house_value, data = ca) +
+  geom_smooth()
+```
+
+
+```{r}
+model <- lm(median_house_value ~ poly(mean_household_income, 3),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
+```
+
+```{r}
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+```{r}
+model <- lm(median_house_value ~ poly(mean_household_income, 15),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
+```
+
+```{r}
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+
+$$ Y_i = f(X_i) + g(Z_i) + \epsilon_i, \quad mean(\epsilon_i) = 0 $$
+
+
+```{r}
+model <- lm(median_house_value ~ poly(mean_household_income, 3) +
+              poly(median_household_income, 3),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+
+$$ Y_i = f(X_i, Z_i) + \epsilon_i, \quad mean(\epsilon_i) = 0 $$
+
+```{r, message = FALSE}
+model <- lm(median_house_value ~
+               poly(mean_household_income, median_household_income,
+                    degree = 3),
+            subset = train_id == "train",
+            data = ca)
+model
+```
+
+
+```{r}
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+
+```{r, message = FALSE}
+# change degree from 6 => 10 => 12
+model <- lm(median_house_value ~
+               poly(mean_household_income, median_household_income,
+                    degree = 12),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+
+
+```{r, message = FALSE}
+model <- lm(median_house_value ~
+               poly(latitude, longitude,
+                    degree = 6),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+
+```{r, message = FALSE}
+qplot(longitude, latitude, data = ca, color = value_pred) +
+  viridis::scale_color_viridis()
+```
+
+
+```{r, message = FALSE}
+library(ggmap)
+qmplot(longitude, latitude, data = ca, color = value_pred) +
+  viridis::scale_color_viridis()
+```
+
+```{r}
+ca$mean_household_income_cut <- cut(ca$mean_household_income, 10, labels = FALSE)
+qplot(mean_household_income, mean_household_income_cut, data = ca)
+```
+
+```{r}
+model <- lm(median_house_value ~ factor(mean_household_income_cut),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
+```
+
+```{r}
+model
+```
+
+```{r}
+library(smodels)
+ca$mean_household_income_bin <- bin(ca$mean_household_income, 10)
+qplot(mean_household_income, mean_household_income_bin, data = ca)
+```
+
+ADD GAM EXAMPLE
+

@@ -1,0 +1,51 @@
+---
+title: "Class 19: Woof, Bark, Meow?"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-11-02-class19/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(methods)
+library(keras)
+```
+
+```{r, message = FALSE}
+dc <- read_csv("~/files/ml_data/dogs_vs_cats.csv")
+X <- read_rds("~/files/ml_data/dogs_vs_cats_X.rds")
+y <- dc$class
+
+X_train <- X[dc$train_id == "train",,,,drop = FALSE]
+y_train <- to_categorical(y[dc], num_classes = 10)
+```
+
+```{r}
+dim(X)
+```
+
+```{r, fig.asp=0.75, fig.width=10}
+par(mar = c(0,0,0,0))
+par(mfrow = c(3, 4))
+for (i in sample(seq_len(nrow(dc)), 12)) {
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  rasterImage(X[i,,,],0,0,1,1)
+}
+```
+
+```{r}
+# model <- application_vgg16()
+# model
+```
+
+```{r}
+# X_in <- imagenet_preprocess_input(x = X)
+# X_out <- predict(model, X_in, verbose = TRUE)
+```
+

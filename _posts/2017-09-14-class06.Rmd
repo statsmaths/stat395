@@ -1,0 +1,143 @@
+---
+title: "Class 06: Spatial Analysis of Income"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-09-14-class06/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+```
+
+
+## Nearest Neighbours
+
+```{r, message = FALSE}
+library(smodels)
+library(ggmap)
+temp <- filter(acs, train_id == "train", !(state %in% c("AK", "HI")))
+qmplot(lon, lat, data = temp, color = bin(median_income, 8), size = I(0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+
+```{r}
+library(FNN)
+y_valid_pred <- knn.reg(train = X_train, y = y_train, test = X_valid, k = 10)$pred
+```
+
+```{r}
+
+```
+
+```{r}
+rmse <- rep(NA, 100)
+for (k in seq_along(rmse)) {
+  y_valid_pred <- knn.reg(train = X_train, y = y_train,
+                          test = X_valid, k = k)$pred
+  rmse[k] <- sqrt( mean((y_valid_pred - y_valid)^2) )
+}
+```
+
+```{r}
+qplot(seq_along(rmse), rmse)
+```
+
+
+```{r}
+rmse <- rep(NA, 100)
+for (k in seq_along(rmse)) {
+  y_train_pred <- knn.reg(train = X_train, y = y_train,
+                          test = X_train, k = k)$pred
+  rmse[k] <- sqrt( mean((y_train_pred - y_train)^2) )
+}
+```
+
+```{r}
+qplot(seq_along(rmse), rmse)
+```
+
+```{r, message = FALSE}
+id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
+pred_id <- knn.reg(train = X_train, y = y_train,
+                   test = X_valid[id,], k = 1000)$pred
+
+df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
+                 pred = pred_id)
+
+qmplot(lon, lat, data = df, color = bin(pred, 4)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+```{r, message = FALSE}
+id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
+pred_id <- knn.reg(train = X_train, y = y_train,
+                   test = X_valid[id,], k = 5)$pred
+
+df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
+                 pred = pred_id)
+
+qmplot(lon, lat, data = df, color = bin(pred, 4)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+## Scale
+
+So far we have been working with data
+
+```{r}
+X <- as.matrix(select(acs, lon, lat, same_county))
+X[1:10,]
+```
+
+```{r}
+X <- scale(X)
+X[1:10,]
+```
+
+Note: ADD CLUSTERING
+
+
+## California House Prices
+
+```{r, message = FALSE}
+ca <- read_csv("~/files/ml_data/ca_house_price.csv")
+```
+
+```{r}
+library(smodels)
+ca$latitude_bin <- cut(ca$latitude, 5, label = FALSE)
+ca$longitude_bin <- cut(ca$longitude, 5, label = FALSE)
+ca$lat_long_bin <- ca$latitude_bin + ca$longitude_bin * 10
+```
+
+```{r, message = FALSE}
+library(ggmap)
+model <- lm(median_house_value ~  factor(lat_long_bin), data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qmplot(longitude, latitude, data = ca, color = value_pred) +
+  viridis::scale_color_viridis()
+```
+
+```{r, message = FALSE}
+acs <- read_csv("~/files/ml_data/tract_median_income.csv")
+ma <- filter(acs, state %in% c("MA"), !is.na(cbsa_name))
+ma <- arrange(ma, median_income)
+```
+
+```{r}
+count(ma, cbsa_name)
+```
+
+```{r}
+model <- lm(median_income ~ cbsa_name, data = ma)
+model
+```
+
+

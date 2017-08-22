@@ -1,0 +1,88 @@
+---
+title: "Class 10: Taxi!"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-09-28-class10/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(methods)
+```
+
+```{r, message = FALSE}
+taxi <- read_csv("~/files/ml_data/nyc_taxi.csv")
+```
+
+
+```{r}
+library(forcats)
+taxi$pickup_NTACode <- fct_lump(taxi$pickup_NTACode, prop = 0.01)
+taxi$dropoff_NTACode <- fct_lump(taxi$dropoff_NTACode, prop = 0.01)
+table(taxi$pickup_NTACode)
+```
+
+```{r}
+X <- model.matrix(~ . -1 ,
+                  data = taxi[,-c(1:3)])
+y <- taxi$duration
+
+y_train <- y[taxi$train_id == "train"]
+y_valid <- y[taxi$train_id == "valid"]
+X_train <- X[taxi$train_id == "train",]
+X_valid <- X[taxi$train_id == "valid",]
+```
+
+```{r}
+beta <- lm.fit(X_train, y_train)$coef
+y_valid_pred <- X_valid %*% beta
+sqrt(mean((y_valid - y_valid_pred)^2))
+```
+
+```{r}
+beta
+```
+
+```{r}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train)
+y_valid_pred <- predict(model, newx = X_valid)
+sqrt(mean((y_valid - y_valid_pred)^2))
+coef(model, s = model$lambda.1se)
+```
+
+```{r}
+X <- model.matrix(~ poly(trip_distance, hour, degree = 5) + . -1,
+                  data = taxi[,-c(1:3)])
+y <- taxi$duration
+
+y_train <- y[taxi$train_id == "train"]
+y_valid <- y[taxi$train_id == "valid"]
+X_train <- X[taxi$train_id == "train",]
+X_valid <- X[taxi$train_id == "valid",]
+```
+
+```{r}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train)
+y_valid_pred <- predict(model, newx = X_valid)
+sqrt(mean((y_valid - y_valid_pred)^2))
+coef(model, s = model$lambda.1se)
+```
+
+```{r}
+model <- lm(trip_distance ~ poly(trip_distance, hour, degree = 5) + .,
+            data = taxi[,-c(1:3)])
+y <- predict(model, newdata = taxi)
+y_valid <- y[taxi$train_id == "valid"]
+sqrt(mean((y_valid - y_valid_pred)^2))
+```
+
+
+
