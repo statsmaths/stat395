@@ -17,8 +17,8 @@ library(methods)
 ```
 
 ```{r, message = FALSE}
-flowers <- read_csv("~/files/ml_data/flowers17.csv")
-X <- read_rds("~/files/ml_data/flowers17_X.rds")
+flowers <- read_csv("~/files/ml_data/flowers_17.csv")
+X <- read_rds("~/files/ml_data/flowers_17_X.rds")
 X <- X[flowers$class %in% 1:10,,,]
 flowers <- flowers[flowers$class %in% 1:10,]
 ```

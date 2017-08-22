@@ -19,7 +19,7 @@ library(smodels)
 ```
 
 ```{r, message = FALSE}
-president <- read_csv("~/files/ml_data/presidents3.csv")
+president <- read_csv("~/files/ml_data/presidents_3.csv")
 ```
 
 ```{r}

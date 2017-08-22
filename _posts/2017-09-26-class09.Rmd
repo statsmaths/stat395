@@ -1,5 +1,5 @@
 ---
-title: "Class 09: Up in the Air"
+title: "Class 09: Corn Belt Housing"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -15,18 +15,17 @@ library(ggplot2)
 library(dplyr)
 ```
 
-
 ```{r, message = FALSE}
-air <- read_csv("~/files/ml_data/flights.csv")
+ames <- read_csv("~/files/ml_data/ames.csv")
 ```
 
+## Decision Trees
 
 ```{r}
 library(tree)
-model <- tree(factor(delayed) ~ month + day + weekday + arr_hour +
-                        dep_hour + origin + dest + distance + carrier,
-                      data = air, subset = train_id == "train",
-              control = tree.control(nobs = nrow(air), mindev = 0.001))
+model <- tree(saleprice ~ neighborhood + overall_qual + overall_cond + year_built,
+                      data = ames, subset = train_id == "train",
+              control = tree.control(nobs = nrow(ames), mindev = 0.005))
 ```
 
 
@@ -36,45 +35,33 @@ plot(model, type = "uniform")
 text(model, cex = 0.7, col = "purple")
 ```
 
+## Random Forests
+
 ```{r, message = FALSE}
 library(randomForest)
-model <- randomForest(factor(delayed) ~ dep_hour + arr_hour,
-                      data = air, subset = train_id == "train",
+model <- randomForest(saleprice ~ overall_qual + year_built,
+                      data = ames, subset = train_id == "train",
                       ntree = 20, maxnodes = 3, mtry = 1)
 ```
 
 ```{r}
-obj <- predict(model, newdata = air, predict.all = TRUE)$individual
+obj <- predict(model, newdata = ames, predict.all = TRUE)$individual
 ```
 
 ```{r}
-air$delayed_pred <- obj[,3]
-qplot(dep_hour, arr_hour, data = air, color = factor(delayed_pred)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+ames$price_pred <- obj[,3]
+qplot(overall_qual, year_built, data = ames, color = price_pred) +
+  viridis::scale_color_viridis()
 ```
 
 ```{r}
-air$delayed_pred <- predict(model, newdata = air)
-qplot(dep_hour, arr_hour, data = air, color = factor(delayed_pred)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+ames$price_pred <- predict(model, newdata = ames)
+qplot(overall_qual, year_built, data = ames, color = price_pred) +
+  viridis::scale_color_viridis()
 ```
 
 ```{r}
-tapply(air$delayed == air$delayed_pred, air$train_id, mean)
-```
-
-
-```{r}
-library(forcats)
-air$dest <- fct_lump(air$dest, 52)
-air$origin <- fct_lump(air$origin, 52)
-air$carrier <- factor(air$carrier)
-model <- randomForest(factor(delayed) ~ month + day + weekday +
-                         arr_hour + dep_hour + distance +
-                         origin + carrier,
-                      data = air,
-                      ntree = 100, maxnodes = 10, mtry = 4,
-                      subset = train_id == "train")
+sqrt(tapply((ames$saleprice - ames$price_pred)^2, ames$train_id, mean))
 ```
 
 ```{r}
@@ -83,19 +70,10 @@ importance(model)
 
 
 ```{r}
-air$delayed_pred <- predict(model, newdata = air)
-tapply(air$delayed == air$delayed_pred, air$train_id, mean)
+sqrt(tapply((ames$saleprice - ames$price_pred)^2, ames$train_id, mean))
 ```
 
-```{r}
-table(pred = air$delayed_pred, actual = air$delayed)
-```
-
-
-
-```{r, message = FALSE}
-ames <- read_csv("~/files/ml_data/ames.csv")
-```
+## Gradient Boosted Trees
 
 ```{r}
 X <- model.matrix(~ . -1 , data = ames[,-c(1:3)])

@@ -19,8 +19,8 @@ library(keras)
 ```
 
 ```{r, message = FALSE}
-mnist <- read_csv("~/files/ml_data/mnist10.csv")
-X <- read_rds("~/files/ml_data/mnist10_X.rds")
+mnist <- read_csv("~/files/ml_data/mnist_10.csv")
+X <- read_rds("~/files/ml_data/mnist_10_X.rds")
 ```
 
 ```{r}

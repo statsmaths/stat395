@@ -103,41 +103,5 @@ X[1:10,]
 
 Note: ADD CLUSTERING
 
-
-## California House Prices
-
-```{r, message = FALSE}
-ca <- read_csv("~/files/ml_data/ca_house_price.csv")
-```
-
-```{r}
-library(smodels)
-ca$latitude_bin <- cut(ca$latitude, 5, label = FALSE)
-ca$longitude_bin <- cut(ca$longitude, 5, label = FALSE)
-ca$lat_long_bin <- ca$latitude_bin + ca$longitude_bin * 10
-```
-
-```{r, message = FALSE}
-library(ggmap)
-model <- lm(median_house_value ~  factor(lat_long_bin), data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qmplot(longitude, latitude, data = ca, color = value_pred) +
-  viridis::scale_color_viridis()
-```
-
-```{r, message = FALSE}
-acs <- read_csv("~/files/ml_data/tract_median_income.csv")
-ma <- filter(acs, state %in% c("MA"), !is.na(cbsa_name))
-ma <- arrange(ma, median_income)
-```
-
-```{r}
-count(ma, cbsa_name)
-```
-
-```{r}
-model <- lm(median_income ~ cbsa_name, data = ma)
-model
-```
-
+Note: DISCUSS CROSS VALIDATION
 
