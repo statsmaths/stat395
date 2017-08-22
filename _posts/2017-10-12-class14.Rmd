@@ -13,8 +13,6 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-10-12-class14/")
 library(readr)
 library(dplyr)
 library(ggplot2)
-
-# text processing packages
 library(tokenizers)
 library(stringi)
 library(smodels)
@@ -63,9 +61,10 @@ head(beta[[3]])
 ```{r}
 for(j in 1:3) {
   beta <- coef(model, s = model$lambda[12])
-  cat(sprintf("%s:\n", c( "Obama", "Bush", "Clinton" )[j]))
-  out <-sprintf("%s (%s)", rownames(beta[[j]])[which((beta[[j]] != 0))],
-                     sign(beta[[j]])[which((beta[[j]] != 0))])
+  cat(c( "Obama", "Bush", "Clinton" )[j])
+  cat(":\n")
+  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
+        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
   print(out)
   cat("\n")
 }
@@ -107,9 +106,10 @@ plot(model)
 ```{r}
 for(j in 1:3) {
   beta <- coef(model, s = model$lambda[15])
-  cat(sprintf("%s:\n", c( "Obama", "Bush", "Clinton" )[j]))
-  out <-sprintf("%s (%s)", rownames(beta[[j]])[which((beta[[j]] != 0))],
-                     sign(beta[[j]])[which((beta[[j]] != 0))])
+  cat(c( "Obama", "Bush", "Clinton" )[j])
+  cat(":\n")
+  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
+        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
   print(out)
   cat("\n")
 }
@@ -145,9 +145,10 @@ plot(model)
 ```{r}
 for(j in 1:3) {
   beta <- coef(model, s = model$lambda[12])
-  cat(sprintf("%s:\n", c( "Obama", "Bush", "Clinton" )[j]))
-  out <-sprintf("%s (%s)", rownames(beta[[j]])[which((beta[[j]] != 0))],
-                     sign(beta[[j]])[which((beta[[j]] != 0))])
+  cat(c( "Obama", "Bush", "Clinton" )[j])
+  cat(":\n")
+  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
+        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
   print(out)
   cat("\n")
 }
