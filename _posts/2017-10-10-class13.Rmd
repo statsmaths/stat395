@@ -14,8 +14,6 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-10-10-class13/")
 library(readr)
 library(dplyr)
 library(ggplot2)
-
-# text processing packages
 library(tokenizers)
 library(stringi)
 library(smodels)
