@@ -2,6 +2,8 @@
 layout: default
 ---
 
+{{ site.baseurl }}
+
 <div class="posts">
 {% for post in site.posts reversed %}
     <h3><strong>{{ post.date | date: "%Y-%m-%d" }}</strong>&nbsp;&nbsp;<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
