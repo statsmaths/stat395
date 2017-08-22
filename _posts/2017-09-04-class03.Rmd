@@ -4,6 +4,11 @@ author: "Taylor Arnold"
 output: html_notebook
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-09-04-class03/")
+```
+
 ```{r, message = FALSE}
 library(readr)
 library(ggplot2)
