@@ -1,0 +1,16 @@
+---
+title: "Class 23: Art 101"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-11-16-class23/")
+```
+
+```{r, message = FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
