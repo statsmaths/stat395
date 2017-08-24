@@ -15,10 +15,8 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-08-28-class01/")
 
 ## Statistical Learning
 
-Welcome to *Statistical Learning*!
-
-All of the material for this course, including the notes here, are available
-on our class website:
+Welcome! All of the material for this course, including the
+notes here, are available on our class website:
 
 - [https://statsmaths.github.io/stat395/](https://statsmaths.github.io/stat395/)
 
@@ -48,7 +46,6 @@ number of bedrooms, square footage and its address
 scheduled departure time, arrival and departure airports
 - a crime has been reported at a specific place and time in
 Chicago; what type of crime is it?
-- is a text message spam?
 - here is a picture of a flower, what kind of flower is it?
 - given two sentences of text, predict which President used it
 in a public speech
