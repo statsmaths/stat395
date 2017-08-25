@@ -151,7 +151,19 @@ otherwise.
 
 ## Class Structure
 
-We will spend the first part of the class...
+Each class will generally be broken into three sections:
+
+1. **30-45 minutes**: walking through new concepts by applying
+techniques to a new dataset using my notes
+2. **15-30 minutes**: pairing or tripling off to share your
+results from the most recent lab
+3. **0-30 minutes**: share results from last week's lab with
+the entire class (time remaining)
+
+Depending on the task, I may ask you to present the work
+of your partner rather than your own. Typically, the lab
+due for the next class will use the data from the prior
+classes notes.
 
 ## Set-up for next time
 
