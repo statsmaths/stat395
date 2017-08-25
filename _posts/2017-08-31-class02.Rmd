@@ -11,6 +11,8 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-08-31-class02/")
 
 ## Basic R
 
+### Markdown
+
 Now, I want to throw you all into the format for the class and
 get you started with how assignments will work. This document,
 as well as all of your assignments, is written in a format
@@ -18,19 +20,29 @@ called **Rmarkdown**. At the moment we are looking at the
 source code; if you are familiar with markdown, it is just a
 specific flavor of the basic standard.
 
+Plain markdown is just a very simple format for marking up
+texts. Unlike write text in a word editor, there is nothing
+hidden in a markdown file. If you want something to be in
+italics, surround it in single stars like *this*. For bold,
+use **two**. Links use the following format:
+[site name](http://www.wheretogo.com). If you want to make
+something look like code in the output, you can enclose 
+text in back ticks: `print("Hello!")`.
+
 We can turn markdown into a number of other formats. If I
-hit the preview button above, it will display what the
+hit the *preview* button above, it will display what the
 HTML version of the document looks like. I'll usually
 export this HTML version and put it on the class website
 as it is slightly cleaner than the raw format here.
 
-The powerful feature of **Rmarkdown** is that we can intermix
-code into the document and actually run it in real time. To
-do this, we enclose code blocks with three backticks, and
-preface the first one with r in squiggly brackets. The code
-will get run when we hit the Preview or Knit buttons, but
-we can also run just this block by hitting the play button to
-the right of the block. Here, let's add 1 and 1 together:
+The most powerful feature of **Rmarkdown** is that we can
+intermix code into the document and actually run it in real
+time. To do this, we enclose code blocks with three backticks,
+and preface the first one with r in squiggly brackets. Every
+code block will get run in sequence if when we hit the Preview
+or Knit buttons, but we can also run just this block by hitting
+the play button to the right of the block. Here, let's add
+1 and 1 together:
 
 ```{r}
 1 + 1
@@ -38,14 +50,43 @@ the right of the block. Here, let's add 1 and 1 together:
 
 The output is written directly to the document. This is the
 reason I'll often use the raw format in class; it allows us
-to modify the code and see the changes as they run.
+to modify the code and see the changes as they run. 
 
-Next, we'll load some libraries into R. These are collections
-of functions written by third-parties. We will see how to
-install these in a bit. The curly braces part of the code
-block accepts several options. Notably, here we turn off
-messages as the packages produce quite a bit of verbose
-output that we do not need to worry about.
+Note that there are shortcuts for running a chunk of code.
+To see them for your platform, look at the menu under the
+Run button.
+
+### Packages
+
+In addition to the basic R functions that exist on start-up,
+there are thousands of user-contributed packages the implement
+various add-ons. To install these packages, we use the function
+`install.packages`:
+
+```{r, eval = FALSE}
+install.packages("readr")
+```
+
+Once a package is installed, we also need to load it. While
+installing the package only needs to be done once, we have to
+load it each and every time we restart R (notice up above that
+I included the option `eval = FALSE` in the code block so that
+my computer does not constantly reinstall it):
+
+```{r}
+library(readr)
+```
+
+Once, loaded we can run commands from the **readr** package.
+We will do this in just a moment.
+
+### Loading Data
+
+Let's load in three libraries that will be important for 
+us throughout the semester. Note that I'll turn off messages
+as the packages produce quite a bit of verbose output that
+we do not need to worry about. Also note that re-loading the
+**readr** package has no ill-effects.
 
 ```{r, message = FALSE}
 library(readr)
@@ -56,7 +97,8 @@ library(dplyr)
 Next, let's load in a small dataset to work with today.
 This data consists of the average number of hours per
 day that various species are awake. We'll read the data
-set in from my website:
+set, like most of those in this class, directly from
+my website:
 
 ```{r, message = FALSE}
 msleep <- read_csv("~/files/ml_data/msleep.csv")
@@ -67,36 +109,116 @@ pop up in the upper right hand corner of the screen.
 Clicking on it opens up a spreedsheet-like view of the
 data.
 
-Particularly important are the first two columns, as
+Particularly important are the first three columns, as
 most datasets that we work with this semester will have
-these columns as well. The first is just an id; the
-second indicates whether this is a sample where you
-know the response or have to predict the response.
-Your goal is to use the data with visible responses
-to predict the responses you do not know.
+these columns as well. The meaning
 
-Here, the most straightforward relationship in the data is
-that between the logarithm of bodyweight and the number
-of hours spent awake. We will use the `qplot` function
-to visualize this relationship. The `qplot` function
-takes the name of the x-variable, the name of the
-y-variable, and the dataset the variables reside inside.
-The function is quite smart and will choose by default
-the most appropriate plot to use. Here it gives a
-scatterplot:
+- the first column is just an id; don't lose it!
+- the second indicates whether this is a sample where
+you know the response or if have to predict the response
+- the third column gives the response of interest; it
+is missing wheneve the second column is equal to "test"
+
+### qplot
+
+We will use the function `qplot` to produce simple plots
+based on our data. In its most basic form, we give `qplot`
+the name of the variable we want to plot and the name of
+the dataset in which the variable resides. 
+
+```{r}
+qplot(bodywt_log, data = msleep)
+```
+
+The function is quite smart and will choose by default the
+most appropriate plot to use. Here is creating a *histogram*
+because we gave it one numeric variable. Appling `qplot` to
+a categorical variable gives a bar plot:
+
+```{r}
+qplot(vore, data = msleep)
+```
+
+We can also give `qplot` two variable. For instance, if we
+use two continuous variables the function will construct a
+scatter plot:
 
 ```{r}
 qplot(bodywt_log, awake, data = msleep)
 ```
 
-The missing values are those points where you need to produce
-predictions.
+The missing values that we are warned about are those points
+where we need to produce predictions.
+
+There is not a special name for the plot with a continuous
+variable plotted versus a categorical one, but the point
+should be clear:
+
+```{r}
+qplot(vore, awake, data = msleep)
+```
+
+Finally, one can plot two categorical variables, but it is
+rarely useful due to overplotting.
+
+### Aesthetics
+
+The `qplot` function comes from the **ggplot2** package. In
+**ggplot2**, plots can be modified by changing what are known
+as aesthetic mappings. Common aesthetics are: color, size, and
+alpha (the opacity of the points). To change any of these to
+a fixed value for all points, simply use the `I` function
+in the call to `qplot`:
+
+```{r}
+qplot(vore, awake, data = msleep, color = I("gold"),
+      size = I(10), alpha = I(0.3))
+```
+
+Alternatively, we can map aesthetics to variables in our dataset.
+For example, let's change the color to a function of the diet 
+type of each mammal (note that here we do not use the `I` function):
+
+```{r}
+qplot(sleep_rem, awake, data = msleep, color = vore)
+```
+
+Color behaves differently if we use a discrete variable or a numeric
+one. Notice here how a color gradient is used in place of a fixed scale:
+
+```{r}
+qplot(sleep_rem, awake, data = msleep, color = brainwt)
+```
+
+This last plot is particularly hard to read on the projector. It is also
+difficult on my screen and for anyone with any degree of color-blindness.
+The package **viridis** can help. Let's load it in (if you want to run this
+line, make sure to install the package first!):
+
+```{r}
+library(viridis)
+```
+
+We now literally add a *layer* to the plot describing what color scale we
+would like to make use of:
+
+```{r}
+qplot(sleep_rem, awake, data = msleep, color = log(brainwt)) +
+  scale_color_viridis()
+```
+
+We will make use of these aesthetics throughout the semester to explore datasets.
+In particular, the color mapping allows us to look at more than two variables at
+the same time.
+
+### Best-fit line
 
 It seems like there is a positive relationship between body
 weight and hours spent awake. We can add a best-fit line to
 the plot to model this relationship. Adding things to a
 `qplot` graphic literally involves using the `+` sign and
-adding the results of other functions. Here we use `geom_smooth`
+adding the results of other functions, much like when we
+added an alternative color scale. Here we use `geom_smooth`
 with an option to make the smooth strictly linear:
 
 ```{r}
@@ -123,8 +245,10 @@ by this line:
 predict(model, newdata = msleep)
 ```
 
+### Accessing and adding new variables
+
 Columns of the dataset `msleep` can be referenced by
-using the dataset name, followed by a dollar sign and
+using the dataset name followed by a dollar sign and
 the name of the variable. So, for example, here are the
 hours spent awake:
 
@@ -144,6 +268,8 @@ msleep$awake_pred <- predict(model, msleep)
 Click on the msleep dataset again to verify that there is a
 new column of predictions. Notice that these are filled in
 for all values.
+
+### Prediction solutions
 
 Now, we use the `select` function to pick just a few
 variables from `msleep` and save this as a new dataset.
@@ -173,4 +299,54 @@ for all of the data, even though we already know some of the
 values. It is often easier to do this and avoids the mistake
 of predicting on the wrong set. Of course, I'll only grade
 you on the set that you were not able to see.
+
+## GitHub Classroom
+
+Now you should be familiar with the basics of using R to read
+data, create visualizations, and produce predictions. Let's go
+through and show how to put these together to produce and subit
+your daily labs. I will do this interactively, but here are 
+the steps in case you are returning to these notes at a later
+time:
+
+1. I will send a link to your e-mail that you should follow
+and accept. Assuming you have a valid GitHub account, this
+will set up a repository where all of your labs for this semester
+should be posted.
+2. Select the lab you would like to work on (`lab01.Rmd` here)
+and click on the link.
+3. Now, click on the **Raw** button. This should take you to
+the raw notebook file. Download this through your browser somewhere
+on your computer.
+4. Open this file in RStudio and work through the questions.
+5. When you are finished, select the `Knit to HTML` button. This
+should create an html file in the same location that you saved
+the Rmd file. You should also have a file `class01_submit.csv`
+in the same location.
+6. Return to GitHub and drag and drop the three files into your
+respository. Commit these to the repository with the **Commit changes**
+button and then you are done! If dragging and dropping does not work
+(only officially support on Chrome I believe), select **Upload files**
+and do so manually.
+7. There should already be a `lab02.Rmd` for you to work on for the
+next class. New labs will show up automatically as we proceed through
+the semester.
+
+Remember that labs are due online 90 minutes before class starts
+(noon on Tuesdays and Thursdays).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
