@@ -102,6 +102,13 @@ new dataset nearly every class period. Concepts and new
 algorithms will be intermixed with these, but the focus will
 generally be how to apply them to a specific task.
 
+This class is cross-listed with mathematics and computer science.
+We have a fairly diverse set of academic backgrounds in the room.
+You will likely encounter parts of some classes which are a bit
+over your head. That is not just okay but, in my mind, ideal.
+Try your best to catch the basic ideas and don't get worried
+about the details.
+
 ## Syllabus
 
 *As mentioned, this is just a summary of the larger document located
@@ -149,6 +156,11 @@ how to convert between numeric and letter grades.
 There is no required textbook and there are no exams, final or
 otherwise.
 
+### also, because someone always asks
+
+We will have one class outside, probably around week 7. Details
+to follow.
+
 ## Class Structure
 
 Each class will generally be broken into three sections:
@@ -164,6 +176,12 @@ Depending on the task, I may ask you to present the work
 of your partner rather than your own. Typically, the lab
 due for the next class will use the data from the prior
 classes notes.
+
+Because of the class structure, ideally you should bring
+your laptop or at least a tablet to each class meeting.
+If this is a problem, I suggest pairing up with someone
+who can bring a computer to class. If this is also not
+feasible, please let me know as soon as possible.
 
 ## Set-up for next time
 
