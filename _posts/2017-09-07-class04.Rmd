@@ -18,7 +18,7 @@ library(dplyr)
 ## California Housing Prices
 
 Today we are going to look at a dataset of housing prices from
-California. Loading it in we see that each row of the dataset 
+California. Loading it in we see that each row of the dataset
 is a small neighborhood (technically a census tract) and the
 goal is to predict the median house price within the tract.
 
@@ -36,11 +36,11 @@ today will ask you to extrapolate on this using the remaining variables.
 In the prior two classes we have introduced the notion of linear
 models. We have even extended this idea to multivariate linear
 models and linear models with categorical variables. What about
-relationships that are non-linear? It may seem that the linear 
-model is highly restrictive, perhaps even to the point of 
+relationships that are non-linear? It may seem that the linear
+model is highly restrictive, perhaps even to the point of
 uselessness on larger, more complex datasets.
 
-The catch is that linear models need only be linear in the 
+The catch is that linear models need only be linear in the
 unknown parameters. That is, the following is not a linear
 model:
 
@@ -50,7 +50,7 @@ However, this is:
 
 $$ Y_i = \alpha + \beta_1 X_i + \beta_2 X_i^2 + \beta_3 X_i^3 + \epsilon_i $$
 
-By picking large enough polynomials, in theory we can approximate 
+By picking large enough polynomials, in theory we can approximate
 any relationship between X and Y.
 
 Let's take a look at the relationship between mean household
@@ -74,7 +74,7 @@ qplot(mean_household_income, median_house_value, data = ca) +
 ```
 
 This line, in constrast, seems to fit the data much more accurately.
-We will see later today the exact algorithm used in `geom_smooth`. 
+We will see later today the exact algorithm used in `geom_smooth`.
 For now, let's us the polynomial expansion trick we just derived
 to fit the curve using `lm`. We will fit a cubic polynomial to the
 data. The first step is to create two new variables:
@@ -128,7 +128,7 @@ sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
 
 ## Basis expansion with poly()
 
-The technique of creating more complex relationships by 
+The technique of creating more complex relationships by
 explicitly adding transformed versions of the original
 variables is called **basis expansion**. It is a very
 powerful and useful tool.
@@ -209,7 +209,7 @@ the model.
 ## Non-linear interactions
 
 A more general form of the additive model would allow arbitrary
-interactions between the predictor variables. We would write 
+interactions between the predictor variables. We would write
 this as the following:
 
 $$ Y_i = f(X_i, Z_i) + \epsilon_i $$
@@ -220,7 +220,7 @@ is the quadratic approximation:
 
 $$ Y_i = \alpha + \beta_1 X + \beta_2 X^2 + \beta_3 Z + \beta_4 Z^2 + \beta_5 X\cdot Z + \epsilon_i $$
 
-In the quadratic case, the number of terms grows only by 1. For 
+In the quadratic case, the number of terms grows only by 1. For
 higher orders to number of interactions increases significantly
 faster.
 
@@ -254,7 +254,7 @@ model by a slight amount.
 
 As a general pattern, we see that increasing the complexity of
 the model creates a more predictive output. This should not be
-taken as a given. Let's increase the interaction polynomial 
+taken as a given. Let's increase the interaction polynomial
 degrees from 6, to 10, and to 12. Notice what happens with the
 training and validation errors:
 
@@ -292,7 +292,7 @@ sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
 ```
 
 We see that the training error slowly gets lower as we increase the
-degree of the polynomial. With more terms to use, it will always 
+degree of the polynomial. With more terms to use, it will always
 improve the fit on the data it is trained on (at least up to numerical
 stability). However, the higher order fits begin to overfit to the training
 data. For degree six polynomials this creates a slightly worse fit. For
@@ -305,7 +305,7 @@ on the validation set. Visually, we see the following relationship
 (though in our case we do not know the test set and are comparing with
 the validation set):
 
-![](https://statsmaths.github.io/stat395/assets/img/pg38.pdf)
+![](https://statsmaths.github.io/stat395/assets/img/pg38.png)
 
 I have several videos that demonstrate the process of moving from overfitting
 to underfitting. Here are three examples:
@@ -389,7 +389,7 @@ qplot(mean_household_income, mean_household_income_cut, data = ca)
 
 A linear model fit on this variable (we use the `factor` function
 to tell R to treat it as a categorical variable), is able to fit
-any abritrary number to each bin resulting in fits that can be 
+any abritrary number to each bin resulting in fits that can be
 very non-linear.
 
 ```{r}
@@ -437,7 +437,7 @@ qmplot(longitude, latitude, data = ca, color = value_pred) +
 We conclude with a brief introduction to the **gam** package. The
 package allows us to replace the `lm` function with the `gam` function.
 With no other options selected, this will not effect the results in
-any way. The benefit comes from the included functions `s`, which 
+any way. The benefit comes from the included functions `s`, which
 stands for smoothing spline, and `lo`, which stands for LOcal polynomial
 smoothers. We can use these functions as a drop-in replacement
 for the `poly` function. However, unlike poly we do not need to
@@ -481,10 +481,10 @@ Notice that the `s` and `lo` functions are doing more than intelligently selecti
 the degree of the polynomial. There are some downsides to using the `gam` function
 compared to polynomial basis expansion with the `lm` function. The primary downside
 is that the computational time can be quite long with larger datasets, particularly
-if we try to fit iteraction terms. In fact, just the last block of code took a 
+if we try to fit iteraction terms. In fact, just the last block of code took a
 non-negligable amount of time to run and we only have a few thousand rows of data
 and two variables. Secondly, iteraction terms can become unstable in dimensions
-three or more. Often, a low-order polynomial expansion can be used up to even 
+three or more. Often, a low-order polynomial expansion can be used up to even
 4 or 5 dimensions if there is sufficent data.
 
 
