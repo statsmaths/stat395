@@ -103,7 +103,7 @@ set, like most of those in this class, directly from
 my website:
 
 ```{r, message = FALSE}
-msleep <- read_csv("~/files/ml_data/msleep.csv")
+msleep <- read_csv("https://statsmaths.github.io/ml_data/msleep.csv")
 ```
 
 Once this code has been run, you should see the dataset

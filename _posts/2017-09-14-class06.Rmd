@@ -19,7 +19,10 @@ library(dplyr)
 ## Nearest Neighbours
 
 ```{r, message = FALSE}
-library(smodels)
+acs <- read_csv("https://statsmaths.github.io/ml_data/tract_median_income.csv")
+```
+
+```{r, message = FALSE}
 library(ggmap)
 temp <- filter(acs, train_id == "train", !(state %in% c("AK", "HI")))
 qmplot(lon, lat, data = temp, color = bin(median_income, 8), size = I(0.5)) +
@@ -27,14 +30,15 @@ qmplot(lon, lat, data = temp, color = bin(median_income, 8), size = I(0.5)) +
 ```
 
 
+
+
+
+
 ```{r}
 library(FNN)
 y_valid_pred <- knn.reg(train = X_train, y = y_train, test = X_valid, k = 10)$pred
 ```
 
-```{r}
-
-```
 
 ```{r}
 rmse <- rep(NA, 100)
