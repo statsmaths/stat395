@@ -1,8 +1,9 @@
 ---
-title: "Class 10: Taxi!"
+title: "Class 10: Bad Bad Leroy Brown"
 author: "Taylor Arnold"
 output: html_notebook
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
@@ -13,76 +14,85 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-09-28-class10/")
 library(readr)
 library(ggplot2)
 library(dplyr)
-library(methods)
+```
+
+> Well the South side of Chicago
+> Is the baddest part of town
+> And if you go down there
+> You better just beware
+> Of a man named Leroy Brown
+
+
+```{r, message = FALSE}
+crimes <- read_csv("~/files/ml_data/chi_crimes_3.csv")
+```
+
+```{r}
+temp <- crimes[crimes$crime_type %in% c("theft", "narcotics"),]
+temp$y <- as.numeric(temp$crime_type == "theft")
+model <- lm(y ~ latitude + longitude,
+            data = temp, subset = train_id == "train")
+temp$y_pred <- predict(model, newdata = temp)
 ```
 
 ```{r, message = FALSE}
-taxi <- read_csv("~/files/ml_data/nyc_taxi.csv")
+library(ggmap)
+qmplot(longitude, latitude, data = temp, color = factor(y_pred > 0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+```{r, message = FALSE}
+model <- lm(y ~ poly(latitude, 4) + poly(longitude, 4),
+            data = temp, subset = train_id == "train")
+temp$y_pred <- predict(model, newdata = temp)
+qmplot(longitude, latitude, data = temp, color = factor(y_pred > 0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+```{r, message = FALSE}
+library(FNN)
+X <- scale(as.matrix(select(temp, longitude, latitude)))
+y <- temp$y
+X_train <- X[temp$train_id == "train",]
+y_train <- y[temp$train_id == "train"]
+
+temp$y_pred <- as.numeric(FNN::knn(train = X_train, test = X, cl = y_train, k = 200))
+
+qmplot(longitude, latitude, data = temp, color = factor(y_pred)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+```{r, message = FALSE}
+crimes$y <- as.numeric(factor(crimes$crime_type))
+
+
+library(FNN)
+X <- scale(as.matrix(select(crimes, longitude, latitude)))
+y <- crimes$y
+X_train <- X[crimes$train_id == "train",]
+y_train <- y[crimes$train_id == "train"]
+
+crimes$y_pred <- as.numeric(FNN::knn(train = X_train, test = X, cl = y_train, k = 500))
+
+qmplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
+  viridis::scale_color_viridis(discrete = TRUE)
 ```
 
 
-```{r}
-library(forcats)
-taxi$pickup_NTACode <- fct_lump(taxi$pickup_NTACode, prop = 0.01)
-taxi$dropoff_NTACode <- fct_lump(taxi$dropoff_NTACode, prop = 0.01)
-table(taxi$pickup_NTACode)
+
+```{r, message = FALSE, warning = FALSE}
+library(nnet)
+library(ggmap)
+library(smodels)
+crimes$h6 <- as.numeric(cut(crimes$hour, 6, label = FALSE))
+model <- multinom(crime_type ~ poly(longitude, latitude, h6, degree = 3),
+                  data = crimes)
+crimes$y_pred <- predict(model, newdata = crimes)
+qplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  facet_wrap(~h6)
 ```
 
-```{r}
-X <- model.matrix(~ . -1 ,
-                  data = taxi[,-c(1:3)])
-y <- taxi$duration
-
-y_train <- y[taxi$train_id == "train"]
-y_valid <- y[taxi$train_id == "valid"]
-X_train <- X[taxi$train_id == "train",]
-X_valid <- X[taxi$train_id == "valid",]
-```
-
-```{r}
-beta <- lm.fit(X_train, y_train)$coef
-y_valid_pred <- X_valid %*% beta
-sqrt(mean((y_valid - y_valid_pred)^2))
-```
-
-```{r}
-beta
-```
-
-```{r}
-library(glmnet)
-model <- cv.glmnet(X_train, y_train)
-y_valid_pred <- predict(model, newx = X_valid)
-sqrt(mean((y_valid - y_valid_pred)^2))
-coef(model, s = model$lambda.1se)
-```
-
-```{r}
-X <- model.matrix(~ poly(trip_distance, hour, degree = 5) + . -1,
-                  data = taxi[,-c(1:3)])
-y <- taxi$duration
-
-y_train <- y[taxi$train_id == "train"]
-y_valid <- y[taxi$train_id == "valid"]
-X_train <- X[taxi$train_id == "train",]
-X_valid <- X[taxi$train_id == "valid",]
-```
-
-```{r}
-library(glmnet)
-model <- cv.glmnet(X_train, y_train)
-y_valid_pred <- predict(model, newx = X_valid)
-sqrt(mean((y_valid - y_valid_pred)^2))
-coef(model, s = model$lambda.1se)
-```
-
-```{r}
-model <- lm(trip_distance ~ poly(trip_distance, hour, degree = 5) + .,
-            data = taxi[,-c(1:3)])
-y <- predict(model, newdata = taxi)
-y_valid <- y[taxi$train_id == "valid"]
-sqrt(mean((y_valid - y_valid_pred)^2))
-```
 
 
 

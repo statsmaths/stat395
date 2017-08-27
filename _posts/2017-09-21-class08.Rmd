@@ -1,9 +1,8 @@
 ---
-title: "Class 08: Bad Bad Leroy Brown"
+title: "Class 08: Spatial Analysis of Income"
 author: "Taylor Arnold"
 output: html_notebook
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
@@ -16,88 +15,187 @@ library(ggplot2)
 library(dplyr)
 ```
 
-> Well the South side of Chicago
-> Is the baddest part of town
-> And if you go down there
-> You better just beware
-> Of a man named Leroy Brown
+## Building model matricies
 
+When we simply want to set the model matrix X to a subset
+of the numeric columns in our data frame, the function
+`as.matrix` is usually sufficent. The formula interface
+to `lm` is incredibly useful however when using categorical
+variables or when processing numeric variables by special
+functions such as `poly`.
+
+The function `model.matrix` allows us to compute the model
+matrix from the formula interface. In fact, the `lm` function
+calls this to convert our inputs into a model matrix. The
+output of this is then passed to `lm.fit`. It will also, by
+default, include an intercept term for us. Here we use it
+to build a model matrix of the carriers in the flights data:
+
+```{r}
+X <- model.matrix(~ carrier , data = flights)
+head(X)
+```
+
+Notice that each of these new variables is an indicator for
+whether a given flight was flown on the associated carrier.
+Let's look at the first 6 carriers to verify this:
+
+```{r}
+head(flights$carrier)
+```
+
+If we look at a table of all the carriers, we see that one
+of the carriers is missing:
+
+```{r}
+table(flights$carrier)
+```
+
+The missing value "9E" is known as the **baseline** in this model.
+The intercept indicates the expected delay of flights on this carrier.
+All of the other terms give how much more or less each carrier is
+to be delayed relative to the baseline "9E".
+
+Changing the baseline will change all of the beta coefficents.
+However, the predicted values will remain the same. In 209 and 289,
+I spend a lot of time talking about changing the baseline and
+understanding the model from different perspectives. As we are
+focused on prediction, which is unchanged, this will be much less
+of a concern for us. Just note that by default variables are sorted
+in alphabetical order, which is why "9E" is the baseline here.
+
+With this model matrix, we can compute the regression vector
+by first creating training and validation matricies:
+
+```{r}
+y_train <- y[flights$train_id == "train"]
+y_valid <- y[flights$train_id == "valid"]
+X_train <- X[flights$train_id == "train",]
+X_valid <- X[flights$train_id == "valid",]
+```
+
+And then using `lm.fit`:
+
+```{r}
+beta <- lm.fit(X_train, y_train)$coef
+beta
+```
+
+## Lumping categorical variables
+
+Some categorical variables come from fixed categories and/or have
+relatively equal number of observations in each unique value.
+Common examples are day of the week, month of the year, and
+weather ("clear", "cloudy", "rainy", "snowing"). Other times we
+have cases where a categorical variable has some categories with
+many observations but others with very few. In the latter case,
+we may not be able to reliably fit a seperate model term to the
+rare unique values in the category. The package **forcats**
+offers a solution with the function **fct_lump**. This function
+lumps together all but the top n categories into an "other"
+label. For example, here we can lump all but the top four
+carriers into an other group:
+
+```{r}
+library(forcats)
+model <- lm(delayed ~ fct_lump(carrier, n = 4), data = flights)
+model
+```
+
+Remember that the design matrix *hides* one level in the baseline. Here
+the baseline (AA) stands for American Airlines, revealing why all
+the coefficents are negative!
+
+## Nearest Neighbours
 
 ```{r, message = FALSE}
-crimes <- read_csv("~/files/ml_data/chi_crimes_3.csv")
+acs <- read_csv("https://statsmaths.github.io/ml_data/tract_median_income.csv")
+```
+
+```{r, message = FALSE}
+library(ggmap)
+temp <- filter(acs, train_id == "train", !(state %in% c("AK", "HI")))
+qmplot(lon, lat, data = temp, color = bin(median_income, 8), size = I(0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+
+
+
+
+
+```{r}
+library(FNN)
+y_valid_pred <- knn.reg(train = X_train, y = y_train, test = X_valid, k = 10)$pred
+```
+
+
+```{r}
+rmse <- rep(NA, 100)
+for (k in seq_along(rmse)) {
+  y_valid_pred <- knn.reg(train = X_train, y = y_train,
+                          test = X_valid, k = k)$pred
+  rmse[k] <- sqrt( mean((y_valid_pred - y_valid)^2) )
+}
 ```
 
 ```{r}
-temp <- crimes[crimes$crime_type %in% c("theft", "narcotics"),]
-temp$y <- as.numeric(temp$crime_type == "theft")
-model <- lm(y ~ latitude + longitude,
-            data = temp, subset = train_id == "train")
-temp$y_pred <- predict(model, newdata = temp)
+qplot(seq_along(rmse), rmse)
+```
+
+
+```{r}
+rmse <- rep(NA, 100)
+for (k in seq_along(rmse)) {
+  y_train_pred <- knn.reg(train = X_train, y = y_train,
+                          test = X_train, k = k)$pred
+  rmse[k] <- sqrt( mean((y_train_pred - y_train)^2) )
+}
+```
+
+```{r}
+qplot(seq_along(rmse), rmse)
 ```
 
 ```{r, message = FALSE}
-library(ggmap)
-qmplot(longitude, latitude, data = temp, color = factor(y_pred > 0.5)) +
+id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
+pred_id <- knn.reg(train = X_train, y = y_train,
+                   test = X_valid[id,], k = 1000)$pred
+
+df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
+                 pred = pred_id)
+
+qmplot(lon, lat, data = df, color = bin(pred, 4)) +
   viridis::scale_color_viridis(discrete = TRUE)
 ```
 
 ```{r, message = FALSE}
-model <- lm(y ~ poly(latitude, 4) + poly(longitude, 4),
-            data = temp, subset = train_id == "train")
-temp$y_pred <- predict(model, newdata = temp)
-qmplot(longitude, latitude, data = temp, color = factor(y_pred > 0.5)) +
+id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
+pred_id <- knn.reg(train = X_train, y = y_train,
+                   test = X_valid[id,], k = 5)$pred
+
+df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
+                 pred = pred_id)
+
+qmplot(lon, lat, data = df, color = bin(pred, 4)) +
   viridis::scale_color_viridis(discrete = TRUE)
 ```
 
-```{r, message = FALSE}
-library(FNN)
-X <- scale(as.matrix(select(temp, longitude, latitude)))
-y <- temp$y
-X_train <- X[temp$train_id == "train",]
-y_train <- y[temp$train_id == "train"]
+## Scale
 
-temp$y_pred <- as.numeric(FNN::knn(train = X_train, test = X, cl = y_train, k = 200))
+So far we have been working with data
 
-qmplot(longitude, latitude, data = temp, color = factor(y_pred)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+```{r}
+X <- as.matrix(select(acs, lon, lat, same_county))
+X[1:10,]
 ```
 
-```{r, message = FALSE}
-crimes$y <- as.numeric(factor(crimes$crime_type))
-
-
-library(FNN)
-X <- scale(as.matrix(select(crimes, longitude, latitude)))
-y <- crimes$y
-X_train <- X[crimes$train_id == "train",]
-y_train <- y[crimes$train_id == "train"]
-
-crimes$y_pred <- as.numeric(FNN::knn(train = X_train, test = X, cl = y_train, k = 500))
-
-qmplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+```{r}
+X <- scale(X)
+X[1:10,]
 ```
 
+Note: ADD CLUSTERING
 
-
-```{r, message = FALSE, warning = FALSE}
-library(nnet)
-library(ggmap)
-library(smodels)
-crimes$h6 <- as.numeric(cut(crimes$hour, 6, label = FALSE))
-model <- multinom(crime_type ~ poly(longitude, latitude, h6, degree = 3),
-                  data = crimes)
-crimes$y_pred <- predict(model, newdata = crimes)
-qplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
-  viridis::scale_color_viridis(discrete = TRUE) +
-  facet_wrap(~h6)
-```
-
-
-
-
-
-
-
-
+Note: DISCUSS CROSS VALIDATION
 

@@ -1,5 +1,5 @@
 ---
-title: "Class 04: Buying Property in The Golden State"
+title: "Class 04: Fuel Efficiency in the Big City"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -7,6 +7,8 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-09-07-class04/")
+knitr::opts_chunk$set(fig.height = 4)
+knitr::opts_chunk$set(fig.width = 6.8)
 ```
 
 ```{r, message = FALSE}
@@ -15,482 +17,195 @@ library(ggplot2)
 library(dplyr)
 ```
 
-## California Housing Prices
 
-Today we are going to look at a dataset of housing prices from
-California. Loading it in we see that each row of the dataset
-is a small neighborhood (technically a census tract) and the
-goal is to predict the median house price within the tract.
+### Aesthetics
 
-```{r, message = FALSE}
-ca <- read_csv("https://statsmaths.github.io/ml_data/ca_house_price.csv")
-```
-
-Looking at the dataset we see a number of potentially useful
-covariates. Our interest right now focuses on just the mean household
-income, latitude, and longitude of the neighborhood. The lab for
-today will ask you to extrapolate on this using the remaining variables.
-
-## Non-linear relationships
-
-In the prior two classes we have introduced the notion of linear
-models. We have even extended this idea to multivariate linear
-models and linear models with categorical variables. What about
-relationships that are non-linear? It may seem that the linear
-model is highly restrictive, perhaps even to the point of
-uselessness on larger, more complex datasets.
-
-The catch is that linear models need only be linear in the
-unknown parameters. That is, the following is not a linear
-model:
-
-$$ Y_i = \alpha + X_i^\beta + \epsilon_i $$
-
-However, this is:
-
-$$ Y_i = \alpha + \beta_1 X_i + \beta_2 X_i^2 + \beta_3 X_i^3 + \epsilon_i $$
-
-By picking large enough polynomials, in theory we can approximate
-any relationship between X and Y.
-
-Let's take a look at the relationship between mean household
-income and median house value. I'll put a best fit line through
-the data to visually see how well it performs:
-
-```{r, message = FALSE, warning = FALSE}
-qplot(mean_household_income, median_house_value, data = ca) +
-  geom_smooth(method = "lm")
-```
-
-The line does a decent job, but seems to overpredict house values in areas
-with very high mean household incomes.
-
-Let's remove the `model = 'lm'` in the `geom_smooth` layer and see what
-a non-linear fit looks like:
-
-```{r, message = FALSE, warning = FALSE}
-qplot(mean_household_income, median_house_value, data = ca) +
-  geom_smooth()
-```
-
-This line, in constrast, seems to fit the data much more accurately.
-We will see later today the exact algorithm used in `geom_smooth`.
-For now, let's us the polynomial expansion trick we just derived
-to fit the curve using `lm`. We will fit a cubic polynomial to the
-data. The first step is to create two new variables:
+The `qplot` function comes from the **ggplot2** package. In
+**ggplot2**, plots can be modified by changing what are known
+as aesthetic mappings. Common aesthetics are: color, size, and
+alpha (the opacity of the points). To change any of these to
+a fixed value for all points, simply use the `I` function
+in the call to `qplot`:
 
 ```{r}
-ca$mean_household_income_2 <- ca$mean_household_income^2
-ca$mean_household_income_3 <- ca$mean_household_income^3
+qplot(vore, awake, data = msleep, color = I("gold"),
+      size = I(10), alpha = I(0.3))
 ```
 
-In order to compare how well a cubic polynomial fits the
-data, let's evaluate how well the mean model performs:
+Alternatively, we can map aesthetics to variables in our dataset.
+For example, let's change the color to a function of the diet
+type of each mammal (note that here we do not use the `I` function):
 
 ```{r}
-avg <- mean(ca$median_house_value, na.rm = TRUE)
-sqrt(tapply((ca$median_house_value - avg)^2,
-            ca$train_id, mean))
+qplot(bodywt_log, awake, data = msleep, color = vore)
 ```
 
-And the linear model:
+Color behaves differently if we use a discrete variable or a numeric
+one. Notice here how a color gradient is used in place of a fixed scale:
 
 ```{r}
-model <- lm(median_house_value ~ mean_household_income,
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
+qplot(bodywt_log, awake, data = msleep, color = bodywt_log)
 ```
 
-Now, we'll build a cubic model to fit to the data and see
-how well it seems to fit visually.
+This last plot is particularly hard to read on the projector. It is also
+difficult on my screen and for anyone with any degree of color-blindness.
+The package **viridis** can help. Let's load it in (if you want to run this
+line, make sure to install the package first!):
 
 ```{r}
-model <- lm(median_house_value ~ mean_household_income +
-              mean_household_income_2 + mean_household_income_3,
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qplot(mean_household_income, value_pred, data = ca)
+library(viridis)
 ```
 
-Notice that our polynomial now predicts a non-linear relationship
-between the mean household income and the median house value.
-The predictions are slightly better than the linear model, though
-not by very much as the linear model performed fairly well already:
+We now literally add a *layer* to the plot describing what color scale we
+would like to make use of:
 
 ```{r}
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
+qplot(bodywt_log, awake, data = msleep, color = bodywt_log) +
+  scale_color_viridis()
 ```
 
-## Basis expansion with poly()
+We will make use of these aesthetics throughout the semester to explore datasets.
+In particular, the color mapping allows us to look at more than two variables at
+the same time.
 
-The technique of creating more complex relationships by
-explicitly adding transformed versions of the original
-variables is called **basis expansion**. It is a very
-powerful and useful tool.
 
-We can make use of polynomial expansions without having
-to directly construct all of the polynomial terms using
-the `poly` function. For example, here we use it to fit
-the cubic polynomial again:
+## Evaluating models
+
+How should be evaluate the predictive ability of a model?
+The method of oridinary least squares suggests that we
+should consider the sum of squared errors. A challenge with
+this is that the value of a sum will grow in proportion to
+how many observations there are. This makes it hard to compare
+results across data sources and subsets. A simple solution
+is to use the average value of the squared errors, known as
+the mean squared error or MSE:
+
+```{r, warning=FALSE}
+mean((tea$score - tea$score_pred)^2, na.rm = TRUE)
+```
+
+This works as a general measurment of error, but the units
+are a bit strange as they are given in squared scores. A
+simple solution to this exists by taking the square root
+of the MSE, resulting in the root mean squared error (RMSE):
+
+```{r, warning=FALSE}
+sqrt(mean((tea$score - tea$score_pred)^2, na.rm = TRUE))
+```
+
+You'll find references to the RMSE through the literature on
+machine learning as it is by far the most common measurment
+for predictiveness of continuous responses.
+
+How good of a result is our RMSE of 1.99? It's hard to say
+for sure, but one easy thing to do is to compare it to the
+simpliest possible model: the one that predicts every score
+will be equal to the average score. The RMSE of this estimator
+is given by:
+
+```{r, warning=FALSE}
+sqrt(mean((tea$score - mean(tea$score, na.rm = TRUE))^2, na.rm = TRUE))
+```
+
+So, we have improved on the baseline model, but not by a large
+amount. Note: if you are familiar with the standard error, the
+RMSE of the mean is *almost* equal to the standard error of
+the response.
+
+## Validation Sets
+
+One potential difficulty with the approach above is that we are
+using the same data to validate models that we used to construct
+them. In this simple case it is unlikely to cause problems, but
+it will be a huge problem going forward as we look towards more
+complex prediction schemes.
+
+So far, I have discuss that the observations are split into two
+groups: those where we know the response and those where we need
+to predict the responses. Looking at a table of the `train_id`
+variable we see that their are actual three subsets of data:
 
 ```{r}
-model <- lm(median_house_value ~
-              poly(mean_household_income, degree = 3),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qplot(mean_household_income, value_pred, data = ca)
+table(tea$train_id)
 ```
 
-Note that the predicted values are the same as before, however
-the exact polynomial terms are actually different. R has picked
-a polynomial basis which is much more numerically stable that the
-naive one we used. We will explore this more when we dive into
-R matricies next week.
+The response is missing only on the 48 observations labels with
+the test flag. What is the purpose of the validation label? When
+building models, we should only train using the training set.
+The validation set then can be used to *validate* how good the
+model is working. We can use it to make decisions about which of
+the various models we want to use for our final prediction.
 
-With this new function it is easy to expand the polynomial basis
-to a large order. Try for example, 15:
+In order to only using the training set when fitting a model with
+the `lm` function, we add an option called `subset`:
 
 ```{r}
-model <- lm(median_house_value ~ poly(mean_household_income, 15),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qplot(mean_household_income, value_pred, data = ca)
-```
-
-Notice that we get *edge effects*, where the polynomial acts
-very strangly for extreme values of the X variable. The fit
-here is marginally better than the cubic fit:
-
-```{r}
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
-```
-
-## Additive models
-
-With large polynomials, we are in a sense approximating the
-non-linear regression model given by the following:
-
-$$ Y_i = f(X_i) + \epsilon_i, \quad mean(\epsilon_i) = 0 $$
-
-Where the goal is to estimate the function f. Here we are doing
-so by approximating it by a large polynomial. A natural extension
-of non-linear regression is the **additive model**. Here there is
-a non-linear relationship between the predictor variables and
-the response, but their are no interaction terms between the two
-predictor variables:
-
-$$ Y_i = f(X_i) + g(Z_i) + \epsilon_i, \quad mean(\epsilon_i) = 0 $$
-
-We can fit models like this by the same polynomial trick. Here,
-let's use it to predict median house value as a function the mean
-and median household incomes:
-
-```{r}
-model <- lm(median_house_value ~ poly(mean_household_income, 3) +
-              poly(median_household_income, 3),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
-```
-
-Again, we see minor improvements with the increased complexity of
-the model.
-
-## Non-linear interactions
-
-A more general form of the additive model would allow arbitrary
-interactions between the predictor variables. We would write
-this as the following:
-
-$$ Y_i = f(X_i, Z_i) + \epsilon_i $$
-
-To approximate this with a polynomial, we would need to
-include all interaction terms as well. For example, here
-is the quadratic approximation:
-
-$$ Y_i = \alpha + \beta_1 X + \beta_2 X^2 + \beta_3 Z + \beta_4 Z^2 + \beta_5 X\cdot Z + \epsilon_i $$
-
-In the quadratic case, the number of terms grows only by 1. For
-higher orders to number of interactions increases significantly
-faster.
-
-To fit such models in R, we simply use the `poly` function and
-give it multiple variables. Here is the cubic interaction of
-mean and median household income:
-
-```{r, message = FALSE}
-model <- lm(median_house_value ~
-               poly(mean_household_income, median_household_income,
-                    degree = 3),
-            subset = train_id == "train",
-            data = ca)
+model <- lm(score ~ num_reviews, data = tea,
+            subset = train_id == "train")
+tea$score_pred <- predict(model, newdata = tea)
 model
 ```
 
-The numbers in the coefficents give the degree of the first term,
-a dot, and the degree of the second term. Once again, this more
-complex model offers some (modest) gains over the simplier models.
+Notice that the exact values for the linear model have changed slighty,
+though as mentioned previously in this simple case we would not expect
+the parameters to change much when removing the validation set.
+
+Now, we will update our RMSE code to produce the RMSE on each training
+id type; the testing variable will be missing (`NA`) for you, but when
+I run this code on the full data I will be able to see how well you
+did on the hidden data. Don't worry about the specifics of the function
+`tapply` here. I suggest just copying this code whenever you need it
+and changing the response and dataset names as appropriate:
 
 ```{r}
-ca$value_pred <- predict(model, newdata = ca)
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
+sqrt(tapply((tea$score - tea$score_pred)^2, tea$train_id, mean))
 ```
 
-And, as we have seen, this increases the predictiveness of the
-model by a slight amount.
+Notice here that the training dataset actually has a worse RMSE than
+the validation data. This is a common phenomenon with small and medium
+sized datasets but often strikes students as very confusing. Shouldn't
+the model do better on data it was trained with compared to data it
+was not trained on?
 
-## Overfitting
+The explanation is simply that, due to random chance, the validation
+data is noisier than the training data. So, naturally the RMSE of a
+simple model is lower on the validation set regardless of which
+chunk the model was fit on.
 
-As a general pattern, we see that increasing the complexity of
-the model creates a more predictive output. This should not be
-taken as a given. Let's increase the interaction polynomial
-degrees from 6, to 10, and to 12. Notice what happens with the
-training and validation errors:
 
-```{r, message = FALSE}
-model <- lm(median_house_value ~
-               poly(mean_household_income, median_household_income,
-                    degree = 6),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
-```
+## Multivariate regression with categorical data
 
-```{r, message = FALSE}
-model <- lm(median_house_value ~
-               poly(mean_household_income, median_household_income,
-                    degree = 10),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
-```
-
-```{r, message = FALSE}
-model <- lm(median_house_value ~
-               poly(mean_household_income, median_household_income,
-                    degree = 12),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
-```
-
-We see that the training error slowly gets lower as we increase the
-degree of the polynomial. With more terms to use, it will always
-improve the fit on the data it is trained on (at least up to numerical
-stability). However, the higher order fits begin to overfit to the training
-data. For degree six polynomials this creates a slightly worse fit. For
-degree 10 the fit is signficantly worse. At degree 12, the validation RMSE
-is many times higher than the training error.
-
-As a general rule, we use the validation set to determine exactly how
-complex to make the model by determining which model minimizes the RMSE
-on the validation set. Visually, we see the following relationship
-(though in our case we do not know the test set and are comparing with
-the validation set):
-
-![](https://statsmaths.github.io/stat395/assets/img/pg38.png)
-
-I have several videos that demonstrate the process of moving from overfitting
-to underfitting. Here are three examples:
-
-- [k-nearest neighbors](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/knnEst.mp4)
-- [kernel smoothers](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/ksmoothEst.mp4)
-- [lowess](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/loessEst.mp4)
-
-While we have not yet seen these particular models, the basic ideas between
-overfitting and underfitting still apply.
-
-## Latitude and Longitude
-
-By looking at how predictive the models are, we can clearly see that there
-are non-linearities and interactions between the relationship of mean
-and median income and median house values. Let's move on, however, to a
-more obvious example where the relationship should be non-linear and
-need interactions: using longitude and latitude to predict house value.
-
-A simple plots show how using longitude and latitude creates and adhoc
-map.
-
-```{r, message = FALSE}
-library(viridis)
-qplot(longitude, latitude, data = ca[ca$train_id != 'test',],
-      color = median_house_value, size = I(0.5)) +
-  scale_color_viridis()
-```
-
-If you know California well, you may be able to infer a lot from this
-plot. Otherwise, layering a map under the data helps substantailly.
-Using the **ggmap** package, I can replace the `qplot` function with
-the `qmplot` function to reproduce the prior plot with a map.
-
-```{r, message = FALSE}
-library(ggmap)
-qmplot(longitude, latitude, data = ca[ca$train_id != 'test',],
-       color = median_house_value, size = I(0.5)) +
-  scale_color_viridis()
-```
-
-As we might expect, prices jump near Los Angeles and San Francisco
-and drop as you move inland.
-
-Let's fit a model to the data using the `poly` function:
-
-```{r, message = FALSE}
-model <- lm(median_house_value ~
-               poly(latitude, longitude,
-                    degree = 6),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
-            ca$train_id, mean))
-```
-
-And see what this plot looks like over the map:
-
-```{r, message = FALSE}
-library(ggmap)
-qmplot(longitude, latitude, data = ca,
-       color = value_pred, size = I(0.5)) +
-  scale_color_viridis()
-```
-
-As hoped, our model lights up near the two big cities and decreases
-as we move inland.
-
-## Other basis expansions
-
-There are other alternatives to using a polynomial basis. One of my
-favorite is to do a discrete transformation of the dataset using the
-`cut` function. Here, we break every mean household income into ten
-buckets:
+We can just as easily add categorical data into our
+model. Next week we will cover the specifics of what
+is internally being done here, but for now let's just
+see what adding the `type` variable to the model does
+to the output:
 
 ```{r}
-ca$mean_household_income_cut <- cut(ca$mean_household_income, 10, labels = FALSE)
-qplot(mean_household_income, mean_household_income_cut, data = ca)
+model <- lm(score ~ num_reviews + type + price,
+            data = tea,
+            subset = train_id == "train")
+tea$score_pred <- predict(model, newdata = tea)
+model
 ```
 
-A linear model fit on this variable (we use the `factor` function
-to tell R to treat it as a categorical variable), is able to fit
-any abritrary number to each bin resulting in fits that can be
-very non-linear.
+Notice that it appears that we now have a seperate term for
+each type of tea. If you look more carefully you'll see that
+there is no mention of black tea in the list. We will see why
+this is next week as well.
+
+The RMSE of this new model makes improvements on both the
+training and validation sets:
 
 ```{r}
-model <- lm(median_house_value ~ factor(mean_household_income_cut),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qplot(mean_household_income, value_pred, data = ca)
+sqrt(tapply((tea$score - tea$score_pred)^2, tea$train_id, mean))
 ```
 
-Similarly, the `bin` function in the **smodels** package breaks the
-variable into a number of bins as well. However, here the bins are
-required to contain the same number of points rather than the being
-the same width:
-
-```{r}
-library(smodels)
-ca$mean_household_income_bin <- bin(ca$mean_household_income, 10)
-qplot(mean_household_income, mean_household_income_bin, data = ca)
-```
-
-There is not a direct function for computing two dimensional cuts or bins,
-but we can create these directly without much trouble. See for example the
-following code to bin the latitude and longitude:
-
-```{r}
-ca$latitude_bin <- cut(ca$latitude, 5, label = FALSE)
-ca$longitude_bin <- cut(ca$longitude, 5, label = FALSE)
-ca$lat_long_bin <- ca$latitude_bin + ca$longitude_bin * 10
-```
-
-The resulting plot yields a different prediction for each
-bin:
-
-```{r, message = FALSE}
-library(ggmap)
-model <- lm(median_house_value ~  factor(lat_long_bin), data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qmplot(longitude, latitude, data = ca, color = value_pred) +
-  scale_color_viridis()
-```
-
-## Linear smoothers with gam
-
-We conclude with a brief introduction to the **gam** package. The
-package allows us to replace the `lm` function with the `gam` function.
-With no other options selected, this will not effect the results in
-any way. The benefit comes from the included functions `s`, which
-stands for smoothing spline, and `lo`, which stands for LOcal polynomial
-smoothers. We can use these functions as a drop-in replacement
-for the `poly` function. However, unlike poly we do not need to
-specify the degree of the polynomial as the complexity of the model
-will be determined by the data:
-
-```{r, message = FALSE}
-library(gam)
-model <- gam(median_house_value ~
-              s(mean_household_income),
-            subset = train_id == "train",
-            data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qplot(mean_household_income, value_pred, data = ca)
-```
-
-We can add two smoothed variable together much as we did with the poly
-function:
-
-```{r, message = FALSE}
-library(ggmap)
-model <- gam(median_house_value ~ s(latitude)  + s(longitude), data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qmplot(longitude, latitude, data = ca, color = value_pred) +
-  scale_color_viridis()
-```
-
-The `lo` function, but not the `s` function, also allows for
-multivariate effects. So, we can smooth over interactions between
-latitude and longitude:
-
-```{r, message = FALSE, warning = FALSE}
-library(ggmap)
-model <- gam(median_house_value ~ lo(latitude, longitude), data = ca)
-ca$value_pred <- predict(model, newdata = ca)
-qmplot(longitude, latitude, data = ca, color = value_pred) +
-  scale_color_viridis()
-```
-
-Notice that the `s` and `lo` functions are doing more than intelligently selecting
-the degree of the polynomial. There are some downsides to using the `gam` function
-compared to polynomial basis expansion with the `lm` function. The primary downside
-is that the computational time can be quite long with larger datasets, particularly
-if we try to fit iteraction terms. In fact, just the last block of code took a
-non-negligable amount of time to run and we only have a few thousand rows of data
-and two variables. Secondly, iteraction terms can become unstable in dimensions
-three or more. Often, a low-order polynomial expansion can be used up to even
-4 or 5 dimensions if there is sufficent data.
-
-
-
-
-
-
+However, notice that the training set improved significantly
+more than the validation set. We are starting to see the effects
+of what is known as *overfitting*, where the model starts
+predicting random noises in the training data that do not generalize
+into the validation set. This will be a major theme throughout
+the entire semester.
 
 

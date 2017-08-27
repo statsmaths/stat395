@@ -1,5 +1,5 @@
 ---
-title: "Class 22: Rockin' Robin, (tweet-tweet-tweet) "
+title: "Class 22: Vector Representations of Words"
 author: "Taylor Arnold"
 output: html_notebook
 ---

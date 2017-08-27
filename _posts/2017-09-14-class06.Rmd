@@ -1,5 +1,5 @@
 ---
-title: "Class 06: Spatial Analysis of Income"
+title: "Class 06: The Weather, Basis Functions, and Other Bad Conversation Starters"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -16,96 +16,8 @@ library(dplyr)
 ```
 
 
-## Nearest Neighbours
-
-```{r, message = FALSE}
-acs <- read_csv("https://statsmaths.github.io/ml_data/tract_median_income.csv")
-```
-
-```{r, message = FALSE}
-library(ggmap)
-temp <- filter(acs, train_id == "train", !(state %in% c("AK", "HI")))
-qmplot(lon, lat, data = temp, color = bin(median_income, 8), size = I(0.5)) +
-  viridis::scale_color_viridis(discrete = TRUE)
-```
 
 
 
 
-
-
-```{r}
-library(FNN)
-y_valid_pred <- knn.reg(train = X_train, y = y_train, test = X_valid, k = 10)$pred
-```
-
-
-```{r}
-rmse <- rep(NA, 100)
-for (k in seq_along(rmse)) {
-  y_valid_pred <- knn.reg(train = X_train, y = y_train,
-                          test = X_valid, k = k)$pred
-  rmse[k] <- sqrt( mean((y_valid_pred - y_valid)^2) )
-}
-```
-
-```{r}
-qplot(seq_along(rmse), rmse)
-```
-
-
-```{r}
-rmse <- rep(NA, 100)
-for (k in seq_along(rmse)) {
-  y_train_pred <- knn.reg(train = X_train, y = y_train,
-                          test = X_train, k = k)$pred
-  rmse[k] <- sqrt( mean((y_train_pred - y_train)^2) )
-}
-```
-
-```{r}
-qplot(seq_along(rmse), rmse)
-```
-
-```{r, message = FALSE}
-id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
-pred_id <- knn.reg(train = X_train, y = y_train,
-                   test = X_valid[id,], k = 1000)$pred
-
-df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
-                 pred = pred_id)
-
-qmplot(lon, lat, data = df, color = bin(pred, 4)) +
-  viridis::scale_color_viridis(discrete = TRUE)
-```
-
-```{r, message = FALSE}
-id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
-pred_id <- knn.reg(train = X_train, y = y_train,
-                   test = X_valid[id,], k = 5)$pred
-
-df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
-                 pred = pred_id)
-
-qmplot(lon, lat, data = df, color = bin(pred, 4)) +
-  viridis::scale_color_viridis(discrete = TRUE)
-```
-
-## Scale
-
-So far we have been working with data
-
-```{r}
-X <- as.matrix(select(acs, lon, lat, same_county))
-X[1:10,]
-```
-
-```{r}
-X <- scale(X)
-X[1:10,]
-```
-
-Note: ADD CLUSTERING
-
-Note: DISCUSS CROSS VALIDATION
 

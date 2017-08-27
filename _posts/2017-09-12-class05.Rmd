@@ -1,5 +1,5 @@
 ---
-title: "Class 05: Up in the Air (with Matrices!)"
+title: "Class 05: Buying Property in The Golden State"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -15,538 +15,482 @@ library(ggplot2)
 library(dplyr)
 ```
 
-## Matricies
-
-### Linear Maps
-
-Consider all functions from an n-dimensional space into an
-m-dimensional space,
-
-$$ f: \mathbb{R}^n \rightarrow \mathbb{R}^m, $$
-
-That preserves addition,
-
-$$ f(u + v) = f(u) + f(v) $$
-
-And multiplication by a fixed scalar value,
-
-$$ f(\alpha \cdot u) = \alpha \cdot f(u), \quad \alpha \in \mathbb{R}. $$
-
-Such functions are known as **linear maps** (the definition can be abstracted
-to infinite dimensional spaces and over other fields, but we will only need
-the finite real-valued case in this course). 
-
-There is an important representation theorem stating that every such mapping
-can be described by an n-by-m array of real numbers. This array is commonly
-called a **matrix**. How exactly do we calculate the function f given its
-matrix representation A? It is easier to explain with fixed values for n
-and m. Let's consider the following matrix:
-
-$$ A = \left( \begin{array}{ccc} a_{1, 1} & a_{1, 2} & a_{1, 3} \\
-                                 a_{2, 1} & a_{2, 2} & a_{2, 3} \end{array} \right) $$
-
-So, in this case we have n = 3 and m = 2. Therefore this is a mapping that 
-takes a triple of numbers and returns a pair of numbers. Let's define
-the input as a vector u:
-
-$$ u = \left( \begin{array}{c} u_{1} \\
-                               u_{2} \\
-                               u_{3} \end{array} \right) $$
-
-
-And the output as a vector v:
-
-$$ v = \left( \begin{array}{c} v_{1} \\
-                               v_{2} \end{array} \right) $$
-
-The linear map is then defined as:
-
-$$ \begin{align} v_1 &= a_{1,1} \cdot u_{1} + a_{1,2} \cdot u_{2} + a_{1,3} \cdot u_{3} \\
-                 v_2 &= a_{2,1} \cdot u_{1} + a_{2,2} \cdot u_{2} + a_{3,3} \cdot u_{3}
-                 \end{align} $$
-
-So, each component of v is a linear combination of all components of u. We can
-write this compactly using summation notation:
-
-$$ v_i = \sum_{j = 1}^m a_{i, j} \cdot u_j $$
-
-Conveniently, this last equation holds for any arbitrary choice of n and m.
-Finally, we represent this symbolically by
-
-$$ Au = v. $$
-
-### Function composition
-
-Consider two linear maps:
-
-$$ \begin{align} f: \mathbb{R}^n \rightarrow \mathbb{R}^m \\
-                 g: \mathbb{R}^m \rightarrow \mathbb{R}^p \end{align} $$
-
-
-If we apply f to an vector in n-dimensional space we get an
-m-dimensional vector. We could then take the output of this
-map and apply g to it in order to get a p-dimensional vector.
-This is known a function composition. We can represent the
-action of first applying f and then applying g as a new function
-h:
-
-$$ h = g(f(u)), \quad h: \mathbb{R}^n \rightarrow \mathbb{R}^p $$
-
-It is a fairly intuitive and easy to prove result that if f and
-g are linear maps, so is h. Let f be represented by the matrix A,
-g by the matrix B, and h by the matrix C. A natural question is
-what relationship exists between A, B, and C?
-
-It turns out that the result is just another sum:
-
-$$ C_{i, j} = \sum_{k = 1}^{m} A_{i, k} \cdot B_{k, j} $$
-
-This is known as a **matrix product** and is written as:
-
-$$ C = A \cdot B = AB $$
-
-If the concept of matrix multiplication is new to you, an animated
-visualization of multiplying two matricies can be useful. Of course,
-for this semester understanding the abstract meaning behind matrix
-multiplication (function composition) is much more important than
-grasping the mechanics of computing the new matrix:
-
-![](https://thumbs.gfycat.com/PositiveExhaustedAmericangoldfinch-size_restricted.gif)
-
-Notice that if we represent vectors as one-column matricies, the
-definition of matrix multiplication is equivalent to our defintion
-of applying a matrix to a vector:
-
-$$ Au = v. $$
-
-## Matrices in R
-
-### Basics
-
-There is extensive functionality for working with matricies in
-R. Let's make a random 5-by-5 matrix and a 5-by-matrix, the 
-latter we can think of as a vector.
-
-```{r}
-A <- matrix(sample(1:99, 25), 5, 5)
-A
-b <- matrix(sample(1:99, 5))
-b
-```
-
-Element-wise arithmetic is assumed by default:
-
-```{r}
-A + A
-```
-
-To calculate a matrix produce, R requires us to use the
-symbol `%*%`. If a matrix is square, there is nothing
-stopping us from composing a matrix with itself:
-
-```{r}
-A %*% A
-```
-
-Similarly, we can multiply the matrix by the column vector
-to compute the action of the matrix A as a linear map:
-
-```{r}
-A %*% b
-```
-
-The transpose of a matrix, denoted by using t as a superscript,
-can be computed with the t function:
-
-```{r}
-t(A)
-```
-
-This is often useful in matrix computations. Similarly, we
-can computing the inverse of a matrix with the function
-`solve`:
-
-```{r}
-solve(A)
-```
-
-A matrix inverse, by definition, describes the inverse of the underlying
-linear map (its also relatively simple to show that linear maps have 
-linear inverses, when they exist). Note that matrix inversion is a
-computationally unstable procedure and should be avoided when possible.
-
-### Subsetting matricies
-
-It will often be useful to take a subst of the rows and
-columns in a matrix. Here we take rows 2 and 3 and columns
-1 and 2:
-
-```{r}
-A[2:3, 1:2]
-```
-
-Here we take columns 1 and 2; by leaving the rows 
-component empty every row is returned:
-
-```{r}
-A[,1:2]
-```
-
-There is a strange convention in R that, by default, if we
-select a sub-matrix with only one row or one column, the
-result will be converted from a rectangular matrix to a
-non-dimensional vector. Notice that the output below is
-not given as a matrix with one column:
-
-```{r}
-A[,1]
-```
-
-Usually this is not a problem, but if we want to be safe
-we can add the option `drop = FALSE` to the subset command.
-Notice the difference in the output here compared to the
-output above:
-
-```{r}
-A[,1,drop = FALSE]
-```
-
-Finally, we can also subset by giving a logical statement
-in either the rows or columns spot. Here we select only those
-rows where the numbers 1 through 5 are greater than 3:
-
-```{r}
-A[1:5 > 3,]
-```
-
-As expected, the output is a matrix with just two rows.
-
-## Multivariate Linear Models
-
-### Matrix Formulation
-
-We have been working with multivariate linear models over the
-past few classes, though I have only ever written the formal
-equation in the case where there are two explanatory variables.
-In general, multivariate regression represents the following
-model:
-
-$$y_i = x_{1,i} \beta_1 + x_{2,i} \beta_2 + \cdots + x_{1,p} \beta_p + \epsilon_i$$
-
-For simplicity, we won't include an explicit intercept term in 
-the model. If we want one, we will just make the first variable $x_{1,i}$
-equal to one for every value of i.
-
-The statistical estimation problem is to estimate the p
-components of the multivariate vector beta.
-
-Using our matrix notation, we can write the linear model
-simultaneously for all observations:
-
-$$ \left(\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_n\end{array}\right) =
-  \left(\begin{array}{cccc}x_{1,1}&x_{2,1}&\cdots&x_{p,1}\\
-                           x_{1,2}&\ddots&&x_{p,2}\\
-                           \vdots&&\ddots&\vdots\\
-                           x_{1,n}&x_{2,n}&\cdots&x_{p,n}\\\end{array}\right)
-  \left(\begin{array}{c}\beta_1\\ \beta_2\\ \vdots\\ \beta_p\end{array}\right) +
-  \left(\begin{array}{c}\epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\end{array}\right) $$
-
-
-Which can be compactly written as:
-
-$$ y = X \beta + \epsilon $$
-
-The matrix X is known as the **design matrix** or **model matrix**.
-For reference, note the following equation yields these dimensions:
-
-$$ y \in \mathbb{R}^n $$
-$$ X \in \mathbb{R}^{n \times p} $$
-$$ \beta \in \mathbb{R}^p $$
-$$ \epsilon \in \mathbb{R}^n $$
-
-### Solving Linear Models
-
-Calculating the OLS solution for multivariate linear regression involves,
-in matrix notation, finding the beta vector that minimizes the sum of 
-squared residules. We can write, in matrix notation, the residuals as
-the following:
-
-$$ r(\beta) = y - X \beta $$
-
-And the sum of squared residuals can be derived as:
-
-$$ \begin{align} \text{sum of squared residuals} &= r(\beta)^t r(\beta) \\
-    &= \sum_{i = 1}^n r(\beta)_i \cdot r(\beta)_i
-    \end{align} $$
-
-This is a length n vector (or, equivalently, an n-by-1 matrix). The
-optimization task can then be written compactly as:
-
-$$ \begin{align} \widehat{\beta} &= \arg\min_b \left\{ r(b)^t r(b)  \right\} \\
-      &= \arg\min_b \left\{ (y - X b)^t (y - X b)  \right\}
-    \end{align} $$
-
-To find the minimizer, we calculate the gradient and set it equal to
-zero. This is not hard if you have learned how to work with gradients
-(and also, remember what you learned):
-
-$$ \begin{align} \nabla_b \left(r(b)^t r(b)\right)  
-   &= \nabla_b \left((y - X b)^t (y - X b)\right) \\
-   &= \nabla_b \left(y^t y + b^t X^t X b - 2 b^t X^t y\right) \\
-   &= 2 X^t X b - 2 X^t y.
-  \end{align} $$
-
-Setting this equal to zero, we derive what are known as the normal
-equations (yes, this is plural; why?!):
-
-$$ (X^t X) \cdot \widehat{\beta} = X^t y. $$
-
-If the inverse exists, this gives an analytic formula for solving
-the linear system of equations:
-
-$$ \widehat{\beta} = (X^t X)^{-1} \cdot X^t y. $$
-
-I could be even more formal about this and show that the Hessian matrix
-is positive semi-definite everywhere and therefore we have found a global
-minimum. Under the assumption that many of your are already overwhelmed
-at this point, I'll skip this for today.
-
-## Linear Models with Matrices in R
-
-Let's now try to apply these theoretical ideas to an actual dataset.
-I'll load in the flights data from my website:
+## California Housing Prices
+
+Today we are going to look at a dataset of housing prices from
+California. Loading it in we see that each row of the dataset
+is a small neighborhood (technically a census tract) and the
+goal is to predict the median house price within the tract.
 
 ```{r, message = FALSE}
-flights <- read_csv("~/files/ml_data/flights_15min.csv")
+ca <- read_csv("https://statsmaths.github.io/ml_data/ca_house_price.csv")
 ```
 
-Note that the flights data, like every other dataset we have used,
-is not a matrix. It is something that R calls a **data frame**:
+Looking at the dataset we see a number of potentially useful
+covariates. Our interest right now focuses on just the mean household
+income, latitude, and longitude of the neighborhood. The lab for
+today will ask you to extrapolate on this using the remaining variables.
 
-```{r}
-class(flights)
+## Non-linear relationships
+
+In the prior two classes we have introduced the notion of linear
+models. We have even extended this idea to multivariate linear
+models and linear models with categorical variables. What about
+relationships that are non-linear? It may seem that the linear
+model is highly restrictive, perhaps even to the point of
+uselessness on larger, more complex datasets.
+
+The catch is that linear models need only be linear in the
+unknown parameters. That is, the following is not a linear
+model:
+
+$$ Y_i = \alpha + X_i^\beta + \epsilon_i $$
+
+However, this is:
+
+$$ Y_i = \alpha + \beta_1 X_i + \beta_2 X_i^2 + \beta_3 X_i^3 + \epsilon_i $$
+
+By picking large enough polynomials, in theory we can approximate
+any relationship between X and Y.
+
+Let's take a look at the relationship between mean household
+income and median house value. I'll put a best fit line through
+the data to visually see how well it performs:
+
+```{r, message = FALSE, warning = FALSE}
+qplot(mean_household_income, median_house_value, data = ca) +
+  geom_smooth(method = "lm")
 ```
 
-While both matricies and data frames have data organized in rows and
-columns, matricies force all of the data to be numeric (its actually
-more complicated than this in R, but just go along with it for now).
-A data frame on the other hand can have different variable types in
-each column.
+The line does a decent job, but seems to overpredict house values in areas
+with very high mean household incomes.
 
-An easy way to construct a matrix in R, is to use the `select` function
-to grab only numeric columns and the function `as.matrix` to convert
-the output into a matrix object. We will throughout the course use the
-notation that the variable y is a vector holding the response of 
-interest and X is a matrix containing the variables we want to use in
-a model.
+Let's remove the `model = 'lm'` in the `geom_smooth` layer and see what
+a non-linear fit looks like:
 
-```{r}
-y <- flights$delayed
-
-X <- as.matrix(select(flights, arr_hour, dep_hour))
-X[1:10,]
+```{r, message = FALSE, warning = FALSE}
+qplot(mean_household_income, median_house_value, data = ca) +
+  geom_smooth()
 ```
 
-We can then create specific training and validation sets
-using the logical subset method from above:
+This line, in constrast, seems to fit the data much more accurately.
+We will see later today the exact algorithm used in `geom_smooth`.
+For now, let's us the polynomial expansion trick we just derived
+to fit the curve using `lm`. We will fit a cubic polynomial to the
+data. The first step is to create two new variables:
 
 ```{r}
-X_train <- X[flights$train_id == "train", ]
-X_valid <- X[flights$train_id == "valid", ]
-y_train <- y[flights$train_id == "train"]
-y_valid <- y[flights$train_id == "valid"]
+ca$mean_household_income_2 <- ca$mean_household_income^2
+ca$mean_household_income_3 <- ca$mean_household_income^3
 ```
 
-From here, we can compute the regression vector beta:
+In order to compare how well a cubic polynomial fits the
+data, let's evaluate how well the mean model performs:
 
 ```{r}
-beta <- solve(t(X_train) %*% X_train) %*% t(X_train) %*% y_train
-beta
+avg <- mean(ca$median_house_value, na.rm = TRUE)
+sqrt(tapply((ca$median_house_value - avg)^2,
+            ca$train_id, mean))
 ```
 
-So this generally looks good, but we left out the intercept. Recall
-that our matrix formulation required us to add an explicit column of
-1's if we wanted an intercept. Let's do this directly in the matrix
-X using the `cbind` function, and repeat:
+And the linear model:
 
 ```{r}
-X <- as.matrix(select(flights, arr_hour, dep_hour))
-X <- cbind(1, X)
-X_train <- X[flights$train_id == "train", ]
-X_valid <- X[flights$train_id == "valid", ]
-
-beta <- solve(t(X_train) %*% X_train) %*% t(X_train) %*% y_train
-beta
+model <- lm(median_house_value ~ mean_household_income,
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
 ```
 
-Perfect, now we have a regression vector. To do prediction,
-we just calculate X times beta:
+Now, we'll build a cubic model to fit to the data and see
+how well it seems to fit visually.
 
 ```{r}
-y_valid_pred <- X_valid %*% beta
-sqrt(mean( (y_valid - y_valid_pred)^2))
+model <- lm(median_house_value ~ mean_household_income +
+              mean_household_income_2 + mean_household_income_3,
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
 ```
 
-Let's verify that this gives the same output as the `lm` function:
+Notice that our polynomial now predicts a non-linear relationship
+between the mean household income and the median house value.
+The predictions are slightly better than the linear model, though
+not by very much as the linear model performed fairly well already:
 
 ```{r}
-model <- lm(delayed ~ arr_hour +  dep_hour, data = flights,
-            subset = train_id == "train")
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+## Basis expansion with poly()
+
+The technique of creating more complex relationships by
+explicitly adding transformed versions of the original
+variables is called **basis expansion**. It is a very
+powerful and useful tool.
+
+We can make use of polynomial expansions without having
+to directly construct all of the polynomial terms using
+the `poly` function. For example, here we use it to fit
+the cubic polynomial again:
+
+```{r}
+model <- lm(median_house_value ~
+              poly(mean_household_income, degree = 3),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
+```
+
+Note that the predicted values are the same as before, however
+the exact polynomial terms are actually different. R has picked
+a polynomial basis which is much more numerically stable that the
+naive one we used. We will explore this more when we dive into
+R matricies next week.
+
+With this new function it is easy to expand the polynomial basis
+to a large order. Try for example, 15:
+
+```{r}
+model <- lm(median_house_value ~ poly(mean_household_income, 15),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
+```
+
+Notice that we get *edge effects*, where the polynomial acts
+very strangly for extreme values of the X variable. The fit
+here is marginally better than the cubic fit:
+
+```{r}
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+## Additive models
+
+With large polynomials, we are in a sense approximating the
+non-linear regression model given by the following:
+
+$$ Y_i = f(X_i) + \epsilon_i, \quad mean(\epsilon_i) = 0 $$
+
+Where the goal is to estimate the function f. Here we are doing
+so by approximating it by a large polynomial. A natural extension
+of non-linear regression is the **additive model**. Here there is
+a non-linear relationship between the predictor variables and
+the response, but their are no interaction terms between the two
+predictor variables:
+
+$$ Y_i = f(X_i) + g(Z_i) + \epsilon_i, \quad mean(\epsilon_i) = 0 $$
+
+We can fit models like this by the same polynomial trick. Here,
+let's use it to predict median house value as a function the mean
+and median household incomes:
+
+```{r}
+model <- lm(median_house_value ~ poly(mean_household_income, 3) +
+              poly(median_household_income, 3),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+Again, we see minor improvements with the increased complexity of
+the model.
+
+## Non-linear interactions
+
+A more general form of the additive model would allow arbitrary
+interactions between the predictor variables. We would write
+this as the following:
+
+$$ Y_i = f(X_i, Z_i) + \epsilon_i $$
+
+To approximate this with a polynomial, we would need to
+include all interaction terms as well. For example, here
+is the quadratic approximation:
+
+$$ Y_i = \alpha + \beta_1 X + \beta_2 X^2 + \beta_3 Z + \beta_4 Z^2 + \beta_5 X\cdot Z + \epsilon_i $$
+
+In the quadratic case, the number of terms grows only by 1. For
+higher orders to number of interactions increases significantly
+faster.
+
+To fit such models in R, we simply use the `poly` function and
+give it multiple variables. Here is the cubic interaction of
+mean and median household income:
+
+```{r, message = FALSE}
+model <- lm(median_house_value ~
+               poly(mean_household_income, median_household_income,
+                    degree = 3),
+            subset = train_id == "train",
+            data = ca)
 model
 ```
 
-And, as hoped, it does!
-
-## Using lm.fit
-
-We have seen how to use the `lm` function to quickly fit
-linear regression directly from data frames. Now, we also
-know how to do this directly with matrix operations. There
-is an intermediate function that solves the linear regression
-problem directly from our matricies called `lm.fit`. In 
-fact, the `lm` function internally calls this function.
-As inputs, it takes just the X matrix and response y. There
-is a lot of diagnostic output, but we will take just the 
-`coef` component, corresponding to the coefficents matrix:
+The numbers in the coefficents give the degree of the first term,
+a dot, and the degree of the second term. Once again, this more
+complex model offers some (modest) gains over the simplier models.
 
 ```{r}
-lm.fit(X_train, y_train)$coef
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
 ```
 
-This, once again, aligns with the output from the other
-two methods.
+And, as we have seen, this increases the predictiveness of the
+model by a slight amount.
 
-## Building model matricies
+## Overfitting
 
-When we simply want to set the model matrix X to a subset
-of the numeric columns in our data frame, the function
-`as.matrix` is usually sufficent. The formula interface
-to `lm` is incredibly useful however when using categorical
-variables or when processing numeric variables by special
-functions such as `poly`.
+As a general pattern, we see that increasing the complexity of
+the model creates a more predictive output. This should not be
+taken as a given. Let's increase the interaction polynomial
+degrees from 6, to 10, and to 12. Notice what happens with the
+training and validation errors:
 
-The function `model.matrix` allows us to compute the model
-matrix from the formula interface. In fact, the `lm` function
-calls this to convert our inputs into a model matrix. The
-output of this is then passed to `lm.fit`. It will also, by
-default, include an intercept term for us. Here we use it
-to build a model matrix of the carriers in the flights data:
+```{r, message = FALSE}
+model <- lm(median_house_value ~
+               poly(mean_household_income, median_household_income,
+                    degree = 6),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+```{r, message = FALSE}
+model <- lm(median_house_value ~
+               poly(mean_household_income, median_household_income,
+                    degree = 10),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+```{r, message = FALSE}
+model <- lm(median_house_value ~
+               poly(mean_household_income, median_household_income,
+                    degree = 12),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+We see that the training error slowly gets lower as we increase the
+degree of the polynomial. With more terms to use, it will always
+improve the fit on the data it is trained on (at least up to numerical
+stability). However, the higher order fits begin to overfit to the training
+data. For degree six polynomials this creates a slightly worse fit. For
+degree 10 the fit is signficantly worse. At degree 12, the validation RMSE
+is many times higher than the training error.
+
+As a general rule, we use the validation set to determine exactly how
+complex to make the model by determining which model minimizes the RMSE
+on the validation set. Visually, we see the following relationship
+(though in our case we do not know the test set and are comparing with
+the validation set):
+
+![](https://statsmaths.github.io/stat395/assets/img/pg38.png)
+
+I have several videos that demonstrate the process of moving from overfitting
+to underfitting. Here are three examples:
+
+- [k-nearest neighbors](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/knnEst.mp4)
+- [kernel smoothers](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/ksmoothEst.mp4)
+- [lowess](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/loessEst.mp4)
+
+While we have not yet seen these particular models, the basic ideas between
+overfitting and underfitting still apply.
+
+## Latitude and Longitude
+
+By looking at how predictive the models are, we can clearly see that there
+are non-linearities and interactions between the relationship of mean
+and median income and median house values. Let's move on, however, to a
+more obvious example where the relationship should be non-linear and
+need interactions: using longitude and latitude to predict house value.
+
+A simple plots show how using longitude and latitude creates and adhoc
+map.
+
+```{r, message = FALSE}
+library(viridis)
+qplot(longitude, latitude, data = ca[ca$train_id != 'test',],
+      color = median_house_value, size = I(0.5)) +
+  scale_color_viridis()
+```
+
+If you know California well, you may be able to infer a lot from this
+plot. Otherwise, layering a map under the data helps substantailly.
+Using the **ggmap** package, I can replace the `qplot` function with
+the `qmplot` function to reproduce the prior plot with a map.
+
+```{r, message = FALSE}
+library(ggmap)
+qmplot(longitude, latitude, data = ca[ca$train_id != 'test',],
+       color = median_house_value, size = I(0.5)) +
+  scale_color_viridis()
+```
+
+As we might expect, prices jump near Los Angeles and San Francisco
+and drop as you move inland.
+
+Let's fit a model to the data using the `poly` function:
+
+```{r, message = FALSE}
+model <- lm(median_house_value ~
+               poly(latitude, longitude,
+                    degree = 6),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
+            ca$train_id, mean))
+```
+
+And see what this plot looks like over the map:
+
+```{r, message = FALSE}
+library(ggmap)
+qmplot(longitude, latitude, data = ca,
+       color = value_pred, size = I(0.5)) +
+  scale_color_viridis()
+```
+
+As hoped, our model lights up near the two big cities and decreases
+as we move inland.
+
+## Other basis expansions
+
+There are other alternatives to using a polynomial basis. One of my
+favorite is to do a discrete transformation of the dataset using the
+`cut` function. Here, we break every mean household income into ten
+buckets:
 
 ```{r}
-X <- model.matrix(~ carrier , data = flights)
-head(X)
+ca$mean_household_income_cut <- cut(ca$mean_household_income, 10, labels = FALSE)
+qplot(mean_household_income, mean_household_income_cut, data = ca)
 ```
 
-Notice that each of these new variables is an indicator for
-whether a given flight was flown on the associated carrier.
-Let's look at the first 6 carriers to verify this:
+A linear model fit on this variable (we use the `factor` function
+to tell R to treat it as a categorical variable), is able to fit
+any abritrary number to each bin resulting in fits that can be
+very non-linear.
 
 ```{r}
-head(flights$carrier)
+model <- lm(median_house_value ~ factor(mean_household_income_cut),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
 ```
 
-If we look at a table of all the carriers, we see that one
-of the carriers is missing:
+Similarly, the `bin` function in the **smodels** package breaks the
+variable into a number of bins as well. However, here the bins are
+required to contain the same number of points rather than the being
+the same width:
 
 ```{r}
-table(flights$carrier)
+library(smodels)
+ca$mean_household_income_bin <- bin(ca$mean_household_income, 10)
+qplot(mean_household_income, mean_household_income_bin, data = ca)
 ```
 
-The missing value "9E" is known as the **baseline** in this model.
-The intercept indicates the expected delay of flights on this carrier.
-All of the other terms give how much more or less each carrier is
-to be delayed relative to the baseline "9E".
-
-Changing the baseline will change all of the beta coefficents.
-However, the predicted values will remain the same. In 209 and 289,
-I spend a lot of time talking about changing the baseline and
-understanding the model from different perspectives. As we are
-focused on prediction, which is unchanged, this will be much less
-of a concern for us. Just note that by default variables are sorted
-in alphabetical order, which is why "9E" is the baseline here.
-
-With this model matrix, we can compute the regression vector
-by first creating training and validation matricies:
+There is not a direct function for computing two dimensional cuts or bins,
+but we can create these directly without much trouble. See for example the
+following code to bin the latitude and longitude:
 
 ```{r}
-y_train <- y[flights$train_id == "train"]
-y_valid <- y[flights$train_id == "valid"]
-X_train <- X[flights$train_id == "train",]
-X_valid <- X[flights$train_id == "valid",]
+ca$latitude_bin <- cut(ca$latitude, 5, label = FALSE)
+ca$longitude_bin <- cut(ca$longitude, 5, label = FALSE)
+ca$lat_long_bin <- ca$latitude_bin + ca$longitude_bin * 10
 ```
 
-And then using `lm.fit`:
+The resulting plot yields a different prediction for each
+bin:
 
-```{r}
-beta <- lm.fit(X_train, y_train)$coef
-beta
+```{r, message = FALSE}
+library(ggmap)
+model <- lm(median_house_value ~  factor(lat_long_bin), data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qmplot(longitude, latitude, data = ca, color = value_pred) +
+  scale_color_viridis()
 ```
 
-## Sparse Matricies
+## Linear smoothers with gam
 
-You may have noticed that the design matrix above contains
-primarily zeros. With large datasets and even more categories,
-we would be wasting a lot of valuable memory holding all of
-these values. R has support for objects known as sparse
-matricies. These store only the non-zero elements, saving
-space when most elements are zero. To access them, we'll load
-the **MatrixModels** package and using the function `model.Matrix`
-(in general, in R capital letters indicate sparse matrix 
-variations of dense matrix operations).
+We conclude with a brief introduction to the **gam** package. The
+package allows us to replace the `lm` function with the `gam` function.
+With no other options selected, this will not effect the results in
+any way. The benefit comes from the included functions `s`, which
+stands for smoothing spline, and `lo`, which stands for LOcal polynomial
+smoothers. We can use these functions as a drop-in replacement
+for the `poly` function. However, unlike poly we do not need to
+specify the degree of the polynomial as the complexity of the model
+will be determined by the data:
 
-```{r}
-library(methods)
-library(MatrixModels)
-X <- model.Matrix(~ carrier , data = flights[,-c(1:3)], sparse = TRUE)
-X[1:10,]
+```{r, message = FALSE}
+library(gam)
+model <- gam(median_house_value ~
+              s(mean_household_income),
+            subset = train_id == "train",
+            data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qplot(mean_household_income, value_pred, data = ca)
 ```
 
-Many operations, such as subsetting and multiplication, translate
-directly to sparse matrices. We'll construct training and validation
-sets as before:
+We can add two smoothed variable together much as we did with the poly
+function:
 
-```{r}
-X_train <- X[flights$train_id == "train",]
-X_valid <- X[flights$train_id == "valid",]
+```{r, message = FALSE}
+library(ggmap)
+model <- gam(median_house_value ~ s(latitude)  + s(longitude), data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qmplot(longitude, latitude, data = ca, color = value_pred) +
+  scale_color_viridis()
 ```
 
-The **MatrixModels** package has experimental support for computing
-linear regression models with sparse matricies using the function
-`lm.fit.sparse`. Because it is experimental, we need to prepend the
-notation `MatrixModels:::` to the function call:
+The `lo` function, but not the `s` function, also allows for
+multivariate effects. So, we can smooth over interactions between
+latitude and longitude:
 
-```{r}
-beta <- MatrixModels:::lm.fit.sparse(X_train, y_train)
-beta
+```{r, message = FALSE, warning = FALSE}
+library(ggmap)
+model <- gam(median_house_value ~ lo(latitude, longitude), data = ca)
+ca$value_pred <- predict(model, newdata = ca)
+qmplot(longitude, latitude, data = ca, color = value_pred) +
+  scale_color_viridis()
 ```
 
-Notice that this yields the same regression vector beta as the dense
-operations above.
+Notice that the `s` and `lo` functions are doing more than intelligently selecting
+the degree of the polynomial. There are some downsides to using the `gam` function
+compared to polynomial basis expansion with the `lm` function. The primary downside
+is that the computational time can be quite long with larger datasets, particularly
+if we try to fit iteraction terms. In fact, just the last block of code took a
+non-negligable amount of time to run and we only have a few thousand rows of data
+and two variables. Secondly, iteraction terms can become unstable in dimensions
+three or more. Often, a low-order polynomial expansion can be used up to even
+4 or 5 dimensions if there is sufficent data.
 
-## Lumping categorical variables
 
-Some categorical variables come from fixed categories and/or have
-relatively equal number of observations in each unique value.
-Common examples are day of the week, month of the year, and
-weather ("clear", "cloudy", "rainy", "snowing"). Other times we
-have cases where a categorical variable has some categories with
-many observations but others with very few. In the latter case,
-we may not be able to reliably fit a seperate model term to the
-rare unique values in the category. The package **forcats**
-offers a solution with the function **fct_lump**. This function
-lumps together all but the top n categories into an "other"
-label. For example, here we can lump all but the top four 
-carriers into an other group:
 
-```{r}
-library(forcats)
-model <- lm(delayed ~ fct_lump(flights$carrier, n = 4), data = flights)
-model
-```
 
-Remember that the design matrix *hides* one level in the baseline. Here
-the baseline (AA) stands for American Airlines, revealing why all
-the coefficents are negative!
+
 
 
 

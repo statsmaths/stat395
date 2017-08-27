@@ -1,8 +1,9 @@
 ---
-title: "Class 19: Woof, Bark, Meow?"
+title: "Class 19: Three, Two, One..."
 author: "Taylor Arnold"
 output: html_notebook
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
@@ -18,34 +19,118 @@ library(keras)
 ```
 
 ```{r, message = FALSE}
-dc <- read_csv("~/files/ml_data/dogs_vs_cats.csv")
-X <- read_rds("~/files/ml_data/dogs_vs_cats_X.rds")
-y <- dc$class
-
-X_train <- X[dc$train_id == "train",,,,drop = FALSE]
-y_train <- to_categorical(y[dc], num_classes = 10)
+mnist <- read_csv("~/files/ml_data/mnist_10.csv")
+X <- read_rds("~/files/ml_data/mnist_10_X.rds")
 ```
 
 ```{r}
 dim(X)
 ```
 
+
 ```{r, fig.asp=0.75, fig.width=10}
 par(mar = c(0,0,0,0))
-par(mfrow = c(3, 4))
-for (i in sample(seq_len(nrow(dc)), 12)) {
+par(mfrow = c(10, 10))
+for (i in sample(which(mnist$class == 0), 100)) {
   plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
-  rasterImage(X[i,,,],0,0,1,1)
+  rasterImage(X[i,,],0,0,1,1)
 }
 ```
 
 ```{r}
-# model <- application_vgg16()
-# model
+y <- mnist$class
+
+X_train <- X[mnist$train_id == "train",,]
+y_train <- to_categorical(y[mnist$train_id == "train"], num_classes = 10)
 ```
 
 ```{r}
-# X_in <- imagenet_preprocess_input(x = X)
-# X_out <- predict(model, X_in, verbose = TRUE)
+model <- keras_model_sequential()
+model %>%
+  layer_reshape(target_shape = c(28^2), input_shape = c(28, 28)) %>%
+  layer_dense(units = 20) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 20) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 10) %>%
+  layer_activation(activation = "softmax")
+
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
+
+model
 ```
 
+```{r}
+history <- model %>%
+  fit(X_train, y_train, epochs = 10, validation_split = 0.2)
+plot(history)
+```
+
+```{r}
+y_pred <- predict_classes(model, X)
+table(y[mnist$train_id == "train"], y_pred[mnist$train_id == "train"])
+```
+
+```{r, fig.asp=0.75, fig.width=10}
+par(mar = c(0,0,0,0))
+par(mfrow = c(10, 10))
+for (i in sample(which(y_pred != y), 100)) {
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  rasterImage(X[i,,],0,0,1,1)
+  text(0.1,0.1,y[i],col="blue", cex = 3)
+  text(0.9,0.1,y_pred[i],col="red", cex = 3)
+  box()
+}
+```
+
+## Visualize weights
+
+```{r}
+layer <- get_layer(model, index = 2)
+dim(layer$get_weights()[[1]])
+dim(layer$get_weights()[[2]])
+```
+
+```{r, fig.asp = 1, fig.width = 4}
+im <- matrix(layer$get_weights()[[1]], nrow = 28, ncol = 28)
+im <- abs(im) / max(abs(im))
+plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+rasterImage(im,0,0,1,1)
+```
+
+## Larger model
+
+```{r}
+model <- keras_model_sequential()
+model %>%
+  layer_reshape(target_shape = c(28^2), input_shape = c(28, 28)) %>%
+  layer_dense(units = 128, kernel_initializer = "glorot_normal") %>%
+  layer_activation(activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+
+  layer_dense(units = 512, kernel_initializer = "glorot_normal",
+              kernel_regularizer = regularizer_l2(0.2)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+
+  layer_dense(units = 10) %>%
+  layer_activation(activation = "softmax")
+
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
+
+model
+```
+
+```{r}
+history <- model %>%
+  fit(X_train, y_train, epochs = 10,
+      validation_split = 0.1)
+plot(history)
+```
+
+Why is the training accuracy lower than the validation accuracy, particularly
+for the first few epochs?

@@ -1,5 +1,5 @@
 ---
-title: "Class 14: All Hail the Chief"
+title: "Class 14: Chicago - Now With 80% More Crimes!"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -11,245 +11,143 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-10-12-class14/")
 
 ```{r, message = FALSE}
 library(readr)
-library(dplyr)
 library(ggplot2)
-library(tokenizers)
-library(stringi)
-library(smodels)
+library(dplyr)
+library(methods)
+library(keras)
 ```
 
 ```{r, message = FALSE}
-president <- read_csv("~/files/ml_data/presidents_3.csv")
+crimes <- read_csv("~/files/ml_data/chi_crimes_12.csv")
+```
+
+$$ Y = \sigma(X \cdot A) \cdot B $$
+
+
+```{r}
+to_categorical(c(1,1,2,4,10))
 ```
 
 ```{r}
-stri_wrap(president$text[1000], width = 60)
+X <- scale(as.matrix(select(crimes, longitude, latitude, hour)))
+y <- factor(crimes$crime_type)
+crime_levels <- levels(y)
+y <- as.integer(y) - 1
+
+X_train <- X[crimes$train_id == "train",]
+y_train <- to_categorical(y[crimes$train_id == "train"], num_classes = 12)
+X_valid <- X[crimes$train_id == "valid",]
+y_valid <- to_categorical(y[crimes$train_id == "valid"], num_classes = 12)
 ```
 
 ```{r}
-data(stop_words, package = "tidytext")
-stop_words <- stop_words$word
-sample(stop_words, 50)
-```
-
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_words(president$text,
-                             stopwords = stop_words)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 0.97,
-                       scale = TRUE)
-
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
+y_train[sample(nrow(y_train), 10),]
 ```
 
 ```{r}
-beta <- coef(model, s = model$lambda[12])
-length(beta)
-head(beta[[3]])
-```
-
-```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[12])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
-```
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-head(y_valid_pred)
+model <- keras_model_sequential()
+model %>%
+  layer_dense(units = 20, input_shape = c(3)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 20) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 12) %>%
+  layer_activation(activation = "softmax")
+model
 ```
 
 
 ```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
-
-## Bigrams
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_ngrams(president$text, n = 2, n_min = 1,
-                             stopwords = stop_words)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03)
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
 ```
 
 ```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[15])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
+model %>%
+  fit(X_train, y_train, epochs = 10,
+      validation_data = list(X_valid, y_valid))
 ```
 
 ```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
+crimes <- sample_frac(crimes, size = 1)
+X <- scale(as.matrix(select(crimes, longitude, latitude, hour)))
+y <- factor(crimes$crime_type)
+crime_levels <- levels(y)
+y <- as.integer(y) - 1
 
-## Character grams
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_character_shingles(president$text, n = 3,
-                                          n_min = 1,
-                                          strip_non_alphanum = TRUE)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03)
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
+X_train <- X[crimes$train_id == "train",]
+y_train <- to_categorical(y[crimes$train_id == "train"], num_classes = 12)
+X_valid <- X[crimes$train_id == "valid",]
+y_valid <- to_categorical(y[crimes$train_id == "valid"], num_classes = 12)
 ```
 
 ```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[12])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
-```
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
-
-## Negative examples
-
-Let's redo the simple unigram term analysis:
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_words(president$text,
-                             stopwords = stop_words)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 0.97,
-                       scale = FALSE)
-
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-```
-
-```{r}
-pnames <-c( "Obama", "Bush", "Clinton" )
-table(actual = pnames[y_valid],
-      pred = pnames[y_valid_pred])
+model <- keras_model_sequential()
+model %>%
+  layer_dense(units = 20, input_shape = c(3)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 20) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 12) %>%
+  layer_activation(activation = "softmax")
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
 ```
 
 
 ```{r}
-neg_example <- function(actual, pred) {
-  pnames <-c( "Obama", "Bush", "Clinton" )
-  ids <- which(y_valid == match(actual, pnames) &
-               y_valid_pred == match(pred, pnames))
-  cat(c(stri_wrap(president$text[sample(ids, 1)], width = 60),
-    "\n"), sep = "\n")
-}
-
-
-neg_example("Bush", "Clinton")
-neg_example("Bush", "Obama")
-neg_example("Obama", "Bush")
-```
-
-## Visualization
-
-```{r}
-library(irlba)
-X_pca <- prcomp_irlba(X_train, n = 2)$x
-qplot(X_pca[,1], X_pca[,2], color = factor(y_train),
-      alpha = I(0.3)) +
-  viridis::scale_color_viridis(discrete = TRUE) +
-  theme_minimal()
-```
-
-## SVD
-
-
-$$ X = U \cdot D \cdot V^t $$
-
-
-![](img/tm.jpg)
-
-
-![](img/svd_fb.png)
-
-
-
-
-```{r, message = FALSE}
-library(irlba)
-X_svd <- irlba::irlba(X_train, nv = 10)
-
-names(X_svd)
-length(X_svd$d)
-dim(X_svd$u)
-dim(X_svd$v)
+model %>%
+  fit(X_train, y_train, epochs = 10,
+      validation_data = list(X_valid, y_valid))
 ```
 
 ```{r}
-top_words <- apply(X_svd$v, 2, function(v) {
-  id <- order(v, decreasing = TRUE)[1:5]
-  stri_paste(colnames(X_train)[id], collapse = "; ")
-})
-top_words
+model <- keras_model_sequential()
+model %>%
+  layer_dense(units = 20, input_shape = c(3)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dropout(rate = 0.1) %>%
+  layer_dense(units = 20) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dropout(rate = 0.1) %>%
+  layer_dense(units = 12) %>%
+  layer_activation(activation = "softmax")
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
 ```
 
+
 ```{r}
-table(top_words[apply(X_svd$u, 1, which.max)], pnames[y_train])
+model %>%
+  fit(X_train, y_train, epochs = 10,
+      validation_data = list(X_valid, y_valid))
 ```
+
+## Backpropagation
+
+$$ \begin{align} \widehat{Y} &= \sigma(X \cdot A) \cdot B \\
+                 \widehat{Y} &= Z \cdot B \end{align} \\
+                 $$
+
+It will be easier to index of $A$ as a vector, with elements $a_i$ rather than
+having to keep track of the 2-dimensional nature of the matrix.
+
+$$ \frac{\partial f}{\partial a_{i}} =
+    \sum_k \frac{\partial z_{k}}{\partial a_{i}} \cdot \frac{\partial f}{\partial z_{k}} $$
+
+
+$$ \frac{\partial f}{\partial z_{k}} =
+    \sum_j \frac{\partial \widehat{y}_{j}}{\partial z_{k}} \cdot \frac{\partial f}{\partial \widehat{y}_{j}} $$
+
+
+![](img/tikz40.png)
+
+
+
+
+
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Class 23: Art 101"
+title: "Class 23: Parlez-vous Anglais?"
 author: "Taylor Arnold"
 output: html_notebook
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Class 09: Corn Belt Housing"
+title: "Class 09: Making Shots in the NBA"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -15,110 +15,183 @@ library(ggplot2)
 library(dplyr)
 ```
 
-```{r, message = FALSE}
-ames <- read_csv("~/files/ml_data/ames.csv")
-```
-
-## Decision Trees
-
-```{r}
-library(tree)
-model <- tree(saleprice ~ neighborhood + overall_qual + overall_cond + year_built,
-                      data = ames, subset = train_id == "train",
-              control = tree.control(nobs = nrow(ames), mindev = 0.005))
-```
-
-
-```{r}
-par(mar = c(0,0,0,0))
-plot(model, type = "uniform")
-text(model, cex = 0.7, col = "purple")
-```
-
-## Random Forests
 
 ```{r, message = FALSE}
-library(randomForest)
-model <- randomForest(saleprice ~ overall_qual + year_built,
-                      data = ames, subset = train_id == "train",
-                      ntree = 20, maxnodes = 3, mtry = 1)
+nba <- read_csv("~/files/ml_data/nba_shots.csv")
+```
+
+
+```{r}
+model <- lm(fgm ~ shot_clock + shot_dist,
+            data = nba, subset = train_id == "train")
+nba$fgm_pred <- predict(model, newdata = nba)
 ```
 
 ```{r}
-obj <- predict(model, newdata = ames, predict.all = TRUE)$individual
+qplot(shot_clock, shot_dist, data = nba, color = fgm_pred) +
+  viridis::scale_color_viridis()
 ```
 
+
+
 ```{r}
-ames$price_pred <- obj[,3]
-qplot(overall_qual, year_built, data = ames, color = price_pred) +
+qplot(shot_clock, shot_dist, data = nba, color = factor(fgm_pred > 0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+
+```{r}
+model <- lm(fgm ~ shot_clock + close_def_dist,
+            data = nba, subset = train_id == "train")
+nba$fgm_pred <- predict(model, newdata = nba)
+qplot(shot_clock, close_def_dist, data = nba, color = factor(fgm_pred > 0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+
+
+```{r}
+model <- lm(fgm ~ shot_clock + defender_height,
+            data = nba, subset = train_id == "train")
+nba$fgm_pred <- predict(model, newdata = nba)
+qplot(shot_clock, defender_height, data = nba, color = factor(fgm_pred > 0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+
+$$ \frac{\mathbb{P}[Y_i = 1]}{1 - \mathbb{P}[Y_i = 1]} = X \beta $$
+
+$$ \text{logit}(\mathbb{P}[Y_i = 1]) = X \beta $$
+
+$$ \mathbb{P}[Y_i = 1] = \text{logit}^{-1} (X \beta) $$
+
+
+
+```{r}
+model <- glm(fgm ~ shot_clock + shot_dist,
+            data = nba, subset = train_id == "train",
+            family = binomial)
+nba$fgm_pred <- predict(model, newdata = nba, type = "response")
+```
+
+
+```{r}
+qplot(shot_clock, shot_dist, data = nba, color = fgm_pred) +
   viridis::scale_color_viridis()
 ```
 
 ```{r}
-ames$price_pred <- predict(model, newdata = ames)
-qplot(overall_qual, year_built, data = ames, color = price_pred) +
-  viridis::scale_color_viridis()
+qplot(shot_clock, shot_dist, data = nba, color = factor(fgm_pred > 0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
 ```
 
 ```{r}
-sqrt(tapply((ames$saleprice - ames$price_pred)^2, ames$train_id, mean))
+model <- lm(fgm ~ shot_clock + shot_dist,
+            data = nba, subset = train_id == "train")
+nba$fgm_pred_lm <- as.numeric(predict(model, newdata = nba, type = "response") > 0.5)
+
+model <- glm(fgm ~ shot_clock + shot_dist,
+            data = nba, subset = train_id == "train",
+            family = binomial)
+nba$fgm_pred_glm <- as.numeric(predict(model, newdata = nba, type = "response") > 0.5)
 ```
 
 ```{r}
-importance(model)
+nba <- arrange(nba, fgm_pred_lm != fgm_pred_glm)
+qplot(shot_clock, shot_dist, data = nba,
+      color = factor(fgm_pred_lm + 2 * fgm_pred_glm)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  labs(color = "class")
 ```
 
 
 ```{r}
-sqrt(tapply((ames$saleprice - ames$price_pred)^2, ames$train_id, mean))
-```
+model <- lm(fgm ~ shot_clock + shot_dist,
+            data = nba, subset = train_id == "train")
+nba$fgm_pred_lm <- predict(model, newdata = nba, type = "response")
 
-## Gradient Boosted Trees
-
-```{r}
-X <- model.matrix(~ . -1 , data = ames[,-c(1:3)])
-y <- ames$saleprice
-
-y_train <- y[ames$train_id == "train"]
-y_valid <- y[ames$train_id == "valid"]
-X_train <- X[ames$train_id == "train",]
-X_valid <- X[ames$train_id == "valid",]
-```
-
-```{r, warning = FALSE, message = FALSE}
-library(xgboost)
-model <- xgboost(data = X_train, label = y_train,
-                 max_depth = 2, eta = 0.01, nthread = 2,
-                 nrounds = 10, objective = "reg:linear",
-                 verbose = 1)
-```
-
-```{r, warning = FALSE}
-y_valid_pred <- predict(model, newdata = X_valid)
-sqrt(mean((y_valid - y_valid_pred)^2))
+model <- glm(fgm ~ shot_clock + shot_dist,
+            data = nba, subset = train_id == "train",
+            family = binomial)
+nba$fgm_pred_glm <- predict(model, newdata = nba, type = "response")
 ```
 
 ```{r}
-data_train <- xgb.DMatrix(data = X_train, label = y_train)
-data_valid <- xgb.DMatrix(data = X_valid, label = y_valid)
+qplot(fgm_pred_lm, fgm_pred_glm, data = nba) +
+  geom_abline(aes(intercept = 0, slope = 1), color = "orange")
 ```
 
 ```{r}
-watchlist <- list(train=data_train, valid=data_valid)
-
-model <- xgb.train(data = data_train,
-                 max_depth = 3, eta = 1, nthread = 2,
-                 nrounds = 100, objective = "reg:linear",
-                 watchlist = watchlist)
+model <- lm(fgm ~ poly(shot_clock, 3) + poly(shot_dist, 3),
+            data = nba, subset = train_id == "train")
+nba$fgm_pred <- as.numeric(predict(model, newdata = nba) > 0.5)
 ```
 
 ```{r}
-importance_matrix <- xgb.importance(model = model)
-importance_matrix[,1] <- colnames(X)[as.numeric(importance_matrix[[1]]) + 1]
-importance_matrix
+qplot(shot_clock, shot_dist, data = nba, color = factor(fgm_pred > 0.5),
+      size = I(0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
 ```
 
 
 
+```{r}
+X <- scale(as.matrix(select(nba, shot_clock, shot_dist)))
+y <- nba$fgm
+X_train <- X[nba$train_id == "train",]
+y_train <- y[nba$train_id == "train"]
+```
+
+```{r}
+library(FNN)
+nba$pred <- as.numeric(FNN::knn(train = X_train, test = X, cl = y_train, k = 200))
+```
+
+```{r}
+qplot(shot_clock, shot_dist, data = nba, color = factor(pred),
+      size = I(0.5)) +
+  viridis::scale_color_viridis(discrete = TRUE)
+```
+
+## Support vector machines
+
+```{r}
+y <- nba$fgm
+X <- as.matrix(select(nba, shot_clock, shot_dist))
+
+X_train <- X[nba$train_id == "train", ]
+X_valid <- X[nba$train_id == "valid", ]
+y_train <- y[nba$train_id == "train"]
+y_valid <- y[nba$train_id == "valid"]
+```
+
+```{r}
+library(e1071)
+model <- svm(X_train, y_train, kernel = "linear")
+nba$fgm_pred_svm <- as.numeric(predict(model, newdata = X, type = "response") > 0.5)
+nba$fgm_pred_lm <- as.numeric(nba$fgm_pred_lm > 0.5)
+```
+
+```{r}
+nba <- arrange(nba, fgm_pred_lm != fgm_pred_glm)
+qplot(shot_clock, shot_dist, data = nba,
+      color = factor(fgm_pred_lm + 2 * fgm_pred_glm)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  labs(color = "class")
+```
+
+```{r}
+nba <- arrange(nba, fgm_pred_lm != fgm_pred_svm)
+qplot(shot_clock, shot_dist, data = nba,
+      color = factor(fgm_pred_lm + 2 * fgm_pred_svm)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  labs(color = "class")
+```
+
+
+```{r}
+tapply(nba$fgm_pred_lm == nba$fgm, nba$train_id, mean)
+tapply(nba$fgm_pred_svm == nba$fgm, nba$train_id, mean)
+```
 
 

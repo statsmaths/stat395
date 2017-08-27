@@ -1,12 +1,12 @@
 ---
-title: "Class 17: Guest Lecture"
+title: "Class 27: TO DO"
 author: "Taylor Arnold"
 output: html_notebook
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
-knitr::opts_chunk$set(fig.path = "../assets/2017-10-26-class17/")
+knitr::opts_chunk$set(fig.path = "../assets/2017-12-05-class27/")
 ```
 
 ```{r, message = FALSE}

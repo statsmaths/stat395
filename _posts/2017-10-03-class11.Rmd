@@ -1,9 +1,8 @@
 ---
-title: "Class 11: Thinking, Fast and Slow"
+title: "Class 11: Corn Belt Housing"
 author: "Taylor Arnold"
 output: html_notebook
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
@@ -14,238 +13,111 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-10-03-class11/")
 library(readr)
 library(ggplot2)
 library(dplyr)
-library(methods)
 ```
 
 ```{r, message = FALSE}
-wiki <- read_csv("~/files/ml_data/wiki_traffic.csv")
+ames <- read_csv("~/files/ml_data/ames.csv")
 ```
 
-$$  X \cdot A =
-    \left(\begin{array}{cc} X_{1,1} & X_{1,2} \\
-                           X_{1,1} & X_{1,2} \\
-                           \vdots & \vdots \\
-                           X_{n,1} & X_{n, 2} \end{array} \right) \cdot
-    \left(\begin{array}{cc} A_{1,1} & A_{1,2} \\
-                            A_{2,1} & A_{2, 2} \end{array} \right)
-                            =
-   \left(\begin{array}{c} X_{1} \\
-                           X_{2} \\
-                           \vdots \\
-                           X_{n} \end{array} \right) \cdot
-    \left(\begin{array}{cc} A^{(0)} & A^{(1)}\end{array} \right)
-                            =
-   \left(\begin{array}{cc} X_{1} \cdot A^{(0)} & X_{1} \cdot A^{(0)} \\
-                           X_{2} \cdot A^{(0)} & X_{2} \cdot A^{(0)} \\
-                           \vdots & \vdots \\
-                           X_{n} \cdot A^{(0)} & X_{n} \cdot A^{(0)} \end{array} \right)
-                        $$
+## Decision Trees
 
-$$ \left( X \cdot A \right) \cdot B, \quad B = \left(\begin{array}{c} b_1 \\ b_2 \end{array}\right) $$
-
-```{r, fig.asp=0.33, fig.width = 12}
-par(mfrow = c(1, 3))
-plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
-     axes = FALSE, xlab = "", ylab = "")
-abline(0.5, -0.5, lty = "dashed", lwd = 4)
-abline(v = 0); abline(h = 0)
-box()
-plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
-     axes = FALSE, xlab = "", ylab = "")
-mtext("+", side=2, line=2.2, cex=2)
-abline(-1, 1, lty = "dashed", lwd = 4)
-abline(v = 0); abline(h = 0)
-box()
-plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
-     axes = FALSE, xlab = "", ylab = "")
-mtext("=", side=2, line=2.2, cex=2, las=1)
-abline(-0.5, 0.5, lty = "dashed", col = "orange", lwd = 4)
-abline(0.5, -1, lty = "dashed", lwd = 1)
-abline(-1, 1, lty = "dashed", lwd = 1)
-abline(v = 0); abline(h = 0)
-box()
+```{r}
+library(tree)
+model <- tree(saleprice ~ neighborhood + overall_qual + overall_cond + year_built,
+                      data = ames, subset = train_id == "train",
+              control = tree.control(nobs = nrow(ames), mindev = 0.005))
 ```
 
+
+```{r}
+par(mar = c(0,0,0,0))
+plot(model, type = "uniform")
+text(model, cex = 0.7, col = "purple")
+```
+
+## Random Forests
 
 ```{r, message = FALSE}
-library(keras)
+library(randomForest)
+model <- randomForest(saleprice ~ overall_qual + year_built,
+                      data = ames, subset = train_id == "train",
+                      ntree = 20, maxnodes = 3, mtry = 1)
 ```
 
 ```{r}
-X <- scale(as.matrix(select(wiki, day001)))
-y <- scale(wiki$day000)
-
-X_train <- X[wiki$train_id == "train",]
-X_valid <- X[wiki$train_id == "valid",]
-y_train <- y[wiki$train_id == "train"]
-y_valid <- y[wiki$train_id == "valid"]
-```
-
-```{r, message = FALSE}
-model <- keras_model_sequential()
-model %>%
-  layer_dense(units = 2, input_shape = c(1)) %>%
-  layer_dense(units = 1)
-model
+obj <- predict(model, newdata = ames, predict.all = TRUE)$individual
 ```
 
 ```{r}
-model %>% compile(
-  loss = 'mse',
-  optimizer = optimizer_rmsprop(),
-  metrics = c('mse')
-)
+ames$price_pred <- obj[,3]
+qplot(overall_qual, year_built, data = ames, color = price_pred) +
+  viridis::scale_color_viridis()
 ```
 
 ```{r}
-model %>%
-  fit(X_train, y_train, epochs = 5,
-      validation_data = list(X_valid, y_valid))
-```
-
-
-![](img/tikz40.png)
-
-```{r}
-y_valid_pred <- predict(model, X_valid)
-qplot(X_valid, y_valid_pred)
-```
-
-$$ \sigma \left( X \cdot A \right) \cdot B, \quad B =
-    \left(\begin{array}{c} b_1 \\ b_2 \end{array}\right) $$
-
-**rectified linear unit (relu)**:
-
-$$ \sigma(x) =
-\begin{cases}
-    x,& \text{if } x\geq 0\\
-    0,              & \text{otherwise}
-\end{cases}  $$
-
-
-```{r, fig.asp=0.33}
-par(mfrow = c(1, 3))
-plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
-     axes = FALSE, xlab = "", ylab = "")
-abline(1, -1, lty = "dashed", lwd = 4)
-abline(v = 0); abline(h = 0)
-box()
-plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
-     axes = FALSE, xlab = "", ylab = "")
-mtext("+", side=2, line=2.2, cex=2)
-abline(-3, 1, lty = "dashed", lwd = 4)
-abline(v = 0); abline(h = 0)
-box()
-plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
-     axes = FALSE, xlab = "", ylab = "")
-mtext("=", side=2, line=2.2, cex=2, las=1)
-lines(x = c(-3, 1, 3, 5), y = c(4, 0, 0, 2), col = "orange",
-      lwd = 6, lty = "dashed")
-abline(-3, 1, lty = "dashed", lwd = 1)
-abline(1, -1, lty = "dashed", lwd = 1)
-abline(v = 0); abline(h = 0)
-box()
-```
-
-
-
-```{r}
-model <- keras_model_sequential()
-model %>%
-  layer_dense(units = 2, input_shape = c(1)) %>%
-  layer_activation(activation = "relu") %>%
-  layer_dense(units = 1)
-model
+ames$price_pred <- predict(model, newdata = ames)
+qplot(overall_qual, year_built, data = ames, color = price_pred) +
+  viridis::scale_color_viridis()
 ```
 
 ```{r}
-model %>% compile(
-  loss = 'mse',
-  optimizer = optimizer_rmsprop(),
-  metrics = c('mse')
-)
-model %>%
-  fit(X_train, y_train, epochs = 5,
-      validation_data = list(X_valid, y_valid))
+sqrt(tapply((ames$saleprice - ames$price_pred)^2, ames$train_id, mean))
 ```
 
 ```{r}
-y_valid_pred <- predict(model, X_valid)
-qplot(X_valid, y_valid_pred)
+importance(model)
 ```
 
 
 ```{r}
-X <- scale(as.matrix(select(wiki, day001, day002, day003, day004)))
-y <- scale(wiki$day000)
+sqrt(tapply((ames$saleprice - ames$price_pred)^2, ames$train_id, mean))
+```
 
-X_train <- X[wiki$train_id == "train",]
-X_valid <- X[wiki$train_id == "valid",]
-y_train <- y[wiki$train_id == "train"]
-y_valid <- y[wiki$train_id == "valid"]
+## Gradient Boosted Trees
+
+```{r}
+X <- model.matrix(~ . -1 , data = ames[,-c(1:3)])
+y <- ames$saleprice
+
+y_train <- y[ames$train_id == "train"]
+y_valid <- y[ames$train_id == "valid"]
+X_train <- X[ames$train_id == "train",]
+X_valid <- X[ames$train_id == "valid",]
+```
+
+```{r, warning = FALSE, message = FALSE}
+library(xgboost)
+model <- xgboost(data = X_train, label = y_train,
+                 max_depth = 2, eta = 0.01, nthread = 2,
+                 nrounds = 10, objective = "reg:linear",
+                 verbose = 1)
+```
+
+```{r, warning = FALSE}
+y_valid_pred <- predict(model, newdata = X_valid)
+sqrt(mean((y_valid - y_valid_pred)^2))
 ```
 
 ```{r}
-model <- keras_model_sequential()
-model %>%
-  layer_dense(units = 5, input_shape = c(4)) %>%
-  layer_activation(activation = "relu") %>%
-  layer_dense(units = 3) %>%
-  layer_activation(activation = "relu") %>%
-  layer_dense(units = 1)
-model
+data_train <- xgb.DMatrix(data = X_train, label = y_train)
+data_valid <- xgb.DMatrix(data = X_valid, label = y_valid)
 ```
 
 ```{r}
-model %>% compile(
-  loss = 'mse',
-  optimizer = optimizer_rmsprop(),
-  metrics = c('mse')
-)
-model %>%
-  fit(X_train, y_train, epochs = 20,
-      validation_data = list(X_valid, y_valid))
+watchlist <- list(train=data_train, valid=data_valid)
+
+model <- xgb.train(data = data_train,
+                 max_depth = 3, eta = 1, nthread = 2,
+                 nrounds = 100, objective = "reg:linear",
+                 watchlist = watchlist)
 ```
-
-
 
 ```{r}
-y_valid_pred <- predict(model, X_valid)
-qplot(X_valid[,1], X_valid[,2], color = y_valid_pred) +
-  viridis::scale_color_viridis() +
-  scale_x_log10() +
-  scale_y_log10()
+importance_matrix <- xgb.importance(model = model)
+importance_matrix[,1] <- colnames(X)[as.numeric(importance_matrix[[1]]) + 1]
+importance_matrix
 ```
 
-
-## Stochastic Gradient Descent
-
-$$ \left( w^{(0)} - \eta \cdot \nabla_w f \right) \, \rightarrow \, w^{(1)} $$
-
-$$ \begin{align} f(w) &= \sum_i (\widehat{y}_i(w) - y_i)^2 \\
-        &= \sum_i f_i(w) \\
-        \nabla_w f &= \sum_i \nabla_w f_i
-    \end{align}$$
-
-$$
-\begin{align}
-\left( w^{(0)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_1 \right) \, &\rightarrow \, w^{(1)} \\
-\left( w^{(1)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_2 \right) \, &\rightarrow \, w^{(2)} \\
-&\vdots \\
-\left( w^{(n-1)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_n \right) \, &\rightarrow \, w^{(n)} \\
-\end{align}
-$$
-
-The $w^{(n)}$ here is exactly equivalent to the $w^{(1)}$ from before.
-
-$$
-\begin{align}
-\left( w^{(0)} - \eta' \cdot \nabla_{w^{(0)}} f_1 \right) \, &\rightarrow \, w^{(1)} \\
-\left( w^{(1)} - \eta' \cdot \nabla_{w^{(1)}} f_2 \right) \, &\rightarrow \, w^{(2)} \\
-&\vdots \\
-\left( w^{(n-1)} - \eta' \cdot \nabla_{w^{(n)}} f_n \right) \, &\rightarrow \, w^{(n)} \\
-\end{align}
-$$
 
 
 
