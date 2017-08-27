@@ -85,11 +85,10 @@ the semester.
 
 ## Teaching Philosophy
 
-Unlike the vast majority of faculty in the school of Arts and
-Sciences, I spent several years after finishing graduate school
-working in industry. All of these positions consisted primarily
-of collecting and understanding large datasets and building
-predictive models from them.
+I spent several years after finishing graduate school
+working in industry in a number of positions. All of these
+consisted primarily of collecting and understanding large
+datasets and building predictive models from them.
 
 **My goal this semester is give you the skills to do this as well,
 at least with medium-sized datasets.** You can then extend
@@ -107,7 +106,8 @@ We have a fairly diverse set of academic backgrounds in the room.
 You will likely encounter parts of some classes which are a bit
 over your head. That is not just okay but, in my mind, ideal.
 Try your best to catch the basic ideas and don't get worried
-about the details.
+about the details. At the same time, you may find the first few
+weeks a bit slow as everyone works to get up to the same level.
 
 ## Syllabus
 
@@ -120,8 +120,8 @@ given as R markdown notebooks. These are self-contained files that include
 code, output, text, and graphics. All of your assignments will also be
 handed in as R markdown notebooks. No prior experience with R will be
 assumed. The course is designed to require no formal prior programming
-experience, but you should have some familiarity with a scripting
-language such as R, Matlab, or Mathematica.
+experience, but you should ideally have some familiarity with a scripting
+language such as R, Python, Matlab, or Mathematica.
 
 ### labs
 
@@ -227,14 +227,8 @@ the weekend.**
 
 ## Questions
 
-As a last task, please write the following on the index cards provided:
-
-1. name (and preferred, if not obvious)
-2. prior programming experience
-3. have you taken linear algebra?
-4. what is your interest in statistical learning?
-5. types of applications you are particularly interested in
-6. anything else I need to know
+As a last task, please complete the brief questionnaires I am
+handing out.
 
 In case you're curious, here are my answers:
 
