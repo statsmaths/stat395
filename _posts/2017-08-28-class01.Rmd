@@ -52,6 +52,13 @@ in a public speech
 - how many page views will a specific Wikipedia page receive
 tomorrow?
 
+And can look at some explicit examples of these models in
+the wild:
+
+- [Automated game playing](https://www.youtube.com/watch?v=qv6UVOQ0F44)
+- [Face Detection and Recognition](https://www.youtube.com/watch?v=QLybZt3cI_0)
+- [Sports Video Classification](https://www.youtube.com/watch?v=qrzQ_AB1DZk)
+
 ## Learning Algorithms
 
 This class is not about teaching you a wide range of models.
