@@ -146,12 +146,20 @@ of your steps and justify why you are doing them, a predictive
 model and fill in the missing values.
 
 You will receive an auto-graded score by the start of class showing
-how well you performed on the estimation task. While getting good
-prediction rates is important, your grades on labs will be more
-holistically based on your general approach and overall write-up.
-You will receive detailed feedback and a letter grade three times
-throughout the semester (roughly every 4th week) summarizing your
-performance on the labs.
+how well you performed on the estimation task.
+
+![](https://img.shields.io/badge/Accuracy-0.92-green.svg)
+
+![](https://img.shields.io/badge/Accuracy-0.65-yellow.svg)
+
+![](https://img.shields.io/badge/Accuracy-0.22-red.svg)
+
+
+While getting good prediction rates is important, your grades on
+labs will be more holistically based on your general approach and
+overall write-up. You will receive detailed feedback and a letter
+grade three times throughout the semester (roughly every 4th week)
+summarizing your performance on the labs.
 
 
 ### final project
