@@ -133,6 +133,20 @@ questions contained within the lab notebook. Assignments will be
 submitted through GitHub; this process is explained more during
 our next class.
 
+Each lab will generally consist of looking at a new dataset with
+some missing responses. You need to build, documenting all
+of your steps and justify why you are doing them, a predictive
+model and fill in the missing values.
+
+You will receive an auto-graded score by the start of class showing
+how well you performed on the estimation task. While getting good
+prediction rates is important, your grades on labs will be more
+holistically based on your general approach and overall write-up.
+You will receive detailed feedback and a letter grade three times
+throughout the semester (roughly every 4th week) summarizing your
+performance on the labs.
+
+
 ### final project
 
 You will also complete a course project. The last two weeks of the
@@ -146,8 +160,7 @@ Final grades will be determined by the following weighting scheme:
 - labs (66%)
 - final project (34%)
 
-You will receive detailed feedback three times throughout the
-semester summarizing your performance on the labs. The actual
+The actual
 syllabus file has more details concerning the specifics of
 how to convert between numeric and letter grades.
 
