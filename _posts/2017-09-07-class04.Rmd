@@ -17,58 +17,6 @@ library(ggplot2)
 library(dplyr)
 ```
 
-
-### Aesthetics
-
-The `qplot` function comes from the **ggplot2** package. In
-**ggplot2**, plots can be modified by changing what are known
-as aesthetic mappings. Common aesthetics are: color, size, and
-alpha (the opacity of the points). To change any of these to
-a fixed value for all points, simply use the `I` function
-in the call to `qplot`:
-
-```{r}
-qplot(vore, awake, data = msleep, color = I("gold"),
-      size = I(10), alpha = I(0.3))
-```
-
-Alternatively, we can map aesthetics to variables in our dataset.
-For example, let's change the color to a function of the diet
-type of each mammal (note that here we do not use the `I` function):
-
-```{r}
-qplot(bodywt_log, awake, data = msleep, color = vore)
-```
-
-Color behaves differently if we use a discrete variable or a numeric
-one. Notice here how a color gradient is used in place of a fixed scale:
-
-```{r}
-qplot(bodywt_log, awake, data = msleep, color = bodywt_log)
-```
-
-This last plot is particularly hard to read on the projector. It is also
-difficult on my screen and for anyone with any degree of color-blindness.
-The package **viridis** can help. Let's load it in (if you want to run this
-line, make sure to install the package first!):
-
-```{r}
-library(viridis)
-```
-
-We now literally add a *layer* to the plot describing what color scale we
-would like to make use of:
-
-```{r}
-qplot(bodywt_log, awake, data = msleep, color = bodywt_log) +
-  scale_color_viridis()
-```
-
-We will make use of these aesthetics throughout the semester to explore datasets.
-In particular, the color mapping allows us to look at more than two variables at
-the same time.
-
-
 ## Evaluating models
 
 How should be evaluate the predictive ability of a model?

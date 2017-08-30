@@ -1,5 +1,5 @@
 ---
-title: "Class 02: Sleepy Mammals and Other Zoo Animals"
+title: "Class 02: Sleepy Mammals and Sea Snails"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -23,7 +23,7 @@ source code; if you are familiar with markdown, it is just a
 specific flavor of the basic standard.
 
 Plain markdown is just a very simple format for marking up
-texts. Unlike write text in a word editor, there is nothing
+texts. Unlike writing text in a word editor, there is nothing
 hidden in a markdown file. If you want something to be in
 italics, surround it in single stars like *this*. For bold,
 use **two**. Links use the following format:
@@ -79,12 +79,12 @@ my computer does not constantly reinstall it):
 library(readr)
 ```
 
-Once, loaded we can run commands from the **readr** package.
+Once loaded, we can run commands from the **readr** package.
 We will do this in just a moment.
 
 ### Loading Data
 
-Let's load in three libraries that will be important for
+Let's load in four libraries that will be important for
 us throughout the semester. Note that I'll turn off messages
 as the packages produce quite a bit of verbose output that
 we do not need to worry about. Also note that re-loading the
@@ -93,12 +93,13 @@ we do not need to worry about. Also note that re-loading the
 ```{r, message = FALSE}
 library(readr)
 library(ggplot2)
+library(viridis)
 library(dplyr)
 ```
 
 Next, let's load in a small dataset to work with today.
 This data consists of the average number of hours per
-day that various species are awake. We'll read the data
+day that various species are awake. We will read the data
 set, like most of those in this class, directly from
 my website:
 
@@ -133,9 +134,10 @@ qplot(bodywt_log, data = msleep)
 ```
 
 The function is quite smart and will choose by default the
-most appropriate plot to use. Here is creating a *histogram*
-because we gave it one numeric variable. Applying `qplot` to
-a categorical variable gives a bar plot:
+most appropriate plot to use. Here it is creating a *histogram*
+because we gave it one numeric variable.
+
+Applying `qplot` to a categorical variable gives a bar plot:
 
 ```{r}
 qplot(vore, data = msleep)
@@ -145,7 +147,7 @@ We can also give `qplot` two variable. For instance, if we
 use two continuous variables the function will construct a
 scatter plot:
 
-```{r}
+```{r, message = FALSE}
 qplot(bodywt_log, awake, data = msleep)
 ```
 
@@ -154,14 +156,70 @@ where we need to produce predictions.
 
 There is not a special name for the plot with a continuous
 variable plotted versus a categorical one, but the point
-should be clear:
+should be clear (not too different from a scatter plot):
 
 ```{r}
 qplot(vore, awake, data = msleep)
 ```
 
-Finally, one can plot two categorical variables, but it is
-rarely useful due to over-plotting.
+Finally, one can plot two categorical variables. It is often
+not useful, but here it does help to understand the relationship
+between order and diet:
+
+```{r}
+qplot(vore, order, data = msleep)
+```
+
+
+### Aesthetics
+
+The `qplot` function comes from the **ggplot2** package. In
+**ggplot2**, plots can be modified by changing what are known
+as aesthetic mappings. Common aesthetics are: color, size, and
+alpha (the opacity of the points). To change any of these to
+a fixed value for all points, simply use the `I` function
+in the call to `qplot`:
+
+```{r}
+qplot(vore, awake, data = msleep, color = I("gold"),
+      size = I(10), alpha = I(0.3))
+```
+
+Alternatively, we can map aesthetics to variables in our dataset.
+For example, let's change the color to a function of the diet
+type of each mammal (note that here we do not use the `I` function):
+
+```{r}
+qplot(bodywt_log, awake, data = msleep, color = vore)
+```
+
+Color behaves differently if we use a discrete variable or a numeric
+one. Notice here how a color gradient is used in place of a fixed scale:
+
+```{r}
+qplot(bodywt_log, awake, data = msleep, color = bodywt_log)
+```
+
+This last plot is particularly hard to read on the projector. It is also
+difficult on my screen and for anyone with any degree of color-blindness.
+The package **viridis** can help. Let's load it in (if you want to run this
+line, make sure to install the package first!):
+
+```{r}
+library(viridis)
+```
+
+We now literally add a *layer* to the plot describing what color scale we
+would like to make use of:
+
+```{r}
+qplot(bodywt_log, awake, data = msleep, color = bodywt_log) +
+  scale_color_viridis()
+```
+
+We will make use of these aesthetics throughout the semester to explore datasets.
+In particular, the color mapping allows us to look at more than two variables at
+the same time.
 
 ### Best-fit line
 
