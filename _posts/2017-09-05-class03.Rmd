@@ -7,8 +7,10 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-09-05-class03/")
-knitr::opts_chunk$set(fig.height = 4)
-knitr::opts_chunk$set(fig.width = 6.8)
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
 ```{r, message = FALSE}
@@ -229,6 +231,49 @@ qplot(num_reviews, score, data = tea) +
   geom_point(aes(num_reviews, score_pred), color = "orange")
 ```
 
+## Evaluating models
+
+How should be evaluate the predictive ability of a model?
+The method of oridinary least squares suggests that we
+should consider the sum of squared errors. A challenge with
+this is that the value of a sum will grow in proportion to
+how many observations there are. This makes it hard to compare
+results across data sources and subsets. A simple solution
+is to use the average value of the squared errors, known as
+the mean squared error or MSE:
+
+```{r, warning=FALSE}
+mean((tea$score - tea$score_pred)^2, na.rm = TRUE)
+```
+
+This works as a general measurment of error, but the units
+are a bit strange as they are given in squared scores. A
+simple solution to this exists by taking the square root
+of the MSE, resulting in the root mean squared error (RMSE):
+
+```{r, warning=FALSE}
+sqrt(mean((tea$score - tea$score_pred)^2, na.rm = TRUE))
+```
+
+You'll find references to the RMSE through the literature on
+machine learning as it is by far the most common measurment
+for predictiveness of continuous responses.
+
+How good of a result is our RMSE of 1.99? It's hard to say
+for sure, but one easy thing to do is to compare it to the
+simpliest possible model: the one that predicts every score
+will be equal to the average score. The RMSE of this estimator
+is given by:
+
+```{r, warning=FALSE}
+sqrt(mean((tea$score - mean(tea$score, na.rm = TRUE))^2, na.rm = TRUE))
+```
+
+So, we have improved on the baseline model, but not by a large
+amount. Note: if you are familiar with the standard error, the
+RMSE of the mean is *almost* equal to the standard error of
+the response.
+
 ## Multivariate linear regression
 
 The linear regression model I just introduced is known
@@ -265,9 +310,29 @@ tea$score_pred <- predict(model, newdata = tea)
 model
 ```
 
-The predictiveness of the model has been
+Using the color aesthetics we learned last class, we
+can visulize the predicted values of this model. Don't
+get hung up on the code below; concentrate on the output.
+
+```{r}
+tea_grid <- expand.grid(seq(min(tea$num_reviews), max(tea$num_reviews), length.out = 20),
+                        seq(min(tea$price), max(tea$price), length.out = 20))
+tea_grid <- data_frame(num_reviews = tea_grid[,1],
+                       price = tea_grid[,2])
+tea_grid$score_pred <- predict(model, newdata = tea_grid)
+qplot(price, num_reviews, data = tea_grid, color = score_pred,
+      size = I(5)) +
+  scale_color_viridis() +
+  theme_minimal()
+```
+
+Also, predictiveness of the model has been
 greatly improved over the simple linear regression from
-before. Next class we will see exactly how to quantify
-this improvement.
+before:
+
+```{r}
+sqrt(mean((tea$score - tea$score_pred)^2, na.rm = TRUE))
+```
+
 
 
