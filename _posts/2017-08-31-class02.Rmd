@@ -199,7 +199,8 @@ Color behaves differently if we use a discrete variable or a numeric
 one. Notice here how a color gradient is used in place of a fixed scale:
 
 ```{r}
-qplot(bodywt_log, awake, data = msleep, color = bodywt_log)
+qplot(bodywt_log, awake, data = msleep, color = bodywt_log,
+      size = I(3))
 ```
 
 This last plot is particularly hard to read on the projector. It is also
@@ -215,7 +216,8 @@ We now literally add a *layer* to the plot describing what color scale we
 would like to make use of:
 
 ```{r}
-qplot(bodywt_log, awake, data = msleep, color = bodywt_log) +
+qplot(bodywt_log, awake, data = msleep, color = bodywt_log,
+      size = I(3)) +
   scale_color_viridis()
 ```
 
