@@ -10,6 +10,7 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-08-31-class02/")
 knitr::opts_chunk$set(fig.height = 5)
 knitr::opts_chunk$set(fig.width = 8.5)
 knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
 ## Basic R
