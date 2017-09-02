@@ -1,2 +1,2 @@
-Statistial Learning
+Statistical Learning
 

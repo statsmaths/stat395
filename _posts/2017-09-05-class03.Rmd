@@ -299,19 +299,16 @@ predictor variable.
 Fitting multivariate models is also quite easy with the
 `lm` function. Simply add the variables together that
 you would like to use for prediction. Here we use both
-the number of reviews and the price of the tea (from
-now on, unless otherwise specified, we will only use
-the training data to fit models):
+the number of reviews and the price of the tea:
 
 ```{r}
-model <- lm(score ~ num_reviews + price, data = tea,
-            subset = train_id == "train")
+model <- lm(score ~ num_reviews + price, data = tea)
 tea$score_pred <- predict(model, newdata = tea)
 model
 ```
 
 Using the color aesthetics we learned last class, we
-can visulize the predicted values of this model. Don't
+can visualize the predicted values of this model. Don't
 get hung up on the code below; concentrate on the output.
 
 ```{r}
@@ -333,6 +330,27 @@ before:
 ```{r}
 sqrt(mean((tea$score - tea$score_pred)^2, na.rm = TRUE))
 ```
+
+## Notes on Labs
+
+- you should see your completion marker increased from `0/28`
+to `2/28`
+- you should also see that your first two labs now have scores
+in the file `results.md`
+- you may have entries in `results.md`, but still missing the
+completion scores
+- if there are any issues:
+    - make sure that the files have correct extensions (`Rmd`, `nb.html`,
+      and `csv`), including capitalization
+    - if files are misnamed at the moment, please move them
+      to the correct ones
+    - I will re-update the completions indicator this evening;
+      please try to have labs 1 and 2 fixed by then
+- due to naming issues, I've decided it will be easier to post
+lab assignments on the website rather than pushing the templates
+to GitHub
+
+
 
 
 
