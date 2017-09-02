@@ -7,19 +7,77 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-09-07-class04/")
-knitr::opts_chunk$set(fig.height = 4)
-knitr::opts_chunk$set(fig.width = 6.8)
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
 ```{r, message = FALSE}
 library(readr)
 library(ggplot2)
 library(dplyr)
+library(viridis)
 ```
+
+## Cars Dataset
+
+Today we are going to look at another classic datasets in statistics
+featuring data about a number of automobiles.
+
+```{r, message = FALSE}
+cars <- read_csv("https://statsmaths.github.io/ml_data/mpg.csv")
+```
+
+Our goal today is to estimate the city fuel efficency of each car.
+The variable is fairly concentrated around a few values without any
+extreme outliers:
+
+```{r, message = FALSE, warning = FALSE}
+qplot(cty, data = cars)
+```
+
+The variable `displ` is negatively related to the fuel efficency
+of the car, as we can see in the following plot:
+
+```{r, message = FALSE, warning = FALSE}
+qplot(displ, cty, data = cars)
+```
+
+Within this plot, we can mark to classes of cars.
+
+```{r, message = FALSE, warning = FALSE}
+qplot(displ, cty, data = cars, color = class, size = I(2)) +
+  scale_color_viridis(discrete = TRUE)
+```
+
+Do the car classes generally seem to be where you would expect them?
+
+## Multivariate regression with categorical data
+
+It would be reasonable to start with a regression model
+that uses `displ` to predict the response variable.
+We can just as easily add categorical data into our
+model. Next week we will cover the specifics of what
+is internally being done here, but for now let's just
+see what adding the `class` variable to the model does
+to the output:
+
+```{r}
+model <- lm(cty ~ displ + class,
+            data = cars)
+cars$score_pred <- predict(model, newdata = cars)
+model
+```
+
+Notice that it appears that we now have a separate term for
+each class of car. If you look more carefully you'll see that
+there is no mention of 2seater"" in the list. We will see why
+this is next week as well.
 
 ## Validation Sets
 
-One potential difficulty with the approach above is that we are
+One potential difficulty with our approach so far is that we are
 using the same data to validate models that we used to construct
 them. In this simple case it is unlikely to cause problems, but
 it will be a huge problem going forward as we look towards more
@@ -31,10 +89,10 @@ to predict the responses. Looking at a table of the `train_id`
 variable we see that their are actual three subsets of data:
 
 ```{r}
-table(tea$train_id)
+table(cars$train_id)
 ```
 
-The response is missing only on the 48 observations labels with
+The response is missing only on the 47 observations labels with
 the test flag. What is the purpose of the validation label? When
 building models, we should only train using the training set.
 The validation set then can be used to *validate* how good the
@@ -45,9 +103,9 @@ In order to only using the training set when fitting a model with
 the `lm` function, we add an option called `subset`:
 
 ```{r}
-model <- lm(score ~ num_reviews, data = tea,
+model <- lm(cty ~ displ + class, data = cars,
             subset = train_id == "train")
-tea$score_pred <- predict(model, newdata = tea)
+cars$score_pred <- predict(model, newdata = cars)
 model
 ```
 
@@ -63,7 +121,7 @@ did on the hidden data. Don't worry about the specifics of the function
 and changing the response and dataset names as appropriate:
 
 ```{r}
-sqrt(tapply((tea$score - tea$score_pred)^2, tea$train_id, mean))
+sqrt(tapply((cars$cty - cars$score_pred)^2, cars$train_id, mean))
 ```
 
 Notice here that the training dataset actually has a worse RMSE than
@@ -77,33 +135,20 @@ data is noisier than the training data. So, naturally the RMSE of a
 simple model is lower on the validation set regardless of which
 chunk the model was fit on.
 
-
-## Multivariate regression with categorical data
-
-We can just as easily add categorical data into our
-model. Next week we will cover the specifics of what
-is internally being done here, but for now let's just
-see what adding the `type` variable to the model does
-to the output:
+Now, let's try to add the manufacturer of each car to the model:
 
 ```{r}
-model <- lm(score ~ num_reviews + type + price,
-            data = tea,
+model <- lm(cty ~ displ + class + manufacturer, data = cars,
             subset = train_id == "train")
-tea$score_pred <- predict(model, newdata = tea)
+cars$score_pred <- predict(model, newdata = cars)
 model
 ```
-
-Notice that it appears that we now have a seperate term for
-each type of tea. If you look more carefully you'll see that
-there is no mention of black tea in the list. We will see why
-this is next week as well.
 
 The RMSE of this new model makes improvements on both the
 training and validation sets:
 
 ```{r}
-sqrt(tapply((tea$score - tea$score_pred)^2, tea$train_id, mean))
+sqrt(tapply((cars$cty - cars$score_pred)^2, cars$train_id, mean))
 ```
 
 However, notice that the training set improved significantly
@@ -111,6 +156,152 @@ more than the validation set. We are starting to see the effects
 of what is known as *overfitting*, where the model starts
 predicting random noises in the training data that do not generalize
 into the validation set. This will be a major theme throughout
-the entire semester.
+the entire semester. 
+
+## Solving OLS
+
+Let's now return to calculating the solution to the linear regression
+model. I want to illustrate two general techniques that will help us
+understand the more complex models we'll cover in the upcoming weeks.
+
+Recall that we are assuming that data are distributed as:
+
+$$ y_i = \alpha + x_i \beta $$
+
+We can define the OLS estimator by giving a name to the sum 
+of squares:
+
+$$ f(\alpha, \beta) = \sum_i (y_i - \alpha - x_i \beta )^2 $$
+
+Then, the OLS estimator is given by an optimization problem:
+
+$$ \widehat{\alpha}, \widehat{\beta} \in \arg\min_{a,b \in \mathbb{R}}
+  \left\{ f(a, b) \right\} $$
+
+This is a very useful formulation because most ML algorithms
+are written as optimization problems. It will be helpful to 
+compute the partial derivaties of f with respect to alpha and
+beta:
+
+$$\begin{align} \frac{\partial f}{\partial \alpha}
+  &=\sum_i 2 \cdot (y_i - \alpha - x_i \beta) \cdot (-1)\\
+  &= - \sum_i 2 \cdot (y_i - \alpha - x_i \beta) 
+  \end{align}
+$$
+
+And
+
+$$\begin{align} \frac{\partial f}{\partial \beta}
+  &=\sum_i 2 \cdot (y_i - \alpha - x_i \beta) \cdot (-x_i)\\
+  &= - \sum_i 2 x_i \cdot (y_i - \alpha - x_i \beta)
+  \end{align}
+$$
+
+Putting these together, the gradient of f is just:
+
+$$ \nabla f = \left( \begin{array}{cc} \frac{\partial f}{\partial \beta} \\ 
+                                \frac{\partial f}{\partial \beta} \end{array} \right) 
+            = -1 \cdot \left( \begin{array}{cc}\sum_i 2 \cdot (y_i - \alpha - x_i \beta)  \\ 
+                                \sum_i 2 x_i \cdot (y_i - \alpha - x_i \beta) \end{array} \right) 
+$$
+
+Of course, one way to solve this equation would be to set both derivatives
+equal to zero. The ability to do this is a privilege of the OLS model and
+will not generalize to other models. Instead, lets use the gradient and
+partial derivaties to iteratively solve the equation. There are two basic
+techniques for doing this, both useful in different situations.
+
+## Coordinate descent
+
+The idea of Coordiante descent is to cycle through the variables,
+optimizing our function univariately one variable at a time. Doing
+this many times seems like a reasonable approach to minimizing the
+function.
+
+So, if we start with alpha, how would we update alpha given a fixed
+beta? We just set the partial derivative to zero:
+
+$$ \begin{align} 0
+  &= \sum_i (y_i - \alpha - x_i \beta) \\
+  \sum_i \alpha &= \sum_i (y_i - x_i \beta) \\
+  n \alpha &= \sum_i (y_i - x_i \beta) \\
+  \alpha &\leftarrow \frac{1}{n} \cdot \sum_i(y_i - x_i \beta)
+  \end{align}
+$$
+
+Similarly, if we have a fixed alpha, to update beta we set the partial
+derivative to zero:
+
+$$ \begin{align} 0
+  &= \sum_i x_i \cdot (y_i - \alpha - x_i \beta) \\
+  \beta \sum_i x_i^2 &= \sum_i   y_i x_i - \alpha x_i) \\
+  \beta &\leftarrow \frac{\sum_i y_i x_i - \alpha x_i}{\sum_i x_i^2} \\
+  \end{align}
+$$
+
+Let's implement this in R, saving our results as we go:
+
+```{r}
+y <- cars$cty[cars$train_id == "train"]
+x <- cars$displ[cars$train_id == "train"]
+n <- length(y)
+iter <- 100
+
+alpha_vals <- rep(0, iter)
+beta_vals <- rep(0, iter)
+
+for (i in 2:iter) {
+  # update alpha
+  alpha_vals[i] <- (1 / n) * sum(y - x * beta_vals[i-1])
+  
+  # update beta
+  beta_vals[i] <- sum(y * x - alpha_vals[i] * x) / sum(x^2)
+}
+
+df <- data_frame(iter = rep(1:iter, each = 2),
+                 alpha = rep(alpha_vals, each = 2),
+                 beta = lag(rep(beta_vals, each = 2), 1, default = 0))
+```
+
+```{r}
+co <- coef(lm(cty ~ displ, data = cars, subset = train_id == "train"))
+qplot(alpha, beta, data = df[-1,], geom = c("point", "line")) +
+  annotate("point", x = co[1], y = co[2], col = 'red')
+```
+
+
+
+```{r}
+y <- cars$cty[cars$train_id == "train"]
+x <- cars$displ[cars$train_id == "train"]
+n <- length(y)
+iter <- 100
+rho <- 0.0001 # step size
+
+alpha_vals <- rep(0, iter)
+beta_vals <- rep(0, iter)
+
+for (i in 2:iter) {
+  # compute gradient
+  grad <- -2 * c(sum(y - alpha_vals[i-1] - x * beta_vals[i-1]),
+                 sum(y*x - alpha_vals[i-1]*x - x^2))
+  
+  # take a step in the direction of the negative gradient
+  alpha_vals[i] <- alpha_vals[i-1] + (-rho) * grad[1]
+  beta_vals[i] <- beta_vals[i-1] + (-rho) * grad[2]
+}
+
+df <- data_frame(iter = 1:iter,
+                 alpha = alpha_vals,
+                 beta = beta_vals)
+```
+
+```{r}
+co <- coef(lm(cty ~ displ, data = cars, subset = train_id == "train"))
+qplot(alpha, beta, data = df[-1,], geom = c("point", "line")) +
+  annotate("point", x = co[1], y = co[2], col = 'red')
+```
+
+
 
 

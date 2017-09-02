@@ -73,7 +73,7 @@ qplot(mean_household_income, median_house_value, data = ca) +
   geom_smooth()
 ```
 
-This line, in constrast, seems to fit the data much more accurately.
+This line, in contrast, seems to fit the data much more accurately.
 We will see later today the exact algorithm used in `geom_smooth`.
 For now, let's us the polynomial expansion trick we just derived
 to fit the curve using `lm`. We will fit a cubic polynomial to the
