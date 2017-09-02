@@ -156,7 +156,7 @@ more than the validation set. We are starting to see the effects
 of what is known as *overfitting*, where the model starts
 predicting random noises in the training data that do not generalize
 into the validation set. This will be a major theme throughout
-the entire semester. 
+the entire semester.
 
 ## Solving OLS
 
@@ -168,7 +168,7 @@ Recall that we are assuming that data are distributed as:
 
 $$ y_i = \alpha + x_i \beta $$
 
-We can define the OLS estimator by giving a name to the sum 
+We can define the OLS estimator by giving a name to the sum
 of squares:
 
 $$ f(\alpha, \beta) = \sum_i (y_i - \alpha - x_i \beta )^2 $$
@@ -179,13 +179,13 @@ $$ \widehat{\alpha}, \widehat{\beta} \in \arg\min_{a,b \in \mathbb{R}}
   \left\{ f(a, b) \right\} $$
 
 This is a very useful formulation because most ML algorithms
-are written as optimization problems. It will be helpful to 
+are written as optimization problems. It will be helpful to
 compute the partial derivaties of f with respect to alpha and
 beta:
 
 $$\begin{align} \frac{\partial f}{\partial \alpha}
   &=\sum_i 2 \cdot (y_i - \alpha - x_i \beta) \cdot (-1)\\
-  &= - \sum_i 2 \cdot (y_i - \alpha - x_i \beta) 
+  &= - \sum_i 2 \cdot (y_i - \alpha - x_i \beta)
   \end{align}
 $$
 
@@ -199,21 +199,21 @@ $$
 
 Putting these together, the gradient of f is just:
 
-$$ \nabla f = \left( \begin{array}{cc} \frac{\partial f}{\partial \beta} \\ 
-                                \frac{\partial f}{\partial \beta} \end{array} \right) 
-            = -1 \cdot \left( \begin{array}{cc}\sum_i 2 \cdot (y_i - \alpha - x_i \beta)  \\ 
-                                \sum_i 2 x_i \cdot (y_i - \alpha - x_i \beta) \end{array} \right) 
+$$ \nabla f = \left( \begin{array}{cc} \frac{\partial f}{\partial \beta} \\
+                                \frac{\partial f}{\partial \beta} \end{array} \right)
+            = -1 \cdot \left( \begin{array}{cc}\sum_i 2 \cdot (y_i - \alpha - x_i \beta)  \\
+                                \sum_i 2 x_i \cdot (y_i - \alpha - x_i \beta) \end{array} \right)
 $$
 
 Of course, one way to solve this equation would be to set both derivatives
 equal to zero. The ability to do this is a privilege of the OLS model and
 will not generalize to other models. Instead, lets use the gradient and
-partial derivaties to iteratively solve the equation. There are two basic
+partial derivatives to iteratively solve the equation. There are two basic
 techniques for doing this, both useful in different situations.
 
 ## Coordinate descent
 
-The idea of Coordiante descent is to cycle through the variables,
+The idea of Coordinate descent is to cycle through the variables,
 optimizing our function univariately one variable at a time. Doing
 this many times seems like a reasonable approach to minimizing the
 function.
@@ -253,7 +253,7 @@ beta_vals <- rep(0, iter)
 for (i in 2:iter) {
   # update alpha
   alpha_vals[i] <- (1 / n) * sum(y - x * beta_vals[i-1])
-  
+
   # update beta
   beta_vals[i] <- sum(y * x - alpha_vals[i] * x) / sum(x^2)
 }
@@ -285,7 +285,7 @@ for (i in 2:iter) {
   # compute gradient
   grad <- -2 * c(sum(y - alpha_vals[i-1] - x * beta_vals[i-1]),
                  sum(y*x - alpha_vals[i-1]*x - x^2))
-  
+
   # take a step in the direction of the negative gradient
   alpha_vals[i] <- alpha_vals[i-1] + (-rho) * grad[1]
   beta_vals[i] <- beta_vals[i-1] + (-rho) * grad[2]

@@ -4,9 +4,6 @@ layout: default
 
 <div>
 <h1>STAT/MATH/CS 395: Statistical Learning</h1>
-<a href="labs/" type="button" class="btn btn-success">LABS</a>
-<a href="notes/"  type="button" class="btn btn-success">NOTES</a>
-<a href="source/"  type="button" class="btn btn-success">SOURCE</a>
 </div>
 
 <div class="posts">
@@ -15,6 +12,15 @@ Time: Tuesday, Thursday 13:30-14:45<br>
 E-mail: tarnold2@richmond.edu<br>
 Office Hours: Tuesday, Thursday 10:30-12:00 <br>
 Syllabus: <a href="assets/syllabus/STAT395_Syllabus.pdf">STAT395_Syllabus.pdf</a> <br>
+<b><a href="labs/">Labs</a></b><br>
+<b><a href="source/">Source</a></b><br>
+</div>
 
+<div class="posts">
+  <br>
+  <h3>CLASS NOTES</h3>
+{% for post in site.posts reversed %}
+    <h3><strong>{{ post.date | date: "%Y-%m-%d" }}</strong>&nbsp;&nbsp;<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+{% endfor %}
 </div>
 
