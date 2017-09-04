@@ -15,11 +15,11 @@ library(ggplot2)
 library(dplyr)
 ```
 
-## Building model matricies
+## Building model matrices
 
 When we simply want to set the model matrix X to a subset
 of the numeric columns in our data frame, the function
-`as.matrix` is usually sufficent. The formula interface
+`as.matrix` is usually sufficient. The formula interface
 to `lm` is incredibly useful however when using categorical
 variables or when processing numeric variables by special
 functions such as `poly`.
@@ -56,7 +56,7 @@ The intercept indicates the expected delay of flights on this carrier.
 All of the other terms give how much more or less each carrier is
 to be delayed relative to the baseline "9E".
 
-Changing the baseline will change all of the beta coefficents.
+Changing the baseline will change all of the beta coefficients.
 However, the predicted values will remain the same. In 209 and 289,
 I spend a lot of time talking about changing the baseline and
 understanding the model from different perspectives. As we are
@@ -65,7 +65,7 @@ of a concern for us. Just note that by default variables are sorted
 in alphabetical order, which is why "9E" is the baseline here.
 
 With this model matrix, we can compute the regression vector
-by first creating training and validation matricies:
+by first creating training and validation matrices:
 
 ```{r}
 y_train <- y[flights$train_id == "train"]
@@ -89,7 +89,7 @@ Common examples are day of the week, month of the year, and
 weather ("clear", "cloudy", "rainy", "snowing"). Other times we
 have cases where a categorical variable has some categories with
 many observations but others with very few. In the latter case,
-we may not be able to reliably fit a seperate model term to the
+we may not be able to reliably fit a separate model term to the
 rare unique values in the category. The package **forcats**
 offers a solution with the function **fct_lump**. This function
 lumps together all but the top n categories into an "other"
@@ -104,7 +104,7 @@ model
 
 Remember that the design matrix *hides* one level in the baseline. Here
 the baseline (AA) stands for American Airlines, revealing why all
-the coefficents are negative!
+the coefficients are negative!
 
 ## Nearest Neighbours
 

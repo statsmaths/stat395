@@ -62,7 +62,7 @@ qplot(mean_household_income, median_house_value, data = ca) +
   geom_smooth(method = "lm")
 ```
 
-The line does a decent job, but seems to overpredict house values in areas
+The line does a decent job, but seems to over predict house values in areas
 with very high mean household incomes.
 
 Let's remove the `model = 'lm'` in the `geom_smooth` layer and see what
@@ -237,9 +237,9 @@ model <- lm(median_house_value ~
 model
 ```
 
-The numbers in the coefficents give the degree of the first term,
+The numbers in the coefficients give the degree of the first term,
 a dot, and the degree of the second term. Once again, this more
-complex model offers some (modest) gains over the simplier models.
+complex model offers some (modest) gains over the simpler models.
 
 ```{r}
 ca$value_pred <- predict(model, newdata = ca)
@@ -250,7 +250,7 @@ sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
 And, as we have seen, this increases the predictiveness of the
 model by a slight amount.
 
-## Overfitting
+## Over fitting
 
 As a general pattern, we see that increasing the complexity of
 the model creates a more predictive output. This should not be
@@ -294,9 +294,9 @@ sqrt(tapply((ca$median_house_value - ca$value_pred)^2,
 We see that the training error slowly gets lower as we increase the
 degree of the polynomial. With more terms to use, it will always
 improve the fit on the data it is trained on (at least up to numerical
-stability). However, the higher order fits begin to overfit to the training
+stability). However, the higher order fits begin to over fit to the training
 data. For degree six polynomials this creates a slightly worse fit. For
-degree 10 the fit is signficantly worse. At degree 12, the validation RMSE
+degree 10 the fit is significantly worse. At degree 12, the validation RMSE
 is many times higher than the training error.
 
 As a general rule, we use the validation set to determine exactly how
@@ -307,15 +307,15 @@ the validation set):
 
 ![](https://statsmaths.github.io/stat395/assets/img/pg38.png)
 
-I have several videos that demonstrate the process of moving from overfitting
-to underfitting. Here are three examples:
+I have several videos that demonstrate the process of moving from over-fitting
+to under-fitting. Here are three examples:
 
 - [k-nearest neighbors](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/knnEst.mp4)
 - [kernel smoothers](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/ksmoothEst.mp4)
 - [lowess](http://euler.stat.yale.edu/~tba3/stat665/lectures/lec02/media/loessEst.mp4)
 
 While we have not yet seen these particular models, the basic ideas between
-overfitting and underfitting still apply.
+over-fitting and under-fitting still apply.
 
 ## Latitude and Longitude
 
@@ -325,7 +325,7 @@ and median income and median house values. Let's move on, however, to a
 more obvious example where the relationship should be non-linear and
 need interactions: using longitude and latitude to predict house value.
 
-A simple plots show how using longitude and latitude creates and adhoc
+A simple plots show how using longitude and latitude creates and ad hoc
 map.
 
 ```{r, message = FALSE}
@@ -336,7 +336,7 @@ qplot(longitude, latitude, data = ca[ca$train_id != 'test',],
 ```
 
 If you know California well, you may be able to infer a lot from this
-plot. Otherwise, layering a map under the data helps substantailly.
+plot. Otherwise, layering a map under the data helps substantially.
 Using the **ggmap** package, I can replace the `qplot` function with
 the `qmplot` function to reproduce the prior plot with a map.
 

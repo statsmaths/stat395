@@ -278,7 +278,7 @@ qplot(alpha, beta, data = df[-1,], geom = c("point", "line")) +
 Coordinate descent forces us to iterate parallel to the axes of
 the data. It is like being constrained to moving along blocks in
 NYC rather than cutting across by more direct diagonals. Gradient
-descent modifies this approach by moving a small amount in the 
+descent modifies this approach by moving a small amount in the
 direction (or opposite direction, in the case of minimization) of
 the gradient of the function f. Specifically, we iteratively
 update according to:
@@ -358,7 +358,7 @@ qplot(alpha, beta, data = df, geom = c("point", "line")) +
   annotate("point", x = co[1], y = co[2], col = 'red')
 ```
 
-Even 1000 steps has a noticable error rate, let's increase it to 10k:
+Even 1000 steps has a noticeable error rate, let's increase it to 10k:
 
 ```{r}
 df <- grad_descent(x, y, iter = 10000, rho = 0.01)
@@ -367,7 +367,7 @@ qplot(alpha, beta, data = df, geom = c("point", "line")) +
 ```
 
 Now, at least at this scale, the optimization task approachs the optimal
-value. In case you are wondering about why the path takes a seemingly 
+value. In case you are wondering about why the path takes a seemingly
 circuitous route, we can plot the objective function to understand its
 overall shape:
 
