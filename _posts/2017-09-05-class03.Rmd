@@ -349,6 +349,9 @@ completion scores
 - due to naming issues, I've decided it will be easier to post
 lab assignments on the website rather than pushing the templates
 to GitHub
+- some version of R and RStudio produce `.html` files rather than
+`nb.html` files; this is fine - just put the html files online
+instead. The grading script has been modified to catch this.
 - if you had error messages about "curl" when downloading files,
 you can run `install.packages("devtools")` once to get the
 packages it is complaining about
