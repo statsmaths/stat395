@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<div>
+<h1>STAT/MATH/CS 395: Statistical Learning</h1>
+</div>
+
+<div class="posts">
+Location: PURH G13<br>
+Time: Tuesday, Thursday 13:30-14:45<br>
+E-mail: tarnold2@richmond.edu<br>
+Office Hours: Tuesday, Thursday 10:30-12:00 <br>
+Syllabus: <a href="assets/syllabus/STAT395_Syllabus.pdf">STAT395_Syllabus.pdf</a> <br>
+Labs: <b><a href="labs/">link</a></b> <br>
+Source: <b><a href="source/">link</a></b> <br>
+</div>
+
+<div class="posts">
+  <br>
+  <h3>CLASS NOTES</h3>
+{% for post in site.posts reversed %}
+    <h3><strong>{{ post.date | date: "%Y-%m-%d" }}</strong>&nbsp;&nbsp;<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+{% endfor %}
+</div>
+

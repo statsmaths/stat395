@@ -14,5 +14,14 @@ semester
 download 'curl' package for R not to complain when loading
 readr
 
+# Class 03: The Lady Tasting Tea
 
+- total lecture took about 1h, though longer with some
+questions at end about labs
+- no real questions throughout about the material today
+- mostly concerned with labs and results
+- need to create a minimal template showing how this was
+completed
+
+# Class 04: Fuel Efficiency in the Big City
 
