@@ -142,7 +142,7 @@ the `lm` function, we add an option called `subset`:
 ```{r}
 model <- lm(cty ~ displ + class, data = cars,
             subset = train_id == "train")
-cars$score_pred <- predict(model, newdata = cars)
+cars$cty_pred <- predict(model, newdata = cars)
 model
 ```
 
@@ -158,7 +158,7 @@ did on the hidden data. Don't worry about the specifics of the function
 and changing the response and dataset names as appropriate:
 
 ```{r}
-sqrt(tapply((cars$cty - cars$score_pred)^2, cars$train_id, mean))
+sqrt(tapply((cars$cty - cars$cty_pred)^2, cars$train_id, mean))
 ```
 
 Notice here that the training dataset actually has a worse RMSE than
@@ -177,7 +177,7 @@ Now, let's try to add the manufacturer of each car to the model:
 ```{r}
 model <- lm(cty ~ displ + class + manufacturer, data = cars,
             subset = train_id == "train")
-cars$score_pred <- predict(model, newdata = cars)
+cars$cty_pred <- predict(model, newdata = cars)
 model
 ```
 
@@ -185,7 +185,7 @@ The RMSE of this new model makes improvements on both the
 training and validation sets:
 
 ```{r}
-sqrt(tapply((cars$cty - cars$score_pred)^2, cars$train_id, mean))
+sqrt(tapply((cars$cty - cars$cty_pred)^2, cars$train_id, mean))
 ```
 
 However, notice that the training set improved significantly
