@@ -71,8 +71,46 @@ model
 
 Notice that it appears that we now have a separate term for
 each class of car. If you look more carefully you'll see that
-there is no mention of "2seater" in the list. We will see why
-this is next week as well.
+there is no mention of "2seater" in the list. This value is
+excluded because otherwise we would have perfect collinearity
+between the variables (a violation of the model assumptions)
+
+The model created here can be thought of as a set of parallel
+lines, one for each class of car. We can see that here:
+
+```{r}
+ggplot(cars, aes(displ, cty_pred)) +
+  geom_line(aes(color = class)) +
+  geom_point(aes(color = class))
+```
+
+Notice, for example, that compact and midsize have very close
+estimates in the regression model and very close lines on the
+plot.
+
+Here, we have different offsets for each class but the same slope.
+It is possible, easy in fact, to have different slopes and the same
+intercept. We simply use the `:` sign instead of the `+` sign in
+the formula specification.
+
+```{r}
+model <- lm(cty ~ displ:class,
+            data = cars)
+cars$cty_pred <- predict(model, newdata = cars)
+model
+```
+
+Here, the model gives the difference between each classes slope and
+the baseline slope.
+
+```{r}
+ggplot(cars, aes(displ, cty_pred)) +
+  geom_line(aes(color = class)) +
+  geom_point(aes(color = class))
+```
+
+Finally, we could use a `*` in place of the `:` to have different slopes
+and intercepts.
 
 ## Validation Sets
 
