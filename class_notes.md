@@ -25,3 +25,11 @@ completed
 
 # Class 04: Fuel Efficiency in the Big City
 
+- lecture took about 1h5; lots of questions about validation
+and how to use it... would not change anything per say but
+these were great to have asked off-hand
+- while giving the notes, I forgot about the part that
+teaches how to use the `subset` option; had to go back and
+re-do it; don't forget next time
+
+

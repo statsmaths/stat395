@@ -15,7 +15,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
-## Matricies
+## Matrices
 
 ### Linear Maps
 
