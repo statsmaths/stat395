@@ -15,6 +15,24 @@ library(ggplot2)
 library(dplyr)
 ```
 
+## Linear Models with Matrices in R
+
+Today, we will look at a dataset of flight delays. The delays
+have been rounded to the nearest 15 minutes. I have also 
+truncated flights to got in early to have non-negative 
+delays:
+
+```{r, message = FALSE}
+flights <- read_csv("~/files/ml_data/flights_15min.csv")
+```
+
+
+We are going to fit linear models to the dataset, but I want
+to modify how we build the models. Specifically, I want to
+manually construct the **data matrix** rather than having it
+made behind the scenes by R.
+
+
 ## Matrices
 
 ### Linear Maps
@@ -106,15 +124,15 @@ This is known as a **matrix product** and is written as:
 $$ C = A \cdot B = AB $$
 
 If the concept of matrix multiplication is new to you, an animated
-visualization of multiplying two matrices can be useful. Of course,
+visualization of multiplying two matricies can be useful. Of course,
 for this semester understanding the abstract meaning behind matrix
 multiplication (function composition) is much more important than
 grasping the mechanics of computing the new matrix:
 
 ![](https://thumbs.gfycat.com/PositiveExhaustedAmericangoldfinch-size_restricted.gif)
 
-Notice that if we represent vectors as one-column matrices, the
-definition of matrix multiplication is equivalent to our definition
+Notice that if we represent vectors as one-column matricies, the
+definition of matrix multiplication is equivalent to our defintion
 of applying a matrix to a vector:
 
 $$ Au = v. $$
@@ -123,7 +141,7 @@ $$ Au = v. $$
 
 ### Basics
 
-There is extensive functionality for working with matrices in
+There is extensive functionality for working with matricies in
 R. Let's make a random 5-by-5 matrix and a 5-by-matrix, the
 latter we can think of as a vector.
 
@@ -175,9 +193,9 @@ linear map (its also relatively simple to show that linear maps have
 linear inverses, when they exist). Note that matrix inversion is a
 computationally unstable procedure and should be avoided when possible.
 
-### Subsetting matrices
+### Subsetting matricies
 
-It will often be useful to take a subset of the rows and
+It will often be useful to take a subst of the rows and
 columns in a matrix. Here we take rows 2 and 3 and columns
 1 and 2:
 
@@ -264,61 +282,7 @@ $$ X \in \mathbb{R}^{n \times p} $$
 $$ \beta \in \mathbb{R}^p $$
 $$ \epsilon \in \mathbb{R}^n $$
 
-### Solving Linear Models
-
-Calculating the OLS solution for multivariate linear regression involves,
-in matrix notation, finding the beta vector that minimizes the sum of
-squared residuals. We can write, in matrix notation, the residuals as
-the following:
-
-$$ r(\beta) = y - X \beta $$
-
-And the sum of squared residuals can be derived as:
-
-$$ \begin{align} \text{sum of squared residuals} &= r(\beta)^t r(\beta) \\
-    &= \sum_{i = 1}^n r(\beta)_i \cdot r(\beta)_i
-    \end{align} $$
-
-This is a length n vector (or, equivalently, an n-by-1 matrix). The
-optimization task can then be written compactly as:
-
-$$ \begin{align} \widehat{\beta} &= \arg\min_b \left\{ r(b)^t r(b)  \right\} \\
-      &= \arg\min_b \left\{ (y - X b)^t (y - X b)  \right\}
-    \end{align} $$
-
-To find the minimizer, we calculate the gradient and set it equal to
-zero. This is not hard if you have learned how to work with gradients
-(and also, remember what you learned):
-
-$$ \begin{align} \nabla_b \left(r(b)^t r(b)\right)
-   &= \nabla_b \left((y - X b)^t (y - X b)\right) \\
-   &= \nabla_b \left(y^t y + b^t X^t X b - 2 b^t X^t y\right) \\
-   &= 2 X^t X b - 2 X^t y.
-  \end{align} $$
-
-Setting this equal to zero, we derive what are known as the normal
-equations (yes, this is plural; why?!):
-
-$$ (X^t X) \cdot \widehat{\beta} = X^t y. $$
-
-If the inverse exists, this gives an analytic formula for solving
-the linear system of equations:
-
-$$ \widehat{\beta} = (X^t X)^{-1} \cdot X^t y. $$
-
-I could be even more formal about this and show that the Hessian matrix
-is positive semi-definite everywhere and therefore we have found a global
-minimum. Under the assumption that many of your are already overwhelmed
-at this point, I'll skip this for today.
-
-## Linear Models with Matrices in R
-
-Let's now try to apply these theoretical ideas to an actual dataset.
-I'll load in the flights data from my website:
-
-```{r, message = FALSE}
-flights <- read_csv("~/files/ml_data/flights_15min.csv")
-```
+## Fitting Linear Models with Matricies
 
 Note that the flights data, like every other dataset we have used,
 is not a matrix. It is something that R calls a **data frame**:
@@ -357,13 +321,6 @@ y_train <- y[flights$train_id == "train"]
 y_valid <- y[flights$train_id == "valid"]
 ```
 
-From here, we can compute the regression vector beta:
-
-```{r}
-beta <- solve(t(X_train) %*% X_train) %*% t(X_train) %*% y_train
-beta
-```
-
 So this generally looks good, but we left out the intercept. Recall
 that our matrix formulation required us to add an explicit column of
 1's if we wanted an intercept. Let's do this directly in the matrix
@@ -374,17 +331,23 @@ X <- as.matrix(select(flights, arr_hour, dep_hour))
 X <- cbind(1, X)
 X_train <- X[flights$train_id == "train", ]
 X_valid <- X[flights$train_id == "valid", ]
-
-beta <- solve(t(X_train) %*% X_train) %*% t(X_train) %*% y_train
-beta
 ```
 
-Perfect, now we have a regression vector. To do prediction,
-we just calculate X times beta:
+## Using lm.fit
+
+We have seen how to use the `lm` function to quickly fit
+linear regression directly from data frames. Now, how do
+we actually fit a linear model once we have these matricies?
+Next class we will see how to do this directly with matrix
+operations. There is an intermediate function that solves the
+linear regression problem directly from our matricies called
+`lm.fit`. In fact, the `lm` function internally calls this function.
+As inputs, it takes just the X matrix and response y. There
+is a lot of diagnostic output, but we will take just the
+`coef` component, corresponding to the coefficents matrix:
 
 ```{r}
-y_valid_pred <- X_valid %*% beta
-sqrt(mean( (y_valid - y_valid_pred)^2))
+lm.fit(X_train, y_train)$coef
 ```
 
 Let's verify that this gives the same output as the `lm` function:
@@ -397,28 +360,68 @@ model
 
 And, as hoped, it does!
 
-## Using lm.fit
+## Another (The Best!) Way to Make Model Matricies
 
-We have seen how to use the `lm` function to quickly fit
-linear regression directly from data frames. Now, we also
-know how to do this directly with matrix operations. There
-is an intermediate function that solves the linear regression
-problem directly from our matrices called `lm.fit`. In
-fact, the `lm` function internally calls this function.
-As inputs, it takes just the X matrix and response y. There
-is a lot of diagnostic output, but we will take just the
-`coef` component, corresponding to the coefficients matrix:
+When we simply want to set the model matrix X to a subset
+of the numeric columns in our data frame, the function
+`as.matrix` is usually sufficient. The formula interface
+to `lm` is incredibly useful however when using categorical
+variables or when processing numeric variables by special
+functions such as `poly`.
+
+The function `model.matrix` allows us to compute the model
+matrix from the formula interface. In fact, the `lm` function
+calls this to convert our inputs into a model matrix. The
+output of this is then passed to `lm.fit`. It will also, by
+default, include an intercept term for us. Here we use it
+to build the same model matrix as before:
 
 ```{r}
-lm.fit(X_train, y_train)$coef
+X <- model.matrix(~ arr_hour +  dep_hour , data = flights)
+head(X)
 ```
 
-This, once again, aligns with the output from the other
-two methods.
+Notice that the intercept has been added for us. What is nice
+about this formulation is that we can commands like `poly` and
+factor (or just raw character vectors) and have R take care of
+all the hard work for us:
 
+```{r}
+X <- model.matrix(~ poly(arr_hour, degree = 2) + factor(carrier) , data = flights)
+head(X)
+```
 
+We will begin next class by showing some best practices for how to build
+model matrices. At that point we will be able to apply more models that
+require us to put data into a matrix format.
 
+### Indicator variables
 
+Notice that each of the carrier variables is an indicator for
+whether a given flight was flown on the associated carrier.
+Let's look at the first 6 carriers to verify this:
 
+```{r}
+head(flights$carrier)
+```
 
+If we look at a table of all the carriers, we see that one
+of the carriers is missing:
+
+```{r}
+table(flights$carrier)
+```
+
+The missing value "9E" is known as the **baseline** in this model.
+The intercept indicates the expected delay of flights on this carrier.
+All of the other terms give how much more or less each carrier is
+to be delayed relative to the baseline "9E".
+
+Changing the baseline will change all of the beta coefficients.
+However, the predicted values will remain the same. In 209 and 289,
+I spend a lot of time talking about changing the baseline and
+understanding the model from different perspectives. As we are
+focused on prediction, which is unchanged, this will be much less
+of a concern for us. Just note that by default variables are sorted
+in alphabetical order, which is why "9E" is the baseline here.
 
