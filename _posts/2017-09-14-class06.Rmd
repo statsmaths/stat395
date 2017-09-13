@@ -22,7 +22,7 @@ Washington, DC. Our task is to predict how many mikes are
 rented each day:
 
 ```{r, message = FALSE}
-bikes <- read_csv("~/files/ml_data/bikes.csv")
+bikes <- read_csv("https://statsmaths.github.io/ml_data//bikes.csv")
 ```
 
 
