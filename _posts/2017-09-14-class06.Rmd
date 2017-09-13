@@ -17,13 +17,12 @@ library(dplyr)
 
 ## Linear Models with Matrices in R
 
-Today, we will look at a dataset of flight delays. The delays
-have been rounded to the nearest 15 minutes. I have also 
-truncated flights to got in early to have non-negative 
-delays:
+Today, we will look at a dataset of bike sharing usage in
+Washington, DC. Our task is to predict how many mikes are
+rented each day:
 
 ```{r, message = FALSE}
-flights <- read_csv("~/files/ml_data/flights_15min.csv")
+bikes <- read_csv("~/files/ml_data/bikes.csv")
 ```
 
 
@@ -142,7 +141,7 @@ $$ Au = v. $$
 ### Basics
 
 There is extensive functionality for working with matricies in
-R. Let's make a random 5-by-5 matrix and a 5-by-matrix, the
+R. Let's make a random 5-by-5 matrix and a 5-by-1 matrix, the
 latter we can think of as a vector.
 
 ```{r}
@@ -284,11 +283,11 @@ $$ \epsilon \in \mathbb{R}^n $$
 
 ## Fitting Linear Models with Matricies
 
-Note that the flights data, like every other dataset we have used,
+Note that the bikes data, like every other dataset we have used,
 is not a matrix. It is something that R calls a **data frame**:
 
 ```{r}
-class(flights)
+class(bikes)
 ```
 
 While both matrices and data frames have data organized in rows and
@@ -305,9 +304,9 @@ interest and X is a matrix containing the variables we want to use in
 a model.
 
 ```{r}
-y <- flights$delayed
+y <- bikes$count
 
-X <- as.matrix(select(flights, arr_hour, dep_hour))
+X <- as.matrix(select(bikes, temp, humidity))
 X[1:10,]
 ```
 
@@ -327,7 +326,7 @@ that our matrix formulation required us to add an explicit column of
 X using the `cbind` function, and repeat:
 
 ```{r}
-X <- as.matrix(select(flights, arr_hour, dep_hour))
+X <- as.matrix(select(bikes, temp, humidity))
 X <- cbind(1, X)
 X_train <- X[flights$train_id == "train", ]
 X_valid <- X[flights$train_id == "valid", ]
@@ -347,13 +346,21 @@ is a lot of diagnostic output, but we will take just the
 `coef` component, corresponding to the coefficents matrix:
 
 ```{r}
-lm.fit(X_train, y_train)$coef
+beta <- lm.fit(X_train, y_train)$coef
+beta
+```
+
+We can creat predicted values for the whole dataset by matrix
+multiplying `X` with `beta`:
+
+```{r}
+bikes$count_pred <- X %*% beta
 ```
 
 Let's verify that this gives the same output as the `lm` function:
 
 ```{r}
-model <- lm(delayed ~ arr_hour +  dep_hour, data = flights,
+model <- lm(count ~ temp +  humidity, data = bikes,
             subset = train_id == "train")
 model
 ```
@@ -377,7 +384,7 @@ default, include an intercept term for us. Here we use it
 to build the same model matrix as before:
 
 ```{r}
-X <- model.matrix(~ arr_hour +  dep_hour , data = flights)
+X <- model.matrix(~ temp +  humidity , data = flights)
 head(X)
 ```
 
@@ -387,7 +394,8 @@ factor (or just raw character vectors) and have R take care of
 all the hard work for us:
 
 ```{r}
-X <- model.matrix(~ poly(arr_hour, degree = 2) + factor(carrier) , data = flights)
+X <- model.matrix(~ poly(humidity, degree = 2) + factor(season),
+                  data = flights)
 head(X)
 ```
 
@@ -397,25 +405,25 @@ require us to put data into a matrix format.
 
 ### Indicator variables
 
-Notice that each of the carrier variables is an indicator for
+Notice that each of the season variables is an indicator for
 whether a given flight was flown on the associated carrier.
 Let's look at the first 6 carriers to verify this:
 
 ```{r}
-head(flights$carrier)
+head(bikes$season)
 ```
 
 If we look at a table of all the carriers, we see that one
 of the carriers is missing:
 
 ```{r}
-table(flights$carrier)
+table(bikes$season)
 ```
 
-The missing value "9E" is known as the **baseline** in this model.
-The intercept indicates the expected delay of flights on this carrier.
-All of the other terms give how much more or less each carrier is
-to be delayed relative to the baseline "9E".
+The missing value "Fall" is known as the **baseline** in this model.
+The intercept indicates the expected rentals for a day in the Fall.
+All of the other terms give how much more or less each season has
+more or less expected rentals relative to the baseline "Fall".
 
 Changing the baseline will change all of the beta coefficients.
 However, the predicted values will remain the same. In 209 and 289,
@@ -423,5 +431,5 @@ I spend a lot of time talking about changing the baseline and
 understanding the model from different perspectives. As we are
 focused on prediction, which is unchanged, this will be much less
 of a concern for us. Just note that by default variables are sorted
-in alphabetical order, which is why "9E" is the baseline here.
+in alphabetical order, which is why "Fall" is the baseline here.
 

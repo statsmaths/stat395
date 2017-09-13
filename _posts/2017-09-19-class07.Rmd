@@ -28,10 +28,6 @@ y_train <- y[train_id == "train"]
 X_train <- X[train_id == "train",]
 ```
 
-
-
-
-
 ### Solving Linear Models
 
 Calculating the OLS solution for multivariate linear regression involves,
