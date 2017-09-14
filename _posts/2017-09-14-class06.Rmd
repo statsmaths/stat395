@@ -406,7 +406,7 @@ require us to put data into a matrix format.
 ### Indicator variables
 
 Notice that each of the season variables is an indicator for
-whether a given flight was flown on the associated carrier.
+which season of the year each day is.
 Let's look at the first 6 carriers to verify this:
 
 ```{r}
