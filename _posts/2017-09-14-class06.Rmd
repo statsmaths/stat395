@@ -31,7 +31,6 @@ to modify how we build the models. Specifically, I want to
 manually construct the **data matrix** rather than having it
 made behind the scenes by R.
 
-
 ## Matrices
 
 ### Linear Maps
@@ -330,6 +329,7 @@ X <- as.matrix(select(bikes, temp, humidity))
 X <- cbind(1, X)
 X_train <- X[flights$train_id == "train", ]
 X_valid <- X[flights$train_id == "valid", ]
+head(X_train)
 ```
 
 ## Using lm.fit
@@ -350,7 +350,7 @@ beta <- lm.fit(X_train, y_train)$coef
 beta
 ```
 
-We can creat predicted values for the whole dataset by matrix
+We can create predicted values for the whole dataset by matrix
 multiplying `X` with `beta`:
 
 ```{r}
@@ -389,7 +389,7 @@ head(X)
 ```
 
 Notice that the intercept has been added for us. What is nice
-about this formulation is that we can commands like `poly` and
+about this formulation is that we can use commands like `poly` and
 factor (or just raw character vectors) and have R take care of
 all the hard work for us:
 
