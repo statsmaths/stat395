@@ -313,10 +313,10 @@ We can then create specific training and validation sets
 using the logical subset method from above:
 
 ```{r}
-X_train <- X[flights$train_id == "train", ]
-X_valid <- X[flights$train_id == "valid", ]
-y_train <- y[flights$train_id == "train"]
-y_valid <- y[flights$train_id == "valid"]
+X_train <- X[bikes$train_id == "train", ]
+X_valid <- X[bikes$train_id == "valid", ]
+y_train <- y[bikes$train_id == "train"]
+y_valid <- y[bikes$train_id == "valid"]
 ```
 
 So this generally looks good, but we left out the intercept. Recall
@@ -327,8 +327,8 @@ X using the `cbind` function, and repeat:
 ```{r}
 X <- as.matrix(select(bikes, temp, humidity))
 X <- cbind(1, X)
-X_train <- X[flights$train_id == "train", ]
-X_valid <- X[flights$train_id == "valid", ]
+X_train <- X[bikes$train_id == "train", ]
+X_valid <- X[bikes$train_id == "valid", ]
 head(X_train)
 ```
 
@@ -384,7 +384,7 @@ default, include an intercept term for us. Here we use it
 to build the same model matrix as before:
 
 ```{r}
-X <- model.matrix(~ temp +  humidity , data = flights)
+X <- model.matrix(~ temp +  humidity , data = bikes)
 head(X)
 ```
 
@@ -395,7 +395,7 @@ all the hard work for us:
 
 ```{r}
 X <- model.matrix(~ poly(humidity, degree = 2) + factor(season),
-                  data = flights)
+                  data = bikes)
 head(X)
 ```
 
