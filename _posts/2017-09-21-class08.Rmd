@@ -7,6 +7,10 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-09-21-class08/")
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
 ```{r, message = FALSE}
@@ -15,78 +19,248 @@ library(ggplot2)
 library(dplyr)
 ```
 
+## Chicago Crimes
+
+Our dataset for today contains observations of reported crimes
+from the city of Chicago. Our prediction task is to figure out,
+given details of when and where the crime occured, what the
+mostly likely type of crime was commited. Loading in the dataset
+see that the crime type is given as a number from 1 to 3:
 
 ```{r, message = FALSE}
 crimes <- read_csv("~/files/ml_data/chi_crimes_3.csv")
 ```
 
+The corresponding crime names are:
+
 ```{r}
-temp <- crimes[crimes$crime_type %in% c("theft", "narcotics"),]
-temp$y <- as.numeric(temp$crime_type == "theft")
-model <- lm(y ~ latitude + longitude,
-            data = temp, subset = train_id == "train")
-temp$y_pred <- predict(model, newdata = temp)
+crime_names <- c("criminal_damage", "narcotics", "theft")
 ```
 
-```{r, message = FALSE}
-library(ggmap)
-qmplot(longitude, latitude, data = temp, color = factor(y_pred > 0.5)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+Notice that this dataset has been *balanced*. That is,
+there are an approximately equal number of each crime type
+in both the training and validation sets (also in the
+test set, but you cannot see that here):
+
+```{r}
+table(crimes$crime_type, crimes$train_id)
 ```
 
-```{r, message = FALSE}
-model <- lm(y ~ poly(latitude, 4) + poly(longitude, 4),
-            data = temp, subset = train_id == "train")
-temp$y_pred <- predict(model, newdata = temp)
-qmplot(longitude, latitude, data = temp, color = factor(y_pred > 0.5)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+This has been done by *down-sampling*. These crimes do not
+occur with equal probabilities in the raw data; I have taken
+a subset of the data in such a way that the probabilities are
+equal. This makes building models easier and is a common trick
+that I will generally do for you on the lab data.
+
+### Multivariate prediction
+
+Now that we have three categories, if we were to fit a linear
+regression on the response this would no longer make sense. The
+model would be assuming that the second category is somehow
+in-between the other two categories. We could modify the
+procedure in two ways:
+
+- *one-vs-one*: take each pair of crimes and fit a LM or GLM
+seperating these two groups. Final predictions use every model
+to determine, head to head, which class each testing point should
+belong to.
+- *one-vs-all*: build a seperate model for each class, trying
+to seperate each class from the rest.
+
+With only a small number of classes, both of these can work
+well. When the number of categories is large, the first takes
+a lot of computational resource to compare all pairs of models.
+The second becomes hard because it has a tendency to make every
+point look like the "all" (since it dominates any individual
+group). 
+
+We could implement either of these strategies ourselves. Some
+models, such as GAMs, don't directly implement any other way
+of doing multi-class prediction and that would be the only 
+approach if we wanted to use them. The **e1071** package will
+do the *one-vs-one* when given multiple classes (so be
+carefuly giving it too many classes). Today we will see a
+package that does a tweak on the *one-vs-many* for logistic
+regression and an entirely different way of approaching the
+problem that avoids the multiclass issue in its entirety.
+
+## Multinomial regression
+
+The **nnet** package provides a function `multinom` that
+generalizes the logistic regression in the `glm` function.
+It requires almost no special settings; just supply a 
+formula as usual but with a categorical response. The 
+function will print out verbose information letting you
+know how quickly it converges.
+
+```{r}
+library(nnet)
+model <- multinom(crime_type ~ poly(longitude, latitude, degree = 3),
+                  data = crimes)
 ```
 
-```{r, message = FALSE}
+The predicted values from the predict function give, by default, 
+the class predictions:
+
+```{r}
+crimes$y_pred <- predict(model, newdata = crimes)
+```
+
+We could, if needed, get the predicted probabilities for each
+class by setting the `type` option to "probs". The output is
+a matrix with one column per class. We will see uses for these
+in the future:
+
+```{r}
+head(predict(model, newdata = crimes, type = "probs"))
+```
+
+### Confusion Matrix
+
+The classification rate that we saw last time still work as a
+good measurment of how well our predictions run. Remember though
+that with more classes, even "good" classification rates will
+generally be lower. Random guessing in the two class model yields
+a 50% rate; here it gives a 33% rate.
+
+```{r}
+tapply(crimes$y_pred == crimes$crime_type, crimes$train_id, mean)
+```
+
+With more than two classes, there is more than one kind of error.
+Which crimes, for example, are we having trouble distinguishing?
+The confusion matrix shows 
+
+```{r}
+table(y = crimes$crime_type, y_pred = crimes$y_pred)
+```
+
+So, criminal damage and narcotics seem harder to distinguish
+based on location along. These types of metric will be very
+useful going forward.
+
+### Neural networks?
+
+You might wonder why we are using a neural network package for
+fitting multinomial models. This is a very old package; I can't
+find the exact original publication date but I believe it was
+pre version 2.0 of R (2004-10-04). The neural networks here do
+not have the functions that you might be familiar with from 
+another class or research project. However, there is a close
+relationship between neural networks and regression theory.
+We will ook at this in just a couple of weeks.
+
+## Nearest Neighbors
+
+Now, we can look at an entirely different approach to prediction.
+As I mentioned in the course introduction, I think of models as
+coming in two categories: local and global. Everything we have
+seen is inherently global, though we have tried to create
+local effects through non-linearities and basis expansion
+techniques. 
+
+The nearest neighbor classification algorithm does something very
+simple: categorize each point with whatever category is more
+prominent within the nearest k training points. The package we
+will use for this is **FNN**, for fast nearest neighbors.
+
+```{r}
 library(FNN)
-X <- scale(as.matrix(select(temp, longitude, latitude)))
-y <- temp$y
-X_train <- X[temp$train_id == "train",]
-y_train <- y[temp$train_id == "train"]
-
-temp$y_pred <- as.numeric(FNN::knn(train = X_train, test = X, cl = y_train, k = 200))
-
-qmplot(longitude, latitude, data = temp, color = factor(y_pred)) +
-  viridis::scale_color_viridis(discrete = TRUE)
 ```
 
-```{r, message = FALSE}
-crimes$y <- as.numeric(factor(crimes$crime_type))
+In order to use nearest neighbors, we need to create a model 
+matrix. FNN does not accept a formula input.
 
-
-library(FNN)
-X <- scale(as.matrix(select(crimes, longitude, latitude)))
-y <- crimes$y
+```{r}
+X <- as.matrix(select(crimes, longitude, latitude))
+y <- crimes$crime_type
 X_train <- X[crimes$train_id == "train",]
 y_train <- y[crimes$train_id == "train"]
+```
 
-crimes$y_pred <- as.numeric(FNN::knn(train = X_train, test = X, cl = y_train, k = 500))
+Once we have the data, the `knn` function is used
+to run the nearest neighbors algorithm. We have only
+to set the parameter `k`; here set to 100.
 
-qmplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
+```{r}
+crimes$y_pred <- knn(train = X_train, test = X,
+                     cl = y_train, k = 100)
+```
+
+The classification can be investigated and we see that
+it is better in this case than the linear model.
+
+```{r}
+tapply(crimes$y_pred == crimes$crime_type, crimes$train_id, mean)
+```
+
+Plotting the data, we can see just how local the model actually
+is:
+
+```{r, message = FALSE}
+library(ggmap)
+qmplot(longitude, latitude, data = crimes,
+       color = y_pred) +
   viridis::scale_color_viridis(discrete = TRUE)
 ```
 
+The nearest neighbors algorithm is of course very sensitive to
+the choice of k. You can tune it using the validation set. 
+Also, the function `knn.reg` can be used to do nearest neighbors
+for prediction of a continuous response (notice the use of
+"regression" to contrast with "classification").
 
+### Scale
+
+A main problem with the nearest neighbors algorithm is defining
+what "near" means. This will be an ongoing issue, but for now
+notice that if we build a model matrix with very different
+variables (such as, time, latitude, and income) the algorithm
+will basically ignore any variables that have a very different
+scale. By default `knn` just uses ordinary Euclidean distances.
+
+One simple fix is to use the `scale` function on the data 
+matrix `X`:
+
+```{r}
+X <- scale(X)
+X_train <- X[crimes$train_id == "train",]
+```
+
+It does not change much here because latitude and longitude 
+have different scales. In other applications it drastically
+changes the fit.
+
+## Spatial-temporal plots
+
+I wanted to show you an interesting plot of the predictions
+for the Chicago crime data. In order to make the plot most
+readable, lets cut time into six buckets:
 
 ```{r, message = FALSE, warning = FALSE}
-library(nnet)
-library(ggmap)
-library(smodels)
 crimes$h6 <- as.numeric(cut(crimes$hour, 6, label = FALSE))
+```
+
+Now, I'll fit a multinomial model interacting longitude,
+latitude, and time.
+
+```{r, message = FALSE, warning = FALSE}
 model <- multinom(crime_type ~ poly(longitude, latitude, h6, degree = 3),
                   data = crimes)
 crimes$y_pred <- predict(model, newdata = crimes)
+```
+
+The resulting plot shows how the propensity for each crime
+type changes throughout the day and over the city.
+
+```{r, message = FALSE, warning = FALSE}
 qplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
   viridis::scale_color_viridis(discrete = TRUE) +
   facet_wrap(~h6)
 ```
 
-
+This is a good example of how predictive modelling can be
+used for meaninful data analysis. 
 
 
 

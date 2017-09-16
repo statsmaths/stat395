@@ -7,6 +7,10 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-09-19-class07/")
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
 ```{r, message = FALSE}
@@ -56,7 +60,7 @@ with more time on the clock.
 Think for a moment about exactly what the predicted value might mean
 here. If it is 1, the model predicts that the shot will be made and
 if 0 the model preidcts it will not be made. What about 0.5? Here, it
-seems like there is an equal chance of the shot missing or being 
+seems like there is an equal chance of the shot missing or being
 made. Extrapolating, we can see the predicted value as a predicted
 probability.
 
@@ -93,7 +97,7 @@ nba$fgm_pred <- predict(model, newdata = nba)
 qplot(shot_clock, defender_height, data = nba, color = factor(fgm_pred > 0.5)) +
   viridis::scale_color_viridis(discrete = TRUE) +
   theme_minimal()
-``` 
+```
 
 And again, the pattern matches the relationship we would expect and
 shows how the two regions are seperated by a straight line.
@@ -102,23 +106,23 @@ shows how the two regions are seperated by a straight line.
 
 The variable we are trying to predict here is quite different from all
 of our previous examples. It takes on only one of two values. In cases
-like this (such as a spam classifier or cancer detection algorithm), 
+like this (such as a spam classifier or cancer detection algorithm),
 as we have just seen, it is possible to ignore this distinction when
 fitting a model by treating one category as a `0` and the other category
 as a `1`. Next time, we'll see what to do when we have more than two
 categories.
 
 When our response takes on only a small set of values, particularly if
-these are unordered, we say that we are doing **classification**. 
+these are unordered, we say that we are doing **classification**.
 Somewhat confusingly, the complement of classification is often called
 **regression**. I try to avoid this later term because it can become
-confusing with the more general notion of regression models. 
+confusing with the more general notion of regression models.
 
 It is possible to use RMSE to measure how well our predicted probabilities
 fit the data. Often though, we ultimately do not care much about the
 probabilities, and simple want to make the binary guess of our model
 be correct as often as possible. Here, we would only allow for predictions
-to be either `0` or `1`. The best metric for measuring this is the 
+to be either `0` or `1`. The best metric for measuring this is the
 *classification rate*, the proportion of guesses that were correct. We
 can measure that here fairly quickly:
 
@@ -128,7 +132,7 @@ nba$fgm_pred <- as.numeric(nba$fgm_pred > 0.5)
 tapply(nba$fgm_pred == nba$fgm, nba$train_id, mean)
 ```
 
-Here, we have a classification rate of 57.5% on the validation set. 
+Here, we have a classification rate of 57.5% on the validation set.
 Unless otherwise noted, classification rate will be used for assessing
 classification models throughout the semester.
 
@@ -148,13 +152,13 @@ equal to 1, this does not make sense.
 Generalized linear models (GLMs) extend the linear model assumptions to
 allow for a more complex relationship between Y and X. The linear
 part that is preserved, is that X is always multiplied (as a matrix)
-by the unknown parameters beta. The most commonly seen GLM relates 
+by the unknown parameters beta. The most commonly seen GLM relates
 the *log odds ratio* to the linear predictor:
 
 $$ \log \left( \frac{\mathbb{P}[Y_i = 1]}{1 - \mathbb{P}[Y_i = 1]} \right) = X \beta $$
 
-The left-hand side here can be written equivalently using the 
-logit function, which is simply defined to be equivalent to 
+The left-hand side here can be written equivalently using the
+logit function, which is simply defined to be equivalent to
 the log odds ratio:
 
 $$ \text{logit}(\mathbb{P}[Y_i = 1]) = X \beta $$
@@ -167,7 +171,7 @@ could be represented by X beta. There are more technical reasons
 for using this particular function, the logit, having to do with
 the theory of exponential families.
 
-A GLM using the logit function is so common that it 
+A GLM using the logit function is so common that it
 has its own name: *logistic regression*.
 
 Once we have learned the regression vector in logistic regression,
@@ -217,7 +221,7 @@ qplot(shot_clock, shot_dist, data = nba, color = factor(fgm_pred > 0.5)) +
 ### GLM and LM comparison
 
 Visually, it looks liks the output of the GLM and LM are not
-very different. Let's formalize that here by saving the 
+very different. Let's formalize that here by saving the
 predicted classes from both:
 
 ```{r}
@@ -301,7 +305,7 @@ regression.
 
 Also, remember the generalized additive models (GAM) package **gam** from last
 week? The generalized in the name of that function refers to the same
-generalized as in GLM. You can use the family function in `gam` to fit 
+generalized as in GLM. You can use the family function in `gam` to fit
 generalized additive models with a logistic link. Feel free to try this
 in the next few labs.
 
@@ -313,7 +317,7 @@ to briefly introduce a fourth model known as support vector
 machines (SVMs). We won't cover these in detail, but the basic
 idea is to eschew the prediction of probabilities and to calculate
 the best seperating hyperplane (generalization of the line we saw
-in our example to higher dimensions) directly. 
+in our example to higher dimensions) directly.
 
 To use SVMs, we need to create a model matrix as we learned last
 week:
@@ -333,7 +337,7 @@ plane we had above:
 
 ```{r}
 library(e1071)
-model <- svm(X_train, y_train, kernel = "linear")
+model <- svm(X_train, factor(y_train), kernel = "linear")
 nba$fgm_pred_svm <- as.numeric(predict(model, newdata = X, type = "response") > 0.5)
 nba$fgm_pred_lm <- as.numeric(nba$fgm_pred_lm > 0.5)
 ```
