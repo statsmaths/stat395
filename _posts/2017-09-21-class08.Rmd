@@ -72,11 +72,11 @@ well. When the number of categories is large, the first takes
 a lot of computational resource to compare all pairs of models.
 The second becomes hard because it has a tendency to make every
 point look like the "all" (since it dominates any individual
-group). 
+group).
 
 We could implement either of these strategies ourselves. Some
 models, such as GAMs, don't directly implement any other way
-of doing multi-class prediction and that would be the only 
+of doing multi-class prediction and that would be the only
 approach if we wanted to use them. The **e1071** package will
 do the *one-vs-one* when given multiple classes (so be
 carefuly giving it too many classes). Today we will see a
@@ -88,8 +88,8 @@ problem that avoids the multiclass issue in its entirety.
 
 The **nnet** package provides a function `multinom` that
 generalizes the logistic regression in the `glm` function.
-It requires almost no special settings; just supply a 
-formula as usual but with a categorical response. The 
+It requires almost no special settings; just supply a
+formula as usual but with a categorical response. The
 function will print out verbose information letting you
 know how quickly it converges.
 
@@ -99,7 +99,7 @@ model <- multinom(crime_type ~ poly(longitude, latitude, degree = 3),
                   data = crimes)
 ```
 
-The predicted values from the predict function give, by default, 
+The predicted values from the predict function give, by default,
 the class predictions:
 
 ```{r}
@@ -129,7 +129,7 @@ tapply(crimes$y_pred == crimes$crime_type, crimes$train_id, mean)
 
 With more than two classes, there is more than one kind of error.
 Which crimes, for example, are we having trouble distinguishing?
-The confusion matrix shows 
+The confusion matrix shows
 
 ```{r}
 table(y = crimes$crime_type, y_pred = crimes$y_pred)
@@ -145,7 +145,7 @@ You might wonder why we are using a neural network package for
 fitting multinomial models. This is a very old package; I can't
 find the exact original publication date but I believe it was
 pre version 2.0 of R (2004-10-04). The neural networks here do
-not have the functions that you might be familiar with from 
+not have the functions that you might be familiar with from
 another class or research project. However, there is a close
 relationship between neural networks and regression theory.
 We will ook at this in just a couple of weeks.
@@ -157,7 +157,7 @@ As I mentioned in the course introduction, I think of models as
 coming in two categories: local and global. Everything we have
 seen is inherently global, though we have tried to create
 local effects through non-linearities and basis expansion
-techniques. 
+techniques.
 
 The nearest neighbor classification algorithm does something very
 simple: categorize each point with whatever category is more
@@ -168,7 +168,7 @@ will use for this is **FNN**, for fast nearest neighbors.
 library(FNN)
 ```
 
-In order to use nearest neighbors, we need to create a model 
+In order to use nearest neighbors, we need to create a model
 matrix. FNN does not accept a formula input.
 
 ```{r}
@@ -205,7 +205,7 @@ qmplot(longitude, latitude, data = crimes,
 ```
 
 The nearest neighbors algorithm is of course very sensitive to
-the choice of k. You can tune it using the validation set. 
+the choice of k. You can tune it using the validation set.
 Also, the function `knn.reg` can be used to do nearest neighbors
 for prediction of a continuous response (notice the use of
 "regression" to contrast with "classification").
@@ -219,7 +219,7 @@ variables (such as, time, latitude, and income) the algorithm
 will basically ignore any variables that have a very different
 scale. By default `knn` just uses ordinary Euclidean distances.
 
-One simple fix is to use the `scale` function on the data 
+One simple fix is to use the `scale` function on the data
 matrix `X`:
 
 ```{r}
@@ -227,7 +227,7 @@ X <- scale(X)
 X_train <- X[crimes$train_id == "train",]
 ```
 
-It does not change much here because latitude and longitude 
+It does not change much here because latitude and longitude
 have different scales. In other applications it drastically
 changes the fit.
 
@@ -254,13 +254,13 @@ The resulting plot shows how the propensity for each crime
 type changes throughout the day and over the city.
 
 ```{r, message = FALSE, warning = FALSE}
-qplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
+qmplot(longitude, latitude, data = crimes, color = factor(y_pred)) +
   viridis::scale_color_viridis(discrete = TRUE) +
   facet_wrap(~h6)
 ```
 
 This is a good example of how predictive modelling can be
-used for meaninful data analysis. 
+used for meaninful data analysis.
 
 
 
