@@ -338,7 +338,7 @@ plane we had above:
 ```{r}
 library(e1071)
 model <- svm(X_train, factor(y_train), kernel = "linear")
-nba$fgm_pred_svm <- as.numeric(predict(model, newdata = X, type = "response") > 0.5)
+nba$fgm_pred_svm <- as.numeric(as.character(predict(model, newdata = X, type = "response")))
 nba$fgm_pred_lm <- as.numeric(nba$fgm_pred_lm > 0.5)
 ```
 
@@ -357,7 +357,7 @@ If we change the *kernel* option, other choices are "radial",
 "sigmoid", and "polynomial", this will do something akin to
 a basis expansion.
 
-In this case, the SVM does a better job with the classification
+In this case, the LM does a better job with the classification
 task:
 
 ```{r}
