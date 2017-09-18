@@ -1,5 +1,5 @@
 ---
-title: "Class 10: "
+title: "Class 10: Household Income"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -13,6 +13,287 @@ knitr::opts_chunk$set(fig.width = 8.5)
 knitr::opts_chunk$set(out.width = "100%")
 knitr::opts_chunk$set(dpi = 300)
 ```
+
+```{r, message = FALSE}
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(viridis)
+```
+
+## Income data
+
+The data for today is similar to the California housing dataset. For
+each census tract we need to predict the median income variable.
+Here, however, we now have data for the entire United States.
+
+```{r, message = FALSE}
+acs <- read_csv("https://statsmaths.github.io/ml_data/tract_median_income.csv")
+```
+
+Looking at the map, we see that income is highly local and highest
+near large cities (such as NYC, Chicago, LA, and Houston).
+
+```{r, message = FALSE}
+library(smodels)
+temp <- filter(acs, train_id == "train", !(state %in% c("AK", "HI")))
+qplot(lon, lat, data = temp, color = bin(median_income, 6),
+      size = I(0.5), alpha = I(0.5)) +
+  theme_minimal() +
+  coord_map()
+```
+
+###
+
+```{r}
+X <- as.matrix(select(acs, lon, lat))
+y <- acs$median_income
+
+X_train <- X[acs$train_id == "train",]
+X_valid <- X[acs$train_id == "valid",]
+y_train <- y[acs$train_id == "train"]
+y_valid <- y[acs$train_id == "valid"]
+```
+
+
+
+```{r}
+rmse <- rep(NA, 25)
+for (k in seq_along(rmse)) {
+  y_valid_pred <- knn.reg(train = X_train, y = y_train,
+                          test = X_valid, k = k)$pred
+  rmse[k] <- sqrt( mean((y_valid_pred - y_valid)^2) )
+}
+```
+
+
+```{r}
+qplot(seq_along(rmse), rmse) + 
+  geom_line() +
+  theme_minimal()
+```
+
+
+```{r, message = FALSE}
+id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
+pred_id <- knn.reg(train = X_train, y = y_train,
+                   test = X_valid[id,], k = 2000)$pred
+
+df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
+                 pred = pred_id)
+
+qmplot(lon, lat, data = df, color = bin(pred, 4)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  ggtitle("k = 2000")
+```
+
+```{r, message = FALSE}
+id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
+pred_id <- knn.reg(train = X_train, y = y_train,
+                   test = X_valid[id,], k = 3)$pred
+
+df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
+                 pred = pred_id)
+
+qmplot(lon, lat, data = df, color = bin(pred, 4)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  ggtitle("k = 5")
+```
+
+## Sparse Matricies
+
+Let us make a design matrix capturing the state variable in
+the dataset. I'll take just a small sample of the dataset
+to illustrate the point:
+
+```{r}
+set.seed(1)
+X <- model.matrix(~state, data = sample_n(acs, size = 10))
+X
+```
+
+Noticed that the design matrix above contains primarily zeros.
+With large datasets and even more categories,
+we would be wasting a lot of valuable memory holding all of
+these values. R has support for objects known as sparse
+matricies. These store only the non-zero elements, saving
+space when most elements are zero. To access them, we'll load
+the **MatrixModels** package and using the function `model.Matrix`
+(in general, in R capital letters indicate sparse matrix
+variations of dense matrix operations).
+
+```{r}
+library(methods)
+library(MatrixModels)
+set.seed(1)
+X <- model.Matrix(~ state , data = sample_n(acs, size = 10),
+                  sparse = TRUE)
+X
+```
+
+Many operations, such as subsetting and multiplication, translate
+directly to sparse matrices. We'll construct training and validation
+sets as before:
+
+```{r}
+X <- model.Matrix(~ state , data = acs, sparse = TRUE)
+
+X_train <- X[acs$train_id == "train",]
+X_valid <- X[acs$train_id == "valid",]
+```
+
+The **MatrixModels** package has experimental support for computing
+linear regression models with sparse matricies using the function
+`lm.fit.sparse`. Because it is experimental, we need to prepend the
+notation `MatrixModels:::` to the function call:
+
+```{r}
+beta <- MatrixModels:::lm.fit.sparse(X_train, y_train)
+beta
+```
+
+Notice that this yields the same regression vector beta as the dense
+operations above. It is only the algorithm that changes.
+
+## Indicator variables in glmnet
+
+Remember that when building design matricies for categorical variables,
+we usually have a baseline variable and define the other weights as
+changes from this baseline. This is because otherwise the model will
+be rank-deficent; there will be multiple ways of representing the
+exact same model.
+
+When using penalized regression, this rank issue is not a problem.
+The choice between equivalent models is made by the penality; there
+will be a uniquely 'best' model for any elastic net model with alpha
+less than 1. In fact, it actually makes sense to have a seperate 
+parameter for each level, rather than a baseline and offsets from 
+it. The choice of baseline in penalized models would actually change
+the resulting model. To do this, all we have to specify is that 
+we do not want an intercept by giving the formula the option "-1":
+
+```{r}
+X <- model.Matrix(~ state -1 , data = acs, sparse = TRUE)
+colnames(X)
+```
+
+And this is nice too, because as a side benefit we also do not have
+an intercept term, which is handled directly by glmnet anyway.
+
+## Clustering with K-means
+
+```{r, message = FALSE}
+library(ggmap)
+X <- as.matrix(select(acs, lon, lat))
+
+set.seed(1)
+acs$cluster_20 <- kmeans(X, centers = 20)$cluster
+qmplot(lon, lat, data = acs, color = factor(cluster_20))
+```
+
+
+```{r, message = FALSE}
+library(ggmap)
+X <- as.matrix(select(acs, lon, lat))
+
+set.seed(1)
+acs$cluster_20 <- kmeans(X, centers = 20)$cluster
+acs$cluster_100 <- kmeans(X, centers = 100)$cluster
+acs$cluster_200 <- kmeans(X, centers = 200)$cluster
+```
+
+## Building models with clusters
+
+```{r}
+X <- model.Matrix(~ factor(cluster_20) + factor(cluster_100) +
+                    factor(cluster_200) + -1 , data = acs, sparse = TRUE)
+y <- acs$median_income
+X_train <- X[acs$train_id == "train",]
+y_train <- y[acs$train_id == "train"]
+```
+
+
+```{r, message = FALSE}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, alpha = 0.2)
+```
+
+
+```{r, message = FALSE}
+acs$median_income_pred <- predict(model, newx = X)
+```
+
+
+```{r, message = FALSE}
+acs_ne <- filter(acs, lon > -80, lat > 35, lon < -30)
+qmplot(lon, lat, data = acs_ne, color = bin(median_income_pred, 4)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  ggtitle("k = 5")
+```
+
+```{r}
+sqrt(tapply((acs$median_income - acs$median_income_pred)^2,
+            acs$train_id, mean))
+```
+
+## Hierarchical models
+
+```{r}
+model <- lm(median_income ~ cluster_20, data = acs,
+            subset = (train_id == "train"))
+acs$cluster_20_value <- predict(model, newdata = acs)
+sqrt(tapply((acs$median_income - acs$cluster_20_value)^2,
+            acs$train_id, mean))
+```
+
+
+```{r}
+model <- lm(median_income ~ cluster_100, data = acs,
+            subset = (train_id == "train"))
+acs$cluster_100_value <- predict(model, newdata = acs)
+sqrt(tapply((acs$median_income - acs$cluster_100_value)^2,
+            acs$train_id, mean))
+```
+
+
+```{r}
+model <- lm(median_income ~ cluster_200, data = acs,
+            subset = (train_id == "train"))
+acs$cluster_200_value <- predict(model, newdata = acs)
+sqrt(tapply((acs$median_income - acs$cluster_200_value)^2,
+            acs$train_id, mean))
+```
+
+```{r}
+model <- lm(median_income ~ poly(cluster_20_value, cluster_100_value,
+                cluster_200_value, degree = 3), data = acs,
+            subset = (train_id == "train"))
+acs$median_income_pred <- predict(model, newdata = acs)
+sqrt(tapply((acs$median_income - acs$median_income_pred)^2,
+            acs$train_id, mean))
+```
+
+```{r}
+X <- model.Matrix(~ cluster_20_value +
+                    cluster_100_value +
+                    cluster_200_value +
+                    factor(cluster_20) +
+                    factor(cluster_100) +
+                    factor(cluster_200) + -1 , data = acs, sparse = TRUE)
+y <- acs$median_income
+X_train <- X[acs$train_id == "train",]
+y_train <- y[acs$train_id == "train"]
+model <- cv.glmnet(X_train, y_train, alpha = 0.2)
+```
+
+
+```{r}
+acs$median_income_pred <- predict(model, newx = X)
+sqrt(tapply((acs$median_income - acs$median_income_pred)^2,
+            acs$train_id, mean))
+```
+
+
 
 
 

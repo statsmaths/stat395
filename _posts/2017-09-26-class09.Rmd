@@ -1,5 +1,5 @@
 ---
-title: "Class 09: "
+title: "Class 09: Model Regularization"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -19,571 +19,429 @@ library(ggplot2)
 library(dplyr)
 ```
 
+## City Tempurature Data
 
-## Building model matrices
+Today we will start by looking at a small dataset of tempuratures
+from 327 cities across the world.
 
-When we simply want to set the model matrix X to a subset
-of the numeric columns in our data frame, the function
-`as.matrix` is usually sufficient. The formula interface
-to `lm` is incredibly useful however when using categorical
-variables or when processing numeric variables by special
-functions such as `poly`.
-
-The function `model.matrix` allows us to compute the model
-matrix from the formula interface. In fact, the `lm` function
-calls this to convert our inputs into a model matrix. The
-output of this is then passed to `lm.fit`. It will also, by
-default, include an intercept term for us. Here we use it
-to build a model matrix of the carriers in the flights data:
-
-```{r}
-X <- model.matrix(~ carrier , data = flights)
-head(X)
+```{r, message = FALSE}
+temps <- read_csv("https://statsmaths.github.io/ml_data/city_temps_yr.csv")
 ```
 
+Our goal is to predict the average daily high tempurature for the
+month of May using the average daily tempuratures for the other
+elevent months of the year. This is not particularly hard but will
+be a great illustration of linear regression regularization.
 
-With this model matrix, we can compute the regression vector
-by first creating training and validation matrices:
+The format of the data is the same as others we have looked at, but
+all of the data is in the training set. 
 
-```{r}
-y_train <- y[flights$train_id == "train"]
-y_valid <- y[flights$train_id == "valid"]
-X_train <- X[flights$train_id == "train",]
-X_valid <- X[flights$train_id == "valid",]
-```
+### Ordinary regression
 
-And then using `lm.fit`:
-
-```{r}
-beta <- lm.fit(X_train, y_train)$coef
-beta
-```
-
-## Lumping categorical variables
-
-Some categorical variables come from fixed categories and/or have
-relatively equal number of observations in each unique value.
-Common examples are day of the week, month of the year, and
-weather ("clear", "cloudy", "rainy", "snowing"). Other times we
-have cases where a categorical variable has some categories with
-many observations but others with very few. In the latter case,
-we may not be able to reliably fit a separate model term to the
-rare unique values in the category. The package **forcats**
-offers a solution with the function **fct_lump**. This function
-lumps together all but the top n categories into an "other"
-label. For example, here we can lump all but the top four
-carriers into an other group:
+We can start by predicting the average daily high in May as a 
+function of all of the other eleven months:
 
 ```{r}
-library(forcats)
-model <- lm(delayed ~ fct_lump(carrier, n = 4), data = flights)
+model <- lm(may ~ ., data = temps[,c(3,6:16)])
 model
 ```
 
-Remember that the design matrix *hides* one level in the baseline. Here
-the baseline (AA) stands for American Airlines, revealing why all
-the coefficients are negative!
+We can understand these coefficents best by plotting them over the
+course of the year:
 
+```{r, fig.height = 2, fig.width = 4, echo = FALSE}
+df <- data_frame(month = names(coef(model)[-1]), val = coef(model)[-1],
+                 f = 1)
+ggplot(df, aes(factor(month, levels = tolower(month.abb)), val)) +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  geom_path(aes(group = f), size = 1) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  scale_x_discrete(breaks = tolower(month.abb)) +
+  xlab("Month") + ylab("Coefficent")
+```
 
+As you might expect, April and Jun have the largest coefficents.
+You may not have thought that other months would have negative 
+weights. What is going on here? These variables have fairly high
+correlations, so we can get a fairly predictive model by combining
+positive weights on some variables and negative weights on others.
 
+### An analogy
 
+In the article "The relationship between jaw, arm and leg size in
+three ethnic groups" (DOI: 10.1002/aja.1001360211), it is established
+that the length of the average human leg is roughly 20% larger than
+the length of their arms. We know that the length between someone's
+left arm and their right arm are very highly correlated (virtually
+the same, depending on your precision). If we collected data and
+tried to predict the length of left legs as a function of right arms
+and left arms we would have several different choices that seem
+to given essentially the same fit. 
 
+We could put all of the model weight on the left arm:
 
-## Nearest Neighbours
+$$ \text{left_leg} = \text{left_arm} \cdot 1.2 + \text{right_arm} \cdot 0.0 $$
+
+All on the right arm:
+
+$$ \text{left_leg} = \text{left_arm} \cdot 0.0 + \text{right_arm} \cdot 1.2 $$
+
+Split it between both arms:
+
+$$ \text{left_leg} = \text{left_arm} \cdot 0.6 + \text{right_arm} \cdot 0.6 $$
+
+Or, do something quite a bit more complex:
+
+$$ \text{left_leg} = \text{left_arm} \cdot 101.2 - \text{right_arm} \cdot 100 $$
+
+If our measurements for left arms and right arms were *exactly* the same,
+there would be no way of distinguishing this infinite set of choices. This
+would then be a *rank deficent* model. If just one person has a different
+left and right arm measurment (perhaps an old injury or we are using very
+precise measuring tool), there will be a best model in the ordinary least
+squares sense. However, this may not match what the best model should be
+for future predictions. 
+
+### Regularization: Ridge regression
+
+The tendency of linear regression to overfit the data in the presense of
+highly-correlated variables or sets of variables is a major issue in 
+predictive modelling. So far our only option has been to control this
+by limiting the number of variables in a model, either directly or by
+limiting the number of interactions or basis expansion terms. 
+
+Regularization is a more direct approach to limiting the complexity of
+a model. Ridge regression solves this problem by modifying the ordinary
+least squares optimization task. It add a penalty term that penalizes
+the model for having coefficents that are too large. Specifically, we
+have:
+
+$$ \widehat{\beta}_{ridge} \in \arg\min \left\{\frac{1}{2n} \cdot || y - X \beta||_2^2 + \lambda \cdot || \beta ||_2^2, \quad b \in \mathbb{R}^p \right\}, \quad \lambda > 0 $$
+
+Where
+
+$$ || a ||_2^2 = \sum_i a_i^2 $$
+
+The tuning parameter lambda sets the level of penalization. If
+lambda is very large, the best model will have no coefficents.
+As lambda approaches zero, the ridge vector will limit towards
+the ordinary least squares solution. The term in from of the 
+sum of squares makes such that lambda does not have to scale 
+with the sample size (the sum of squares growns with larger
+samples). It is the same reason we use RMSE instead of MSE to
+compare our models.
+
+The **glmnet** package provides a function for fitting the ridge
+regression model. It requires that we provide a matrix form of
+our data. 
+
+```{r}
+X <- as.matrix(temps[,6:16])
+y <- temps$may
+```
+
+To run ridge regression, we will use the function `cv.glmnet` and
+set `alpha` equal to zero. I want us to understand what this model
+is doing before returning to some of the details later today.
 
 ```{r, message = FALSE}
-acs <- read_csv("https://statsmaths.github.io/ml_data/tract_median_income.csv")
+library(glmnet)
+model <- cv.glmnet(X, y, alpha = 0)
 ```
+
+The output vector is given in a different type of R object than
+from the `lm` function, but the printed output looks similar:
+
+```{r}
+coef(model)
+```
+
+Let's plot this again:
+
+```{r, fig.height = 2, fig.width = 4, echo = FALSE}
+df <- data_frame(month = rownames(coef(model))[-1],
+                 val = coef(model)[-1],
+                 f = 1)
+ggplot(df, aes(factor(month, levels = tolower(month.abb)), val)) +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  geom_path(aes(group = f), size = 1) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  scale_x_discrete(breaks = tolower(month.abb)) +
+  xlab("Month") + ylab("Coefficent")
+```
+
+Now, the weights are all positive and spread out over the
+course of the year. There is still, however, a peak near
+April and June. What has happened is two fold: the penalty
+as made it "not worth" making offsetting negative weights
+and positive weights even if this slightly decreases the
+RMSE. The penalty is simply too great. Secondly, the 
+ridge penalty in particular prefers many small weights 
+compared to a few larger weights. That is why the values
+are spread throughout the year.
+
+In our leg length example, ridge regression would strongly
+prefer this:
+
+$$ \text{left_leg} = \text{left_arm} \cdot 0.6 + \text{right_arm} \cdot 0.6 $$
+
+The squared size of these values is only 0.36, compared to the
+size of 1.44 for having the full weight on only one of the two
+variables.
+
+### Regularization: Lasso regression
+
+There are other ways of penalizing the size of the regression
+vector by replacing the sum of squares term with other penalties.
+Lasso regression replaces the sum of squares with the sum of
+absolute values:
+
+$$ \widehat{\beta}_{ridge} \in \arg\min \left\{\frac{1}{2n} \cdot || y - X \beta||_2^2 + \lambda \cdot || \beta ||_1, \quad b \in \mathbb{R}^p \right\}, \quad \lambda > 0 $$
+
+Where
+
+$$ || a ||_1 = \sum_i | a_i | $$
+
+The behavior of the lasso regression has a very special property
+that can be extremely useful in predictive modeling. We can apply
+it using the `cv.glmnet` function by setting `alpha` to 1.
 
 ```{r, message = FALSE}
-library(ggmap)
-temp <- filter(acs, train_id == "train", !(state %in% c("AK", "HI")))
-qmplot(lon, lat, data = temp, color = bin(median_income, 8), size = I(0.5)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+model <- cv.glmnet(X, y, alpha = 1)
 ```
 
+Plotting the coefficents again, we see the special behavior of
+the lasso regression in action:
 
-
-
-
-
-```{r}
-library(FNN)
-y_valid_pred <- knn.reg(train = X_train, y = y_train, test = X_valid, k = 10)$pred
+```{r, fig.height = 2, fig.width = 4}
+df <- data_frame(month = rownames(coef(model))[-1],
+                 val = coef(model)[-1],
+                 f = 1)
+ggplot(df, aes(factor(month, levels = tolower(month.abb)), val)) +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  geom_path(aes(group = f), size = 1) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  scale_x_discrete(breaks = tolower(month.abb)) +
+  xlab("Month") + ylab("Coefficent")
 ```
 
+The model has made every weight other than April and June set 
+to exactly zero. As with ridge regression, the penalty is too
+great to make canceling negative weights and postive weights.
+Unlike ridge regression, the lasso penalty does not prefer 
+many small weights to fewer large weights. Therefore, the model
+will pick only those variables which are most strongly correlated
+with the response; here, these are April and June.
 
-```{r}
-rmse <- rep(NA, 100)
-for (k in seq_along(rmse)) {
-  y_valid_pred <- knn.reg(train = X_train, y = y_train,
-                          test = X_valid, k = k)$pred
-  rmse[k] <- sqrt( mean((y_valid_pred - y_valid)^2) )
-}
-```
+The magic of lasso regression is that it sets many terms exactly 
+to zero. This is accomplished because the absolute value does not
+have a derivative at zero. Therefore, the target function has 
+many critical points where beta coefficents are equal to zero
+and a non-zero chance of setting any beta value to zero.
 
-```{r}
-qplot(seq_along(rmse), rmse)
-```
+Which model would the lasso regression prefer in our left leg
+prediction example? It would put all of the weight
+on one arm, whichever one had a slightly higher correlation with
+the response. 
 
+## The elastic net with glmnet
 
-```{r}
-rmse <- rep(NA, 100)
-for (k in seq_along(rmse)) {
-  y_train_pred <- knn.reg(train = X_train, y = y_train,
-                          test = X_train, k = k)$pred
-  rmse[k] <- sqrt( mean((y_train_pred - y_train)^2) )
-}
-```
+The `glmnet` functions fits, and is named for, a collection
+of models that sit in-between ridge and lasso regression known
+as the *elastic net*. This is defined as:
 
-```{r}
-qplot(seq_along(rmse), rmse)
-```
+$$ \widehat{\beta}_{ridge} \in \arg\min \left\{\frac{1}{2n} \cdot || y - X \beta||_2^2 + \alpha \cdot \lambda \cdot || \beta ||_1 + (1 - \alpha) \cdot \lambda \cdot || \beta ||_2^2, \quad b \in \mathbb{R}^p \right\}, \quad \lambda > 0 $$
+
+You can see how we can get ridge by setting alpha to 0 and the 
+lasso regression by setting alpha to 1 (the latter is the default).
+Settings with alpha somewhere in between 0 and 1 blend the behavior
+of the two estimators. Generally, the elastic net tends to still set
+some coefficents to zero but tries to spread the weight out evenly
+over higher correlated groups of variables.
+
+### Model selection
+
+Let's look at the California house price dataset again.
 
 ```{r, message = FALSE}
-id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
-pred_id <- knn.reg(train = X_train, y = y_train,
-                   test = X_valid[id,], k = 1000)$pred
+ca <- read_csv("https://statsmaths.github.io/ml_data/ca_house_price.csv")
 
-df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
-                 pred = pred_id)
-
-qmplot(lon, lat, data = df, color = bin(pred, 4)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+X <- model.matrix(~ latitude*longitude + . -1, data = ca[,-c(1,2,3)])
+y <- ca$median_house_value
+X_train <- X[ca$train_id == "train",]
+y_train <- y[ca$train_id == "train"]
 ```
+
+We will run an elastic net regression on the data:
+
+```{r}
+model <- cv.glmnet(X_train, y_train, alpha = 0.9)
+```
+
+The function intelligently picks a set of 100 values of lambda
+to fit the elastic net to. We can see all of these by looking
+at the lambda paramter of the model
+
+```{r}
+model$lambda
+```
+
+The `coef` and `predict` function, by default, choose the 
+optimal value of lambda; we will see in the final section today
+exactly how this is done. We can manually pass either function
+the option `s` to specify which value of lambda we want the
+parameters for (that it is called `s` and not `lambda` has always
+been a pet-peeve of mine). We can pick any value between the
+largest and smallest lambda parameters, though it generally 
+makes sense to pick values where the model was actually fit.
+
+The primary reason for looking at other values of lambda is to
+see which variables are included when the penalty is very
+high. Here, at the 10th value of lambda (remember, they are
+in descending order), we see that only `mean_household_income`
+is included:
+
+```{r}
+coef(model, s = model$lambda[10])
+```
+
+Setting it to the 14th value, shows three additional variables
+that seem particularly important:
+
+```{r}
+coef(model, s = model$lambda[14])
+```
+
+Notice, however, that latitude and longitude are not popping
+up because we would need several interaction orders for them
+to become the most predictive variables. We'll see next class
+some ways of mitigating these weakness of `glmnet`.
+
+### Scaling and intercepts
+
+As we wrote the lasso, ridge regression, and elastic net the
+scale of the predictor variables would have a large impact on
+the model. We did not focus on this because **glmnet** always
+scales the columns to have unit variance and zero mean. Generally,
+we do not have to worry about this and I have rarely found a
+reason to modify this default behavior.
+
+The elastic net function
+also puts in a manual intercept for us. The intercept is 
+treated differently because it does not have a penalty. Again,
+this is almost always the preferred behavior and you will likely
+have no reason to change it. If you accidentally do put in an
+intercept into the model, it will be silently ignored (why would
+the model put a weight on your intercept, which is penalized,
+rather than the internal one which is not?).
+
+### Binomial and Multinomial elastic net
+
+The "g" in `glmnet` stands for the same generalized as in
+`glm` and `gam`. We can fit binomial and multinomial models
+by adjusting the family function. Here is an example with the
+NBA dataset:
 
 ```{r, message = FALSE}
-id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
-pred_id <- knn.reg(train = X_train, y = y_train,
-                   test = X_valid[id,], k = 5)$pred
+nba <- read_csv("https://statsmaths.github.io/ml_data/nba_shots.csv")
 
-df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
-                 pred = pred_id)
-
-qmplot(lon, lat, data = df, color = bin(pred, 4)) +
-  viridis::scale_color_viridis(discrete = TRUE)
+X <- model.matrix(~ . -1, data = nba[,-c(1,2,3,13)])
+y <- nba$fgm
+X_train <- X[nba$train_id == "train",]
+y_train <- y[nba$train_id == "train"]
 ```
 
-## Scale
-
-So far we have been working with data
+Unlike with `glm` and `gam`, we have to provide the family name in
+quotes and there is no link function to specify (logit is default
+and only choice):
 
 ```{r}
-X <- as.matrix(select(acs, lon, lat, same_county))
-X[1:10,]
+model <- cv.glmnet(X_train, y_train, alpha = 0.9,
+                   family = "binomial")
 ```
+
+The internal representation of the model is almost exactly the same.
+Here, we see the most important variables in the model (notice that
+we can give multiple values of lambda):
 
 ```{r}
-X <- scale(X)
-X[1:10,]
+coef(model, s = model$lambda[c(6, 10, 20)])
 ```
 
-Note: ADD CLUSTERING
-
-Note: DISCUSS CROSS VALIDATION
-
-
-
-
-## Matrices
-
-### Linear Maps
-
-Consider all functions from an n-dimensional space into an
-m-dimensional space,
-
-$$ f: \mathbb{R}^n \rightarrow \mathbb{R}^m, $$
-
-That preserves addition,
-
-$$ f(u + v) = f(u) + f(v) $$
-
-And multiplication by a fixed scalar value,
-
-$$ f(\alpha \cdot u) = \alpha \cdot f(u), \quad \alpha \in \mathbb{R}. $$
-
-Such functions are known as **linear maps** (the definition can be abstracted
-to infinite dimensional spaces and over other fields, but we will only need
-the finite real-valued case in this course).
-
-There is an important representation theorem stating that every such mapping
-can be described by an n-by-m array of real numbers. This array is commonly
-called a **matrix**. How exactly do we calculate the function f given its
-matrix representation A? It is easier to explain with fixed values for n
-and m. Let's consider the following matrix:
-
-$$ A = \left( \begin{array}{ccc} a_{1, 1} & a_{1, 2} & a_{1, 3} \\
-                                 a_{2, 1} & a_{2, 2} & a_{2, 3} \end{array} \right) $$
-
-So, in this case we have n = 3 and m = 2. Therefore this is a mapping that
-takes a triple of numbers and returns a pair of numbers. Let's define
-the input as a vector u:
-
-$$ u = \left( \begin{array}{c} u_{1} \\
-                               u_{2} \\
-                               u_{3} \end{array} \right) $$
-
-
-And the output as a vector v:
-
-$$ v = \left( \begin{array}{c} v_{1} \\
-                               v_{2} \end{array} \right) $$
-
-The linear map is then defined as:
-
-$$ \begin{align} v_1 &= a_{1,1} \cdot u_{1} + a_{1,2} \cdot u_{2} + a_{1,3} \cdot u_{3} \\
-                 v_2 &= a_{2,1} \cdot u_{1} + a_{2,2} \cdot u_{2} + a_{3,3} \cdot u_{3}
-                 \end{align} $$
-
-So, each component of v is a linear combination of all components of u. We can
-write this compactly using summation notation:
-
-$$ v_i = \sum_{j = 1}^m a_{i, j} \cdot u_j $$
-
-Conveniently, this last equation holds for any arbitrary choice of n and m.
-Finally, we represent this symbolically by
-
-$$ Au = v. $$
-
-### Function composition
-
-Consider two linear maps:
-
-$$ \begin{align} f: \mathbb{R}^n \rightarrow \mathbb{R}^m \\
-                 g: \mathbb{R}^m \rightarrow \mathbb{R}^p \end{align} $$
-
-
-If we apply f to an vector in n-dimensional space we get an
-m-dimensional vector. We could then take the output of this
-map and apply g to it in order to get a p-dimensional vector.
-This is known a function composition. We can represent the
-action of first applying f and then applying g as a new function
-h:
-
-$$ h = g(f(u)), \quad h: \mathbb{R}^n \rightarrow \mathbb{R}^p $$
-
-It is a fairly intuitive and easy to prove result that if f and
-g are linear maps, so is h. Let f be represented by the matrix A,
-g by the matrix B, and h by the matrix C. A natural question is
-what relationship exists between A, B, and C?
-
-It turns out that the result is just another sum:
-
-$$ C_{i, j} = \sum_{k = 1}^{m} A_{i, k} \cdot B_{k, j} $$
-
-This is known as a **matrix product** and is written as:
-
-$$ C = A \cdot B = AB $$
-
-If the concept of matrix multiplication is new to you, an animated
-visualization of multiplying two matrices can be useful. Of course,
-for this semester understanding the abstract meaning behind matrix
-multiplication (function composition) is much more important than
-grasping the mechanics of computing the new matrix:
-
-![](https://thumbs.gfycat.com/PositiveExhaustedAmericangoldfinch-size_restricted.gif)
-
-Notice that if we represent vectors as one-column matrices, the
-definition of matrix multiplication is equivalent to our definition
-of applying a matrix to a vector:
-
-$$ Au = v. $$
-
-## Matrices in R
-
-### Basics
-
-There is extensive functionality for working with matrices in
-R. Let's make a random 5-by-5 matrix and a 5-by-matrix, the
-latter we can think of as a vector.
-
-```{r}
-A <- matrix(sample(1:99, 25), 5, 5)
-A
-b <- matrix(sample(1:99, 5))
-b
-```
-
-Element-wise arithmetic is assumed by default:
-
-```{r}
-A + A
-```
-
-To calculate a matrix produce, R requires us to use the
-symbol `%*%`. If a matrix is square, there is nothing
-stopping us from composing a matrix with itself:
-
-```{r}
-A %*% A
-```
-
-Similarly, we can multiply the matrix by the column vector
-to compute the action of the matrix A as a linear map:
-
-```{r}
-A %*% b
-```
-
-The transpose of a matrix, denoted by using t as a superscript,
-can be computed with the t function:
-
-```{r}
-t(A)
-```
-
-This is often useful in matrix computations. Similarly, we
-can computing the inverse of a matrix with the function
-`solve`:
-
-```{r}
-solve(A)
-```
-
-A matrix inverse, by definition, describes the inverse of the underlying
-linear map (its also relatively simple to show that linear maps have
-linear inverses, when they exist). Note that matrix inversion is a
-computationally unstable procedure and should be avoided when possible.
-
-### Subsetting matrices
-
-It will often be useful to take a subset of the rows and
-columns in a matrix. Here we take rows 2 and 3 and columns
-1 and 2:
-
-```{r}
-A[2:3, 1:2]
-```
-
-Here we take columns 1 and 2; by leaving the rows
-component empty every row is returned:
-
-```{r}
-A[,1:2]
-```
-
-There is a strange convention in R that, by default, if we
-select a sub-matrix with only one row or one column, the
-result will be converted from a rectangular matrix to a
-non-dimensional vector. Notice that the output below is
-not given as a matrix with one column:
-
-```{r}
-A[,1]
-```
-
-Usually this is not a problem, but if we want to be safe
-we can add the option `drop = FALSE` to the subset command.
-Notice the difference in the output here compared to the
-output above:
-
-```{r}
-A[,1,drop = FALSE]
-```
-
-Finally, we can also subset by giving a logical statement
-in either the rows or columns spot. Here we select only those
-rows where the numbers 1 through 5 are greater than 3:
-
-```{r}
-A[1:5 > 3,]
-```
-
-As expected, the output is a matrix with just two rows.
-
-## Multivariate Linear Models
-
-### Matrix Formulation
-
-We have been working with multivariate linear models over the
-past few classes, though I have only ever written the formal
-equation in the case where there are two explanatory variables.
-In general, multivariate regression represents the following
-model:
-
-$$y_i = x_{1,i} \beta_1 + x_{2,i} \beta_2 + \cdots + x_{1,p} \beta_p + \epsilon_i$$
-
-For simplicity, we won't include an explicit intercept term in
-the model. If we want one, we will just make the first variable $x_{1,i}$
-equal to one for every value of i.
-
-The statistical estimation problem is to estimate the p
-components of the multivariate vector beta.
-
-Using our matrix notation, we can write the linear model
-simultaneously for all observations:
-
-$$ \left(\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_n\end{array}\right) =
-  \left(\begin{array}{cccc}x_{1,1}&x_{2,1}&\cdots&x_{p,1}\\
-                           x_{1,2}&\ddots&&x_{p,2}\\
-                           \vdots&&\ddots&\vdots\\
-                           x_{1,n}&x_{2,n}&\cdots&x_{p,n}\\\end{array}\right)
-  \left(\begin{array}{c}\beta_1\\ \beta_2\\ \vdots\\ \beta_p\end{array}\right) +
-  \left(\begin{array}{c}\epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\end{array}\right) $$
-
-
-Which can be compactly written as:
-
-$$ y = X \beta + \epsilon $$
-
-The matrix X is known as the **design matrix** or **model matrix**.
-For reference, note the following equation yields these dimensions:
-
-$$ y \in \mathbb{R}^n $$
-$$ X \in \mathbb{R}^{n \times p} $$
-$$ \beta \in \mathbb{R}^p $$
-$$ \epsilon \in \mathbb{R}^n $$
-
-### Solving Linear Models
-
-Calculating the OLS solution for multivariate linear regression involves,
-in matrix notation, finding the beta vector that minimizes the sum of
-squared residuals. We can write, in matrix notation, the residuals as
-the following:
-
-$$ r(\beta) = y - X \beta $$
-
-And the sum of squared residuals can be derived as:
-
-$$ \begin{align} \text{sum of squared residuals} &= r(\beta)^t r(\beta) \\
-    &= \sum_{i = 1}^n r(\beta)_i \cdot r(\beta)_i
-    \end{align} $$
-
-This is a length n vector (or, equivalently, an n-by-1 matrix). The
-optimization task can then be written compactly as:
-
-$$ \begin{align} \widehat{\beta} &= \arg\min_b \left\{ r(b)^t r(b)  \right\} \\
-      &= \arg\min_b \left\{ (y - X b)^t (y - X b)  \right\}
-    \end{align} $$
-
-To find the minimizer, we calculate the gradient and set it equal to
-zero. This is not hard if you have learned how to work with gradients
-(and also, remember what you learned):
-
-$$ \begin{align} \nabla_b \left(r(b)^t r(b)\right)
-   &= \nabla_b \left((y - X b)^t (y - X b)\right) \\
-   &= \nabla_b \left(y^t y + b^t X^t X b - 2 b^t X^t y\right) \\
-   &= 2 X^t X b - 2 X^t y.
-  \end{align} $$
-
-Setting this equal to zero, we derive what are known as the normal
-equations (yes, this is plural; why?!):
-
-$$ (X^t X) \cdot \widehat{\beta} = X^t y. $$
-
-If the inverse exists, this gives an analytic formula for solving
-the linear system of equations:
-
-$$ \widehat{\beta} = (X^t X)^{-1} \cdot X^t y. $$
-
-I could be even more formal about this and show that the Hessian matrix
-is positive semi-definite everywhere and therefore we have found a global
-minimum. Under the assumption that many of your are already overwhelmed
-at this point, I'll skip this for today.
-
-## Linear Models with Matrices in R
-
-Let's now try to apply these theoretical ideas to an actual dataset.
-I'll load in the flights data from my website:
+So, shot distance seems to be the most important, follwed
+by shot clock, and then touch time and closest defender
+height.
+
+### Cross-validation
+
+How does the elastic net determine which value of lambda
+is the best? It uses a process called cross-validation
+(that's where the "cv" comes from) where the training set
+itself is used to do automated validation of the model.
+
+Cross validation works as follows. Here I am using 10-fold
+validation, but you can modify to have k-fold validation:
+
+- start with an initial choice of lambda
+- assign every training observation randomly to one of 
+ten buckets
+- fit a model using only data from buckets 2-10 with
+the first lambda value. Use this to predict the values
+from bucket 1.
+- fit a model using only data from buckets 1, and 3-10.
+Use this to predict the values from bucket 2.
+- repeat eight more time to get predictions for the other
+buckets
+- you now have a prediction for each point in the training
+data. Compute the RMSE or other target metric on this set.
+- repeat for all values of lambda (100, by default)
+
+The "best" lambda is the one that is found to minimize the
+target metric from cross-validation. A final model is built
+using all of the data and that is the one that we get as
+an output.
+
+Let's visualize this by putting a very high order interaction
+into the California pricing data:
 
 ```{r, message = FALSE}
-flights <- read_csv("~/files/ml_data/flights_15min.csv")
+X <- model.matrix(~ poly(latitude, longitude, degree = 19), data = ca[,-c(1,2,3)])
+y <- ca$median_house_value
+X_train <- X[ca$train_id == "train",]
+y_train <- y[ca$train_id == "train"]
 ```
 
-Note that the flights data, like every other dataset we have used,
-is not a matrix. It is something that R calls a **data frame**:
+And fit the cross-validated elastic net model:
 
 ```{r}
-class(flights)
+model <- cv.glmnet(X_train, y_train, alpha = 0.9)
 ```
 
-While both matrices and data frames have data organized in rows and
-columns, matrices force all of the data to be numeric (its actually
-more complicated than this in R, but just go along with it for now).
-A data frame on the other hand can have different variable types in
-each column.
-
-An easy way to construct a matrix in R, is to use the `select` function
-to grab only numeric columns and the function `as.matrix` to convert
-the output into a matrix object. We will throughout the course use the
-notation that the variable y is a vector holding the response of
-interest and X is a matrix containing the variables we want to use in
-a model.
+Plotting the model visualizes the cross-validation
+error for each value of lambda:
 
 ```{r}
-y <- flights$delayed
-
-X <- as.matrix(select(flights, arr_hour, dep_hour))
-X[1:10,]
+plot(model)
 ```
 
-We can then create specific training and validation sets
-using the logical subset method from above:
+We can see the "best" lambda, as well as the other lambda
+defined by the dashed line above:
 
 ```{r}
-X_train <- X[flights$train_id == "train", ]
-X_valid <- X[flights$train_id == "valid", ]
-y_train <- y[flights$train_id == "train"]
-y_valid <- y[flights$train_id == "valid"]
+model$lambda.min
+model$lambda.1se
 ```
 
-From here, we can compute the regression vector beta:
+The second lambda gives a model that is within one standard
+error of the predictions from the "best" model but often has
+significantly fewer variables in it.
 
-```{r}
-beta <- solve(t(X_train) %*% X_train) %*% t(X_train) %*% y_train
-beta
-```
 
-So this generally looks good, but we left out the intercept. Recall
-that our matrix formulation required us to add an explicit column of
-1's if we wanted an intercept. Let's do this directly in the matrix
-X using the `cbind` function, and repeat:
 
-```{r}
-X <- as.matrix(select(flights, arr_hour, dep_hour))
-X <- cbind(1, X)
-X_train <- X[flights$train_id == "train", ]
-X_valid <- X[flights$train_id == "valid", ]
 
-beta <- solve(t(X_train) %*% X_train) %*% t(X_train) %*% y_train
-beta
-```
 
-Perfect, now we have a regression vector. To do prediction,
-we just calculate X times beta:
-
-```{r}
-y_valid_pred <- X_valid %*% beta
-sqrt(mean( (y_valid - y_valid_pred)^2))
-```
-
-Let's verify that this gives the same output as the `lm` function:
-
-```{r}
-model <- lm(delayed ~ arr_hour +  dep_hour, data = flights,
-            subset = train_id == "train")
-model
-```
-
-And, as hoped, it does!
-
-## Using lm.fit
-
-We have seen how to use the `lm` function to quickly fit
-linear regression directly from data frames. Now, we also
-know how to do this directly with matrix operations. There
-is an intermediate function that solves the linear regression
-problem directly from our matrices called `lm.fit`. In
-fact, the `lm` function internally calls this function.
-As inputs, it takes just the X matrix and response y. There
-is a lot of diagnostic output, but we will take just the
-`coef` component, corresponding to the coefficients matrix:
-
-```{r}
-lm.fit(X_train, y_train)$coef
-```
-
-This, once again, aligns with the output from the other
-two methods.
 
 

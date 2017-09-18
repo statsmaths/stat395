@@ -28,7 +28,7 @@ mostly likely type of crime was commited. Loading in the dataset
 see that the crime type is given as a number from 1 to 3:
 
 ```{r, message = FALSE}
-crimes <- read_csv("~/files/ml_data/chi_crimes_3.csv")
+crimes <- read_csv("https://statsmaths.github.io/ml_data/chi_crimes_3.csv")
 ```
 
 The corresponding crime names are:
