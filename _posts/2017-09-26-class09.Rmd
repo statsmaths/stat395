@@ -16,6 +16,7 @@ knitr::opts_chunk$set(dpi = 300)
 ```{r, message = FALSE}
 library(readr)
 library(ggplot2)
+library(methods)
 library(dplyr)
 ```
 
@@ -34,11 +35,11 @@ elevent months of the year. This is not particularly hard but will
 be a great illustration of linear regression regularization.
 
 The format of the data is the same as others we have looked at, but
-all of the data is in the training set. 
+all of the data is in the training set.
 
 ### Ordinary regression
 
-We can start by predicting the average daily high in May as a 
+We can start by predicting the average daily high in May as a
 function of all of the other eleven months:
 
 ```{r}
@@ -62,7 +63,7 @@ ggplot(df, aes(factor(month, levels = tolower(month.abb)), val)) +
 ```
 
 As you might expect, April and Jun have the largest coefficents.
-You may not have thought that other months would have negative 
+You may not have thought that other months would have negative
 weights. What is going on here? These variables have fairly high
 correlations, so we can get a fairly predictive model by combining
 positive weights on some variables and negative weights on others.
@@ -77,7 +78,7 @@ left arm and their right arm are very highly correlated (virtually
 the same, depending on your precision). If we collected data and
 tried to predict the length of left legs as a function of right arms
 and left arms we would have several different choices that seem
-to given essentially the same fit. 
+to given essentially the same fit.
 
 We could put all of the model weight on the left arm:
 
@@ -101,15 +102,15 @@ would then be a *rank deficent* model. If just one person has a different
 left and right arm measurment (perhaps an old injury or we are using very
 precise measuring tool), there will be a best model in the ordinary least
 squares sense. However, this may not match what the best model should be
-for future predictions. 
+for future predictions.
 
 ### Regularization: Ridge regression
 
 The tendency of linear regression to overfit the data in the presense of
-highly-correlated variables or sets of variables is a major issue in 
+highly-correlated variables or sets of variables is a major issue in
 predictive modelling. So far our only option has been to control this
 by limiting the number of variables in a model, either directly or by
-limiting the number of interactions or basis expansion terms. 
+limiting the number of interactions or basis expansion terms.
 
 Regularization is a more direct approach to limiting the complexity of
 a model. Ridge regression solves this problem by modifying the ordinary
@@ -126,15 +127,15 @@ $$ || a ||_2^2 = \sum_i a_i^2 $$
 The tuning parameter lambda sets the level of penalization. If
 lambda is very large, the best model will have no coefficents.
 As lambda approaches zero, the ridge vector will limit towards
-the ordinary least squares solution. The term in from of the 
-sum of squares makes such that lambda does not have to scale 
+the ordinary least squares solution. The term in from of the
+sum of squares makes such that lambda does not have to scale
 with the sample size (the sum of squares growns with larger
 samples). It is the same reason we use RMSE instead of MSE to
 compare our models.
 
 The **glmnet** package provides a function for fitting the ridge
 regression model. It requires that we provide a matrix form of
-our data. 
+our data.
 
 ```{r}
 X <- as.matrix(temps[,6:16])
@@ -177,8 +178,8 @@ course of the year. There is still, however, a peak near
 April and June. What has happened is two fold: the penalty
 as made it "not worth" making offsetting negative weights
 and positive weights even if this slightly decreases the
-RMSE. The penalty is simply too great. Secondly, the 
-ridge penalty in particular prefers many small weights 
+RMSE. The penalty is simply too great. Secondly, the
+ridge penalty in particular prefers many small weights
 compared to a few larger weights. That is why the values
 are spread throughout the year.
 
@@ -228,24 +229,24 @@ ggplot(df, aes(factor(month, levels = tolower(month.abb)), val)) +
   xlab("Month") + ylab("Coefficent")
 ```
 
-The model has made every weight other than April and June set 
+The model has made every weight other than April and June set
 to exactly zero. As with ridge regression, the penalty is too
 great to make canceling negative weights and postive weights.
-Unlike ridge regression, the lasso penalty does not prefer 
+Unlike ridge regression, the lasso penalty does not prefer
 many small weights to fewer large weights. Therefore, the model
 will pick only those variables which are most strongly correlated
 with the response; here, these are April and June.
 
-The magic of lasso regression is that it sets many terms exactly 
+The magic of lasso regression is that it sets many terms exactly
 to zero. This is accomplished because the absolute value does not
-have a derivative at zero. Therefore, the target function has 
+have a derivative at zero. Therefore, the target function has
 many critical points where beta coefficents are equal to zero
 and a non-zero chance of setting any beta value to zero.
 
 Which model would the lasso regression prefer in our left leg
 prediction example? It would put all of the weight
 on one arm, whichever one had a slightly higher correlation with
-the response. 
+the response.
 
 ## The elastic net with glmnet
 
@@ -255,7 +256,7 @@ as the *elastic net*. This is defined as:
 
 $$ \widehat{\beta}_{ridge} \in \arg\min \left\{\frac{1}{2n} \cdot || y - X \beta||_2^2 + \alpha \cdot \lambda \cdot || \beta ||_1 + (1 - \alpha) \cdot \lambda \cdot || \beta ||_2^2, \quad b \in \mathbb{R}^p \right\}, \quad \lambda > 0 $$
 
-You can see how we can get ridge by setting alpha to 0 and the 
+You can see how we can get ridge by setting alpha to 0 and the
 lasso regression by setting alpha to 1 (the latter is the default).
 Settings with alpha somewhere in between 0 and 1 blend the behavior
 of the two estimators. Generally, the elastic net tends to still set
@@ -289,13 +290,13 @@ at the lambda paramter of the model
 model$lambda
 ```
 
-The `coef` and `predict` function, by default, choose the 
+The `coef` and `predict` function, by default, choose the
 optimal value of lambda; we will see in the final section today
 exactly how this is done. We can manually pass either function
 the option `s` to specify which value of lambda we want the
 parameters for (that it is called `s` and not `lambda` has always
 been a pet-peeve of mine). We can pick any value between the
-largest and smallest lambda parameters, though it generally 
+largest and smallest lambda parameters, though it generally
 makes sense to pick values where the model was actually fit.
 
 The primary reason for looking at other values of lambda is to
@@ -330,7 +331,7 @@ we do not have to worry about this and I have rarely found a
 reason to modify this default behavior.
 
 The elastic net function
-also puts in a manual intercept for us. The intercept is 
+also puts in a manual intercept for us. The intercept is
 treated differently because it does not have a penalty. Again,
 this is almost always the preferred behavior and you will likely
 have no reason to change it. If you accidentally do put in an
@@ -386,7 +387,7 @@ Cross validation works as follows. Here I am using 10-fold
 validation, but you can modify to have k-fold validation:
 
 - start with an initial choice of lambda
-- assign every training observation randomly to one of 
+- assign every training observation randomly to one of
 ten buckets
 - fit a model using only data from buckets 2-10 with
 the first lambda value. Use this to predict the values

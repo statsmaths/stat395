@@ -68,7 +68,7 @@ for (k in seq_along(rmse)) {
 
 
 ```{r}
-qplot(seq_along(rmse), rmse) + 
+qplot(seq_along(rmse), rmse) +
   geom_line() +
   theme_minimal()
 ```
@@ -166,10 +166,10 @@ exact same model.
 When using penalized regression, this rank issue is not a problem.
 The choice between equivalent models is made by the penality; there
 will be a uniquely 'best' model for any elastic net model with alpha
-less than 1. In fact, it actually makes sense to have a seperate 
-parameter for each level, rather than a baseline and offsets from 
+less than 1. In fact, it actually makes sense to have a seperate
+parameter for each level, rather than a baseline and offsets from
 it. The choice of baseline in penalized models would actually change
-the resulting model. To do this, all we have to specify is that 
+the resulting model. To do this, all we have to specify is that
 we do not want an intercept by giving the formula the option "-1":
 
 ```{r}
