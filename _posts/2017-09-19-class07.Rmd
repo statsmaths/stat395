@@ -342,8 +342,8 @@ nba$fgm_pred_svm <- as.numeric(as.character(predict(model, newdata = X, type = "
 nba$fgm_pred_lm <- as.numeric(nba$fgm_pred_lm > 0.5)
 ```
 
-Plotting the difference between these two models shows
-quite a bit of points where the classification has changed:
+Plotting the difference between these two models shows quite
+a bit of points where the classification has changed:
 
 ```{r}
 nba <- arrange(nba, fgm_pred_lm != fgm_pred_svm)
