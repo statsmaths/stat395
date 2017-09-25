@@ -16,8 +16,10 @@ library(dplyr)
 library(methods)
 ```
 
+
+
 ```{r, message = FALSE}
-taxi <- read_csv("~/files/ml_data/nyc_taxi.csv")
+taxi <- read_csv("https://statsmaths.github.io/ml_data/nyc_taxi.csv")
 ```
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Class 10: Household Income"
+title: "Class 10: Local Models"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -23,9 +23,8 @@ library(viridis)
 
 ## Income data
 
-The data for today is similar to the California housing dataset. For
-each census tract we need to predict the median income variable.
-Here, however, we now have data for the entire United States.
+For the first half of today, we are going to look at the dataset
+you used on your last lab.
 
 ```{r, message = FALSE}
 acs <- read_csv("https://statsmaths.github.io/ml_data/tract_median_income.csv")
@@ -43,7 +42,16 @@ qplot(lon, lat, data = temp, color = bin(median_income, 6),
   coord_map()
 ```
 
-###
+While we have seen ways of building models that account for
+linearites and interactions (GAMs and basis expansion), today's
+focus will be on using inherantly local models to learn the
+response variable here.
+
+### Tuning k-nearest neighbors
+
+The knn model, as we saw last time, requires us to use 
+a model matrix. We will construct one here using only
+longitude and latitude:
 
 ```{r}
 X <- as.matrix(select(acs, lon, lat))
@@ -55,9 +63,15 @@ y_train <- y[acs$train_id == "train"]
 y_valid <- y[acs$train_id == "valid"]
 ```
 
-
+While we usually do not need a specific validation X matrix
+and response vector y, it will be useful here today. We will
+fit the k-nearest neighbors algorithm for 25 values of the
+hyperparameter k, specifically, the integers 1 through 25.
+I will save the RMSE of the validation set for each value of
+k.
 
 ```{r}
+library(FNN)
 rmse <- rep(NA, 25)
 for (k in seq_along(rmse)) {
   y_valid_pred <- knn.reg(train = X_train, y = y_train,
@@ -66,6 +80,8 @@ for (k in seq_along(rmse)) {
 }
 ```
 
+With these values, we can plot the RMSE as a function of
+the parameter k:
 
 ```{r}
 qplot(seq_along(rmse), rmse) +
@@ -73,19 +89,31 @@ qplot(seq_along(rmse), rmse) +
   theme_minimal()
 ```
 
+The optimal value seems to be at k equal to 5, with a drastic
+degradation for k equal to 1 or 2. 
+
+One thing that may be counterintuitive about k-nearest neighbors
+is the relationship between k and the model complexity. Here is
+a plot of the fitted values for k equal to 3000 over the Northeastern
+US:
 
 ```{r, message = FALSE}
 id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
 pred_id <- knn.reg(train = X_train, y = y_train,
-                   test = X_valid[id,], k = 2000)$pred
+                   test = X_valid[id,], k = 3000)$pred
 
 df <- data_frame(lon = X_valid[id,1], lat = X_valid[id,2],
                  pred = pred_id)
 
+library(ggmap)
 qmplot(lon, lat, data = df, color = bin(pred, 4)) +
   viridis::scale_color_viridis(discrete = TRUE) +
-  ggtitle("k = 2000")
+  ggtitle("k = 3000")
 ```
+
+There are large regions that all have very similar predicted
+values. In contrast, here are the predicted value from k equal to 
+3. 
 
 ```{r, message = FALSE}
 id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
@@ -100,111 +128,55 @@ qmplot(lon, lat, data = df, color = bin(pred, 4)) +
   ggtitle("k = 5")
 ```
 
-## Sparse Matricies
-
-Let us make a design matrix capturing the state variable in
-the dataset. I'll take just a small sample of the dataset
-to illustrate the point:
-
-```{r}
-set.seed(1)
-X <- model.matrix(~state, data = sample_n(acs, size = 10))
-X
-```
-
-Noticed that the design matrix above contains primarily zeros.
-With large datasets and even more categories,
-we would be wasting a lot of valuable memory holding all of
-these values. R has support for objects known as sparse
-matricies. These store only the non-zero elements, saving
-space when most elements are zero. To access them, we'll load
-the **MatrixModels** package and using the function `model.Matrix`
-(in general, in R capital letters indicate sparse matrix
-variations of dense matrix operations).
-
-```{r}
-library(methods)
-library(MatrixModels)
-set.seed(1)
-X <- model.Matrix(~ state , data = sample_n(acs, size = 10),
-                  sparse = TRUE)
-X
-```
-
-Many operations, such as subsetting and multiplication, translate
-directly to sparse matrices. We'll construct training and validation
-sets as before:
-
-```{r}
-X <- model.Matrix(~ state , data = acs, sparse = TRUE)
-
-X_train <- X[acs$train_id == "train",]
-X_valid <- X[acs$train_id == "valid",]
-```
-
-The **MatrixModels** package has experimental support for computing
-linear regression models with sparse matricies using the function
-`lm.fit.sparse`. Because it is experimental, we need to prepend the
-notation `MatrixModels:::` to the function call:
-
-```{r}
-beta <- MatrixModels:::lm.fit.sparse(X_train, y_train)
-beta
-```
-
-Notice that this yields the same regression vector beta as the dense
-operations above. It is only the algorithm that changes.
-
-## Indicator variables in glmnet
-
-Remember that when building design matricies for categorical variables,
-we usually have a baseline variable and define the other weights as
-changes from this baseline. This is because otherwise the model will
-be rank-deficent; there will be multiple ways of representing the
-exact same model.
-
-When using penalized regression, this rank issue is not a problem.
-The choice between equivalent models is made by the penality; there
-will be a uniquely 'best' model for any elastic net model with alpha
-less than 1. In fact, it actually makes sense to have a seperate
-parameter for each level, rather than a baseline and offsets from
-it. The choice of baseline in penalized models would actually change
-the resulting model. To do this, all we have to specify is that
-we do not want an intercept by giving the formula the option "-1":
-
-```{r}
-X <- model.Matrix(~ state -1 , data = acs, sparse = TRUE)
-colnames(X)
-```
-
-And this is nice too, because as a side benefit we also do not have
-an intercept term, which is handled directly by glmnet anyway.
+Here, the values change rapidly and there are many nearby
+points with drastically different values. So, a high value
+of k is a less complex model and a low value is a more 
+complex model. If this seems confusing, think about k being
+the size of the entire training set (every point will then
+be equal to a constant: the training set mean). Also perhaps
+confusing is that models with a larger k take longer to fit;
+this should make sense as there are more points to average,
+but goes against our general idea that more complex models
+are more difficult to fit.
 
 ## Clustering with K-means
 
-```{r, message = FALSE}
-library(ggmap)
-X <- as.matrix(select(acs, lon, lat))
+An alternative to k-nearest neighbors is to split the dataset
+into fixed neighborhoods of nearby points and use these as
+indicator variables in a model. To do this, we need to cluster
+the input data. There are many algorithms available for clustering;
+one of the most widely known and implemented is k-means clustering.
+This is achieved by way of the `kmeans` function and requires only
+that we set the number of centers. Here is a plot of kmeans applied
+to the `acs` data:
 
+```{r, message = FALSE}
 set.seed(1)
 acs$cluster_20 <- kmeans(X, centers = 20)$cluster
 qmplot(lon, lat, data = acs, color = factor(cluster_20))
 ```
 
+Notice that I have set the random seed as the output of the algorithm
+is stochastic. Here, longitude and latitude are on similar scales, but
+generally you should scale the data matrix X prior to clustering. 
+
+Let's now build 20, 100, and 200 member clusters in the dataset:
 
 ```{r, message = FALSE}
-library(ggmap)
-X <- as.matrix(select(acs, lon, lat))
-
 set.seed(1)
 acs$cluster_20 <- kmeans(X, centers = 20)$cluster
 acs$cluster_100 <- kmeans(X, centers = 100)$cluster
 acs$cluster_200 <- kmeans(X, centers = 200)$cluster
 ```
 
-## Building models with clusters
+We can use these in a `glmnet` model to determine which clusters
+should have their own offsets. I am going to use the function
+`model.Matrix` (note the captial M) from the **MatrixModels**
+package for efficency purposes. We will discuss the details of
+the function once we get to textual data:
 
 ```{r}
+library(MatrixModels)
 X <- model.Matrix(~ factor(cluster_20) + factor(cluster_100) +
                     factor(cluster_200) + -1 , data = acs, sparse = TRUE)
 y <- acs$median_income
@@ -212,88 +184,250 @@ X_train <- X[acs$train_id == "train",]
 y_train <- y[acs$train_id == "train"]
 ```
 
+And we will fit an elastic net model to the data:
 
 ```{r, message = FALSE}
 library(glmnet)
 model <- cv.glmnet(X_train, y_train, alpha = 0.2)
-```
-
-
-```{r, message = FALSE}
 acs$median_income_pred <- predict(model, newx = X)
 ```
 
+Notice that the output resembles k-nearest neighbors:
 
 ```{r, message = FALSE}
 acs_ne <- filter(acs, lon > -80, lat > 35, lon < -30)
 qmplot(lon, lat, data = acs_ne, color = bin(median_income_pred, 4)) +
   viridis::scale_color_viridis(discrete = TRUE) +
-  ggtitle("k = 5")
+  ggtitle("glmnet")
 ```
+
+There are important differences with the k-nearest neighbors
+method, however. The regions to group together have been determined
+adaptively. Notice that upstate New York and Maine have moslty be
+pushed into the same values. The Metro NYC area, in constrast, has
+many more regions.
+
+## Decision Trees
+
+We will now look at a new dataset of housing prices in Ames,
+Iowa. Unlike our other housing datasets though, the samples 
+here are individual houses.
+
+```{r, message = FALSE}
+ames <- read_csv("https://statsmaths.github.com/ml_data/ames.csv")
+```
+
+One way to build a predictive algorithm is to describe a decision
+tree. The best way to understand what this is is to see an example.
+Here, we use the `tree` library (pre-installed in R) to predict
+sales price:
 
 ```{r}
-sqrt(tapply((acs$median_income - acs$median_income_pred)^2,
-            acs$train_id, mean))
+library(tree)
+model <- tree(saleprice ~ neighborhood + overall_qual + overall_cond + year_built,
+                      data = ames, subset = train_id == "train",
+              control = tree.control(nobs = nrow(ames), mindev = 0.005))
 ```
 
-## Hierarchical models
+This relatively old library needs a special plotting notation (so
+don't worry if this looks strange)
 
 ```{r}
-model <- lm(median_income ~ cluster_20, data = acs,
-            subset = (train_id == "train"))
-acs$cluster_20_value <- predict(model, newdata = acs)
-sqrt(tapply((acs$median_income - acs$cluster_20_value)^2,
-            acs$train_id, mean))
+par(mar = c(0,0,0,0))
+plot(model, type = "uniform")
+text(model, cex = 0.7, col = "purple")
 ```
 
+In order to do prediction, we start at the top of the tree and
+look at each logical statement. If True, move to the left and
+if False move to right. At the bottom (the *terminal nodes* or *leaves*),
+there are predicted values. The tree was built by greedily picking
+variables to spit the dataset up by until some stopping criterion
+was reached; this is usually a fixed depth, a fixed proportion of
+the data, or a fixed decrease in the RMSE of accuracy rate.
+
+## Random Forests
+
+Decision trees give very noisy predictions due to their use of
+greedy logic and because points on the boundary of a decision
+cut-off are forced into a fixed bucket. By noisy, I mean that a
+slightly different training set would yield significantly
+different predictions for at least some of the test points.
+This may seem like a design flaw, but we can easily turn it into
+a design feature!
+
+The idea of a random forest is to add some randomness into the
+decision tree algorithm, fit a large number of trees using this
+random variation, and produce predictions by averaging together
+the predictions from all these individual trees (its a *forest*
+because there are a lot of trees; get it?). The random logic
+applies only the building of the trees; once created, each tree
+is exactly the same as in the case above. The randomness comes
+from two sources:
+
+- for each tree, select only a subset of the training data to
+train with
+- for each split, select only a subset of the available variables
+to split on
+
+The exact values for these two random features can be set as 
+hyperparameters. We can fit random forests using the `randomForest`
+function from the package with the same name as follows:
+
+```{r, message = FALSE}
+library(randomForest)
+set.seed(1)
+model <- randomForest(saleprice ~ overall_qual + year_built,
+                      data = ames, subset = train_id == "train",
+                      ntree = 20, maxnodes = 3, mtry = 1)
+```
+
+Here I selected 20 randomly generated trees, each having at most
+3 terminal nodes and only allowing one variable to be used at
+each split. These are very low settings, used only for illustrating
+the algorithm here. We can get predictions from each individual
+tree by setting `predict.all` to `TRUE`:
 
 ```{r}
-model <- lm(median_income ~ cluster_100, data = acs,
-            subset = (train_id == "train"))
-acs$cluster_100_value <- predict(model, newdata = acs)
-sqrt(tapply((acs$median_income - acs$cluster_100_value)^2,
-            acs$train_id, mean))
+obj <- predict(model, newdata = ames, predict.all = TRUE)$individual
 ```
 
+Here is the prediction for just the third tree:
 
 ```{r}
-model <- lm(median_income ~ cluster_200, data = acs,
-            subset = (train_id == "train"))
-acs$cluster_200_value <- predict(model, newdata = acs)
-sqrt(tapply((acs$median_income - acs$cluster_200_value)^2,
-            acs$train_id, mean))
+ames$price_pred <- obj[,4]
+qplot(overall_qual, year_built, data = ames, color = price_pred) +
+  viridis::scale_color_viridis()
 ```
+
+Can you figure out roughly what the tree looks like? It first
+splits on overal quality being less than 7.5, and then splits
+the lower quality houses by year built around 1982. The individual
+prediction is not very smooth or complex.
+
+Taking all of the twenty trees together, the average model
+looks quite a bit different:
 
 ```{r}
-model <- lm(median_income ~ poly(cluster_20_value, cluster_100_value,
-                cluster_200_value, degree = 3), data = acs,
-            subset = (train_id == "train"))
-acs$median_income_pred <- predict(model, newdata = acs)
-sqrt(tapply((acs$median_income - acs$median_income_pred)^2,
-            acs$train_id, mean))
+ames$price_pred <- predict(model, newdata = ames)
+qplot(overall_qual, year_built, data = ames, color = price_pred) +
+  viridis::scale_color_viridis()
 ```
+
+Helpfully, the **randomForest** also provides the function
+`importance` that measures how important each variable is
+to the model.
 
 ```{r}
-X <- model.Matrix(~ cluster_20_value +
-                    cluster_100_value +
-                    cluster_200_value +
-                    factor(cluster_20) +
-                    factor(cluster_100) +
-                    factor(cluster_200) + -1 , data = acs, sparse = TRUE)
-y <- acs$median_income
-X_train <- X[acs$train_id == "train",]
-y_train <- y[acs$train_id == "train"]
-model <- cv.glmnet(X_train, y_train, alpha = 0.2)
+importance(model)
 ```
 
+This is a measurement of how often the variable was used
+in the model and how much it decreased the RMSE each time it
+was used to split the dataset.
+
+## Gradient Boosted Trees
+
+Gradient boosted trees offer a slightly different approach
+to random forests for making use of the noisy nature of
+decision trees. Like random forests, they construct a 
+number of trees, each using only a subset of the training
+data. They do not restrict the variables available for
+each node to split on. Most importantly, gradient boosted
+trees are fit in a sequence, with each tree trying to predict
+the residuals left over by the other trees. 
+
+More exactly, if the fitted values from the t-th tree
+are given by:
+
+$$ \widehat{Y_i^t} $$
+Then we train the k-th tree on the values Z given by:
+
+$$ Z_i = Y_i - \eta \cdot \sum_{t = 1}^{k - 1} \widehat{Y_i^t} $$
+
+The parameter eta is the learning rate. If set to one, this
+is exactly fitting on the residuals of the prior trees.
+Setting to less than one stop the trees from overfitting from
+the first few trees. Here, we prepare a larger set of variables
+from the `ames` dataset:
 
 ```{r}
-acs$median_income_pred <- predict(model, newx = X)
-sqrt(tapply((acs$median_income - acs$median_income_pred)^2,
-            acs$train_id, mean))
+X <- model.matrix(~ . -1 , data = ames[,-c(1:3)])
+y <- ames$saleprice
+
+y_train <- y[ames$train_id == "train"]
+y_valid <- y[ames$train_id == "valid"]
+X_train <- X[ames$train_id == "train",]
+X_valid <- X[ames$train_id == "valid",]
 ```
 
+We will use the **xgboost** package to fit gradient
+boosted trees. I will set the eta parameter to 0.02.
 
+```{r, warning = FALSE, message = FALSE}
+library(xgboost)
+model <- xgboost(data = X_train, label = y_train,
+                 max_depth = 2, eta = 0.01, nthread = 2,
+                 nrounds = 10, objective = "reg:linear",
+                 verbose = 1)
+```
 
+And we can do prediction on the dataset:
 
+```{r, warning = FALSE}
+y_valid_pred <- predict(model, newdata = X_valid)
+sqrt(mean((y_valid - y_valid_pred)^2))
+```
+
+Alternatively, we can use the function `xgb.DMatrix` to
+combine the data matrix and labels:
+
+```{r}
+data_train <- xgb.DMatrix(data = X_train, label = y_train)
+data_valid <- xgb.DMatrix(data = X_valid, label = y_valid)
+```
+
+And use a more advanced calling method for **xgboost**:
+
+```{r}
+watchlist <- list(train=data_train, valid=data_valid)
+
+model <- xgb.train(data = data_train,
+                 max_depth = 3, eta = 1, nthread = 2,
+                 nrounds = 100, objective = "reg:linear",
+                 watchlist = watchlist)
+```
+
+The algorithm is the same, but there are more options available
+with `xgb.train`. As with random forests, there is a way of
+looking at variable importance. I don't like the default output
+view, so here is some code to make it look nicer:
+
+```{r}
+importance_matrix <- xgb.importance(model = model)
+importance_matrix[,1] <- colnames(X)[as.numeric(importance_matrix[[1]]) + 1]
+importance_matrix
+```
+
+## Thoughts on local models
+
+We've covered a lot today. Here are some take aways:
+
+- k-nearest neighbors are great for smoothing predictions
+or creating meta-features
+- k is inversely related to the complexity of the model
+- using clusters simulated KNN but allows for covariates
+and adaptation to the data
+- don't use the `tree` function for actual predictions; I
+only used it to illustrate decision trees
+- random forests are easy to use and difficult to overfit
+with
+- gradient boosted trees are incredibly powerful (often
+the give the most predictive models in large ML competitions)
+- you need to tune eta and number of trees in GBT to get
+a good model
+
+The last point should be the object of study for the next
+lab. We will discuss the details more next week when going
+over the lab.
 
