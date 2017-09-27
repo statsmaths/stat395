@@ -19,6 +19,7 @@ library(dplyr)
 library(ggplot2)
 library(readr)
 library(viridis)
+library(methods)
 ```
 
 ## Income data
@@ -49,7 +50,7 @@ response variable here.
 
 ### Tuning k-nearest neighbors
 
-The knn model, as we saw last time, requires us to use 
+The knn model, as we saw last time, requires us to use
 a model matrix. We will construct one here using only
 longitude and latitude:
 
@@ -90,7 +91,7 @@ qplot(seq_along(rmse), rmse) +
 ```
 
 The optimal value seems to be at k equal to 5, with a drastic
-degradation for k equal to 1 or 2. 
+degradation for k equal to 1 or 2.
 
 One thing that may be counterintuitive about k-nearest neighbors
 is the relationship between k and the model complexity. Here is
@@ -112,8 +113,8 @@ qmplot(lon, lat, data = df, color = bin(pred, 4)) +
 ```
 
 There are large regions that all have very similar predicted
-values. In contrast, here are the predicted value from k equal to 
-3. 
+values. In contrast, here are the predicted value from k equal to
+3.
 
 ```{r, message = FALSE}
 id <- (X_valid[,1] > -80) & (X_valid[,2] > 35)
@@ -130,7 +131,7 @@ qmplot(lon, lat, data = df, color = bin(pred, 4)) +
 
 Here, the values change rapidly and there are many nearby
 points with drastically different values. So, a high value
-of k is a less complex model and a low value is a more 
+of k is a less complex model and a low value is a more
 complex model. If this seems confusing, think about k being
 the size of the entire training set (every point will then
 be equal to a constant: the training set mean). Also perhaps
@@ -158,7 +159,7 @@ qmplot(lon, lat, data = acs, color = factor(cluster_20))
 
 Notice that I have set the random seed as the output of the algorithm
 is stochastic. Here, longitude and latitude are on similar scales, but
-generally you should scale the data matrix X prior to clustering. 
+generally you should scale the data matrix X prior to clustering.
 
 Let's now build 20, 100, and 200 member clusters in the dataset:
 
@@ -210,7 +211,7 @@ many more regions.
 ## Decision Trees
 
 We will now look at a new dataset of housing prices in Ames,
-Iowa. Unlike our other housing datasets though, the samples 
+Iowa. Unlike our other housing datasets though, the samples
 here are individual houses.
 
 ```{r, message = FALSE}
@@ -270,7 +271,7 @@ train with
 - for each split, select only a subset of the available variables
 to split on
 
-The exact values for these two random features can be set as 
+The exact values for these two random features can be set as
 hyperparameters. We can fit random forests using the `randomForest`
 function from the package with the same name as follows:
 
@@ -330,12 +331,12 @@ was used to split the dataset.
 
 Gradient boosted trees offer a slightly different approach
 to random forests for making use of the noisy nature of
-decision trees. Like random forests, they construct a 
+decision trees. Like random forests, they construct a
 number of trees, each using only a subset of the training
 data. They do not restrict the variables available for
 each node to split on. Most importantly, gradient boosted
 trees are fit in a sequence, with each tree trying to predict
-the residuals left over by the other trees. 
+the residuals left over by the other trees.
 
 More exactly, if the fitted values from the t-th tree
 are given by:
