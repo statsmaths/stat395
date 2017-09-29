@@ -66,7 +66,7 @@ both to one. This means that the last model simply adds the two lines
 from the first regression together. We can graphically see as well that
 this leads to the final model being linear too:
 
-```{r, fig.asp=0.33, fig.width = 12}
+```{r, fig.asp=0.33, fig.width = 12, echo = FALSE}
 par(mfrow = c(1, 3))
 plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
      axes = FALSE, xlab = "", ylab = "")
@@ -101,7 +101,7 @@ layer. The input layer has just one node, a single x, and the output
 has just one node, a single w. We can think of this as a network as
 follows:
 
-```{r}
+```{r, echo = FALSE}
 par(mar = c(0,0,0,0))
 plot(0,0,col="white",xlim=c(0,1),ylim=c(0,1))
 arrows(x0 = c(0.15, 0.15, 0.55, 0.55),
@@ -152,7 +152,7 @@ increases the complexity of the relationship between x and w. Notice
 how we can now create non-linear relationships by combining two linear
 functions where we have applied the ReLU unit before adding them together:
 
-```{r, fig.asp=0.33, fig.width = 12}
+```{r, fig.asp=0.33, fig.width = 12, echo = FALSE}
 par(mfrow = c(1, 3))
 plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
      axes = FALSE, xlab = "", ylab = "")
@@ -189,20 +189,9 @@ arbitrarily small precision.
 
 To build neural networks in R, we are going to use the keras library.
 Originally developed for Python, there are now several wrappers for
-R. To install it, we need to install both the package and the keras
-library itself. To do so, run the following (as usual, do this only
-once):
-
-```{r, eval = FALSE}
-library(keras)
-install_keras()
-```
-
-I have not had trouble with this on my mac, but I also have many
-libraries already installed on my computer. If you run into trouble
-with this, please let me know now. We are doing this one unit with
-neural networks today, but will return to them in force for month of
-November.
+R. Instructions to install it an included at the end of today's class
+notes. Here, I have already installed it and load the package in as
+you would any other package.
 
 ```{r, message = FALSE, echo = FALSE}
 library(keras)
@@ -335,3 +324,165 @@ qplot(latitude, median_house_value_pred, data = ca)
 At this point, neural networks should seem like a natural extension of
 the models we have already seen rather than a fancy black-box. It is,
 in my opinion, too often explained as the latter.
+
+## Classification with neural networks
+
+We have just seen how to use neural networks to do regression with one
+continuous response. Of course, we could modify this to do binary
+classification by coding factors as 0 and 1. Further, the *one-vs-one*
+and *one-vs-many* paradigms would allow this to extend to multiclass
+classification. There is, however, a more straightforward approach.
+If you recall that we used the **nnet** package to fit the multinomial
+function, this should not be surprising.
+
+### One-hot encoding
+
+The trick for doing multiclass regression with neural networks is to
+realize that we can easily make the last layer of a neural network
+output multiple values. All we need to do is have the function that
+we want to minimize by a function of all these outputs rather than
+a single output with each row of the data. An easy way to do this is
+to assign multiple response variables with each observation and do
+mean squared error loss, but we will now take the mean squared loss of
+predicting all the outputs.
+
+The **keras** package include a function `to_categorical` that converts
+numeric class labels to binary indicator variables. This is very similar
+to the model matricies we built for the X matrix when using categorical
+predictors. Here is a simple example of its application:
+
+```{r}
+to_categorical(c(1,1,2,4,10))
+```
+
+Notice that keras is 0-indexed, so it wants the first category to be zero.
+That's why we have 11 columns even thought the largest category is only
+10. The best way to understand how to use this response matrix is to see
+a worked example in keras.
+
+### Chicago Crimes, again
+
+I am going to load another version of the Chicago crimes data, but this 
+time there are 12 crime types:
+
+```{r, message = FALSE}
+crimes <- read_csv("https://statsmaths.github.io/ml_data/chi_crimes_12.csv")
+```
+
+I want to just use latitude, longitude, and hour here to simplify the analysis.
+The X data matrix is unchanged from previous code examples other than the
+fact that we scale the columns.
+
+```{r}
+X <- scale(as.matrix(select(crimes, longitude, latitude, hour)))
+X_train <- X[crimes$train_id == "train",]
+X_valid <- X[crimes$train_id == "valid",]
+```
+
+Typically, I create a y variable as before, but make sure to subtract one so that
+the smallest category is zero. When creating `y_train` and `y_valid`, I use the
+`to_categorical` function, manually specifying the number of classes to avoid any
+issues:
+
+```{r}
+y <- crimes$crime_type - 1
+y_train <- to_categorical(y[crimes$train_id == "train"], num_classes = 12)
+y_valid <- to_categorical(y[crimes$train_id == "valid"], num_classes = 12)
+```
+
+Take note of what the response matrix looks like:
+
+```{r}
+y_train[sample(nrow(y_train), 10),]
+```
+
+### Building a classification model
+
+Here is the specificiation of a model that could train on our dataset. The
+input shape is three because we have three input variables. The last layer
+has 12 units because the respones has 12 columns. I use a new activation layer
+at the end called a "softmax". The forces the output values to all be
+positive and sum to 1; therefore we can safely view them as proper
+probabilities.
+
+```{r}
+model <- keras_model_sequential()
+model %>%
+  layer_dense(units = 20, input_shape = c(3)) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 20) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 12) %>%
+  layer_activation(activation = "softmax")
+model
+```
+
+Notice that this fairly simple model already has 752 parameters that we need
+to learn. Neural networks can get complex very quickly!
+
+Now, we compile the model. While "mse" could work for the function we want to
+minimize, something called "categorical_crossentropy" is better for some technical
+reasons when learning to do multiclass classification. We'll also print out the
+accuracy at each step.
+
+```{r}
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(lr = 0.01),
+                  metrics = c('accuracy'))
+```
+
+```{r, message = FALSE, warning = FALSE}
+model %>%
+  fit(X_train, y_train, epochs = 10,
+      validation_data = list(X_valid, y_valid))
+```
+
+Random guessing yields a classification rate of 8%, so our model does approximately
+twice as well as guessing. Not bad for a first take at using neural networks.
+
+In order to get predictions on the whole dataset, we can use the function `predict_classes`.
+A `predict` function exists, but it would give us a matrix of values much like `y_train`.
+The `predict_classes` function helpfully saves a step. **Don't forget to add one to predictions!**
+
+```{r}
+crimes$crime_type_pred <- predict_classes(model, x = X) + 1
+```
+
+Finally, take a look at the lower right-hand panel in RStudio. You will see a helpful plot of
+the training and validation loss functions metrics.
+
+## Installation
+
+To install keras, we need to install the package, the keras
+library itself, and python. The best first step is to install
+keras as you would any package:
+
+```{r, eval = FALSE}
+install.packages("keras")
+```
+
+Once that is done, load the library and try to run the `install_keras`
+function:
+
+```{r, eval = FALSE}
+library(keras)
+install_keras()
+```
+
+Depending on your system, it may just run and download some files and
+you are all set to go. In the future, just call `library(keras)` as
+you would any other package. If it complains about not having Python,
+install Anaconda for Python 3 from this link:
+
+- [https://www.anaconda.com/download/](https://www.anaconda.com/download/)
+
+Then, restart RStudio and run the block of code again. If there is
+a different error message (most likely you are one a Mac), try to
+do whatever it says. 
+
+If you run into trouble with this, please let me know now. We are doing
+this one unit with neural networks today, but will return to them in force
+for the entire month of November.
+
+
+
