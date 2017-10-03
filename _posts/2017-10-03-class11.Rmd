@@ -83,7 +83,7 @@ plot(0, 0, type = "n", xlim = c(-1, 4), ylim = c(-1, 2),
      axes = FALSE, xlab = "", ylab = "")
 mtext("=", side=2, line=2.2, cex=2, las=1)
 abline(-0.5, 0.5, lty = "dashed", col = "orange", lwd = 4)
-abline(0.5, -1, lty = "dashed", lwd = 1)
+abline(0.5, -0.5, lty = "dashed", lwd = 1)
 abline(-1, 1, lty = "dashed", lwd = 1)
 abline(v = 0); abline(h = 0)
 box()
@@ -260,7 +260,7 @@ model %>% compile(
 
 Once the model has been compiled we can fit it to our dataset.
 
-```{r, message = FALSE, warning = FALSE}
+```{r, message = TRUE, warning = FALSE}
 model %>%
   fit(X_train, y_train, epochs = 5,
       validation_data = list(X_valid, y_valid))

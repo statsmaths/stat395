@@ -16,11 +16,20 @@ library(dplyr)
 library(methods)
 ```
 
+## Taxi Data
 
+Today I am going to look at a dataset of taxi rides in NYC. For each
+ride we want to predict how long the journey took:
 
 ```{r, message = FALSE}
 taxi <- read_csv("https://statsmaths.github.io/ml_data/nyc_taxi.csv")
 ```
+
+
+## 
+
+
+
 
 
 ```{r}
