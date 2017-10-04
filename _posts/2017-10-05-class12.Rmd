@@ -25,121 +25,200 @@ ride we want to predict how long the journey took:
 taxi <- read_csv("https://statsmaths.github.io/ml_data/nyc_taxi.csv")
 ```
 
+Notice that we have only a limited amount of information about each
+ride:
 
-## 
+- time: day, hour, minute, and weekday
+- location: pickup and dropoff latitude / longitude / neighborhood
+- derived variables: trip distance
 
+As way of review, we'll go over all of the primary estimators we have 
+learned and show how they might be applied to this prediction problem.
 
+One key thing here is to learn how we would approach a problem like
+this. Models should usually not be applied in the order we learned
+them.
 
+## Model Selection and Baseline
 
+My first step is to figure out which variables might be of interest and to
+establish a quick baseline for how well I can generally expect to estimate
+the output. Here we have only 11 variables, and only two are directly 
+categorical. This is a borderline case between using **xgboost** and 
+**glmnet**, so let's use both
+
+To use the either for model selection, I will usually put all of the
+variables into the model. I leave out only very grainular categorical
+variables (such as the player name in the NBA shots data). 
 
 ```{r}
-library(forcats)
-taxi$pickup_NTACode <- fct_lump(taxi$pickup_NTACode, prop = 0.01)
-taxi$dropoff_NTACode <- fct_lump(taxi$dropoff_NTACode, prop = 0.01)
-table(taxi$pickup_NTACode)
-```
-
-```{r}
-X <- model.matrix(~ . -1 ,
-                  data = taxi[,-c(1:3)])
+X <- model.matrix(~ . - 1, data = taxi[,4:14])
 y <- taxi$duration
 
-y_train <- y[taxi$train_id == "train"]
-y_valid <- y[taxi$train_id == "valid"]
 X_train <- X[taxi$train_id == "train",]
-X_valid <- X[taxi$train_id == "valid",]
-```
-
-
-
-## Sparse Matricies
-
-You may have noticed that the design matrix above contains
-primarily zeros. With large datasets and even more categories,
-we would be wasting a lot of valuable memory holding all of
-these values. R has support for objects known as sparse
-matricies. These store only the non-zero elements, saving
-space when most elements are zero. To access them, we'll load
-the **MatrixModels** package and using the function `model.Matrix`
-(in general, in R capital letters indicate sparse matrix
-variations of dense matrix operations).
-
-```{r}
-library(methods)
-library(MatrixModels)
-X <- model.Matrix(~ carrier , data = flights[,-c(1:3)], sparse = TRUE)
-X[1:10,]
-```
-
-Many operations, such as subsetting and multiplication, translate
-directly to sparse matrices. We'll construct training and validation
-sets as before:
-
-```{r}
-X_train <- X[flights$train_id == "train",]
-X_valid <- X[flights$train_id == "valid",]
-```
-
-The **MatrixModels** package has experimental support for computing
-linear regression models with sparse matricies using the function
-`lm.fit.sparse`. Because it is experimental, we need to prepend the
-notation `MatrixModels:::` to the function call:
-
-```{r}
-beta <- MatrixModels:::lm.fit.sparse(X_train, y_train)
-beta
-```
-
-Notice that this yields the same regression vector beta as the dense
-operations above.
-
-
-
-
-```{r}
-beta <- lm.fit(X_train, y_train)$coef
-y_valid_pred <- X_valid %*% beta
-sqrt(mean((y_valid - y_valid_pred)^2))
-```
-
-```{r}
-beta
-```
-
-```{r}
-library(glmnet)
-model <- cv.glmnet(X_train, y_train)
-y_valid_pred <- predict(model, newx = X_valid)
-sqrt(mean((y_valid - y_valid_pred)^2))
-coef(model, s = model$lambda.1se)
-```
-
-```{r}
-X <- model.matrix(~ poly(trip_distance, hour, degree = 5) + . -1,
-                  data = taxi[,-c(1:3)])
-y <- taxi$duration
-
 y_train <- y[taxi$train_id == "train"]
-y_valid <- y[taxi$train_id == "valid"]
-X_train <- X[taxi$train_id == "train",]
 X_valid <- X[taxi$train_id == "valid",]
-```
-
-```{r}
-library(glmnet)
-model <- cv.glmnet(X_train, y_train)
-y_valid_pred <- predict(model, newx = X_valid)
-sqrt(mean((y_valid - y_valid_pred)^2))
-coef(model, s = model$lambda.1se)
-```
-
-```{r}
-model <- lm(trip_distance ~ poly(trip_distance, hour, degree = 5) + .,
-            data = taxi[,-c(1:3)])
-y <- predict(model, newdata = taxi)
 y_valid <- y[taxi$train_id == "valid"]
-sqrt(mean((y_valid - y_valid_pred)^2))
 ```
+
+### Elastic Net
+
+Now, we can apply the elastic net. Setting alpha equal to 0.9 is a good
+starting spot.
+
+```{r, message = FALSE}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, alpha = 0.9)
+taxi$duration_pred_enet <- predict(model, newx = X)
+beta <- coef(model, s = c(model$lambda.min, model$lambda.1se, model$lambda[c(3, 10)]))
+beta[beta[,2] != 0,]
+```
+
+Above, I printed out only those rows where the 1se model has non-zero coefficents.
+This limits the output only to those most important variables. For interest, I also
+added several larger lambdas. Here is the predictiveness of the model:
+
+```{r}
+sqrt(tapply((taxi$duration_pred_enet - taxi$duration)^2, taxi$train_id, mean))
+```
+
+What do we learn from the elastic net? Here are a summary of things learned:
+
+- Trip distance is the most important variable (unsurprising, perhaps)
+- The dropoff location effects the output significantly
+- The hour and day of the week also has an effect
+- We should be able to get an RMSE of at least around 370 seconds on the validation set
+
+### Boosted Trees
+
+We can repeat this analysis of the best variables with boosted trees. These
+may find different variable importance scores because it allows for learned
+non-linearities and interactions.
+
+```{r}
+library(xgboost)
+data_train <- xgb.DMatrix(data = X_train, label = y_train)
+data_valid <- xgb.DMatrix(data = X_valid, label = y_valid)
+watchlist <- list(train=data_train, valid=data_valid)
+```
+
+I like to create the datasets and watchlist in a different code chunk to make
+the code easier to iterate on in the future. I started the eta at 0.5, then
+reduced it to 0.1, and then to 0.01. At 0.01 it seemed to slow down a lot but
+still improve. I found that 2000 rounds seemed to be a good limit.
+
+```{r}
+model <- xgb.train(data = data_train,
+                 max_depth = 4, eta = 0.01, nthread = 2,
+                 nrounds = 2000, objective = "reg:linear",
+                 watchlist = watchlist,
+                 print_every_n = 100)
+```
+
+This is a good sign that eta has been tuned correctly and we've used
+a good number of rounds: the validation RMSE has stopped improving
+but has not gotten worse and the training RMSE has continued to 
+improve.
+
+```{r}
+importance_matrix <- xgb.importance(model = model)
+importance_matrix[,1] <- colnames(X)[as.numeric(importance_matrix[[1]]) + 1]
+importance_matrix
+```
+
+So, once again trip distance is the most important. We see that hour,
+dropoff location, and weekday are again important. By using non-linearities,
+the location information seems even more important than we previously found.
+
+```{r}
+taxi$duration_pred_xgb <- predict(model, newdata = X)
+sqrt(tapply((taxi$duration_pred_xgb - taxi$duration)^2, taxi$train_id, mean))
+```
+
+What have we learned from the boosted trees?
+
+- Again, trip distance is the most important variable
+- Hour, dropoff location, and hour are again the second most important 
+- The boosted trees outperfrom the elastic net by a wide marging;
+probable some non-linearities and interactions we need to handle
+- Should be able to get a test RMSE of at least around 280 seconds
+
+## What now?
+
+When we find that the elastic net is better or at least nearly as predictive
+as the gradient trees there is a lot we can do in terms of building new variables
+and interactions. Linear models (remember, the elastic net is a linear model)
+have none of these higher-order terms in them and need to be given them
+directly in the model matrix. 
+
+When we find that the gradient boosted trees are significantly better,
+trying to custom build new variables is rarely a good idea. At best, we
+will approximate the boosted trees with a linear model. A better approach
+is to figure out how to either (1) improve the boosted trees model or 
+(2) to construct a different model that can be blended with the boosted
+trees. The first is not very interesting so let's try the second.
+
+### Generalize additive models
+
+Our best tool for building highly non-linear models are generalized
+additive models. Here, I'll interact the longitude and latitude 
+variables from both the pickup and dropoff locations, the two
+most important time variables, and add a non-linear trip distance
+term.
+
+```{r}
+library(gam)
+model <- gam(duration ~ lo(pickup_longitude, pickup_latitude) +
+                        lo(dropoff_longitude, dropoff_latitude) +
+                        lo(hour, weekday) +
+                        s(trip_distance),
+             data = taxi,
+             subset = (train_id == "train"))
+```
+
+Then, I predict the values and compare the xgboost and elastic net
+models:
+
+```{r, warning = FALSE}
+taxi$duration_pred_gam <- predict(model, newdata = taxi)
+sqrt(tapply((taxi$duration_pred_gam - taxi$duration)^2, taxi$train_id, mean))
+```
+
+The predictive power of this model is not as good as the boosted
+trees but also does not suffer from the same degree of overfitting.
+
+### Blending
+
+We can usually do better by averaging together the models that we built
+into a single meta-model. I tend to do this with a straightforward 
+linear or logistic regression fit on only the validation set:
+
+```{r}
+model <- lm(duration ~ duration_pred_gam + duration_pred_xgb - 1,
+            data = taxi,
+            subset = (train_id == "valid"))
+summary(model)
+taxi$duration_pred <- predict(model, newdata = taxi)
+```
+
+About 85% of the final prediction comes from the boosted trees
+and 13% from the gam model. 
+
+```{r}
+sqrt(tapply((taxi$duration_pred - taxi$duration)^2, taxi$train_id, mean))
+```
+
+We see that the validation error has changed only marginally, but
+has improved slightly. This new meta-model is also likely more
+stable and less prone to model drift and overfitting.
+
+## Classification
+
+
+
+
+
+
 
 
 
