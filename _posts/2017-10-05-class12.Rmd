@@ -214,6 +214,97 @@ stable and less prone to model drift and overfitting.
 
 ## Classification
 
+### Binary Classes
+
+How would the above analysis have changed if I was doing classification
+rather than regression? For binary classification, I would not need
+to do very much to change the process. Just a few basic argument changes:
+
+- set the `family = "binomial"` option in the `glmnet` function
+- set `objective = "binary:logistic"` in the `xgb.train` function
+- set the `family = binomial()` option in the `gam` function
+- blend models using `glm` with the binomial family
+- convert predictions to 0's and 1's using a cutoff
+- use accuracy in place of RMSE when evaluating the model
+
+The nature of classification problems is of course often much different.
+For example, it is much easier to overfit classification tasks and I 
+find that `glmnet` outperforms `xgboost` far more often in
+binary classification tasks.
+
+### Multiclass Estimation (small number of cases)
+
+If I have a problem with a small number of categories, say 3-6, I
+would modify the general approach as follows:
+
+- set the `family = "multinomial"` option in the `glmnet` function
+- fit one-vs-many models using `xgb.train`
+- often forgo the `gam` model; if using, do one-vs-many models
+- blend models using `multinom` from the **nnet** package
+- convert to class predictions and use accuracy when evaluating
+the model
+
+The one-vs-many is generally fine for all of these models and will
+not take too long to use.
+
+### Multiclass Estimation (larger number of cases)
+
+When I have a larger number cases, it quickly becomes infeasible
+to do lots of one-vs-many models, at least at a first take. Of 
+course, for a major project it can be done but is not a good first
+course of action.
+
+If the number of categories does not exceed around a dozen and
+I believe the dataset offers a reasonable chance at a linear solution,
+my first step would be to fit a `glmnet` model with a multinomial
+family. Hopefully this converges in a reasonable time-frame. I then
+look at the confusion matrix to identify particular categories that
+are hard to distinguish. If there are a few particularly hard clusters,
+I attack each problem as a subproblem using binary classifiers or the
+approach above for a small set of 3-6 classes.
+
+If the above approach does not work well or there are a very large
+number of categories, I'll use a dense neural network such as the
+one from our last set of lecture notes. I have increasingly gone to
+dense neural networks for multiclass problems on the boundary of
+these cut-offs (say, 6-10 classes); this is partially due to my
+growing comfort with how to train and test neural networks.
+
+## Other Directions in Structured Predictive Modelling
+
+We now conclude the portion of the course dedicated to what I refer
+to as *structured* data. That is, data where I essentially give you
+the variables we need for modelling as columns in the raw data. Yes,
+we sometimes created derived variables using intuition about the
+problem or some type of basis expansion. However, for the most part
+the way I gave you the data is a natural representation of the the
+way models are built for it. Over the remainder of the course we
+will focus on unstructured data: *text*, *images*, and perhaps even
+*sound*. Here the difficult task of featurization will be the most
+important step of model building.
+
+Before we conclude this part of the course, however, I want to stress
+two very different messages. First of all, the modelling tools that
+we have seen (specifically: the elastic net; gradient boosted trees; 
+KNNs; GAMs; SVMs; dense neural networks; GLMs) make up a sizeable portion
+of what you need to do cutting-edge work in predictive modelling. 
+Yes, there are **many** fancy sounding models that you'll come across
+searching across the web, interviewing or jobs, or attending conferences.
+And yes, some of these are very important in particular niche areas.
+However, for structured data I personally don't think anything else
+outside of this set has proven itself as a crutial preditive tool that
+everyone needs to know and use. 
+
+At the same time, there is of course a lot more to the field than
+what we have already seen. Many of these concern the process of data
+cleaning and preparation. This is actually what I spend the majority
+of my time doing, in fact. There are also a lot of data quirks that
+need addressing such as rare events, non-standard loss functions, and
+missing values. Finally, if we want to implement these models in the
+wild there are a lot of additional concerns such as how to monitor
+the results, how to guard against model drift, and how to avoid
+adversarial attacks.
+
 
 
 
