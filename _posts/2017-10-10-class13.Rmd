@@ -1,5 +1,5 @@
 ---
-title: "Class 13: Thinking, Fast and Slow"
+title: "Class 13: Congratulations, You've Won $1M!"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -12,40 +12,250 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-10-10-class13/")
 
 ```{r, message = FALSE}
 library(readr)
-library(ggplot2)
 library(dplyr)
+library(ggplot2)
 library(methods)
+
+library(stringi)
+library(smodels)
+library(tokenizers)
 ```
 
+## Spam Detection
 
-## Stochastic Gradient Descent
+Today, we start our analysis of textual data (to me, this is where things
+start to get particularly interesting). As a first task let's look at a
+dataset of spam records:
 
-$$ \left( w^{(0)} - \eta \cdot \nabla_w f \right) \, \rightarrow \, w^{(1)} $$
+```{r, message = FALSE}
+spam <- read_csv("https://statsmaths.github.io/ml_data/spam.csv")
+```
 
-$$ \begin{align} f(w) &= \sum_i (\widehat{y}_i(w) - y_i)^2 \\
-        &= \sum_i f_i(w) \\
-        \nabla_w f &= \sum_i \nabla_w f_i
-    \end{align}$$
+Notice that our dataset now has only four columns. There is no easy way of
+putting this in any of our predictive models.
 
-$$
-\begin{align}
-\left( w^{(0)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_1 \right) \, &\rightarrow \, w^{(1)} \\
-\left( w^{(1)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_2 \right) \, &\rightarrow \, w^{(2)} \\
-&\vdots \\
-\left( w^{(n-1)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_n \right) \, &\rightarrow \, w^{(n)} \\
-\end{align}
-$$
+Its useful to see some examples of the data, particularly to see if we can
+detect any manual patterns for classifying the data. What do you think the
+classification of this message is?
 
-The $w^{(n)}$ here is exactly equivalent to the $w^{(1)}$ from before.
+```{r}
+stri_wrap(spam$text[500], width = 60)
+```
 
-$$
-\begin{align}
-\left( w^{(0)} - \eta' \cdot \nabla_{w^{(0)}} f_1 \right) \, &\rightarrow \, w^{(1)} \\
-\left( w^{(1)} - \eta' \cdot \nabla_{w^{(1)}} f_2 \right) \, &\rightarrow \, w^{(2)} \\
-&\vdots \\
-\left( w^{(n-1)} - \eta' \cdot \nabla_{w^{(n)}} f_n \right) \, &\rightarrow \, w^{(n)} \\
-\end{align}
-$$
+Or this one:
+
+```{r}
+stri_wrap(spam$text[506], width = 60)
+```
+
+Or this:
+
+```{r}
+stri_wrap(spam$text[903], width = 60)
+```
+
+Or this:
+
+```{r}
+stri_wrap(spam$text[125], width = 60)
+```
+
+As you probably guessed, the first and last are spam and the other two
+are not:
+
+```{r}
+spam$class[c(500, 506, 903, 125)]
+```
+
+## Constructing Features by Hand
+
+In order to build predictive models from this dataset, we first need to
+create new (ideally numeric) variables that capture relevant aspects of
+each message. This process is known as *featurization*, and will be the
+key task that we will focus on in our text analysis.
+
+What things might be useful to extract from the text? In a moment, we'll
+see some more systematic ways of doing this, but for spam we can do some
+of this manually. Perhaps we could detect the length of each text and use
+that as a feature? To do that, I'll use the **stringi** function `stri_length`:
+
+```{r}
+spam$length <- stri_length(spam$text)
+```
+
+It may also be useful to count how many times the pound symbol (this data
+comes from the UK) and exclamation symbol is used. For this, we use the
+`stri_count` function:
+
+```{r}
+spam$count_pound <- stri_count(spam$text, fixed = "£")
+spam$count_exclm <- stri_count(spam$text, fixed = "!")
+```
+
+We can tweak the count function to match patterns rather than a fixed
+string. Let's count the number of capital letters and the number of
+numbers:
+
+```{r}
+spam$count_caps <- stri_count(spam$text, regex = "[A-Z]")
+spam$count_nums <- stri_count(spam$text, regex = "[0-9]")
+```
+
+The `regex` option stands for *regular expression*. We are not going to
+make much use of them in this course, but they are incredibly powerful
+when cleaning and manipulating text-based datasets.
+
+With these new variables in hand, we can now apply the learning algorithms
+we learned earlier this semester. I'll use a GAM model, allowing for a
+non-linear relationship with length.
+
+```{r}
+library(gam)
+model <- gam(class ~ s(length) + count_pound + count_exclm + count_nums +
+                     count_caps,
+             data = spam,
+             subset = (train_id == "train"))
+plot(model)
+```
+
+As we may have expected, all of the linear terms are positively related
+with spam. Spam tends to have about 200 characters, with the probability
+decreasing for shorter and longer messages.
+
+```{r}
+spam$class_pred <- as.numeric(predict(model, newdata = spam, type = "response") > 0.5)
+tapply(spam$class == spam$class_pred, spam$train_id, mean)
+```
+
+So, we are already doing a very good job with about a 92% classification
+rate. Here, a confusion matrix is fairly useful:
+
+```{r}
+table(y = spam$class, ypred = spam$class_pred)
+```
+
+It shows that only classify three non-spam messages as spam but fail
+to detect 76 spam messages. This inbalance, where one type of error is
+more common, comes up a lot in text and image analysis. Knowing which
+error type is more frequent is helpful in figuring what features are
+missing.
+
+## Negative examples
+
+Let's look 50 of those elements in the training sampling that were not
+detected as spam. Can you think of things that would have helped
+or why the model was not correctly classifying the output?
+
+```{r}
+these_rows <- which(spam$train_id == "train" &
+                    spam$class != spam$class_pred &
+                    spam$class == 1)
+these_rows <- sample(these_rows, 50)
+cat(stri_wrap(spam$text[these_rows], exdent = 5, width = 60), sep = "\n")
+```
+
+In some cases different model might help (there are some short messages
+that use all of the other "spam" features that would probably be caught by
+a local model).
+
+## Product Classification
+
+The dataset for your next lab has a similar task, but involves multiclass
+classification. The task is to look at amazon reviews, which we can read
+in with the following:
+
+```{r, message = FALSE}
+amazon <- read_csv("https://statsmaths.github.io/ml_data/amazon_product_class.csv")
+```
+
+And to classify them as being in:
+
+1. Books
+2. Food
+3. Movies and TV
+
+Here are some examples:
+
+```{r}
+these_rows <- which(amazon$train_id == "train" &
+                    !duplicated(amazon$category))
+cat(stri_wrap(amazon$text[these_rows], exdent = 5, width = 60), sep = "\n")
+```
+
+**What might make these easier to classifier and what might make them
+hard to classifier?**
+
+### Detecting words
+
+To do a good job of predicting categories in the Amazon dataset, we need
+to create features that capture how frequently certain words are used.
+For example, it might make sense to figure out how often the word "read"
+was used in each review. The thought is that it is common in the
+book reviews (and likely entirely absent from food reviews).
+
+```{r}
+amazon$count_read <- stri_count(amazon$text, fixed = "read")
+```
+
+With three categories and only a small number of features, the `multinom`
+function is a good choice for a model to fit this feature to:
+
+```{r}
+library(nnet)
+model <- multinom(category ~ count_read, data = amazon)
+```
+
+Remembering that the base class is the book category, the slopes
+of the read feature (which are negative here) seem as expected:
+
+```{r}
+coef(model)
+```
+
+We see that, on its own, this one feature lets us do a reasonably good
+job of prediction (remember to compare it to the 33% rate of random
+guessing):
+
+```{r}
+amazon$category_pred <- predict(model, newdata = amazon)
+tapply(amazon$category_pred == amazon$category, amazon$train_id, mean)
+```
+
+With this feature we can start to see the benefit of the confusion
+matrix:
+
+```{r}
+table(y = amazon$category, y_pred = amazon$category_pred)
+```
+
+Notice that our simple model never predicts that something is a Food
+item and only predicts that it is a Book or a Movie. It's main predictive
+power coems from seperating some Books from the other categories, as we
+would have expected.
+
+For the next lab, your task is to create more features by finding other
+words that help to seperate the classes. This might be due to just thinking
+about the problem, as we did here, or looking at negative examples to find
+patterns. Some other things you might try:
+
+- use the function `stri_trans_tolower` to convert the text to lower
+case before counting tokens
+- does it make more sense to normalize each county by the length of 
+the review?
+- is there any predictive power to features like length or other stylistic
+features
+- notice that searching for "read" also detects words that contain "read";
+this might be useful such as with "reading" or less useful which words
+such as "ready"
+
+There is a lot of room to be creative this time, but don't feel the need
+to go too crazy. As we did with structured data in the first few weeks,
+we will see more automatic/systematic ways of doing this analysis in the
+next class.
+
+
+
+
 
 
 
