@@ -15,7 +15,6 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 library(methods)
-
 library(stringi)
 library(smodels)
 library(tokenizers)
@@ -240,7 +239,7 @@ patterns. Some other things you might try:
 
 - use the function `stri_trans_tolower` to convert the text to lower
 case before counting tokens
-- does it make more sense to normalize each county by the length of 
+- does it make more sense to normalize each county by the length of
 the review?
 - is there any predictive power to features like length or other stylistic
 features
