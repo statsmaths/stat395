@@ -16,29 +16,151 @@ library(ggplot2)
 library(methods)
 library(stringi)
 library(smodels)
+library(tokenizers)
 ```
+
+## Amazon Classification -- Take Two
+
+Let's look at the Amazon classification data again:
 
 ```{r, message = FALSE}
-president <- read_csv("~/files/ml_data/presidents_3.csv")
+amazon <- read_csv("https://statsmaths.github.io/ml_data/amazon_product_class.csv")
 ```
+
+For the lab, you all should have created features that you thought might
+be useful to classification task. Can we do this in a more systematic
+approach? Yes!
+
+The basic approach is to create features for all (or the most common)
+words that occur in a collection of texts and then use a technique such
+as the elastic net that can be run with a large number of variables.
+
+The first step is to use the `tokenize_characters` function from the
+**tokenizers** package to break each text into characters:
 
 ```{r}
-stri_wrap(president$text[1000], width = 60)
+token_list <- tokenize_words(amazon$text)
+token_list[10]
 ```
 
-```{r}
-data(stop_words, package = "tidytext")
-stop_words <- stop_words$word
-sample(stop_words, 50)
-```
+We then use the `term_list_to_df` function from **smodels** to
+convert this into a feature data frame with one token per row:
 
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_words(president$text,
-                             stopwords = stop_words)
+```{r, message = FALSE}
 token_df <- term_list_to_df(token_list)
+filter(token_df, id == 10)
+```
 
-X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 0.97,
+And, finally, we can get a response matrix giving counts for each of these
+characters with the **smodels** function `term_df_to_matrix`. In theory, the
+result has one row per spam message and one column for each unique character.
+However, by default, only the most frequent 10000 terms are used (usually those
+rare terms are proper nouns or mis-spellings that occur in only 1 or 2 texts
+anyway):
+
+```{r}
+X <- term_df_to_matrix(token_df)
+dim(X)
+```
+
+Here are the first few rows and columns. The columns are ordered by frequency.
+
+```{r}
+colnames(X)[c(1:10, 300, 1000, 5000)]
+X[1:10,c(1:10, 300, 1000, 5000)]
+```
+
+So, for example, the 10th text used the word "the" 8 times. Notice that
+this function creates a sparse matrix, where non-zero terms are not
+show. This is very useful here because over 99% of the terms in the
+matrix X are zero:
+
+```{r}
+mean(X == 0)
+```
+
+Using this matrix as a design matrix, we can then create our usual
+training and validation sets:
+
+```{r}
+y <- amazon$category
+X_train <- X[amazon$train_id == "train",]
+X_valid <- X[amazon$train_id == "valid",]
+y_train <- y[amazon$train_id == "train"]
+y_valid <- y[amazon$train_id == "valid"]
+```
+
+As mentioned above, the elastic net is a fantastic model for this
+problem.
+
+```{r, message = FALSE}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial")
+```
+
+```{r}
+beta <- coef(model, s = model$lambda.min)
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
+```
+
+Neat, right? What are some interesting patterns you see in the output?
+
+Let's see how well does this model stack up to the predictions from today.
+
+```{r, message = FALSE}
+amazon_full <- read_csv("~/gh/ml_data_full/amazon_product_class.csv")
+
+amazon_full$category_pred <- predict(model, newx = X, type = "class")
+tapply(amazon_full$category_pred == amazon_full$category,
+       amazon_full$train_id, mean)
+```
+
+As you all wait to hand in the assignment at the last possible minute, I
+don't know yet, but hopefully fairly well.
+
+## Authorship Detection
+
+Our text prediction task for today involves something called *authorship
+detection*. Given a short snippet of text, predict who wrote or said it.
+The data for today comes from State of the Union Addresses. Each speech
+was broken up into small snippets; we want to detect which president
+is associated with each bit of text. 
+
+```{r, message = FALSE}
+president <- read_csv("https://statsmaths.github.io/ml_data/presidents_3.csv")
+```
+
+Here, I gave a class name in addition to a numeric value to make it
+easy to look at the results. The data comes from our past three presidents:
+
+```{r}
+table(president$class_name)
+```
+
+For example, here is a bit of text from George W. Bush:
+
+```{r}
+cat(president$class_name[1000])
+cat("\n-----------------------------------\n")
+cat(stri_wrap(president$text[1000], width = 60), sep = "\n")
+```
+
+For fairness, the train/valid/test split was done by year. That is,
+every snippet in a particular year's speech was in exactly one of 
+the three groups. This prevents us from learning features that will
+not be useful outside of the corpus (such as particular names of 
+people or specific issues that were relevant only at one moment in
+time).
+
+Let's build another feature matrix using the words in this corpus.
+I'll put all the steps in one block to make it easier for you to 
+copy and adapt in your own work.
+
+```{r}
+token_list <- tokenize_words(president$text)
+token_df <- term_list_to_df(token_list)
+X <- term_df_to_matrix(token_df, min_df = 0.01, max_df = 0.90,
                        scale = TRUE)
 
 y <- president$class
@@ -46,210 +168,169 @@ X_train <- X[president$train_id == "train",]
 X_valid <- X[president$train_id == "valid",]
 y_train <- y[president$train_id == "train"]
 y_valid <- y[president$train_id == "valid"]
+dim(X)
+```
 
+I have added the options `min_df` and `max_df` to filter to only terms
+that are used in at least 1% of the documents but no more than 90% of 
+the documents. These filters help make the computations much faster.
+I also scaled the rows of the data; this makes the counts frequencies
+rather than occurances. Generally, I play around with whether that
+improves my model or not.
+
+We'll use the elastic net again:
+
+```{r, message = FALSE}
 library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
+model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial")
 ```
+
+I toyed with the choice of lambda to find a good set that showed what
+features the model is picking up the most:
 
 ```{r}
-beta <- coef(model, s = model$lambda[12])
-length(beta)
-head(beta[[3]])
+beta <- coef(model, s = model$lambda[15])
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
 ```
+
+At least some of these should seem unsurprising. 
 
 ```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[12])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
+president$class_pred <- predict(model, newx = X, type = "class")
+tapply(president$class_pred == president$class,
+       president$train_id, mean)
 ```
+
+The classification rate is not bad either, though there is clearly
+overfitting. This is likely due to use of cross-validation over a
+non-random train/validation split.
+
+## Other Tokens
+
+One major change we can make to the above modelling approach is to 
+split the text into something other than words. One common altnerative
+is to tokenize into *ngrams*; these are groups of n concurrent words
+rather than individual ones. Using two words togther is called a 
+*bigram*, three a *trigram*, and so forth. We can access these using
+the `tokenize_ngrams` function. By setting `n_min` equal to 1, I make
+sure to also get the single words (or *unigrams*):
 
 ```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-head(y_valid_pred)
-```
-
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
-
-## Bigrams
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_ngrams(president$text, n = 2, n_min = 1,
-                             stopwords = stop_words)
+token_list <- tokenize_ngrams(president$text, n_min = 1, n = 2)
 token_df <- term_list_to_df(token_list)
+X <- term_df_to_matrix(token_df, min_df = 0.01, max_df = 0.90,
+                       scale = TRUE)
 
-X <- term_df_to_matrix(token_df, min_df = 0.03)
 y <- president$class
 X_train <- X[president$train_id == "train",]
 X_valid <- X[president$train_id == "valid",]
 y_train <- y[president$train_id == "train"]
 y_valid <- y[president$train_id == "valid"]
+dim(X)
+```
 
+Because of the aggresive filtering rules, the number of included
+bigrams is not too much larger than the original data matrix. Here
+are some of the bigrams that were included:
+
+```{r}
+set.seed(1)
+sample(colnames(X), 25)
+```
+
+We can use this new data matrix as before by passing it to the glmnet
+function.
+
+```{r, message = FALSE}
 library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
+model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial")
 ```
 
-```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[15])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
-```
+Here are the terms picked out by the elastic net model:
 
 ```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
+beta <- coef(model, s = model$lambda[15])
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
 ```
+
+There are certainly some interesting bigrams here, such as "saddam hussein",
+and "social security". The first one is mostly useful in
+describing to us what the model has found; the second probably helps to
+distinguish the seperate meanings of "social", "security", and "social security".
+
+```{r}
+president$class_pred <- predict(model, newx = X, type = "class")
+tapply(president$class_pred == president$class,
+       president$train_id, mean)
+```
+
+While the training set fits better, we've mostly just helped to 
+overfit the original data. In many cases, however, bigrams and
+trigrams are quite powerful. We'll see over the next few classes
+exactly when and where each of these is most useful.
 
 ## Character grams
 
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_character_shingles(president$text, n = 3,
-                                          n_min = 1,
-                                          strip_non_alphanum = TRUE)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03)
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
-```
+Another way to split apart the text is to break it into individual 
+characters. This would have helped to find the exclamation mark and
+pound symbol in the spam example, for instance. Individual characters
+can be put together in much the same way as bigrams and trigrams.
+These are often called *character shingles*. We can get them in R
+by using the `tokenize_character_shingles` function. Here, we'll get
+all shingles from 1 to 3 characters wide. I like to include the
+non-alphanumeric (i.e., numbers and letters) characters, but feel free
+to experiment with excluding them.
 
 ```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[12])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
-```
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
-
-## Negative examples
-
-Let's redo the simple unigram term analysis:
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_words(president$text,
-                             stopwords = stop_words)
+token_list <- tokenize_character_shingles(president$text, n_min = 1, n = 3,
+                                          strip_non_alphanum = FALSE)
 token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 0.97,
-                       scale = FALSE)
+X <- term_df_to_matrix(token_df, min_df = 0.01, max_df = 0.90,
+                       scale = TRUE)
 
 y <- president$class
 X_train <- X[president$train_id == "train",]
 X_valid <- X[president$train_id == "valid",]
 y_train <- y[president$train_id == "train"]
 y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
+dim(X)
 ```
 
-```{r}
-pnames <-c( "Obama", "Bush", "Clinton" )
-table(actual = pnames[y_valid],
-      pred = pnames[y_valid_pred])
-```
-
-
-```{r}
-neg_example <- function(actual, pred) {
-  pnames <-c( "Obama", "Bush", "Clinton" )
-  ids <- which(y_valid == match(actual, pnames) &
-               y_valid_pred == match(pred, pnames))
-  cat(c(stri_wrap(president$text[sample(ids, 1)], width = 60),
-    "\n"), sep = "\n")
-}
-
-
-neg_example("Bush", "Clinton")
-neg_example("Bush", "Obama")
-neg_example("Obama", "Bush")
-```
-
-## Visualization
-
-```{r}
-library(irlba)
-X_pca <- prcomp_irlba(X_train, n = 2)$x
-qplot(X_pca[,1], X_pca[,2], color = factor(y_train),
-      alpha = I(0.3)) +
-  viridis::scale_color_viridis(discrete = TRUE) +
-  theme_minimal()
-```
-
-## SVD
-
-
-$$ X = U \cdot D \cdot V^t $$
-
-
-![](img/tm.jpg)
-
-
-![](img/svd_fb.png)
-
-
-
+The number of columns is almost twice as large as the bigrams model.
+We can plug it into the elastic net once more:
 
 ```{r, message = FALSE}
-library(irlba)
-X_svd <- irlba::irlba(X_train, nv = 10)
-
-names(X_svd)
-length(X_svd$d)
-dim(X_svd$u)
-dim(X_svd$v)
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial",
+                   alpha = 0.8)
 ```
 
-```{r}
-top_words <- apply(X_svd$v, 2, function(v) {
-  id <- order(v, decreasing = TRUE)[1:5]
-  stri_paste(colnames(X_train)[id], collapse = "; ")
-})
-top_words
-```
+The coefficents are not quite as interesting here, however, as it is
+hard to figure out exactly what each feature is picking up:
 
 ```{r}
-table(top_words[apply(X_svd$u, 1, which.max)], pnames[y_train])
+beta <- coef(model, s = model$lambda[15])
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
 ```
+
+Predicting on the data we see that the model performs very well
+even though we might not understand it. It is not quite as good
+as the bigram model, however.
+
+```{r}
+president$class_pred <- predict(model, newx = X, type = "class")
+tapply(president$class_pred == president$class,
+       president$train_id, mean)
+```
+
+In the lab for next class you'll be given a larger version of this
+dataset that contains 5 presidents. Try to experiment with this automatic
+functions for extracting features and creating data matrices from text.
+
+
+
 
 
