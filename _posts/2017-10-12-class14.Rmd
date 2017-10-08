@@ -93,7 +93,7 @@ y_valid <- y[amazon$train_id == "valid"]
 As mentioned above, the elastic net is a fantastic model for this
 problem.
 
-```{r, message = FALSE}
+```{r, message = FALSE, , warning = FALSE}
 library(glmnet)
 model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial")
 ```
@@ -125,7 +125,7 @@ Our text prediction task for today involves something called *authorship
 detection*. Given a short snippet of text, predict who wrote or said it.
 The data for today comes from State of the Union Addresses. Each speech
 was broken up into small snippets; we want to detect which president
-is associated with each bit of text. 
+is associated with each bit of text.
 
 ```{r, message = FALSE}
 president <- read_csv("https://statsmaths.github.io/ml_data/presidents_3.csv")
@@ -141,20 +141,22 @@ table(president$class_name)
 For example, here is a bit of text from George W. Bush:
 
 ```{r}
-cat(president$class_name[1000])
-cat("\n-----------------------------------\n")
-cat(stri_wrap(president$text[1000], width = 60), sep = "\n")
+{
+  cat(president$class_name[1000])
+  cat("\n-----------------------------------\n")
+  cat(stri_wrap(president$text[1000], width = 60), sep = "\n")
+}
 ```
 
 For fairness, the train/valid/test split was done by year. That is,
-every snippet in a particular year's speech was in exactly one of 
+every snippet in a particular year's speech was in exactly one of
 the three groups. This prevents us from learning features that will
-not be useful outside of the corpus (such as particular names of 
+not be useful outside of the corpus (such as particular names of
 people or specific issues that were relevant only at one moment in
 time).
 
 Let's build another feature matrix using the words in this corpus.
-I'll put all the steps in one block to make it easier for you to 
+I'll put all the steps in one block to make it easier for you to
 copy and adapt in your own work.
 
 ```{r}
@@ -172,7 +174,7 @@ dim(X)
 ```
 
 I have added the options `min_df` and `max_df` to filter to only terms
-that are used in at least 1% of the documents but no more than 90% of 
+that are used in at least 1% of the documents but no more than 90% of
 the documents. These filters help make the computations much faster.
 I also scaled the rows of the data; this makes the counts frequencies
 rather than occurances. Generally, I play around with whether that
@@ -180,7 +182,7 @@ improves my model or not.
 
 We'll use the elastic net again:
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(glmnet)
 model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial")
 ```
@@ -194,7 +196,7 @@ beta <- Reduce(cbind, beta)
 beta[apply(beta != 0, 1, any),]
 ```
 
-At least some of these should seem unsurprising. 
+At least some of these should seem unsurprising.
 
 ```{r}
 president$class_pred <- predict(model, newx = X, type = "class")
@@ -208,10 +210,10 @@ non-random train/validation split.
 
 ## Other Tokens
 
-One major change we can make to the above modelling approach is to 
+One major change we can make to the above modelling approach is to
 split the text into something other than words. One common altnerative
 is to tokenize into *ngrams*; these are groups of n concurrent words
-rather than individual ones. Using two words togther is called a 
+rather than individual ones. Using two words togther is called a
 *bigram*, three a *trigram*, and so forth. We can access these using
 the `tokenize_ngrams` function. By setting `n_min` equal to 1, I make
 sure to also get the single words (or *unigrams*):
@@ -242,7 +244,7 @@ sample(colnames(X), 25)
 We can use this new data matrix as before by passing it to the glmnet
 function.
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(glmnet)
 model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial")
 ```
@@ -266,14 +268,14 @@ tapply(president$class_pred == president$class,
        president$train_id, mean)
 ```
 
-While the training set fits better, we've mostly just helped to 
+While the training set fits better, we've mostly just helped to
 overfit the original data. In many cases, however, bigrams and
 trigrams are quite powerful. We'll see over the next few classes
 exactly when and where each of these is most useful.
 
 ## Character grams
 
-Another way to split apart the text is to break it into individual 
+Another way to split apart the text is to break it into individual
 characters. This would have helped to find the exclamation mark and
 pound symbol in the spam example, for instance. Individual characters
 can be put together in much the same way as bigrams and trigrams.
@@ -301,7 +303,7 @@ dim(X)
 The number of columns is almost twice as large as the bigrams model.
 We can plug it into the elastic net once more:
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(glmnet)
 model <- cv.glmnet(X_train, y_train, nfolds = 5, family = "multinomial",
                    alpha = 0.8)
@@ -326,9 +328,10 @@ tapply(president$class_pred == president$class,
        president$train_id, mean)
 ```
 
-In the lab for next class you'll be given a larger version of this
-dataset that contains 5 presidents. Try to experiment with this automatic
-functions for extracting features and creating data matrices from text.
+In the lab for next class you'll be given a version of this
+dataset that contains 5 (different) presidents. Try to experiment
+with this automatic functions for extracting features and creating
+data matrices from text.
 
 
 
