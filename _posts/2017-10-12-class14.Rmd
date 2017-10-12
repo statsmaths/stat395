@@ -1,5 +1,5 @@
 ---
-title: "Class 14: All Hail the Chief"
+title: "Class 14: Hail to the Chief"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -18,6 +18,59 @@ library(stringi)
 library(smodels)
 library(tokenizers)
 ```
+
+## Mid-course reviews
+
+Thank you all for the really great feedback on the course.
+It seem that things are generally going well. A few themes
+I noticed:
+
+- help with how to select tuning parmeters and more on what
+they are doing
+- more references to other material
+- posting more student solutions
+- perhaps some more interactive class time
+- labs first works well
+- enjoying the datasets
+- pace seems about right
+
+For the first note, I'll reiterate that I try to explain roughly
+what each parameter is directly doing to the model. Why we
+might change it and what the best value should be a is a hard
+problem. Generally I use the validation set to tell me good
+values. Hopefully over time you gain some intuition from seeing
+lots of problems what values work well.
+
+For the second, I should do a better job with this. Here are
+a few references that are really great for understanding the
+main packages we have been using:
+
+- [glmnet tutorial](https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html)
+- [keras notes in R](https://keras.rstudio.com/)
+- [xgboost R tutorial](http://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html)
+
+If you want more general information on R, here's a great
+reference:
+
+- [R for Data Science](http://r4ds.had.co.nz/)
+
+Now, if you would like more theoretical notes about all of
+the topics in this case I would recommend two books. Both
+of these have free pdf versions available online:
+
+- [Introduction to Statistical Learning (ISL)](http://www-bcf.usc.edu/~gareth/ISL/ISLR%20First%20Printing.pdf)
+- [Elements of Statistical Learning (ESL)](https://web.stanford.edu/~hastie/Papers/ESLII.pdf)
+
+Both are large pdfs. The second one is much more theoretical
+than the first.
+
+Once we get to neural networks for text and image processing
+I will point you all to many more papers and references as
+these two fields have changed rapidly over the past 5 years
+and it is hard for textbooks to keep up.
+
+**If there is anything I can help you in learning the material
+for class, please let me know!**
 
 ## Amazon Classification -- Take Two
 
