@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\geometry{top=1in, bottom=1in, left=1in, right=1in, marginparsep=4pt, marginparwidth=1in}
+
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancyplain}
+\fancyhf{}
+\cfoot{\thepage\ of \pageref{LastPage}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{12pt}
+
+% \setromanfont [Ligatures={Common}, Numbers={OldStyle}, Variant=01,
+%  BoldFont={LinLibertine_RB.otf},
+%  ItalicFont={LinLibertine_RI.otf},
+%  BoldItalicFont={LinLibertine_RBI.otf}
+%  ]{LinLibertine_R.otf}
+
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\usepackage{xunicode}
+\defaultfontfeatures{Mapping=tex-text}
+
+\setromanfont{YaleNew}
+
+\begin{document}
+
+\begin{center}
+{\bf Data Collection Assignment -- Lab 15} \\
+\end{center}
+
+\bigskip
+
+\textbf{Overview:} \vspace{6pt}
+
+Remember at the start of the semester how I said we would have
+class outside once? If you are reading this, today is the day! We
+are going to run around outside collecting images that we can
+use in class once we start analysing image data.
+
+Completing this assignment counts as `Lab 15'. There will not be
+a separate task to finish.
+
+\textbf{General Instructions:} \vspace{6pt}
+
+Your goal is to take a set of at least $60$ photos. There should be
+a minimum of $15$ images in each of these categories:
+\begin{itemize}
+\item images taken outdoors without people in the foreground
+\item images taken outdoors with someone from our class in the foreground
+\item images taken indoors without people in the foreground
+\item images taken indoors with someone from our class in the foreground
+\end{itemize}
+Please make sure to take a variety of shots from across campus.
+Don't take more than one from any particular place. For the indoor
+photos, this means only one photo of each type (with and without someone
+else) in a particular building.
+
+You will need to work in groups for this to work because you
+need images with other students. I suggest having groups of no more
+than 5 people. However, each student needs to have their own set
+of $60$ images. My goal is end up with a dataset of around 1400 images.
+
+\textit{If you do not have a phone with a camera, please let me know
+before you leave so we can figure out the best plan of action. I may
+have a spare camera or can let you partner with someone else.}
+
+\textbf{Uploading:} \vspace{6pt}
+
+I have invited you all to join a Box folder called \textbf{stat395\_images}.
+You should see a directory with your GitHub name attached to it. Inside are
+four more directories corresponding to the four categories of images. Please
+upload your images to the relevant directory before our next class.
+
+Note that this directory is open for the entire class to see. We will be
+working with these images as a class in a future lab. If you feel uncomfortable
+sharing your images publicly, please let me know.
+
+\end{document}
+
+
+
+
+
+

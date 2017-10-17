@@ -1,5 +1,5 @@
 ---
-title: "Class 15: Congratulations, You've Won $1M!"
+title: "Class 15: Data Collection"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -8,132 +8,16 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-10-19-class15/")
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
-```{r, message = FALSE}
-library(readr)
-library(dplyr)
-library(ggplot2)
-library(tokenizers)
-library(stringi)
-library(smodels)
-```
+There are no notes for today. Instead, our project is to perform
+some much needed data collection. It is also beautiful outside so
+it seems best to enjoy it while it lasts!
 
-```{r, message = FALSE}
-spam <- read_csv("~/files/ml_data/spam.csv")
-```
-
-```{r}
-stri_wrap(spam$text[500], width = 60)
-```
-
-```{r}
-token_list <- tokenize_words(spam$text)
-token_list[500]
-```
-
-```{r}
-token_df <- term_list_to_df(token_list)
-filter(token_df, id == 500)
-```
-
-```{r}
-X <- term_df_to_matrix(token_df)
-dim(X)
-```
-
-```{r}
-colnames(X)[1:10]
-X[1:10,1:10]
-```
-
-```{r}
-X_train <- X[spam$train_id == "train",]
-X_valid <- X[spam$train_id == "valid",]
-y_train <- spam$class[spam$train_id == "train"]
-y_valid <- spam$class[spam$train_id == "valid"]
-```
-
-```{r, message = FALSE}
-library(glmnet)
-model <- cv.glmnet(X_train, y_train)
-plot(model)
-```
-
-```{r}
-beta <- coef(model, s = model$lambda.min)
-rownames(beta)[which((beta != 0))]
-```
-
-```{r}
-beta <- coef(model, s = model$lambda.1se)
-paste(rownames(beta)[which((beta != 0))], " (",
-      sign(beta)[which((beta != 0))], ")", sep = "")
-```
-
-```{r}
-y_valid_pred <- as.numeric(predict(model, X_valid, type = "response") > 0.5)
-mean(y_valid == y_valid_pred)
-```
-
-## Modify the features
-
-```{r}
-X <- term_df_to_matrix(token_df, min_df = 0.03)
-y <- spam$class
-X_train <- X[spam$train_id == "train",]
-X_valid <- X[spam$train_id == "valid",]
-y_train <- spam$class[spam$train_id == "train"]
-y_valid <- spam$class[spam$train_id == "valid"]
-
-model <- cv.glmnet(X_train, y_train)
-plot(model)
-```
-
-```{r}
-beta <- coef(model, s = model$lambda.1se)
-paste(rownames(beta)[which((beta != 0))], " (",
-      sign(beta)[which((beta != 0))], ")", sep = "")
-```
-
-```{r}
-y_valid_pred <- as.numeric(predict(model, X_valid, type = "response") > 0.5)
-mean(y_valid == y_valid_pred)
-```
-
-## Negative examples
-
-```{r}
-table(y_valid = y_valid, y_valid_pred = y_valid_pred)
-```
-
-```{r}
-y_pred <- as.numeric(predict(model, X, type = "response") > 0.5)
-these_rows <- which(spam$train_id == "valid" &
-                    y != y_pred &
-                    y == 1)
-cat(stri_wrap(spam$text[these_rows], exdent = 5), sep = "\n")
-```
-
-```{r}
-y_pred <- as.numeric(predict(model, X, type = "response") > 0.5)
-these_rows <- which(spam$train_id == "valid" &
-                    y != y_pred &
-                    y == 0)
-cat(stri_wrap(spam$text[these_rows], exdent = 5), sep = "\n")
-```
-
-## Visualization
-
-```{r}
-library(irlba)
-X_pca <- prcomp_irlba(X_train, n = 2)$x
-qplot(X_pca[,1], X_pca[,2], color = factor(y_train),
-      alpha = I(0.3)) +
-  viridis::scale_color_viridis(discrete = TRUE) +
-  theme_minimal()
-```
-
-
+Instructions: [<a href="../assets/syllabus/data_collection.pdf">pdf file</a>] .
 
 
