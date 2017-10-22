@@ -1,5 +1,5 @@
 ---
-title: "Class 16: All Hail the Chief"
+title: "Class 16: Natural Language Processing"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -7,6 +7,10 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-10-24-class16/")
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
 ```{r, message = FALSE}
@@ -19,191 +23,83 @@ library(smodels)
 ```
 
 ```{r, message = FALSE}
-president <- read_csv("~/files/ml_data/presidents_3.csv")
-```
-
-```{r}
-stri_wrap(president$text[1000], width = 60)
-```
-
-```{r}
-data(stop_words, package = "tidytext")
-stop_words <- stop_words$word
-sample(stop_words, 50)
+stylo <- read_csv("~/gh/ml_data/stylo_us.csv")
 ```
 
 
 ```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_words(president$text,
-                             stopwords = stop_words)
+token_list <- tokenize_words(stylo$text)
 token_df <- term_list_to_df(token_list)
 
-X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 0.97,
-                       scale = TRUE)
-
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
-```
-
-```{r}
-beta <- coef(model, s = model$lambda[12])
-length(beta)
-head(beta[[3]])
-```
-
-```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[12])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
-```
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-head(y_valid_pred)
-```
-
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
-
-## Bigrams
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_ngrams(president$text, n = 2, n_min = 1,
-                             stopwords = stop_words)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03)
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
-```
-
-```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[15])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
-```
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
-
-## Character grams
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_character_shingles(president$text, n = 3,
-                                          n_min = 1,
-                                          strip_non_alphanum = TRUE)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03)
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
-
-library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
-```
-
-```{r}
-for(j in 1:3) {
-  beta <- coef(model, s = model$lambda[12])
-  cat(c( "Obama", "Bush", "Clinton" )[j])
-  cat(":\n")
-  out <- paste(rownames(beta[[j]])[which((beta[[j]] != 0))], " (",
-        sign(beta[[j]])[which((beta[[j]] != 0))], ")", sep = "")
-  print(out)
-  cat("\n")
-}
-```
-
-```{r}
-y_valid_pred <- predict(model, X_valid, type = "response",
-                        s = model$lambda.min)[,,1]
-y_valid_pred <- apply(y_valid_pred, 1, which.max)
-mean(y_valid == y_valid_pred)
-```
-
-## Negative examples
-
-Let's redo the simple unigram term analysis:
-
-```{r, message = FALSE, warn = FALSE}
-token_list <- tokenize_words(president$text,
-                             stopwords = stop_words)
-token_df <- term_list_to_df(token_list)
-
-X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 0.97,
+X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 1,
                        scale = FALSE)
 
-y <- president$class
-X_train <- X[president$train_id == "train",]
-X_valid <- X[president$train_id == "valid",]
-y_train <- y[president$train_id == "train"]
-y_valid <- y[president$train_id == "valid"]
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+```
+
+
+
+```{r}
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
+```
+
+```{r}
+stylo$author_pred <- predict(model, newx = X, type = "class")
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+
+## Authorship with character grams
+
+
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_character_shingles(stylo$text,
+                                          n_min = 1, n = 5,
+                                          strip_non_alphanum = FALSE)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 1,
+                       scale = FALSE)
+
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
 
 library(glmnet)
 model <- cv.glmnet(X_train, y_train, family = "multinomial")
 ```
 
 ```{r}
-pnames <-c( "Obama", "Bush", "Clinton" )
-table(actual = pnames[y_valid],
-      pred = pnames[y_valid_pred])
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
 ```
-
 
 ```{r}
-neg_example <- function(actual, pred) {
-  pnames <-c( "Obama", "Bush", "Clinton" )
-  ids <- which(y_valid == match(actual, pnames) &
-               y_valid_pred == match(pred, pnames))
-  cat(c(stri_wrap(president$text[sample(ids, 1)], width = 60),
-    "\n"), sep = "\n")
-}
-
-
-neg_example("Bush", "Clinton")
-neg_example("Bush", "Obama")
-neg_example("Obama", "Bush")
+stylo$author_pred <- predict(model, newx = X, type = "class")
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
 ```
+
+```{r}
+table(author_pred = stylo$author_pred,
+      author = stylo$author)
+```
+
+
+
 
 ## Visualization
 
