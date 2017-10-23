@@ -1,0 +1,289 @@
+---
+title: "Class 16: Natural Language Processing"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(fig.path = "../assets/2017-10-24-class16/")
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
+```
+
+```{r, message = FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tokenizers)
+library(stringi)
+library(smodels)
+```
+
+## Authorship with tokens
+
+```{r, message = FALSE}
+stylo <- read_csv("~/gh/ml_data/stylo_us.csv")
+```
+
+
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_words(stylo$text)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 1,
+                       scale = FALSE)
+
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+```
+
+
+
+```{r}
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
+```
+
+```{r}
+stylo$author_pred <- predict(model, newx = X, type = "class",
+                             lambda = model$lambda.1se)
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+
+## Authorship with character grams
+
+
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_character_shingles(stylo$text,
+                                          n_min = 1, n = 5,
+                                          strip_non_alphanum = FALSE)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.03, max_df = 1,
+                       scale = FALSE)
+
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+```
+
+```{r}
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+dim(beta[apply(beta != 0, 1, any),])
+beta[apply(beta != 0, 1, any),][1:40,]
+```
+
+```{r}
+stylo$author_pred <- predict(model, newx = X, type = "class")
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+```{r}
+table(author_pred = stylo$author_pred,
+      author = stylo$author)
+```
+
+## NLP
+
+
+## Stylometry
+
+
+
+```{r, message = FALSE}
+anno <- read_csv("~/gh/ml_data/stylo_us_anno.csv.gz")
+anno
+```
+
+```{r}
+stylo$text2 <- tapply(anno$upos, anno$id, paste, collapse = " ")
+stylo$text2[1]
+stylo$text2[2]
+```
+
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_words(stylo$text2)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = TRUE)
+
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+```
+
+```{r}
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
+```
+
+```{r}
+stylo$author_pred <- predict(model, newx = X, type = "class")
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_ngrams(stylo$text2, n_min = 1, n = 3)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = TRUE)
+
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+```
+
+
+
+```{r}
+stylo$author_pred <- predict(model, newx = X, type = "class",
+                             s = model$lambda.1se)
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+
+
+```{r, message = FALSE, warn = FALSE}
+stylo$text2 <- tapply(anno$upos, anno$id, paste, collapse = " ")
+token_list <- tokenize_ngrams(stylo$text2, n_min = 1, n = 3)
+token_df <- term_list_to_df(token_list)
+X1 <- term_df_to_matrix(token_df, min_df = 0.01, max_df = 1,
+                       scale = TRUE)
+
+stylo$text2 <- tapply(anno$pos, anno$id, paste, collapse = " ")
+token_list <- tokenize_words(stylo$text2)
+token_df <- term_list_to_df(token_list)
+X2 <- term_df_to_matrix(token_df, min_df = 0.01, max_df = 1,
+                       scale = TRUE)
+
+anno2 <- anno[anno$upos %in% c("PUNCT", "CCONJ", "PRON"),]
+stylo$text2 <- tapply(anno2$word, anno2$id, paste, collapse = " ")
+token_list <- tokenize_words(stylo$text2)
+token_df <- term_list_to_df(token_list)
+X3 <- term_df_to_matrix(token_df, min_df = 0.01, max_df = 1,
+                       scale = TRUE)
+
+stylo$len <- stri_length(stylo$text)
+X4 <- model.matrix(~poly(len, degree = 4), data = stylo)
+
+X <- cbind(X1, X2, X3, X4)
+sprintf("%d; %d; %d; %d", ncol(X1), ncol(X2), ncol(X3), ncol(X4))
+```
+
+
+
+```{r}
+X <- X1
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial",
+                   nfolds = 3)
+
+stylo$author_pred <- predict(model, newx = X, type = "class",
+                             s = model$lambda.min)
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+
+
+
+
+```{r}
+table(author_pred = stylo$author_pred,
+      author = stylo$author)
+```
+
+```{r}
+id <- which(stylo$author_pred != stylo$author & stylo$author == 2)
+stylo$text[sample(id, 10)]
+```
+
+
+## Visualization
+
+```{r}
+library(irlba)
+X_pca <- prcomp_irlba(X_train, n = 2)$x
+qplot(X_pca[,1], X_pca[,2], color = factor(y_train),
+      alpha = I(0.3)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  theme_minimal()
+```
+
+## SVD
+
+
+$$ X = U \cdot D \cdot V^t $$
+
+
+![](img/tm.jpg)
+
+
+![](img/svd_fb.png)
+
+
+
+
+```{r, message = FALSE}
+library(irlba)
+X_svd <- irlba::irlba(X_train, nv = 10)
+
+names(X_svd)
+length(X_svd$d)
+dim(X_svd$u)
+dim(X_svd$v)
+```
+
+```{r}
+top_words <- apply(X_svd$v, 2, function(v) {
+  id <- order(v, decreasing = TRUE)[1:5]
+  stri_paste(colnames(X_train)[id], collapse = "; ")
+})
+top_words
+```
+
+```{r}
+table(top_words[apply(X_svd$u, 1, which.max)], pnames[y_train])
+```
+
+
