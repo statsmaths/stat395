@@ -140,7 +140,7 @@ Today, we will look at short writtings from five well-known
 British authors.
 
 ```{r, message = FALSE}
-stylo <- read_csv("~/gh/ml_data/stylo_uk.csv")
+stylo <- read_csv("https://statsmaths.github.io/ml_data/stylo_uk.csv")
 ```
 
 As a first step, let us build a term-frequency based
@@ -491,6 +491,9 @@ what you would expect them to be.
 
 ```{r, message = FALSE}
 library(irlba)
+
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 0.8,
+                       scale = TRUE)
 X_svd <- irlba::irlba(X, nv = 10)
 
 names(X_svd)
@@ -511,8 +514,31 @@ top_words
 ```
 
 This is an example of a task that would be better if we
-filtered by parts of speech. Here we can see which topic
-is most associated with each speech:
+filtered by parts of speech. So let's redo it with 
+learned part of speech codes.
+
+```{r}
+library(cleanNLP)
+init_spaCy("en")
+anno <- get_combine(run_annotators(sotu_text, as_strings = TRUE))
+
+anno2 <- anno[anno$upos %in% c("NOUN", "VERB"),]
+sotu_text2 <- tapply(anno2$lemma, anno2$id, paste, collapse = " ")
+token_list <- tokenize_words(sotu_text2)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 0.9,
+                       scale = TRUE)
+top_words <- apply(X_svd$v, 2, function(v) {
+  id <- order(v, decreasing = TRUE)[1:5]
+  stri_paste(colnames(X)[id], collapse = "; ")
+})
+top_words
+```
+
+
+
+Here we can see which topic is most associated with each speech:
 
 ```{r}
 table(top_words[apply(X_svd$u, 1, which.max)], sotu_meta$president)
