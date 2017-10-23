@@ -1,12 +1,12 @@
 ---
-title: "Class 18: Lilacs and Tigerlilys and Buttcups! Oh My!"
+title: "Class 16: Natural Language Processing"
 author: "Taylor Arnold"
 output: html_notebook
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
-knitr::opts_chunk$set(fig.path = "../assets/2017-10-31-class18/")
+knitr::opts_chunk$set(fig.path = "../assets/2017-10-24-class16/")
 knitr::opts_chunk$set(fig.height = 5)
 knitr::opts_chunk$set(fig.width = 8.5)
 knitr::opts_chunk$set(out.width = "100%")
@@ -17,236 +17,518 @@ knitr::opts_chunk$set(dpi = 300)
 library(readr)
 library(dplyr)
 library(ggplot2)
-library(methods)
+library(tokenizers)
+library(stringi)
+library(smodels)
 ```
+
+## Natural Language Processing
+
+Natural language processing, or NLP, refers to the process of
+teaching machines how to **understand** language. This goes 
+far beyond the simple models that we have so far built. Consider
+this classic example sentence:
+
+> I forgot the papers.
+
+Only four words here, but let's think about how we as humans
+would understand the sentence. The word "I" refers to the speaker.
+The word forgot is a verb that has four important elements to
+it:
+
+- its lemma, "forget", has several definitions that all
+reduce to some form of not remembering about to do something
+- the *tense* indicates that the action occured in the past
+- the placement right after "I" indicates that the speaker 
+is the one who "forgot""
+- the placement of the determinant and noun "the papers" 
+afterwards indicates that this is the object that the speaker
+forgot
+
+The word "the" is associated with "papers"; it is a definite
+article and shows that "papers" refers to a specific item
+rather than a generic object. Finally, "papers" indicates
+the a set of many objects (from the "s") of type "paper".
+
+Phew! There is actually a lot going on in this short sentence.
+And so far we have just looked at the sentence **semantics**,
+what it literally is saying. **Pragmatics** goes even farther
+and describes what this sentence means within a broader context.
+For example, the sentence above could mean several things
+depending on context:
+
+- I forgot to mix up the morning newspapers.
+- I forgot *about* the papers (perhaps that needed grading).
+- I forgot to bring the paperwork for a meeting.
+
+Getting computers to understand all of these nuances is a 
+**very** open question and certainly not something we will
+get into the details of right now. However, we can get a 
+little bit closer to understand than our current pipeline
+for processing text. Hopefully, at the end of the semester,
+we will return to these ideas and be able to get just a 
+bit closer to parsing textual data the way that humans
+do.
+
+## Text annotation
+
+We can split semantics into two broad categories: grammatical
+relationships and word meanings. The first is the easiest to
+learn computationally because we have a relatively simple way
+of describing grammatical relationships. These can further
+be broken down into several steps:
+
+- **tokenization**: splitting raw characters into sentences
+and words
+- **lemmatization**: finding the root of a word, such as the
+infinitive version of a verb or the singular version of a 
+noun
+- **part of speech tagging**: associating a part of speech
+to each token
+- **dependency parsing**: finding binary relationships
+between words, such as noun-verb and subject-verb relations
+
+We have so far only used tokenization in our analyses. To
+get these deeper attributes we need a more powerful library.
+I have wrote the package **cleanNLP** for just this purpose.
+Unlike **smodels**, this is not just meant for our class; it
+something meant for public consumption. You can find more 
+details in the paper here:
+
+- [A Tidy Data Model for Natural Language Processing using cleanNLP](https://journal.r-project.org/archive/2017/RJ-2017-035/index.html)
+
+Setting up the basic R package is easy, but I won't force you
+all to do this because you also need to correctly set up the
+spaCy library in Python which can be a bit of a pain.
+
+To run **cleanNLP**, we can do the following:
+```{r, message = FALSE}
+text <- "I forgot the papers."
+
+library(cleanNLP)
+init_spaCy("en")
+anno <- get_combine(run_annotators(text, as_strings = TRUE))
+anno
+```
+
+Notice that this captures all of the grammatical information,
+but nothing about the meaning of the words themselves. The 
+field *upos* gives a coarse universal part of speech code
+whereas *pos* gives a more specific speech code specific to
+English. Specific things captured by the model:
+
+- "I" is a pronoun  
+- "I" is the subject of the verb "forgot"
+- "forgot" is the past tense ("VBD") of the verb "forget"
+- "the" is the determinant of the noun "paper"
+- "papers" is the plural ("NNS" is plural) of "paper"
+- "papers" is the direct object of the verb forgot
+
+This grammatical information is very useful for many tasks that
+fall outside of our predictive modelling framework. For example,
+parsing the sentence is useful for document summarization, 
+classification, information extraction, and for building
+question-answer type chat bots.
+
+The grammatical units can also be used in the kinds of predictive
+document classification tasks we have seen so far. We will now
+briefly look at these.
+
+## Authorship with tokens
+
+Today, we will look at short writtings from five well-known
+British authors.
 
 ```{r, message = FALSE}
-flowers <- read_csv("~/gh/ml_data/flowers_17.csv")
-X <- read_rds("~/gh/ml_data/flowers_17_X.rds")
-X <- X[flowers$class %in% 1:10,,,]
-flowers <- flowers[flowers$class %in% 1:10,]
+stylo <- read_csv("~/gh/ml_data/stylo_uk.csv")
 ```
 
-```{r, fig.asp=0.75, fig.width=10}
-par(mar = c(0,0,0,0))
-par(mfrow = c(3, 4))
-for (i in sample(which(flowers$class == 2), 12)) {
-  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
-  rasterImage(X[i,,,],0,0,1,1)
-}
-```
+As a first step, let us build a term-frequency based
+data matrix `X` as usual.
 
-```{r, fig.asp=0.75, fig.width=10}
-par(mar = c(0,0,0,0))
-par(mfrow = c(3, 4))
-for (i in 1:10) {
-  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
-  i <- sample(which(flowers$class == i), 1)
-  rasterImage(X[i,,,],0,0,1,1)
-  text(0.5, 0.1, flowers$class_name[i], cex = 3, col = "salmon")
-}
-```
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_words(stylo$text)
+token_df <- term_list_to_df(token_list)
 
-```{r}
-i <- 3
-red <- as.numeric(X[i,,,1])
-green <- as.numeric(X[i,,,2])
-blue <- as.numeric(X[i,,,3])
-hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
-head(hsv)
-```
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = FALSE)
 
-```{r}
-color_vals <- c(hsv(1, 0, seq(0, 1, by = 0.2)),
-                hsv(seq(0, 0.9, by = 0.1), 1, 1))
-plot(seq_along(color_vals), seq_along(color_vals),
-     col = color_vals, pch = 19, cex = 5)
-```
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
 
-
-```{r}
-color <- rep("#000000", nrow(hsv))
-
-index <- which(hsv[,2] < 0.2)
-color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
-
-index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
-color[index] <- hsv(round(hsv[index,1],1), 1, 1)
-
-table(factor(color, levels = color_vals))
-```
-
-```{r}
-X_hsv <- matrix(0, ncol = length(color_vals),
-                   nrow = nrow(flowers))
-for (i in seq_len(nrow(flowers))) {
-  red <- as.numeric(X[i,,,1])
-  green <- as.numeric(X[i,,,2])
-  blue <- as.numeric(X[i,,,3])
-  hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
-
-  color <- rep("#000000", nrow(hsv))
-
-  index <- which(hsv[,2] < 0.2)
-  color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
-
-  index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
-  color[index] <- hsv(round(hsv[index,1],1), 1, 1)
-
-  X_hsv[i,] <- table(factor(color, levels = color_vals))
-}
-```
-
-```{r}
-y <- flowers$class
-
-X_train <- X_hsv[flowers$train_id == "train",]
-X_valid <- X_hsv[flowers$train_id == "valid",]
-y_train <- y[flowers$train_id == "train"]
-y_valid <- y[flowers$train_id == "valid"]
-```
-
-
-```{r, message = FALSE, warning = FALSE}
 library(glmnet)
 model <- cv.glmnet(X_train, y_train, family = "multinomial")
-plot(model)
 ```
+
+The resulting regression model is quite large. We will
+look at just the first 50 rows.
 
 ```{r}
-pred <- as.numeric(predict(model, newx = X_hsv,
-                           type = "class"))
-
-tapply(pred == y, flowers$train_id, mean)
-table(pred[flowers$train_id == "valid"],
-      y[flowers$train_id == "valid"])
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+dim(beta[apply(beta != 0, 1, any),])
+beta[apply(beta != 0, 1, any),][1:50,]
 ```
 
-## More colors
+Notice that many of these words are the most frequent terms
+rather than relatively rare ones. This fits on theories that
+writing style is most determined by how often one uses 
+function words. 
 
+- [Zheng, Rong, et al. "A framework for authorship identification of online messages: Writing‐style features and classification techniques." Journal of the Association for Information Science and Technology 57.3 (2006): 378-393.](http://onlinelibrary.wiley.com/doi/10.1002/asi.20316/full)	
+
+Evaluating the model, we see that it is reasonably predictive
+but quite overfit to the data.
 
 ```{r}
-color_vals <- c(hsv(1, 0, seq(0, 1, by = 0.2)),
-                hsv(seq(0, 0.9, by = 0.01), 1, 1))
+stylo$author_pred <- predict(model, newx = X, type = "class",
+                             lambda = model$lambda.min)
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
 ```
+
+We see from the confusion matrix that some authors are
+more difficult to tell apart from others.
 
 ```{r}
-X_hsv <- matrix(0, ncol = length(color_vals),
-                   nrow = nrow(flowers))
-for (i in seq_len(nrow(flowers))) {
-  red <- as.numeric(X[i,,,1])
-  green <- as.numeric(X[i,,,2])
-  blue <- as.numeric(X[i,,,3])
-  hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
-
-  color <- rep("#000000", nrow(hsv))
-
-  index <- which(hsv[,2] < 0.2)
-  color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
-
-  index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
-  color[index] <- hsv(round(hsv[index,1], 2), 1, 1)
-
-  X_hsv[i,] <- table(factor(color, levels = color_vals))
-}
+table(author_pred = stylo$author_pred,
+      author = stylo$author_name)
 ```
+
+Remember, there are $5$ classes, so a rate of 57% on the
+validation set is actually fairly good. The reason for
+overfitting is that a given novel or story is completely
+contained within one of the train/test/valid splits. this
+is similar to the splitting done with the State of the 
+Union addresses.
+
+## Stylometry
+
+Stylometry is the study of linguistic style. This is 
+more or less what we are attempting to do with this dataset.
+
+Was the classification of the State of the Union Addresses
+stylometry? Well, sort of. We wanted to predict authorship
+but this came from both stylistic features as well as topic
+based features. That will still be somewhat the case with
+this data (H.G. Wells writes about different topics than
+Jane Austen), but primarily we hope that the features will
+indicate more about writing style than just the topics
+featured.
+
+To get a better sense of style, let us grab the annotations
+from the **cleanNLP** package. I have put these online so
+that we do not need to set-up and run the package ourselves.
+
+```{r, message = FALSE}
+anno <- read_csv("~/gh/ml_data/stylo_uk_anno.csv.gz")
+anno
+```
+
+How might we use these in predicting authorship? One approach is
+to look at the patterns of part of speech codes. Let's reconstruct
+the text using just the universal part of speech values:
 
 ```{r}
-y <- flowers$class
-
-X_train <- X_hsv[flowers$train_id == "train",]
-X_valid <- X_hsv[flowers$train_id == "valid",]
-y_train <- y[flowers$train_id == "train"]
-y_valid <- y[flowers$train_id == "valid"]
+stylo$text2 <- tapply(anno$upos, anno$id, paste, collapse = " ")
+stylo$text2[1]
+stylo$text2[2]
 ```
 
 
-```{r, message = FALSE, warning = FALSE}
+
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_words(stylo$text2)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = TRUE)
+
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
 library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial",
-                   alpha = 0.5)
-plot(model)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
 ```
+
+And we do see differences based on the usage of each part
+of speech.
 
 ```{r}
-pred <- as.numeric(predict(model, newx = X_hsv,
-                           type = "class"))
-
-tapply(pred == y, flowers$train_id, mean)
-table(pred[flowers$train_id == "valid"],
-      y[flowers$train_id == "valid"])
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+beta[apply(beta != 0, 1, any),]
 ```
 
-## Texture
-
-```{r, fig.asp = 1}
-i <- 8
-bw <- (X[i,,,1] + X[i,,,2] + X[i,,,3]) / 3
-plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
-rasterImage(bw,0,0,1,1)
-```
-
-```{r, fig.asp = 1}
-edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
-plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
-rasterImage(edge,0,0,1,1)
-```
+The overall classification is not great though, at only 35%
+on the validation set.
 
 ```{r}
-mean_edge <- rep(0, nrow(flowers))
-for (i in seq_len(nrow(flowers))) {
-  bw <- (X[i,,,1] + X[i,,,2] + X[i,,,3]) / 3
-  edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
-  mean_edge[i] <- mean(edge > 0.1)
-}
+stylo$author_pred <- predict(model, newx = X, type = "class")
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
 ```
 
-```{r}
-qplot(flowers$class_name, mean_edge, geom = "blank") +
-  geom_boxplot() +
-  coord_flip()
-```
+We can improve the prediction by considering patterns of 
+parts of speech code. Let's look at the tri-grams:
 
-```{r}
-mean_edge_mid <- rep(0, nrow(flowers))
-for (i in seq_len(nrow(flowers))) {
-  bw <- (X[i,,,1] + X[i,,,2] + X[i,,,3]) / 3
-  edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
-  mean_edge_mid[i] <- mean(edge[75:148,75:148] > 0.1)
-}
-```
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_ngrams(stylo$text2, n_min = 1, n = 2)
+token_df <- term_list_to_df(token_list)
 
-```{r}
-qplot(flowers$class_name, mean_edge_mid, geom = "blank") +
-  geom_boxplot() +
-  coord_flip()
-```
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = TRUE)
 
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
 
-```{r}
-X_edge <- cbind(X_hsv, mean_edge, mean_edge_mid)
-y <- flowers$class
-
-X_train <- X_edge[flowers$train_id == "train",]
-X_valid <- X_edge[flowers$train_id == "valid",]
-y_train <- y[flowers$train_id == "train"]
-y_valid <- y[flowers$train_id == "valid"]
-```
-
-
-```{r, message = FALSE, warning = FALSE}
 library(glmnet)
-model <- cv.glmnet(X_train, y_train, family = "multinomial",
-                   alpha = 0.2)
-plot(model)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+```
+
+The predictive power is substantially improved, though
+still not quite as good as the approach based on the
+word counts.
+
+```{r}
+stylo$author_pred <- predict(model, newx = X, type = "class",
+                             s = model$lambda.1se)
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+A good technique is to combine the features from this model
+with the features from the token based model. For example:
+
+```{r, message = FALSE, warn = FALSE}
+token_list <- tokenize_words(stylo$text)
+token_df <- term_list_to_df(token_list)
+X1 <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = FALSE)
+
+token_list <- tokenize_ngrams(stylo$text2, n_min = 1, n = 2)
+token_df <- term_list_to_df(token_list)
+X2 <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = TRUE)
+
+X <- cbind(X1, X2)
+
+y <- stylo$author
+X_train <- X[stylo$train_id == "train",]
+X_valid <- X[stylo$train_id == "valid",]
+y_train <- y[stylo$train_id == "train"]
+y_valid <- y[stylo$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial", 
+                   nfolds = 3)
+```
+
+And we see that the result do improve on those from the
+words alone, albeit only slightly.
+
+```{r}
+stylo$author_pred <- predict(model, newx = X, type = "class",
+                             s = model$lambda.min)
+tapply(stylo$author_pred == stylo$author,
+       stylo$train_id, mean)
+```
+
+This approach can be extended to fitting models using the
+*pos* tags, filtering the word lists based on part of speech
+codes, using lemmatized word forms, or involving the
+dependencies structure into the model. Note that when you
+are using character shingles, you are partially approximating
+part of speech codes. Verbs end in "ing " and adjectives end
+in "ly ". To simplify things for the next lab, you are
+**not** allowed to use character shingles and must stick to
+token based algorithms.
+
+## Visualization and Unsupervised Learning
+
+One difficulty with textual data is that even once we
+have constructed nice features there is no easy way of
+plotting the data because there are too many variables
+to plot scatter plots with all of them. Here, we will
+see some visualization techniques that can be applied 
+to any high dimensional dataset.
+
+### Principal Component Analysis (PCA)
+
+Principal component analysis is a linear technique for
+dimensionality reduction. For a fixed number of dimensions
+d, we find the optimal d dimensional hyperplane that describes
+the largest possible amount of variation in the dataset. This
+proceeds greedily, as follows:
+
+- the first principal component (PC1) is a weighted sum of
+the columns of X that has the maximum achievable variance
+- the second principal component (PC2) is a weighted sum of
+the columns of X that has the maximum achievable variance
+subject to being perpendicular to PC1
+- the third principal component (PC3) is a weighted sum of
+the columns of X that as the maximum achieveable variance
+subject to being perpendicular to PC1 and PC2
+
+And so forth for all p of the principal component. By looking
+at just the top components we can often visualize the 
+high dimensional data in an interesting way.
+
+Here, I will use the **irlba** library to efficently compute
+the first two principal components for the `stylo` dataset.
+We will then plot the results using color to denote the
+author.
+
+```{r}
+token_list <- tokenize_words(stylo$text)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = TRUE)
+
+library(irlba)
+X_pca <- prcomp_irlba(X, n = 2)$x
+qplot(X_pca[,1], X_pca[,2], color = factor(y),
+      alpha = I(0.3)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  theme_minimal()
+```
+
+Most of the interesting behavior comes from points near
+the origin so let's zoom in a bit:
+
+```{r}
+qplot(X_pca[,1], X_pca[,2], color = factor(y),
+      alpha = I(0.3), size = I(2)) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  theme_minimal() +
+  scale_x_continuous(limits = c(-0.2, 0.2)) +
+  scale_y_continuous(limits = c(-0.2, 0.2))
+```
+
+There appears to be a fairly clear difference between the
+Jane Austin texts (category 1) and the rest. There may be
+other patterns, but these are slightly harder to find.
+
+```{r}
+library(sotu)
+token_list <- tokenize_words(sotu_text)
+token_df <- term_list_to_df(token_list)
+
+X <- term_df_to_matrix(token_df, min_df = 0.05, max_df = 1,
+                       scale = TRUE)
+X_pca <- prcomp_irlba(X, n = 2)$x
+qplot(X_pca[,1], X_pca[,2], label = sotu_meta$president,
+      alpha = I(0)) +
+  geom_text() +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  theme_minimal()
 ```
 
 ```{r}
-pred <- as.numeric(predict(model, newx = X_edge,
-                           type = "class"))
-
-tapply(pred == y, flowers$train_id, mean)
-table(pred[flowers$train_id == "valid"],
-      y[flowers$train_id == "valid"])
+qplot(X_pca[,1], X_pca[,2], color = sotu_meta$year,
+      alpha = I(1), size = I(3)) +
+  viridis::scale_color_viridis() +
+  theme_minimal()
 ```
 
+### t-Distributed Stochastic Neighbor Embedding (t-SNE)
+
+PCA is a great linear technique for dimensionality reduction.
+If we want to find non-linear dimensionality reduction, a 
+popular technique is t-SNE. A fast implemenetation is available
+with R's **Rtsne**
+
+```{r, warning = FALSE, message = FALSE}
+library(Rtsne)
+X_tsne <- Rtsne(as.matrix(X))$Y
+qplot(X_tsne[,1], X_tsne[,2], label = sotu_meta$president,
+      alpha = I(0)) +
+  geom_text(size = 2) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  theme_minimal()
+```
+
+This does an even better job of spreading the data out over
+the space and allowing us to visualize the changes over time.
+
+### The SVD
+
+The singular value decomposition write a matrix as a
+product of three new matricies as follows:
+
+$$ X = U \cdot D \cdot V^t $$
+
+The matrices U and V are unitary matricies (you can
+think of them representing rotations) and the matrix D
+is a diagonal matrix. The elements of the diagonal matrix
+D are are all non-negative and arranged from smallest to
+largest. This gives a way of approximating the matrix
+by truncated all but the top k values of D to zero. 
+The resulting product then writes X as the product of
+two matricies:
+
+- **U**: one row per document and k columns
+- **V**: one row per term and k columns
+
+These can be visualized as follows:
+
+![](https://image.slidesharecdn.com/ldatutorial-150317223352-conversion-gate01/95/topic-modeling-for-learning-analytics-researchers-lak15-tutorial-61-638.jpg)
+
+The **irlba** package can compute the svd of a large
+matrix (in fact, PCA can be written in terms of the
+SVD). Make sure that the following dimensions match
+what you would expect them to be.
+
+```{r, message = FALSE}
+library(irlba)
+X_svd <- irlba::irlba(X, nv = 10)
+
+names(X_svd)
+length(X_svd$d)
+dim(X_svd$u)
+dim(X_svd$v)
+```
+
+We can view the k dimensions as *topics*, groups of words
+that tend to occur together within a document. 
+
+```{r}
+top_words <- apply(X_svd$v, 2, function(v) {
+  id <- order(v, decreasing = TRUE)[1:5]
+  stri_paste(colnames(X)[id], collapse = "; ")
+})
+top_words
+```
+
+This is an example of a task that would be better if we
+filtered by parts of speech. Here we can see which topic
+is most associated with each speech:
+
+```{r}
+table(top_words[apply(X_svd$u, 1, which.max)], sotu_meta$president)
+```
+
+## For next time
+
+We have covered a lot of ground today in terms of new topics,
+however unlike other classes not all of these relate as directly
+to predictive modelling. That is okay. Hopefully you are here to
+learn broadly about modelling data in all its forms.
+
+The lab for today uses a collection of blog posts where you need
+to predict whether the author is a teenager or not. You are not
+allowed to use character n-grams. Try to focus on not just predicting
+well but also looking at the output.
+
+Next class we will begin looking at images, starting with the ones
+you made last week. I'll also describe details for the final project.
