@@ -26,12 +26,12 @@ Today we begin our study of image data. We will spend about
 two weeks working with several image datasets, building up to
 state-of-art methods such as convolutional neural networks.
 
-Image data is similar in many ways to text data. Both are 
+Image data is similar in many ways to text data. Both are
 relatively unstructured and we generally need to perform
 some sort of feature extraction in order to do predictive
 modelling. Image data is stored (or at least can be represented)
 in a numeric format giving the pixel intensities of the file.
-Because of this is may seem easier than text data where we 
+Because of this is may seem easier than text data where we
 do not even start with numbers. By most measures this is not
 the case as images have many more difficulties that outweight
 this one benefit.
@@ -39,12 +39,12 @@ this one benefit.
 One difficulty of image data is that the files become very
 large. You will see that the images we work with are fairly
 low resolution and yet they still take many gigabyte for just
-a few thousand images. 
+a few thousand images.
 
 My original draft of notes dove head-first into some high
 level image analysis. I took a step back and decided it would
 be beneficial to everyone to start with a gentle introduction
-that shows how to work with image data. As such, note that 
+that shows how to work with image data. As such, note that
 like the last class much of today's notes are for your general
 knowledge and not strictly required for completing the labs.
 
@@ -54,8 +54,8 @@ knowledge and not strictly required for completing the labs.
 
 You all were nice enough to run around outside last week to
 take some photos for class. Let's not let those go to waste!
-The first step in working with the images is to read each 
-image into R. There are few different functions for doing 
+The first step in working with the images is to read each
+image into R. There are few different functions for doing
 this. To start, I will use the `readJPEG` function from the
 **jpeg** library. We will start with a single example:
 
@@ -83,7 +83,7 @@ math here to see which of the colors is the most dominant in
 this photograph
 
 ```{r}
-cat(sprintf("red = %f, green = %f, blue = %f", 
+cat(sprintf("red = %f, green = %f, blue = %f",
             mean(img[,,1]), mean(img[,,2]), mean(img[,,3])))
 ```
 
@@ -124,7 +124,7 @@ that indicates the orientation of the image.
 
 We now have two additional steps: we need to read this metadata
 and then rotate the image. We will do this by way of two different
-packages. The **exif** package returns 
+packages. The **exif** package returns
 
 ```{r}
 library(exif)
@@ -134,14 +134,14 @@ str(read_exif(fpath))
 
 There is a lot of information here about the phone and the photograph.
 We even see information such as whether the flash was used the digital
-"speed" of the sensor. Importantly, there is also a number called 
+"speed" of the sensor. Importantly, there is also a number called
 orientation. It turns out that "6" means we need to rotate the image
 90 degrees ("3" means 180 and "8" is 270). Other numbers indicate
 forms of mirror images that did not appear in this corpus of images.
 
 In order to easily rotate the image, we will use the **EBImage**
 package to load the image. We can then use the `rotate` function
-that operates on EMIMage object to rotate the image.
+that operates on an EBImage object to rotate the image.
 
 ```{r}
 library(EBImage)
@@ -152,7 +152,7 @@ rotation <- c(0, 0, 180, 0, 0, 90, 0, 270)[orientation]
 img <- rotate(img, angle = rotation)
 ```
 
-Now, the image look great but the file is very large. Trying to
+Now, the image looks great but the file is very large. Trying to
 load a few thousand of these will not be feasible if we want to
 store everything in memory. Instead, we will downsample to an
 image that is only 224-by-244 pixels. This also stretches the
@@ -169,7 +169,7 @@ has two people in it and it was taken outdoors.
 
 It will also be useful to have an even smaller version of the
 image. This is just a thumbnail, but still contains a lot of
-information that we can use for detecting whether an image 
+information that we can use for detecting whether an image
 was taken inside or outside.
 
 ```{r}
@@ -184,10 +184,10 @@ flags, and the observation ids.
 ### Fun with exif
 
 There are several interesting things that we can do with the
-exif metadata attached to your images. You may even be 
+exif metadata attached to your images. You may even be
 surprised (and a little worried) about what I can do, actually.
 Let's grab the exif data for all of the images that you uploaded.
-A few of the images have invalide exif data, so the following 
+A few of the images have invalid exif data, so the following
 block of code removes these.
 
 ```{r, message = FALSE, error = FALSE, warning = FALSE, echo = FALSE}
@@ -195,6 +195,14 @@ fpath <- "~/gd/ml_data_raw/stat395_images"
 f <- dir(fpath, recursive = TRUE, full.names = TRUE)
 df <- lapply(f, function(v) {u = NULL; try({u <- exif::read_exif(v)}); return(u)})
 df <- Reduce(rbind, Filter(function(v) length(v) != 0, df))
+df <- as_data_frame(df)
+```
+```{r, eval = FALSE}
+fpath <- "~/gd/ml_data_raw/stat395_images"
+f <- dir(fpath, recursive = TRUE, full.names = TRUE)
+df <- lapply(f, function(v) {u = NULL; try({u <- exif::read_exif(v)}); return(u)})
+df <- Reduce(rbind, Filter(function(v) length(v) != 0, df))
+df <- as_data_frame(df)
 ```
 ```{r}
 df
@@ -222,8 +230,8 @@ kind of information is.**
 ## Classifying Class Data
 
 Now that we know roughly how to turn image data into arrays, let's
-load the entire corpus from class. The data is split into two 
-parts, much like the annotated data you for today's class. The
+load the entire corpus from class. The data is split into two
+parts, much like the annotated data you made for today's class. The
 first is a small data frame that gives just the metadata:
 
 ```{r, message = FALSE}
@@ -242,9 +250,9 @@ dim(x32)
 The dimension of this array gives the number of rows, the width
 of the image, the height of the image, and the number of channels
 in the image. The channels here refer to the red, green, and blue
-values. 
+values.
 
-Today, we'll start by using the `apply` function collapse this into
+Today, we'll start by using the `apply` function to collapse this into
 a two-dimensional array. This has one row for each observation and
 one column for each pixel value.
 
@@ -254,7 +262,7 @@ dim(X)
 ```
 
 Now that we have data in a standard matrix, we can throw this into
-an elastic net model. 
+an elastic net model.
 
 ```{r, message = FALSE, warning = FALSE}
 y <- f17$outside
@@ -268,11 +276,15 @@ beta <- coef(model, s = model$lambda.1se)
 beta[beta[,1] != 0,,drop = FALSE]
 ```
 
-Do you see any patterns in these numbers? Every value in the first
+Do you see any patterns in these numbers?
+
+Every value in the first
 1000 is negative. There are only two values from 1000-2000, and all
 the values in the 3000s are postive. It turns out that the first
 1024 (32 * 32) columns are the red channels, the next 1024 are the
-green channels, and the final 1024 are the blues.
+green channels, and the final 1024 are the blues. So there are
+negative weights on the red channels, very small weights on green,
+and positive weights on blue. Does that make sense?
 
 We see that this model is fairly predictive:
 
@@ -309,15 +321,16 @@ were taken outside:
 ```{r}
 par(mfrow = c(2, 3))
 id <- which(pred != y & y == 0 & f17$train_id == "valid")
-for (i in sample(id)) {
+for (i in id) {
   par(mar = rep(0, 4L))
   plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
   rasterImage(x224[i,,,],0,0,1,1)
 }
 ```
 
-Do you notice any patterns here? Now, lets see outdoor images that were
-classified as being inside:
+Do you notice any interesting patterns here?
+
+Now, let's see outdoor images that were classified as being inside:
 
 ```{r}
 par(mfrow = c(2, 3))
@@ -329,13 +342,13 @@ for (i in sample(id)) {
 }
 ```
 
-What do most of these images have in them (hint: we have **a lot** of
+What do many of these images have in them (hint: we have **a lot** of
 this at UR).
 
 ### Visualization
 
 Notice that we can do a PCA-based visualization of this data much
-as we did with the text data in the last class. 
+as we did with the text data in the last class.
 
 ```{r, warning = FALSE}
 library(irlba)
@@ -346,10 +359,9 @@ qplot(X_pca[,1], X_pca[,2], color = factor(y),
   theme_minimal()
 ```
 
-The plot shows that the there is a seperation between the indoor
-and outdoor photographs but not a particularly clear one in just
-the first two principal components. We will look at plots like 
-this one more next week.
+The plot shows a pattern differentiating the indoor and outdoor
+photographs, but not a particularly clear one. We will look at more
+PCA plots next week.
 
 ### New Features
 
@@ -359,28 +371,28 @@ the average of the red, green, and blue channels and fit a new model
 on just these.
 
 ```{r}
-X2 <- cbind(apply(X[,1:1024 + 1024 * 0], 1, mean),
+Z <- cbind(apply(X[,1:1024 + 1024 * 0], 1, mean),
             apply(X[,1:1024 + 1024 * 1], 1, mean),
             apply(X[,1:1024 + 1024 * 2], 1, mean))
 
-X2_train <- X2[f17$train_id == "train",]
+Z_train <- Z[f17$train_id == "train",]
 
 library(glmnet)
-model <- cv.glmnet(X2_train, y_train, family = "binomial", nfolds = 3)
+model <- cv.glmnet(Z_train, y_train, family = "binomial", nfolds = 3)
 beta <- coef(model, s = model$lambda.1se)
 beta
 ```
 
 Notice that the final model is almost as good as the one fit on the
-entire dataset:
+entire dataset. As a benefit, it does not over-fit the training data.
 
 ```{r}
-pred <- predict(model, newx = X2, type = "class")
+pred <- predict(model, newx = Z, type = "class")
 tapply(pred == y, f17$train_id, mean)
 ```
 
-Your assignmnet for the next lab is to work with this data and to try
-to find a creative way to do prediction. At a minimum, at least show 
+Your assignment for the next lab is to work with this data and to try
+to find a creative way to do prediction. At a minimum, at least show
 that you can apply and understand what I did in class today.
 
 
