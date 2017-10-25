@@ -49,7 +49,7 @@ flowers
 ```
 
 These images are 64 pixels by 64 pixels. Four times larger than
-the thumbnails we used of our data. Class "2" consists of the
+the thumbnails we used of our data. Class "1" consists of the
 snowdrop flower. Let's see at a few of the images to get a
 sense of what this flower looks like:
 
@@ -57,7 +57,7 @@ sense of what this flower looks like:
 par(mar = c(0,0,0,0))
 par(mfrow = c(3, 4))
 set.seed(1)
-for (i in sample(which(flowers$class == 2), 12)) {
+for (i in sample(which(flowers$class == 1), 12)) {
   plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
   rasterImage(x64[i,,,],0,0,1,1)
 }
