@@ -8,6 +8,10 @@ output: html_notebook
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-11-02-class19/")
+knitr::opts_chunk$set(fig.height = 5)
+knitr::opts_chunk$set(fig.width = 8.5)
+knitr::opts_chunk$set(out.width = "100%")
+knitr::opts_chunk$set(dpi = 300)
 ```
 
 ```{r, message = FALSE}
@@ -18,9 +22,50 @@ library(methods)
 library(keras)
 ```
 
+## Flowers with Neural Networks
+
+```{r}
+flowers <- read_csv("https://statsmaths.github.io/ml_data/flowers_17.csv")
+x64 <- read_rds("~/gd/ml_data_raw/output_image_data/flowers_17_x64.rds")
+
+X <- t(apply(x64, 1, cbind))
+y <- flowers$class
+
+X_train <- X[flowers$train_id == "train",]
+y_train <- to_categorical(y[flowers$train_id == "train"], num_classes = 17)
+```
+
+```{r}
+model <- keras_model_sequential()
+model %>%
+  layer_dense(units = 128, input_shape = c(ncol(X_train))) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 128) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 128) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 17) %>%
+  layer_activation(activation = "softmax")
+
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_rmsprop(),
+                  metrics = c('accuracy'))
+
+model
+```
+
+```{r}
+history <- model %>%
+  fit(X_train, y_train, epochs = 100, validation_split = 0.2)
+plot(history)
+```
+
+
+## MNIST
+
 ```{r, message = FALSE}
-mnist <- read_csv("~/files/ml_data/mnist_10.csv")
-X <- read_rds("~/files/ml_data/mnist_10_X.rds")
+mnist <- read_csv("https://statsmaths.github.io/ml_data/mnist_10.csv")
+X <- read_rds("~/gd/ml_data_raw/output_image_data/mnist_10_x28.rds")
 ```
 
 ```{r}
@@ -48,9 +93,11 @@ y_train <- to_categorical(y[mnist$train_id == "train"], num_classes = 10)
 model <- keras_model_sequential()
 model %>%
   layer_reshape(target_shape = c(28^2), input_shape = c(28, 28)) %>%
-  layer_dense(units = 20) %>%
+  layer_dense(units = 128) %>%
   layer_activation(activation = "relu") %>%
-  layer_dense(units = 20) %>%
+  layer_dense(units = 128) %>%
+  layer_activation(activation = "relu") %>%
+  layer_dense(units = 128) %>%
   layer_activation(activation = "relu") %>%
   layer_dense(units = 10) %>%
   layer_activation(activation = "softmax")
@@ -70,6 +117,7 @@ plot(history)
 
 ```{r}
 y_pred <- predict_classes(model, X)
+tapply(y == y_pred, mnist$train_id, mean)
 table(y[mnist$train_id == "train"], y_pred[mnist$train_id == "train"])
 ```
 
@@ -84,6 +132,8 @@ for (i in sample(which(y_pred != y), 100)) {
   box()
 }
 ```
+
+
 
 ## Visualize weights
 
@@ -100,18 +150,27 @@ plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
 rasterImage(im,0,0,1,1)
 ```
 
-## Larger model
+### Neural Network Regularization
+
 
 ```{r}
 model <- keras_model_sequential()
 model %>%
   layer_reshape(target_shape = c(28^2), input_shape = c(28, 28)) %>%
-  layer_dense(units = 128, kernel_initializer = "glorot_normal") %>%
+
+  layer_dense(units = 512, kernel_initializer = "glorot_normal") %>%
   layer_activation(activation = "relu") %>%
   layer_dropout(rate = 0.5) %>%
 
-  layer_dense(units = 512, kernel_initializer = "glorot_normal",
-              kernel_regularizer = regularizer_l2(0.2)) %>%
+  layer_dense(units = 512, kernel_initializer = "glorot_normal") %>%
+  layer_activation(activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+
+  layer_dense(units = 512, kernel_initializer = "glorot_normal") %>%
+  layer_activation(activation = "relu") %>%
+  layer_dropout(rate = 0.5) %>%
+
+  layer_dense(units = 512, kernel_initializer = "glorot_normal") %>%
   layer_activation(activation = "relu") %>%
   layer_dropout(rate = 0.5) %>%
 
@@ -119,7 +178,8 @@ model %>%
   layer_activation(activation = "softmax")
 
 model %>% compile(loss = 'categorical_crossentropy',
-                  optimizer = optimizer_rmsprop(),
+                  optimizer = optimizer_sgd(lr = 0.01, momentum = 0.9,
+                                            nesterov = TRUE),
                   metrics = c('accuracy'))
 
 model
@@ -128,9 +188,67 @@ model
 ```{r}
 history <- model %>%
   fit(X_train, y_train, epochs = 10,
-      validation_split = 0.1)
+      validation_split = 0.1, batch_size = 32)
 plot(history)
+y_pred <- predict_classes(model, X)
+tapply(y == y_pred, mnist$train_id, mean)
+table(y[mnist$train_id == "train"], y_pred[mnist$train_id == "train"])
 ```
 
 Why is the training accuracy lower than the validation accuracy, particularly
 for the first few epochs?
+
+## Neural Network Internals
+
+### Stochastic Gradient Descent
+
+$$ \left( w^{(0)} - \eta \cdot \nabla_w f \right) \, \rightarrow \, w^{(1)} $$
+
+$$ \begin{align} f(w) &= \sum_i (\widehat{y}_i(w) - y_i)^2 \\
+        &= \sum_i f_i(w) \\
+        \nabla_w f &= \sum_i \nabla_w f_i
+    \end{align}$$
+
+$$
+\begin{align}
+\left( w^{(0)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_1 \right) \, &\rightarrow \, w^{(1)} \\
+\left( w^{(1)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_2 \right) \, &\rightarrow \, w^{(2)} \\
+&\vdots \\
+\left( w^{(n-1)} - (\eta / n) \cdot \nabla_{w^{(0)}} f_n \right) \, &\rightarrow \, w^{(n)} \\
+\end{align}
+$$
+
+The $w^{(n)}$ here is exactly equivalent to the $w^{(1)}$ from before.
+
+$$
+\begin{align}
+\left( w^{(0)} - \eta' \cdot \nabla_{w^{(0)}} f_1 \right) \, &\rightarrow \, w^{(1)} \\
+\left( w^{(1)} - \eta' \cdot \nabla_{w^{(1)}} f_2 \right) \, &\rightarrow \, w^{(2)} \\
+&\vdots \\
+\left( w^{(n-1)} - \eta' \cdot \nabla_{w^{(n)}} f_n \right) \, &\rightarrow \, w^{(n)} \\
+\end{align}
+$$
+
+### Backpropagation
+
+$$ \begin{align} \widehat{Y} &= \sigma(X \cdot A) \cdot B \\
+                 \widehat{Y} &= Z \cdot B \end{align} \\
+                 $$
+
+It will be easier to index of $A$ as a vector, with elements $a_i$ rather than
+having to keep track of the 2-dimensional nature of the matrix.
+
+$$ \frac{\partial f}{\partial a_{i}} =
+    \sum_k \frac{\partial z_{k}}{\partial a_{i}} \cdot \frac{\partial f}{\partial z_{k}} $$
+
+
+$$ \frac{\partial f}{\partial z_{k}} =
+    \sum_j \frac{\partial \widehat{y}_{j}}{\partial z_{k}} \cdot \frac{\partial f}{\partial \widehat{y}_{j}} $$
+
+
+![](img/tikz40.png)
+
+
+
+
+

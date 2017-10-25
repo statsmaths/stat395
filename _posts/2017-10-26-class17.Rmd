@@ -235,7 +235,7 @@ parts, much like the annotated data you made for today's class. The
 first is a small data frame that gives just the metadata:
 
 ```{r, message = FALSE}
-f17 <- read_csv("~/gh/ml_data/f17_photos.csv")
+f17 <- read_csv("https://statsmaths.github.io/ml_data/f17_photos_2.csv")
 f17
 ```
 
@@ -243,7 +243,7 @@ The arrays containing the pixels can be read with the following
 code:
 
 ```{r, message = FALSE}
-x32 <- read_rds("~/gd/ml_data_raw/stat395_images/f17_photos_32.rds")
+x32 <- read_rds("~/gd/ml_data_raw/output_image_data/f17_photos_2_x32.rds")
 dim(x32)
 ```
 
@@ -265,7 +265,7 @@ Now that we have data in a standard matrix, we can throw this into
 an elastic net model.
 
 ```{r, message = FALSE, warning = FALSE}
-y <- f17$outside
+y <- f17$class
 
 X_train <- X[f17$train_id == "train",]
 y_train <- y[f17$train_id == "train"]
@@ -312,7 +312,7 @@ with text classification. To look at the negative examples, I will
 read in the larger 224x224 images:
 
 ```{r}
-x224 <- read_rds("~/gd/ml_data_raw/stat395_images/f17_photos_224.rds")
+x224 <- read_rds("~/gd/ml_data_raw/output_image_data/f17_photos_2_x224.rds")
 ```
 
 First, let's plot the examples taken inside but that our algorithm thinks
