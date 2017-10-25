@@ -40,7 +40,7 @@ containing the photo metadata and the second an array consisting
 of the image pixel values.
 
 ```{r, message = FALSE}
-flowers <- read_csv("~/gh/ml_data/flowers_17.csv")
+flowers <- read_csv("https://statsmaths.github.io/ml_data/flowers_17.csv")
 x64 <- read_rds("~/gd/ml_data_raw/output_image_data/flowers_17_x64.rds")
 x64 <- x64[flowers$class %in% 1:10,,,]
 flowers <- flowers[flowers$class %in% 1:10,]
