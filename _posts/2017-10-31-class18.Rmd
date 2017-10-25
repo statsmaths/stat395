@@ -50,7 +50,7 @@ flowers
 
 These images are 64 pixels by 64 pixels. Four times larger than
 the thumbnails we used of our data. Class "2" consists of the
-flower colt's foot. Let's see at a few of the images to get a
+snowdrop flower. Let's see at a few of the images to get a
 sense of what this flower looks like:
 
 ```{r, fig.asp=0.75, fig.width=10}
@@ -80,13 +80,13 @@ for (i in 1:10) {
 ```
 
 Notice that color will be useful for telling some of these apart, but
-not sufficent for distinguishing all classes. Buttercups and windflowers,
+not sufficent for distinguishing all classes. Crocus' and irises,
 for example, look very similar.
 
 ## Collapse into data matrix
 
 To start, we will use the same trick we tried last time of flattening
-the array into a matrix and applying the elastic net to the data. 
+the array into a matrix and applying the elastic net to the data.
 
 ```{r, message = FALSE}
 X <- t(apply(x64, 1, cbind))
@@ -132,8 +132,8 @@ understand what the values mean:
 
 **Value** tells how dark a pixel is, **saturation** how much color it
 has (with a low value being close to grey), and **hue** gives the specific
-point on a color wheel. Usually a hue of 0 indicates red. Notice that 
-hue is a circular variable, so that a hue of 0.99 is close to a 
+point on a color wheel. Usually a hue of 0 indicates red. Notice that
+hue is a circular variable, so that a hue of 0.99 is close to a
 hue of 0.01.
 
 We can conver into HSV space with the base R function `rgb2hsv`:
@@ -187,7 +187,7 @@ table(factor(color, levels = color_vals))
 ```
 
 For the one test image, we see that the dominant color is "#FF9900",
-an orange, followed by "#0066FF", a blue. 
+an orange, followed by "#0066FF", a blue.
 
 We can use these counts as features to tell us about a given flower.
 Let's cycle over the entire dataset and grab these features.
@@ -214,10 +214,8 @@ for (i in seq_len(nrow(flowers))) {
 head(X_hsv)
 ```
 
-Columns 3-6 are the ligher greys, which are not very common in 
-a dataset of flowers. The 8th column is the orange color and 
-the 9th a greenish color, both popular from the flowers and the
-background greenery.
+The 8th column is the orange color and the 9th a greenish color,
+both popular from the flowers and the background greenery.
 
 We can use this new matrix to fit another elastic net. The matrix
 is small enough that we could use other techniques too, but I'll
@@ -240,9 +238,10 @@ rownames(beta) <- c("(intercept)", color_vals)
 as.matrix(beta)
 ```
 
-We see that some expected patterns here. The orange ("#FF9900")
-has a high value for buttercups and the white ("#FFFFFF") has a 
-large value for colts foot.
+We see that some expected patterns here. Snowdrops have a large
+white coefficient ("#FFFFFF") and bluebells have a large value
+for blue ("#3300FF") and purple ("#CC00FF"). Sunflowers have a
+large coefficient for orange ("#FF9900").
 
 This model is slightly more predictive, but importantly is not
 nearly as overfit.
@@ -254,13 +253,13 @@ pred <- as.numeric(predict(model, newx = X_hsv,
 tapply(pred == y, flowers$train_id, mean)
 ```
 
-The reason for these results is that the first elastic net likely
+The reason for this that the first elastic net likely
 approximated the kind of analysis we did here, but in doing overfit
 to the way hue, value, and saturation looked on the training data.
 
 ### More Colors
 
-We can improve our model by including more colors. We don't need 
+We can improve our model by including more colors. We don't need
 any more greys, but lets include a set of 100 hues. This will give
 us more information about the particular colors for each flower.
 
@@ -289,7 +288,7 @@ for (i in seq_len(nrow(flowers))) {
 ```
 
 We will use the elastic net again here. With the increased
-set of colors, lets set alpha to 0.2 to spread the weights 
+set of colors, let's set alpha to 0.2 to spread the weights
 out over similar colors.
 
 ```{r, message = FALSE, warning = FALSE}
@@ -314,7 +313,7 @@ tapply(pred == y, flowers$train_id, mean)
 ```
 
 We can create an interesting visualization of these values by
-showing the weights as a function of the actual colors for 
+showing the weights as a function of the actual colors for
 each flower.
 
 ```{r}
@@ -340,6 +339,9 @@ filter(df, beta > 0) %>%
         panel.grid.minor = element_blank(),
         axis.line = element_line(colour = "black"))
 ```
+
+Tigerlily's are very red, whereas bluebells, crocuses, and
+irises have a blue/purple color.
 
 At the very least, I think it visually looks very neat even if
 it is not particularly helpful from a predictive standpoint.
@@ -381,7 +383,7 @@ We'll do this for each image, and save the number of pixels that
 have an edge value greater than 0.1. You could of course play around
 with this cutoff, or save a number of different cutoff values. This
 number will tell us roughly how much of the image consists of edges.
-A low number indicates a smooth petal and a a high one indicates 
+A low number indicates a smooth petal and a a high one indicates
 a grassy texture to the flower.
 
 ```{r}
@@ -393,8 +395,8 @@ for (i in seq_len(nrow(flowers))) {
 }
 ```
 
-A boxplot shows that there are differences between the flowers 
-in this measurement. Dandelions in particular have a lot of edges.
+A boxplot shows that there are differences between the flowers
+in this measurement. Crocuses in particular have a lot of edges.
 
 ```{r}
 qplot(flowers$class_name, mean_edge, geom = "blank") +
@@ -417,10 +419,10 @@ for (i in seq_len(nrow(flowers))) {
 }
 ```
 
-This shows a clearly differentiation of the flowers. Sunflowers, with
-the seeds in the middle of the flower, have a lot of edges whereas
-the smooth buttercup petals have very little edges in the middle of
-the photo.
+This shows a clearly differentiation of the flowers. Fritillary
+have a lot of edges due to their spots in the middle of
+the photo. Notice that the patterns here are quite different
+from those in the whole image.
 
 ```{r}
 qplot(flowers$class_name, mean_edge_mid, geom = "blank") +
@@ -447,7 +449,10 @@ model <- cv.glmnet(X_train, y_train, family = "multinomial",
 plot(model)
 ```
 
-The resulting model performs much better than the color alone.
+I've included the cross-validation curve because it is a
+perfect textbook example of what the curve should look like
+(but rarely does so nicely). The resulting model performs much
+better than the color alone.
 
 ```{r}
 pred <- as.numeric(predict(model, newx = X_edge,
@@ -464,9 +469,10 @@ table(pred = fnames[pred[flowers$train_id == "valid"]],
 ```
 
 We won't have time here, but the next step would be to figure out
-what features would help distinguish the "colts foot" and "daffodil"
-flowers from the others as false-positives for these classes are
-causing a large portion of the remaining errors.
+what features would help distinguish the "snowdrop", "daffodil",
+and "bluebell" flowers from the others as false positives and
+negatives from these groups are causing a large portion of the
+remaining errors.
 
 
 
