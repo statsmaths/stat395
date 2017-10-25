@@ -1,0 +1,527 @@
+---
+title: "Class 18: Lilacs and Tigerlilys and Buttcups! Oh My!"
+author: "Taylor Arnold"
+output: html_notebook
+---
+
+
+
+
+{% highlight r %}
+library(readr)
+library(dplyr)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Warning: package 'dplyr' was built under R version 3.4.2
+{% endhighlight %}
+
+
+
+{% highlight r %}
+library(ggplot2)
+library(methods)
+{% endhighlight %}
+
+## Flowers dataset
+
+
+{% highlight r %}
+flowers <- read_csv("~/gh/ml_data/flowers_17.csv")
+x64 <- read_rds("~/gd/ml_data_raw/output_image_data/flowers_17_x64.rds")
+x64 <- x64[flowers$class %in% 1:10,,,]
+flowers <- flowers[flowers$class %in% 1:10,]
+fnames <- flowers$class_name[match(1:10, flowers$class)]
+flowers
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## # A tibble: 600 x 4
+##       obs_id train_id class class_name
+##        <chr>    <chr> <int>      <chr>
+##  1 id_000362    valid     5  dandelion
+##  2 id_000506    train     7       iris
+##  3 id_000778    valid    10 windflower
+##  4 id_000274    train     4      daisy
+##  5 id_000084    train     2 colts foot
+##  6 id_000279    train     4      daisy
+##  7 id_000518    train     7       iris
+##  8 id_000670    train     9  sunflower
+##  9 id_000511    train     7       iris
+## 10 id_000285    valid     4      daisy
+## # ... with 590 more rows
+{% endhighlight %}
+
+
+{% highlight r %}
+par(mar = c(0,0,0,0))
+par(mfrow = c(3, 4))
+set.seed(1)
+for (i in sample(which(flowers$class == 2), 12)) {
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  rasterImage(x64[i,,,],0,0,1,1)
+}
+{% endhighlight %}
+
+<img src="../assets/2017-10-31-class18/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="100%" />
+
+
+{% highlight r %}
+par(mar = c(0,0,0,0))
+par(mfrow = c(3, 4))
+set.seed(1)
+for (i in 1:10) {
+  plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+  i <- sample(which(flowers$class == i), 1)
+  rasterImage(x64[i,,,],0,0,1,1)
+  text(0.5, 0.1, flowers$class_name[i], cex = 3, col = "salmon")
+}
+{% endhighlight %}
+
+<img src="../assets/2017-10-31-class18/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="100%" />
+
+## Collapse into data matrix
+
+
+{% highlight r %}
+X <- t(apply(x64, 1, cbind))
+y <- flowers$class
+
+X_train <- X[flowers$train_id == "train",]
+y_train <- y[flowers$train_id == "train"]
+
+library(glmnet)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Warning: package 'glmnet' was built under R version 3.4.2
+{% endhighlight %}
+
+
+
+{% highlight r %}
+model <- cv.glmnet(X_train, y_train, family = "multinomial", nfolds = 3)
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+dim(beta[apply(beta != 0, 1, any),])
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 359  10
+{% endhighlight %}
+
+
+
+{% highlight r %}
+pred <- predict(model, newx = X, type = "class")
+tapply(pred == y, flowers$train_id, mean)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##  train  valid 
+## 0.9325 0.3600
+{% endhighlight %}
+
+## HSV Space
+
+
+{% highlight r %}
+i <- 3
+red <- as.numeric(x64[i,,,1])
+green <- as.numeric(x64[i,,,2])
+blue <- as.numeric(x64[i,,,3])
+hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
+head(hsv)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##              h         s         v
+## [1,] 0.5681818 0.3235306 0.2666657
+## [2,] 0.5681818 0.2404577 0.3587929
+## [3,] 0.5733333 0.2531846 0.3872243
+## [4,] 0.5733333 0.2492254 0.3933757
+## [5,] 0.5802469 0.2573864 0.4113750
+## [6,] 0.5808081 0.3063756 0.4223958
+{% endhighlight %}
+
+
+{% highlight r %}
+color_vals <- c(hsv(1, 0, seq(0, 1, by = 0.2)),
+                hsv(seq(0, 0.9, by = 0.1), 1, 1))
+plot(seq_along(color_vals), seq_along(color_vals),
+     col = color_vals, pch = 19, cex = 5)
+{% endhighlight %}
+
+<img src="../assets/2017-10-31-class18/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="100%" />
+
+
+
+{% highlight r %}
+color <- rep("#000000", nrow(hsv))
+
+index <- which(hsv[,2] < 0.2)
+color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
+
+index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
+color[index] <- hsv(round(hsv[index,1],1), 1, 1)
+
+table(factor(color, levels = color_vals))
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## 
+## #000000 #333333 #666666 #999999 #CCCCCC #FFFFFF #FF0000 #FF9900 #CCFF00 
+##     204     260       0       0       0       0      13    2870      83 
+## #33FF00 #00FF66 #00FFFF #0066FF #3300FF #CC00FF #FF0099 
+##      28       3      22     611       2       0       0
+{% endhighlight %}
+
+
+{% highlight r %}
+X_hsv <- matrix(0, ncol = length(color_vals),
+                   nrow = nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  red <- as.numeric(x64[i,,,1])
+  green <- as.numeric(x64[i,,,2])
+  blue <- as.numeric(x64[i,,,3])
+  hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
+
+  color <- rep("#000000", nrow(hsv))
+
+  index <- which(hsv[,2] < 0.2)
+  color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
+
+  index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
+  color[index] <- hsv(round(hsv[index,1],1), 1, 1)
+
+  X_hsv[i,] <- table(factor(color, levels = color_vals))
+}
+head(X_hsv)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+## [1,]  681  890    0    0    0    0  100  579  752   105     0     0     0
+## [2,]  232 1030    0    0    0    0  957  611   42   165   972    51    11
+## [3,]  204  260    0    0    0    0   13 2870   83    28     3    22   611
+## [4,]  523  804    0    0    0    0   12  245 1754    14     0     0     1
+## [5,] 3117  402    0    0    0    0    2  188  214     8     1     0     4
+## [6,]  683  875    0    0    0    0  135  121  305   903   259    73   152
+##      [,14] [,15] [,16]
+## [1,]    35   832   122
+## [2,]     5     1    19
+## [3,]     2     0     0
+## [4,]   404   335     4
+## [5,]    25    88    47
+## [6,]   486    36    68
+{% endhighlight %}
+
+
+{% highlight r %}
+y <- flowers$class
+
+X_train <- X_hsv[flowers$train_id == "train",]
+X_valid <- X_hsv[flowers$train_id == "valid",]
+y_train <- y[flowers$train_id == "train"]
+y_valid <- y[flowers$train_id == "valid"]
+{% endhighlight %}
+
+
+
+{% highlight r %}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial")
+beta <- coef(model, s = model$lambda.1se)
+beta <- Reduce(cbind, beta)
+colnames(beta) <- fnames
+rownames(beta) <- c("(intercept)", color_vals)
+as.matrix(beta)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##                 buttercup    colts foot      daffodil         daisy
+## (intercept)  1.592117e-01 -0.0320291081  0.9830783690  5.400993e-01
+## #000000      0.000000e+00  0.0005848385  0.0002041653 -3.993807e-04
+## #333333      4.812369e-05  0.0005872025 -0.0001007553  2.590749e-04
+## #666666      0.000000e+00  0.0000000000  0.0000000000  0.000000e+00
+## #999999      0.000000e+00  0.0000000000  0.0000000000  0.000000e+00
+## #CCCCCC      0.000000e+00  0.0000000000  0.0000000000  0.000000e+00
+## #FFFFFF      0.000000e+00  0.0000000000  0.0000000000  0.000000e+00
+## #FF0000      0.000000e+00  0.0000000000  0.0000000000  0.000000e+00
+## #FF9900      7.446949e-04  0.0000000000 -0.0011801444 -5.528785e-04
+## #CCFF00      0.000000e+00  0.0000000000  0.0000000000  0.000000e+00
+## #33FF00     -6.434344e-05 -0.0001072155  0.0004420735  0.000000e+00
+## #00FF66      0.000000e+00  0.0000000000  0.0000000000  1.209787e-05
+## #00FFFF      3.259141e-04  0.0004010808  0.0005742421  0.000000e+00
+## #0066FF      1.377353e-04  0.0000000000 -0.0005458591  0.000000e+00
+## #3300FF      0.000000e+00  0.0000000000  0.0000000000  2.867276e-03
+## #CC00FF      0.000000e+00  0.0000000000  0.0000000000  1.767743e-03
+## #FF0099      0.000000e+00  0.0000000000  0.0000000000  0.000000e+00
+##                 dandelion    fritillary         iris         pansy
+## (intercept) -0.2822378016  1.760535e-01 -0.004199291  7.607355e-01
+## #000000      0.0003456033 -5.084730e-05  0.000000000  2.553706e-06
+## #333333      0.0007831965  0.000000e+00  0.000000000  0.000000e+00
+## #666666      0.0000000000  0.000000e+00  0.000000000  0.000000e+00
+## #999999      0.0000000000  0.000000e+00  0.000000000  0.000000e+00
+## #CCCCCC      0.0000000000  0.000000e+00  0.000000000  0.000000e+00
+## #FFFFFF      0.0000000000  0.000000e+00  0.000000000  0.000000e+00
+## #FF0000      0.0000000000  8.018249e-04  0.003139896  0.000000e+00
+## #FF9900      0.0000000000  0.000000e+00  0.000000000  2.612075e-04
+## #CCFF00      0.0000000000  3.741993e-04  0.000000000  0.000000e+00
+## #33FF00     -0.0002811587  0.000000e+00  0.000000000  0.000000e+00
+## #00FF66     -0.0008371820  0.000000e+00  0.000000000  0.000000e+00
+## #00FFFF      0.0000000000  0.000000e+00  0.000000000 -5.146344e-04
+## #0066FF     -0.0000509745 -2.559568e-05  0.000367673 -5.221236e-04
+## #3300FF      0.0020751796  1.987487e-03  0.000000000  0.000000e+00
+## #CC00FF      0.0026692389  1.208523e-03  0.000000000  0.000000e+00
+## #FF0099      0.0000000000  0.000000e+00  0.000000000  0.000000e+00
+##                sunflower    windflower
+## (intercept) -1.136127643 -1.164585e+00
+## #000000      0.000000000 -1.105254e-04
+## #333333      0.000000000 -9.084857e-05
+## #666666      0.000000000  0.000000e+00
+## #999999      0.000000000  0.000000e+00
+## #CCCCCC      0.000000000  0.000000e+00
+## #FFFFFF      0.000000000  0.000000e+00
+## #FF0000      0.002213743  0.000000e+00
+## #FF9900      0.000000000  1.649100e-03
+## #CCFF00      0.000000000  0.000000e+00
+## #33FF00      0.000000000  0.000000e+00
+## #00FF66      0.000000000  0.000000e+00
+## #00FFFF      0.000000000  1.072158e-03
+## #0066FF      0.000000000  7.033933e-04
+## #3300FF      0.000000000  0.000000e+00
+## #CC00FF      0.000000000  0.000000e+00
+## #FF0099      0.008971925  0.000000e+00
+{% endhighlight %}
+
+
+{% highlight r %}
+pred <- as.numeric(predict(model, newx = X_hsv,
+                           type = "class"))
+
+tapply(pred == y, flowers$train_id, mean)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## train valid 
+## 0.475 0.375
+{% endhighlight %}
+
+
+{% highlight r %}
+color_vals <- c(hsv(1, 0, seq(0, 1, by = 0.2)),
+                hsv(seq(0, 0.9, by = 0.01), 1, 1))
+{% endhighlight %}
+
+
+{% highlight r %}
+X_hsv <- matrix(0, ncol = length(color_vals),
+                   nrow = nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  red <- as.numeric(x64[i,,,1])
+  green <- as.numeric(x64[i,,,2])
+  blue <- as.numeric(x64[i,,,3])
+  hsv <- t(rgb2hsv(red, green, blue, maxColorValue = 1))
+
+  color <- rep("#000000", nrow(hsv))
+
+  index <- which(hsv[,2] < 0.2)
+  color[index] <- hsv(1, 0, round(hsv[index,2] * 5) / 5)
+
+  index <- which(hsv[,2] > 0.2 & hsv[,3] > 0.2)
+  color[index] <- hsv(round(hsv[index,1], 2), 1, 1)
+
+  X_hsv[i,] <- table(factor(color, levels = color_vals))
+}
+{% endhighlight %}
+
+
+{% highlight r %}
+y <- flowers$class
+
+X_train <- X_hsv[flowers$train_id == "train",]
+X_valid <- X_hsv[flowers$train_id == "valid",]
+y_train <- y[flowers$train_id == "train"]
+y_valid <- y[flowers$train_id == "valid"]
+
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial",
+                   alpha = 0.2)
+{% endhighlight %}
+
+
+{% highlight r %}
+pred <- as.numeric(predict(model, newx = X_hsv,
+                           type = "class"))
+
+tapply(pred == y, flowers$train_id, mean)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##  train  valid 
+## 0.5575 0.4000
+{% endhighlight %}
+
+
+{% highlight r %}
+table(pred = fnames[pred[flowers$train_id == "valid"]],
+      y = y[flowers$train_id == "valid"])
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##             y
+## pred          1  2  3  4  5  6  7  8  9 10
+##   buttercup   7  0  0  0  0  1  0  1  1  7
+##   colts foot  3  8  3  1  4  3  3  7  2  1
+##   daffodil    1  6 16  4  0  2  3  3  1  1
+##   daisy       0  0  0  4  1  3  0  0  1  0
+##   dandelion   0  0  0  2 10  1  0  0  0  0
+##   fritillary  1  2  0  5  0  3  3  2  1  0
+##   iris        4  2  1  0  2  1  8  2  2  0
+##   pansy       4  1  0  1  0  2  1  2  1  0
+##   sunflower   0  0  0  1  1  1  1  0 11  0
+##   windflower  0  1  0  2  2  3  1  3  0 11
+{% endhighlight %}
+
+## Texture
+
+
+{% highlight r %}
+i <- 50
+bw <- (x64[i,,,1] + x64[i,,,2] + x64[i,,,3]) / 3
+plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+rasterImage(bw,0,0,1,1)
+{% endhighlight %}
+
+<img src="../assets/2017-10-31-class18/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="100%" />
+
+
+{% highlight r %}
+edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
+plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
+rasterImage(edge,0,0,1,1)
+{% endhighlight %}
+
+<img src="../assets/2017-10-31-class18/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="100%" />
+
+
+{% highlight r %}
+mean_edge <- rep(0, nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  bw <- (x64[i,,,1] + x64[i,,,2] + x64[i,,,3]) / 3
+  edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
+  mean_edge[i] <- mean(edge > 0.1)
+}
+{% endhighlight %}
+
+
+{% highlight r %}
+qplot(flowers$class_name, mean_edge, geom = "blank") +
+  geom_boxplot() +
+  coord_flip() +
+  theme_minimal()
+{% endhighlight %}
+
+<img src="../assets/2017-10-31-class18/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="100%" />
+
+
+{% highlight r %}
+mean_edge_mid <- rep(0, nrow(flowers))
+for (i in seq_len(nrow(flowers))) {
+  bw <- (x64[i,,,1] + x64[i,,,2] + x64[i,,,3]) / 3
+  edge <- abs(bw[-1,-1] - bw[-nrow(bw),-ncol(bw)])
+  mean_edge_mid[i] <- mean(edge[20:44,20:44] > 0.1)
+}
+{% endhighlight %}
+
+
+{% highlight r %}
+qplot(flowers$class_name, mean_edge_mid, geom = "blank") +
+  geom_boxplot() +
+  coord_flip()
+{% endhighlight %}
+
+<img src="../assets/2017-10-31-class18/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="100%" />
+
+
+
+{% highlight r %}
+X_edge <- cbind(X_hsv, mean_edge, mean_edge_mid)
+y <- flowers$class
+
+X_train <- X_edge[flowers$train_id == "train",]
+X_valid <- X_edge[flowers$train_id == "valid",]
+y_train <- y[flowers$train_id == "train"]
+y_valid <- y[flowers$train_id == "valid"]
+{% endhighlight %}
+
+
+
+{% highlight r %}
+library(glmnet)
+model <- cv.glmnet(X_train, y_train, family = "multinomial",
+                   alpha = 0.2)
+{% endhighlight %}
+
+
+{% highlight r %}
+pred <- as.numeric(predict(model, newx = X_edge,
+                           type = "class"))
+tapply(pred == y, flowers$train_id, mean)
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## train valid 
+## 0.615 0.445
+{% endhighlight %}
+
+
+{% highlight r %}
+table(pred = fnames[pred[flowers$train_id == "valid"]],
+      y = y[flowers$train_id == "valid"])
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##             y
+## pred          1  2  3  4  5  6  7  8  9 10
+##   buttercup   8  0  0  0  0  2  0  0  0  5
+##   colts foot  4  8  5  2  1  2  3  8  2  1
+##   daffodil    0  5 14  2  0  2  4  3  0  1
+##   daisy       0  0  0  8  1  3  0  0  1  0
+##   dandelion   0  3  0  2 13  2  1  1  0  0
+##   fritillary  2  1  0  1  0  3  0  1  3  0
+##   iris        3  2  1  0  2  1 10  2  1  0
+##   pansy       3  0  0  0  0  3  0  1  2  0
+##   sunflower   0  0  0  3  2  1  1  1 11  0
+##   windflower  0  1  0  2  1  1  1  3  0 13
+{% endhighlight %}
+
