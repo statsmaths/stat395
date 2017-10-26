@@ -45,6 +45,7 @@ x64 <- read_rds("~/gd/ml_data_raw/output_image_data/flowers_17_x64.rds")
 x64 <- x64[flowers$class %in% 0:9,,,]
 flowers <- flowers[flowers$class %in% 0:9,]
 fnames <- flowers$class_name[match(0:9, flowers$class)]
+fnames <- factor(fnames, levels = fnames)
 flowers
 ```
 
