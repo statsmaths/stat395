@@ -464,7 +464,7 @@ A confusion matrix shows us that only a few flowers are still
 difficult to differentiate.
 
 ```{r}
-table(pred = fnames[pred[flowers$train_id == "valid"]],
+table(pred = fnames[pred[flowers$train_id == "valid"] + 1],
       y = y[flowers$train_id == "valid"])
 ```
 

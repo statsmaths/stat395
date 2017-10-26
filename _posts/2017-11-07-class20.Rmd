@@ -22,6 +22,8 @@ library(methods)
 library(keras)
 ```
 
+## Le-Net for MNIST10 (1998)
+
 ```{r, message = FALSE}
 mnist <- read_csv("https://statsmaths.github.io/ml_data/mnist_10.csv")
 X <- read_rds("~/gd/ml_data_raw/output_image_data/mnist_10_x28.rds")
@@ -31,6 +33,62 @@ y <- mnist$class
 X_train <- X[mnist$train_id == "train",,,,drop = FALSE]
 y_train <- to_categorical(y[mnist$train_id == "train"], num_classes = 10)
 ```
+
+```{r}
+model <- keras_model_sequential()
+model %>%
+  layer_conv_2d(filters = 16, kernel_size = c(5,5),
+                  strides = c(2,2),
+                  input_shape = c(28, 28, 1)) %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_activation(activation = "sigmoid") %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_conv_2d(120, kernel_size = c(1, 1)) %>%
+  layer_flatten() %>%
+
+  layer_dense(units = 84) %>%
+  layer_activation(activation = "sigmoid") %>%
+  layer_dense(units = 10) %>%
+  layer_activation(activation = "softmax")
+```
+
+```{r}
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_sgd(lr = 1, momentum = 0.8),
+                  metrics = c('accuracy'))
+model %>% fit(X_train, y_train, epochs = 2,
+      validation_split = 0.1)
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_sgd(lr = 0.8, momentum = 0.8),
+                  metrics = c('accuracy'))
+model %>% fit(X_train, y_train, epochs = 3,
+      validation_split = 0.1)
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_sgd(lr = 0.4, momentum = 0.8),
+                  metrics = c('accuracy'))
+model %>% fit(X_train, y_train, epochs = 3,
+      validation_split = 0.1)
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_sgd(lr = 0.2, momentum = 0.8),
+                  metrics = c('accuracy'))
+model %>% fit(X_train, y_train, epochs = 4,
+      validation_split = 0.1)
+model %>% compile(loss = 'categorical_crossentropy',
+                  optimizer = optimizer_sgd(lr = 0.08, momentum = 0.8),
+                  metrics = c('accuracy'))
+model %>% fit(X_train, y_train, epochs = 4,
+      validation_split = 0.1)
+```
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
 model <- keras_model_sequential()
