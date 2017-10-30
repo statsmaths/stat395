@@ -24,7 +24,7 @@ theme_set(theme_minimal())
 
 ## MNIST
 
-The National Institute of Standards and Technology (NIST) is a 
+The National Institute of Standards and Technology (NIST) is a
 US federal agency specifically tasked with developing measurment
 standards. The agency has put together several datasets of images
 showing handwritten digits. These were standardized and put together
@@ -32,11 +32,11 @@ by Yann LeCun and Corinna Cortes while at AT&T Labs into a
 classification dataset. The prediction task is to recognize what
 number is shown in the image.
 
-The dataset, known as MNIST or MNIST-10, is a very commonly used 
+The dataset, known as MNIST or MNIST-10, is a very commonly used
 training set when learning how to do image recognition. In academic
-research, it is certainly overused, but it does make a great 
+research, it is certainly overused, but it does make a great
 example for teaching purposes. The images are relatively small
-but still represent an interesting classification task. The 
+but still represent an interesting classification task. The
 primary reason for this is that digit classification does not
 require color or high-resolution images, making the data size
 relatively small.
@@ -57,9 +57,9 @@ the data to make sure that it makes sense to us:
 dim(x28)
 ```
 
-There are 60000 total images, with 28 rows, 28 columns, and one 
+There are 60000 total images, with 28 rows, 28 columns, and one
 color channel. Before diving into the classification task, we
-can take a quick look at what the digits actually look like. 
+can take a quick look at what the digits actually look like.
 Here are 60 examples of the digit 2
 
 ```{r, fig.asp=0.75, fig.width=10}
@@ -73,7 +73,7 @@ for (i in sample(which(mnist$class == 2), 60)) {
 
 We can quickly recognize that all of these are the digit 2, though
 note that the specific pixel values between two different 2's can
-be extremely different. 
+be extremely different.
 
 ### Neural networks
 
@@ -81,7 +81,7 @@ It is now time to return to neural networks. We first flatten the
 dataset `x28` and then construct a training set of data. The only
 tweak for neural networks is the use of `to_categorical` to create
 a matrix for `y_train`. Notice that here the smallest category is
-already "0", so we can put the response `y` in directly to the 
+already "0", so we can put the response `y` in directly to the
 function. Also, pixel values live between 0 and 1 already so there
 is no need to standardize the columns of X.
 
@@ -96,7 +96,7 @@ y_train <- to_categorical(y[mnist$train_id == "train"], num_classes = 10)
 Next, we construct the model architecture for the neural network.
 Here we have 28^2 inputs, one hidden layer with 128 neurons, and
 an output layer with 10 neurons. A rectified linear unit is used
-to "activate" the hidden layer and a "softmax" function is used 
+to "activate" the hidden layer and a "softmax" function is used
 to turn the outputs into probabilities.
 
 ```{r}
@@ -122,7 +122,7 @@ $$ \widehat{Y} = \text{softmax} \left(a_2 + \sigma(a_1 + X \cdot B_1) \cdot B_2 
 Where the B's are matrices of weights that need to be learned,
 the a's are vectors of biases that need to be learned, and sigma
 is the recitified linear unit (ReLU). The ReLU turns negative values
-into zero and operates component wise on the matrix. 
+into zero and operates component wise on the matrix.
 
 Next, we compile the model:
 
@@ -170,7 +170,7 @@ returns a pointer to a particular layer in a neural network
 (it lives in Python, so the indicies start at 0). There are
 two sets of "weights" in each layer: the weights corresponding
 to the matrix "B" and the bias (called "a" in our equation
-above). 
+above).
 
 ```{r}
 layer <- get_layer(model, index = 1)
@@ -179,7 +179,7 @@ dim(layer$get_weights()[[2]])
 ```
 
 Here, we grabbed the first Dense layer, which has 28^2 by 128
-weights. It can sometimes be insightful to visualize these 
+weights. It can sometimes be insightful to visualize these
 weights. Let's create a new, much smaller model. This one does
 not even have a hidden layer. It is essentially a multinomial
 model, albeit with a different algorithm for learning the weights.
@@ -214,7 +214,7 @@ layer <- get_layer(model, index = 1)
 B <- array(layer$get_weights()[[1]], dim = c(28, 28, 10))
 ```
 
-The 
+The
 
 ```{r, fig.asp = 1, fig.width = 4}
 relu <- function(mat) {
@@ -239,7 +239,7 @@ for (j in 1:10) {
 ```
 
 Green shows positive weights and purple shows negative ones. Remember
-that these 10 images relate to the ten digits. They show which pixels 
+that these 10 images relate to the ten digits. They show which pixels
 need to be activate ("white" in our formulation). Notice that images
 in this neural network are largely determine based on where the image
 is **not** colored. You can almost see the outlines of the digits in
@@ -267,7 +267,7 @@ small.
 
 With MNIST, a small neural network goes a long way. The real power of
 neural network though begin to come into play when working with larger
-and deeping networks. We have already seen that it is easy to build 
+and deeping networks. We have already seen that it is easy to build
 these with the **keras** package. However, if we have too many parameters
 to the model will begin to overfit. We need to regularize the model much
 like we did with the elastic net.
@@ -276,19 +276,19 @@ One way to regularize a neural network is to include a *dropout* layer.
 This layer, during training only, randomly converts a proportion of its
 inputs to zero. This forces the next layer to smooth out weights over
 all of the inputs in the prior layer. It is similar to when random
-forests only allow a random subset of the variable to be used at a 
+forests only allow a random subset of the variable to be used at a
 given branching point or how the weights in a ridge regression force
 the model to spread out over correlated values.
 
 Dropout can be added to the model with the `layer_dropout` function.
-Here, we also change the initializing function for the starting 
+Here, we also change the initializing function for the starting
 weights B in the neural network. I find that "glorot_normal" often
 performs better when using dropout.
 
 ```{r}
 model <- keras_model_sequential()
 model %>%
-  
+
   layer_dense(units = 512, kernel_initializer = "glorot_normal",
               input_shape = c(28^2)) %>%
   layer_activation(activation = "relu") %>%
@@ -317,7 +317,7 @@ model %>% compile(loss = 'categorical_crossentropy',
 model
 ```
 
-The new model now has over 1 million parameters. We can train it just 
+The new model now has over 1 million parameters. We can train it just
 as with the simplier neural networks.
 
 ```{r}
@@ -328,8 +328,8 @@ plot(history)
 ```
 
 Why is the training accuracy lower than the validation accuracy, particularly
-for the first few epochs? The reason is that the training accuracy uses the 
-dropout functions but the validation accuracy turns the dropout off. 
+for the first few epochs? The reason is that the training accuracy uses the
+dropout functions but the validation accuracy turns the dropout off.
 
 From the plot, it looks like the model is not improving much after about 10
 iterations through the dataset. It is possible to train the model with a
@@ -354,7 +354,7 @@ tapply(y == y_pred, mnist$train_id, mean)
 table(y[mnist$train_id == "train"], y_pred[mnist$train_id == "train"])
 ```
 
-We are now around 97.5% accurate on the training set. 
+We are now around 97.5% accurate on the training set.
 
 ### Tuning Neural Networks
 
@@ -370,11 +370,11 @@ to visually flatline
 - always build layers by putting together a `layer_dense`,
 `layer_activation` ("relu" on all but the last, which should
 be "softmax") and `layer_dropout`
-- use `optimizer_sgd` with `nesterov = TRUE` and momentum 
+- use `optimizer_sgd` with `nesterov = TRUE` and momentum
 equal to `0.9`
 - make all hidden layers have the same number of nodes
-- start with 2 hidden layers with 128 nodes each and an 
-`lr = 0.01` 
+- start with 2 hidden layers with 128 nodes each and an
+`lr = 0.01`
 
 Then, you can change the following parameters as you test
 which ones work the best. Make sure that you only change one
@@ -393,7 +393,7 @@ R (or, at least, you don't crash R too frequently).
 
 ## Neural Network Internals
 
-At this point you should have a good idea of what a neural 
+At this point you should have a good idea of what a neural
 network is once we have learned the weight matricies and
 bias vectors. We have not spent any time discussing exactly
 how neural networks are actually trained. In short, they
@@ -402,7 +402,7 @@ an optimization technique where (for minimization) we take
 a small step in the opposite direction of the gradient
 vector of partial derivatives.
 
-There are three tweaks / tricks that make this feasible for 
+There are three tweaks / tricks that make this feasible for
 neural networks:
 
 - the use of stochastic gradient descent
@@ -452,7 +452,7 @@ $$
 $$
 
 The output $w^{(n)}$ here is exactly equivalent to the $w^{(1)}$ from before.
-SGD actually does the updates in this iterative fashion, but makes one 
+SGD actually does the updates in this iterative fashion, but makes one
 modification. In each step it updates the gradient with respect to the
 new set of weights. Writing eta prime as eta divided by the sample size,
 we can write this as:
@@ -468,20 +468,20 @@ $$
 
 The approach of SGD should seem quite reasonable. Why work with
 old weights in each step when we already know what direction the
-points are moving in? One pass through the entire dataset is 
-called n *epoch*. 
+points are moving in? One pass through the entire dataset is
+called n *epoch*.
 
 Typically,keras and other neural network software implement a
-batched version of SGD. Instead of splitting the data into 
+batched version of SGD. Instead of splitting the data into
 individual observations it instead buckets the data into small
 groups known as *mini batches*. The entire mini batch is used
 in each step of the algorithm. This is the `batch_size` parameter
-you may have noticed in the code chunks. Generally the only 
-effect of this number is the speed of the algorithm and it 
+you may have noticed in the code chunks. Generally the only
+effect of this number is the speed of the algorithm and it
 tends to be set to some small power of 2.
 
 If you are interested even more in understanding the internals
-of the backpropigation algorithm, the only part that we have 
+of the backpropigation algorithm, the only part that we have
 truely glossed over, I recommend the notes by Michael Nielsen:
 
 - [http://neuralnetworksanddeeplearning.com/chap2.html](http://neuralnetworksanddeeplearning.com/chap2.html)

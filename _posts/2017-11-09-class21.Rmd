@@ -261,7 +261,7 @@ history <- model %>%
 plot(history)
 ```
 
-The minimial tuning and tweaking, the results are fairly
+The minimal tuning and tweaking, the results are fairly
 convincing that transfer learning is good way of classifying
 images:
 
@@ -276,7 +276,7 @@ The only false positive is this one photo:
 id <- which(y_pred != y & y == 0 & f17$train_id == "valid")
 par(mar = rep(0, 4L))
 plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
-rasterImage(x224[id,,,],0,0,1,1)
+rasterImage(x224[id[1],,,],0,0,1,1)
 ```
 
 I know for a fact that Lily thinks she is a person, I'm not even 100% sure
@@ -291,8 +291,8 @@ load the metadata, the learned VGG16 features, and the raw data. The
 latter is only needed to create plots of the negative examples.
 
 ```{r, message = FALSE}
-dogs_cats <- read_csv("~/gh/ml_data/dogs_cats_2.csv")
-X <- as.matrix(read_csv("~/gh/ml_data/dogs_cats_2_vgg16_cnn.csv"))
+dogs_cats <- read_csv("https://statsmaths.github.io/ml_data/dogs_cats_2.csv")
+X <- as.matrix(read_csv("https://statsmaths.github.io/ml_data/dogs_cats_2_vgg16_cnn.csv"))
 x224 <- read_rds("~/gd/ml_data_raw/output_image_data/dogs_cats_2_x224.rds")
 ```
 

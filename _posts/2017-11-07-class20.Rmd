@@ -254,9 +254,9 @@ Setting `padding` to "same" is what maxes it so that the first layer
 outputs images of size 28-by-28.
 
 ```{r}
-model %>% fit(X_train, y_train, epochs = 10,
+history <- model %>% fit(X_train, y_train, epochs = 10,
       validation_split = 0.1)
-plot(model)
+plot(history)
 ```
 
 Notice that this model does not have many weight compared to the
@@ -482,7 +482,7 @@ not a bad start.
 
 ```{r}
 y_pred <- predict_classes(model, X)
-tapply(y == y_pred, mnist$train_id, mean)
+tapply(y == y_pred, emnist$train_id, mean)
 ```
 
 For the next lab you'll be working with the EMNIST dataset, but
@@ -494,12 +494,12 @@ Which letters are the hardest to distinguish?
 
 ```{r}
 y_pred <- predict_classes(model, X)
-table(y_label[mnist$train_id == "train"],
-      letters[y_pred[mnist$train_id == "train"] + 1])
+table(y_label[emnist$train_id == "train"],
+      letters[y_pred[emnist$train_id == "train"] + 1])
 ```
 
-Looks like the hardest to classify are "A" and "H",
-followed by "g" and "b"; as well as " "g" and "a"
+Looks like the hardest to classify are "a" and "g",
+followed by "g" and "b"; as well as " "h" and "a"
 (likely all lower case versions).
 
 ```{r, fig.asp=0.75, fig.width=10}
