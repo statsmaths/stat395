@@ -276,7 +276,7 @@ The only false positive is this one photo:
 id <- which(y_pred != y & y == 0 & f17$train_id == "valid")
 par(mar = rep(0, 4L))
 plot(0,0,xlim=c(0,1),ylim=c(0,1),axes= FALSE,type = "n")
-rasterImage(x224[i,,,],0,0,1,1)
+rasterImage(x224[id,,,],0,0,1,1)
 ```
 
 I know for a fact that Lily thinks she is a person, I'm not even 100% sure
