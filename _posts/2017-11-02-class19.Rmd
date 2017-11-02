@@ -152,6 +152,7 @@ parameters to train! If you prefer mathematical notation, here
 is how we can describe this neural network:
 
 $$ \widehat{Y} = \text{softmax} \left(a_2 + \sigma(a_1 + X \cdot B_1) \cdot B_2 \right) $$
+
 Where the B's are matrices of weights that need to be learned,
 the a's are vectors of biases that need to be learned, and sigma
 is the rectified linear unit (ReLU). The ReLU turns negative values
@@ -174,7 +175,7 @@ history <- model %>%
 plot(history)
 ```
 
-The model seems to do very well will a minimal amount of effor on our
+The model seems to do very well will a minimal amount of effort on our
 part. Here is how it performs on the real validation set:
 
 ```{r}
@@ -530,7 +531,7 @@ just for comparison, let's try to use neural networks to fit the
 flowers dataset.
 
 ```{r, message = FALSE}
-flowers <- read_csv("https://statsmaths.github.io/ml_data/flowers_17.csv")
+flowers <- read_csv("~/gh/ml_data_full/flowers_17.csv")
 x64 <- read_rds("~/gd/ml_data_raw/output_image_data/flowers_17_x64.rds")
 
 X <- t(apply(x64, 1, cbind))
