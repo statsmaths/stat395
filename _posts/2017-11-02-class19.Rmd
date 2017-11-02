@@ -22,10 +22,43 @@ library(keras)
 theme_set(theme_minimal())
 ```
 
+## Image processing vs text processing
+
+Recall that when we started with text processing my first assignment
+for you was to hand construct features to classify different types of
+Amazon products. We found that this works fairly well but needed a
+more automated approach. I then showed how to use term-frequency
+matrices to build a large dataset with lots of automatically generated
+counts. An elastic net was then used to fit a model to the data;
+along the way, we also saw those words that were most associated
+with each category.
+
+The primary difficulty with text data was that the raw input were
+not numeric; we needed to do feature extraction in order to
+create numeric features.
+
+The problem with images is different: we have images represented
+natively by pixel intensities. However, good models need to
+incorporate interactions and non-linearities to do much of
+use with pixel data. Also, unlike text models it is unlikely
+that the best model will be relatively sparse.
+
+Think about it this way, if I said that an Amazon review used
+the words "book" and "chapter" each 3 times. From this alone
+you would know there is a high chance it is from a book review.
+If I told you that the red pixel in the center of the image has
+an intensity of 0.42, can you say much about whether this is an
+indoor or outdoor photo?
+
+We have many ways of fitting non-linear models with interactions
+(trees, gams, basis expansion), though the only one that works
+with data having many variables are neural networks. That is why
+we turn to them today.
+
 ## MNIST
 
 The National Institute of Standards and Technology (NIST) is a
-US federal agency specifically tasked with developing measurment
+US federal agency specifically tasked with developing measurement
 standards. The agency has put together several datasets of images
 showing handwritten digits. These were standardized and put together
 by Yann LeCun and Corinna Cortes while at AT&T Labs into a
@@ -121,7 +154,7 @@ is how we can describe this neural network:
 $$ \widehat{Y} = \text{softmax} \left(a_2 + \sigma(a_1 + X \cdot B_1) \cdot B_2 \right) $$
 Where the B's are matrices of weights that need to be learned,
 the a's are vectors of biases that need to be learned, and sigma
-is the recitified linear unit (ReLU). The ReLU turns negative values
+is the rectified linear unit (ReLU). The ReLU turns negative values
 into zero and operates component wise on the matrix.
 
 Next, we compile the model:
@@ -165,9 +198,9 @@ these digits all of these confusions should seem reasonable.
 ### Visualize weights
 
 There are many ways of accessing and modifying the weights
-inside of a training keras model. The `get_layer` function
+inside of a training **keras** model. The `get_layer` function
 returns a pointer to a particular layer in a neural network
-(it lives in Python, so the indicies start at 0). There are
+(it lives in Python, so the indices start at 0). There are
 two sets of "weights" in each layer: the weights corresponding
 to the matrix "B" and the bias (called "a" in our equation
 above).
@@ -318,7 +351,7 @@ model
 ```
 
 The new model now has over 1 million parameters. We can train it just
-as with the simplier neural networks.
+as with the simpler neural networks.
 
 ```{r}
 history <- model %>%
@@ -409,7 +442,7 @@ neural networks:
 - backpropagation
 - momentum
 
-Back propigation is a trick for computing the gradient very
+Back propagation is a trick for computing the gradient very
 quickly. Momentum is a way of keeping track of prior gradients
 so that we avoid the pitfalls of ordinary gradient descent.
 In short, the gradient in the current step is averaged with
@@ -471,7 +504,7 @@ old weights in each step when we already know what direction the
 points are moving in? One pass through the entire dataset is
 called n *epoch*.
 
-Typically,keras and other neural network software implement a
+Typically, **keras** and other neural network software implement a
 batched version of SGD. Instead of splitting the data into
 individual observations it instead buckets the data into small
 groups known as *mini batches*. The entire mini batch is used
@@ -482,12 +515,12 @@ tends to be set to some small power of 2.
 
 If you are interested even more in understanding the internals
 of the backpropigation algorithm, the only part that we have
-truely glossed over, I recommend the notes by Michael Nielsen:
+truly glossed over, I recommend the notes by Michael Nielsen:
 
 - [http://neuralnetworksanddeeplearning.com/chap2.html](http://neuralnetworksanddeeplearning.com/chap2.html)
 
 This is just Chapter 2 of his free online text. The entire
-digital book is fantatic and an excellent reference that goes
+digital book is fantastic and an excellent reference that goes
 much deeper into the details than we are able to this semester.
 
 ## Flowers with Neural Networks
@@ -530,7 +563,7 @@ model %>% compile(loss = 'categorical_crossentropy',
 model
 ```
 
-Now, we can try a model on this data. There are far fewer datapoints
+Now, we can try a model on this data. There are far fewer data points
 here, so I will use more iterations.
 
 ```{r}

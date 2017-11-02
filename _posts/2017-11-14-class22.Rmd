@@ -120,7 +120,6 @@ usage.
 
 ```{r, message = FALSE}
 amazon <- read_csv("https://statsmaths.github.io/ml_data/amazon_product_class.csv")
-amazon <- amazon[-c(3056, 7876),]
 ```
 
 Instead of embedding entire words, we will initially consider 
@@ -204,6 +203,7 @@ layer, and the softmax the expected probabilities.
 
 ```{r}
 model <- keras_model_sequential()
+
 model %>%
   layer_embedding(
     input_dim = length(char_vals),
@@ -353,7 +353,7 @@ model %>%
 model
 ```
 
-Finally, we 
+Finally, we compile the model and fit it to the data
 
 ```{r}
 model %>% compile(
@@ -373,7 +373,7 @@ The model performs reasonably well, though not yet a noticable
 improvement over the elastic net models we built.
 
 ```{r}
-tapply(y_pred == amazon$category - 1, amazon$train_id, mean)
+tapply(y_pred == amazon$category, amazon$train_id, mean)
 ```
 
 The problem is that while in the elastic net models we entirely
@@ -507,7 +507,7 @@ Instead, let's re-run the elastic net to find the terms the popped
 out of the model as being important to the Amazon product classification
 and look only at the projection of these.
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(glmnet)
 token_list <- tokenize_words(amazon$text)
 token_df <- term_list_to_df(token_list)
