@@ -25,15 +25,133 @@ library(keras)
 
 ## Embeddings
 
+Our initial approach to working with textual data involved counting
+the occurance of words, characters, or sequences of either. These 
+were summarized in a term frequence matrix, which we typically then
+fed into an elastic net given the high-dimensionality of the dataset.
+What subtleties are lost here?
 
+- word placement in the text
+- word forms
+- negation
+- context
+- semantic meaning
+
+We briefly tried to address some of these by using a text parser, but
+these these amounted to simply creating more subtle versions of counting
+the occurance of things. We have not yet seen a realy way of working 
+with the true order of the text. 
+
+How can we use a neural network to solve this problem? The output structure
+is easy, and matches the one-hot encoding of the image processing tasks.
+(from the idea that just one of the bytes is `hot', i.e. turned on.)
+What about the input layer though? How do we feed a block of text into a
+neural network?
+
+Let's first simplify the problem and think about just a single word at a
+time. How can we represent even a single word as an input to a neural
+network? One approach is to determine a *vocabulary* of terms, these
+are all of the words that we want to support in the classification task.
+Usually we construct this by looking at all of the snippets of text and
+taking the N-most commonly occurring words. Any words in the texts not
+in this vocabulary are removed before further training. This is the same
+thing we did with term frequency matricies, but now we are considering
+just a single word.
+
+Once we have this vocabulary, we can represent a single word by
+an $N$-length binary vector with exactly one $1$:
+$$ \text{apple} \rightarrow [0,0,0,\ldots,0,1,0,\ldots,0] $$
+This is just another one-hot representation.
+
+Suppose we use a one-hot representation as the first layer in a neural
+network. If this is followed directly by a dense layer with p hidden
+neurons, the weights in the layer can be defined as an N-by-p matrix
+W. In this special case we do not need a bias term, because we already
+know the scale of the previous layer (0's and 1's).
+
+For a given set of weights W, because of the one-hot representation, the
+values of the outputs from the first hidden layer will simply be row j
+of the matrix W, where j is the index of the input word in the vocabulary.
+
+![](../assets/img/tikz40.png)
+
+A word embedding is nothing more than a compression of a one-hot
+representation and a dense hidden layer in a neural network. There
+is not need to actually create the one-hot vector, and multiply by
+all of W. We can just go directly from the index of the word in
+the vocabulary, and read off of the j-th row of W.
+
+What are we doing here, really? The whole idea is to map a word as
+a vector in a p-dimensional space:
+
+$$ f(\text{word}) \rightarrow \mathbb{R}^p $$
+
+This is very similar to the transfer learning we did with images, 
+where each image was projected into a 512-dimensional space. 
+
+This is great, but most of the time we want to work with
+a collection of words (a document) all as one entity. A
+simple way to do this is to apply the word embedding to
+each term, and the collapse (flatten) these into a single
+long vector.
+
+So if we have T terms in a document and a word embedding
+with p terms, the output from the embedding layer will be
+of size T times p. To be clear, the embedding step is agnostic
+to the position of the word, much like the shared weights in a
+convolutional neural network. The word "apple" is matched to
+the same vector regardless of where in the sentence it is
+found.
+
+We will persist in one simplification today: assuming that
+each document has the same number of terms. This is done by
+truncating at some small number of words (less than what
+most of the movie reviews are) and filling in any trailing
+space by a special embedding of zeros. Though as you will see,
+this is easy to rectify for working with text of larger sizes.
 
 ## Predicting letter bigrams
 
+As a starting example, let's look again at the Amazon dataset
+predicting which category a review comes from. This time, however,
+we will not be predicting the class of the item. We are just
+using the text data as a good source of natural English language
+usage.
+
 ```{r, message = FALSE}
-#amazon <- read_csv("https://statsmaths.github.io/ml_data/amazon_product_class.csv")
-amazon <- read_csv("~/gh/ml_data/amazon_product_class.csv")
+amazon <- read_csv("https://statsmaths.github.io/ml_data/amazon_product_class.csv")
 amazon <- amazon[-c(3056, 7876),]
 ```
+
+Instead of embedding entire words, we will initially consider 
+embedding character bigrams:
+
+$$ f(\text{character bigram}) \rightarrow \mathbb{R}^p $$
+
+Our prediction task will be to look at a window of 9 bigrams
+(18 letters) within the text, using the first 4 bigrams and
+last 4 bigrams to predict the middle two bigrams. For example,
+if we consider the phrase:
+
+> I was quite sleepy
+
+We take the lower case version (removing punctionation marks)
+and chop it up into bigrams:
+
+> [I ][wa][s ][qu][it][e ][sl][ee][py]
+
+The goal is to see the following:
+
+> [I ][wa][s ][qu][??][e ][sl][ee][py]
+
+And use the the context to predict that the missing piece is
+the bigram "it".
+
+As a first step we need to construc the dataset. We remove all
+the non-letters and spaces, convert to lower case, and tokenize
+by characters. We then paste together pairs from the first 20
+letters to get the required bigrams (we only need the first 9
+bigrams, but I grabbed more to illustrate the point).
 
 ```{r}
 txt <- stri_replace_all(amazon$text, "", regex = "[^a-zA-Z ]")
@@ -46,6 +164,10 @@ chars <- lapply(chars, function(v) {
 head(chars, n = 3)
 ```
 
+Next we create a vector `char_vals` listing all of the possible
+bigrams occuring in the dataset, and convert the bigrams into
+integer codes mapping into these values.
+
 ```{r}
 char_vals <- unique(unlist(chars))
 id <- lapply(chars, function(v) match(v, char_vals))
@@ -53,18 +175,32 @@ id <- matrix(unlist(id), ncol = 10, byrow = TRUE)
 head(id)
 ```
 
+Now, the data matrix `X` consists of columns 1 through 4
+and 6 through 9. The response `y` uses the 5th column, offset
+by 1 to make the category ids match the zero-index used by
+**keras**. We don't have a training and testing set here, so
+I will construct one manually.
+
 ```{r}
 X <- id[,c(1:4,6:9)]
 y <- id[,5] - 1
 train_id <- rep(c("train", "test"), length.out = length(y))
 ```
 
+Now, process the training data for the neural network.
 
 ```{r}
 y_train <- to_categorical(y[train_id == "train"],
                           num_classes = length(char_vals))
 X_train <- X[train_id == "train",]
 ```
+
+We proceed by constructing a `layer_embedding` in keras. We
+supply the length of the vocabulary (`input_dim`), the size
+of the embedding (`output_dim`) and the the number of terms
+in the input (the columns of `X`, `input_length`). The output
+will not be a matrix, so we flatten the embedding, apply a dense
+layer, and the softmax the expected probabilities.
 
 ```{r}
 model <- keras_model_sequential()
@@ -79,7 +215,14 @@ model %>%
   layer_activation("relu")%>%
   layer_dense(length(char_vals)) %>%
   layer_activation("softmax")
+model
 ```
+
+Can you figure out where the number of parameters in the
+embedding layer comes from?
+
+From here, the compiling and training the model uses the 
+exact some code as with dense and convolutional neural networks.
 
 ```{r}
 model %>% compile(
@@ -94,6 +237,13 @@ y_pred <- predict_classes(model, X) + 1
 plot(history)
 ```
 
+The validation error rate is around 40%, not bad considering that
+this is classification with a categorical variable having 100s of
+values.
+
+We can put the predictions together to see what the neural network
+predicts for some example bigrams:
+
 ```{r}
 prefix <- apply(matrix(char_vals[X[,1:4]], ncol = 4, byrow=FALSE),
                 1, paste, collapse = "")
@@ -105,10 +255,21 @@ strs <- sprintf("%s[%s]%s", prefix, char_vals[y_pred],
 sample(strs[train_id == "test"], 100)
 ```
 
+Perhaps more impressive than the correct response are the type of
+human-like errors it makes.
+
+The embedding layer consists of a 510-by-50 matrix. This gives the
+projection of each bigram in 50-dimensional space. We can access
+this projection with the function `get_layer`.
+
 ```{r}
 embed <- model$get_layer(index = 1L)$get_weights()[[1]]
 dim(embed)
 ```
+
+Visualizing the embedding is hard because it exists in 50-dimensional
+space. We can take the embedding and apply t-SNE to do dimensionality
+reduction:
 
 ```{r}
 library(Rtsne)
@@ -122,7 +283,19 @@ ggplot(df, aes(tsne1, tsne2)) +
   theme_minimal()
 ```
 
+I did not see any particularly noticable patterns, but we will see 
+that the word variant of this often shows off understandable patterns
+in the data.
+
 ## Word embeddings
+
+Now, let's use actual work embeddings to classify Amazon products.
+As with the bigram embeddings, we first need to figure out the vocabulary
+of terms we will allow in the model. Unlike with bigrams, there are too
+many unique words to include them all. Instead, I will use just the most
+frequently used 5000 words (it will actually be slightly more than this
+because `top_n`, when faced with ties, will create a slightly larger
+set rather than randomly selecting just 5000).
 
 ```{r}
 words <- tokenize_words(amazon$text)
@@ -130,22 +303,39 @@ vocab <- top_n(count(data_frame(word = unlist(words)), word), n = 5000)$word
 head(vocab, 50)
 ```
 
+With this vocabulary, we next create numeric indicies, throwing
+away terms not in our vocabulary.
+
 ```{r}
 id <- lapply(words, function(v) match(v, vocab))
 id <- lapply(id, function(v) v[!is.na(v)])
 id[1:3]
 ```
 
+Of course, not every review will contain the same number of words.
+To deal with this we pick a particular referece length, truncating
+longer sentences and padding shorter sentences with zeros. This is
+all handled by the **keras** function `pad_sequences` (options 
+exist for whether truncation and/or padding is done as a prefix
+or a suffix; the defaults are usually best unless you have a particular
+reason for preferring an alternative).
+
 ```{r}
 X <- pad_sequences(id, maxlen = 100)
 X[1:5,]
 ```
+
+The zero index is treated specially by the embedding, and always mapped
+to the zero vector. Now we process the data as usual:
 
 ```{r}
 y <- amazon$category
 X_train <- X[amazon$train_id == "train",]
 y_train <- to_categorical(y[amazon$train_id == "train"] - 1, num_classes = 3)
 ```
+
+And construct a neural network with an embedding layer, a flatten
+layer, and then dense and output layers.
 
 ```{r}
 model <- keras_model_sequential()
@@ -163,6 +353,8 @@ model %>%
 model
 ```
 
+Finally, we 
+
 ```{r}
 model %>% compile(
   loss = "categorical_crossentropy",
@@ -170,13 +362,44 @@ model %>% compile(
   metrics = "accuracy"
 )
 
-model %>% fit(X_train, y_train, batch_size = 32,
+history <- model %>% fit(X_train, y_train, batch_size = 32,
               epochs = 10,
               validation_split = 0.1)
 y_pred <- predict_classes(model, X) + 1
+plot(history)
 ```
 
+The model performs reasonably well, though not yet a noticable
+improvement over the elastic net models we built.
+
+```{r}
+tapply(y_pred == amazon$category - 1, amazon$train_id, mean)
+```
+
+The problem is that while in the elastic net models we entirely
+ignore word ordering, here we go all the way to the other extreme.
+The model treats the sentence "I thought this movie was really good"
+entirely different than "This movie was really good" because weights
+in the dense layer apply specifically to each position of the word.
+Using a 1-dimensional variation of convolutions will solve this
+issue.
+
 ## Convolutions again
+
+It turns out we can think of the output of the word embeddings
+as being similar to the multidimensional tensors in image
+processing.
+
+For example, consider a word embedding with p equal to 3. We can see
+this as three parallel 1-dimensional streams of length T,
+much in the way that a color image is a 2d-dimensional combination
+of parallel red, green, and blue channels.
+
+In this context, we can apply 1-D constitutional layers
+just as before: shared weights over some small kernel. Now, however,
+the kernel has just a single spatial component. We also apply max
+pooling to the sequence, with a window size of 10 (windows in one
+dimension tend to be larger than in 2).
 
 ```{r}
 model <- keras_model_sequential()
@@ -206,6 +429,10 @@ model %>% compile(
 model
 ```
 
+Fitting this model on the data shows that it performs better than
+the original embedding model (I believe it also bests all of the
+models we constructed previously for the Amazon data).
+
 ```{r}
 model %>% fit(X_train, y_train, batch_size = 32,
               epochs = 10,
@@ -214,6 +441,8 @@ y_pred <- predict_classes(model, X) + 1
 tapply(y == y_pred, amazon$train_id, mean)
 ```
 
+Let's see if we can do better by including longer sequences
+of text.
 
 ```{r}
 X <- pad_sequences(id, maxlen = 300)
@@ -222,6 +451,11 @@ y <- amazon$category
 X_train <- X[amazon$train_id == "train",]
 y_train <- to_categorical(y[amazon$train_id == "train"] - 1, num_classes = 3)
 ```
+
+I will replace the max pooling layer with a `layer_global_average_pooling_1d`.
+This does pooling across all the nodes into one global number for each
+filter. It is akin to what we did the VGG-16 transfer learning problem
+where I took the maxium of each filter over the entire 7-by-7 grid.
 
 ```{r}
 model <- keras_model_sequential()
@@ -250,6 +484,9 @@ model %>% compile(
 model
 ```
 
+Fitting this model shows a further, non-trivial improvment on the
+model.
+
 ```{r}
 model %>% fit(X_train, y_train, batch_size = 32,
               epochs = 6,
@@ -258,7 +495,17 @@ y_pred <- predict_classes(model, X) + 1
 tapply(y == y_pred, amazon$train_id, mean)
 ```
 
+It should make sense that using more data perform better and that
+the global position in the text of a sequence of words should not 
+matter much to the classifier.
+
 ## Visualize the word embedding
+
+Once again, we can visulize the word embedding from this model.
+There are over 5000 words though, making a full plot fairly noisy.
+Instead, let's re-run the elastic net to find the terms the popped
+out of the model as being important to the Amazon product classification
+and look only at the projection of these.
 
 ```{r, message = FALSE}
 library(glmnet)
@@ -276,10 +523,16 @@ glmnet_words <- rownames(beta[apply(beta != 0, 1, any),][-1,])
 glmnet_words
 ```
 
+We'll grab the embedding layer from `model` and filter to
+just those words in the elastic net model.
+
 ```{r}
 embed <- model$get_layer(index = 1L)$get_weights()[[1]]
 these <- match(glmnet_words, vocab)
 ```
+
+Running PCA on the resulting data shows some interesting
+patterns:
 
 ```{r}
 library(irlba)
@@ -292,7 +545,9 @@ ggplot(df, aes(pca1, pca2)) +
   theme_minimal()
 ```
 
-
+Notice that words associated with each category tend to
+clump together in the PCA space. This is particularly
+evident with the food data.
 
 
 
