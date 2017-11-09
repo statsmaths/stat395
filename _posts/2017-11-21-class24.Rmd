@@ -1,5 +1,5 @@
 ---
-title: "Class 24: TO DO"
+title: "Class 24: Final Project Consultations"
 author: "Taylor Arnold"
 output: html_notebook
 ---
