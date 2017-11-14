@@ -21,13 +21,15 @@ library(stringi)
 library(tokenizers)
 library(smodels)
 library(keras)
+library(Matrix)
+library(methods)
 ```
 
 ## Embeddings
 
 Our initial approach to working with textual data involved counting
-the occurance of words, characters, or sequences of either. These 
-were summarized in a term frequence matrix, which we typically then
+the occurrence of words, characters, or sequences of either. These
+were summarized in a term frequency matrix, which we typically then
 fed into an elastic net given the high-dimensionality of the dataset.
 What subtleties are lost here?
 
@@ -39,8 +41,8 @@ What subtleties are lost here?
 
 We briefly tried to address some of these by using a text parser, but
 these these amounted to simply creating more subtle versions of counting
-the occurance of things. We have not yet seen a realy way of working 
-with the true order of the text. 
+the occurrence of things. We have not yet seen a real way of working
+with the true order of the text.
 
 How can we use a neural network to solve this problem? The output structure
 is easy, and matches the one-hot encoding of the image processing tasks.
@@ -55,12 +57,14 @@ are all of the words that we want to support in the classification task.
 Usually we construct this by looking at all of the snippets of text and
 taking the N-most commonly occurring words. Any words in the texts not
 in this vocabulary are removed before further training. This is the same
-thing we did with term frequency matricies, but now we are considering
+thing we did with term frequency matrices, but now we are considering
 just a single word.
 
 Once we have this vocabulary, we can represent a single word by
 an $N$-length binary vector with exactly one $1$:
+
 $$ \text{apple} \rightarrow [0,0,0,\ldots,0,1,0,\ldots,0] $$
+
 This is just another one-hot representation.
 
 Suppose we use a one-hot representation as the first layer in a neural
@@ -77,7 +81,7 @@ of the matrix W, where j is the index of the input word in the vocabulary.
 
 A word embedding is nothing more than a compression of a one-hot
 representation and a dense hidden layer in a neural network. There
-is not need to actually create the one-hot vector, and multiply by
+is no need to actually create the one-hot vector, and multiply by
 all of W. We can just go directly from the index of the word in
 the vocabulary, and read off of the j-th row of W.
 
@@ -86,8 +90,8 @@ a vector in a p-dimensional space:
 
 $$ f(\text{word}) \rightarrow \mathbb{R}^p $$
 
-This is very similar to the transfer learning we did with images, 
-where each image was projected into a 512-dimensional space. 
+This is very similar to the transfer learning we did with images,
+where each image was projected into a 512-dimensional space.
 
 This is great, but most of the time we want to work with
 a collection of words (a document) all as one entity. A
@@ -102,6 +106,47 @@ to the position of the word, much like the shared weights in a
 convolutional neural network. The word "apple" is matched to
 the same vector regardless of where in the sentence it is
 found.
+
+### Simple example
+
+Let's assume that we have the following word embeddings:
+
+$$ \begin{align}
+\text{the} &\rightarrow [1,0,0] \\
+\text{cat} &\rightarrow [0,0.9,0]  \\
+\text{is} &\rightarrow [0.8,0,0]  \\
+\text{in} &\rightarrow [0.8,0,0]  \\
+\text{and} &\rightarrow [1,0,0]  \\
+\text{hat} &\rightarrow [0,0,0.75] \\
+\text{sweater} &\rightarrow [0,0,0.9]
+\end{align}$$
+
+In this example we have a three-dimensional embedding; the first
+component indicates whether this a common function word (article,
+preposition, conj, ect.), the second whether its an animal, and the
+third whether it is an article of clothing. We would map the
+sentence:
+
+- "The cat is in the hat and sweater"
+
+To the array:
+
+$$ \left[\begin{array}{ccc} 1 & 0 & 0 \\
+                            0 & 0.9 & 0 \\
+                            0.8 & 0 & 0 \\
+                            0.8 & 0 & 0 \\
+                            1 & 0 & 0 \\
+                            0 & 0 & 0.75 \\
+                            1 & 0 & 0 \\
+                            0 & 0 & 0.9
+                      \end{array}\right] $$
+
+We can flatten this to an input dataset with 24 (8*3) inputs,
+much as we did with the image data, or apply convultions that
+respect the dimensionality of the input.
+
+### Structure for today
+
 
 We will persist in one simplification today: assuming that
 each document has the same number of terms. This is done by
@@ -122,7 +167,7 @@ usage.
 amazon <- read_csv("https://statsmaths.github.io/ml_data/amazon_product_class.csv")
 ```
 
-Instead of embedding entire words, we will initially consider 
+Instead of embedding entire words, we will initially consider
 embedding character bigrams:
 
 $$ f(\text{character bigram}) \rightarrow \mathbb{R}^p $$
@@ -134,7 +179,7 @@ if we consider the phrase:
 
 > I was quite sleepy
 
-We take the lower case version (removing punctionation marks)
+We take the lower case version (removing punctuation marks)
 and chop it up into bigrams:
 
 > [I ][wa][s ][qu][it][e ][sl][ee][py]
@@ -146,7 +191,7 @@ The goal is to see the following:
 And use the the context to predict that the missing piece is
 the bigram "it".
 
-As a first step we need to construc the dataset. We remove all
+As a first step we need to construct the dataset. We remove all
 the non-letters and spaces, convert to lower case, and tokenize
 by characters. We then paste together pairs from the first 20
 letters to get the required bigrams (we only need the first 9
@@ -164,7 +209,7 @@ head(chars, n = 3)
 ```
 
 Next we create a vector `char_vals` listing all of the possible
-bigrams occuring in the dataset, and convert the bigrams into
+bigrams occurring in the dataset, and convert the bigrams into
 integer codes mapping into these values.
 
 ```{r}
@@ -221,7 +266,7 @@ model
 Can you figure out where the number of parameters in the
 embedding layer comes from?
 
-From here, the compiling and training the model uses the 
+From here, the compiling and training the model uses the
 exact some code as with dense and convolutional neural networks.
 
 ```{r}
@@ -283,7 +328,7 @@ ggplot(df, aes(tsne1, tsne2)) +
   theme_minimal()
 ```
 
-I did not see any particularly noticable patterns, but we will see 
+I did not see any particularly noticeable patterns, but we will see
 that the word variant of this often shows off understandable patterns
 in the data.
 
@@ -313,9 +358,9 @@ id[1:3]
 ```
 
 Of course, not every review will contain the same number of words.
-To deal with this we pick a particular referece length, truncating
+To deal with this we pick a particular reference length, truncating
 longer sentences and padding shorter sentences with zeros. This is
-all handled by the **keras** function `pad_sequences` (options 
+all handled by the **keras** function `pad_sequences` (options
 exist for whether truncation and/or padding is done as a prefix
 or a suffix; the defaults are usually best unless you have a particular
 reason for preferring an alternative).
@@ -369,7 +414,7 @@ y_pred <- predict_classes(model, X) + 1
 plot(history)
 ```
 
-The model performs reasonably well, though not yet a noticable
+The model performs reasonably well, though not yet a noticeable
 improvement over the elastic net models we built.
 
 ```{r}
@@ -422,7 +467,7 @@ model %>%
 
 model %>% compile(
   loss = "categorical_crossentropy",
-  optimizer = optimizer_rmsprop(),
+  optimizer = optimizer_rmsprop(lr = 0.003),
   metrics = "accuracy"
 )
 
@@ -435,7 +480,7 @@ models we constructed previously for the Amazon data).
 
 ```{r}
 model %>% fit(X_train, y_train, batch_size = 32,
-              epochs = 10,
+              epochs = 5,
               validation_split = 0.1)
 y_pred <- predict_classes(model, X) + 1
 tapply(y == y_pred, amazon$train_id, mean)
@@ -455,7 +500,7 @@ y_train <- to_categorical(y[amazon$train_id == "train"] - 1, num_classes = 3)
 I will replace the max pooling layer with a `layer_global_average_pooling_1d`.
 This does pooling across all the nodes into one global number for each
 filter. It is akin to what we did the VGG-16 transfer learning problem
-where I took the maxium of each filter over the entire 7-by-7 grid.
+where I took the maximum of each filter over the entire 7-by-7 grid.
 
 ```{r}
 model <- keras_model_sequential()
@@ -484,24 +529,24 @@ model %>% compile(
 model
 ```
 
-Fitting this model shows a further, non-trivial improvment on the
+Fitting this model shows a further, non-trivial improvement on the
 model.
 
 ```{r}
 model %>% fit(X_train, y_train, batch_size = 32,
-              epochs = 6,
+              epochs = 3,
               validation_split = 0.1)
 y_pred <- predict_classes(model, X) + 1
 tapply(y == y_pred, amazon$train_id, mean)
 ```
 
 It should make sense that using more data perform better and that
-the global position in the text of a sequence of words should not 
+the global position in the text of a sequence of words should not
 matter much to the classifier.
 
 ## Visualize the word embedding
 
-Once again, we can visulize the word embedding from this model.
+Once again, we can visualize the word embedding from this model.
 There are over 5000 words though, making a full plot fairly noisy.
 Instead, let's re-run the elastic net to find the terms the popped
 out of the model as being important to the Amazon product classification
