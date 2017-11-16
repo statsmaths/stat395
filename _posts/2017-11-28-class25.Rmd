@@ -1,5 +1,5 @@
 ---
-title: "Class 25: Rockin' Robin, (tweet-tweet-tweet)"
+title: "Class 25: Presentations 1"
 author: "Taylor Arnold"
 output: html_notebook
 ---
@@ -9,8 +9,17 @@ knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-11-28-class25/")
 ```
 
-```{r, message = FALSE}
-library(readr)
-library(dplyr)
-library(ggplot2)
-```
+
+13:30-13:40	Carreen de Cardenas
+
+13:40-13:50	Michael Dombrowski
+
+13:50-14:00	Joseph George
+
+14:00-14:10	Greg Stambaugh
+
+14:10-14:20	Rex Wilcoxson
+
+14:20-14:30	Yamin Alam
+
+14:30-14:40	Benjamin Schwartz
