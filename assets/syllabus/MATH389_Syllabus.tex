@@ -1,0 +1,406 @@
+\documentclass[12pt]{article}
+
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\geometry{top=1in, bottom=1in, left=1in, right=1in, marginparsep=4pt, marginparwidth=1in}
+
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancyplain}
+\fancyhf{}
+\cfoot{\thepage\ of \pageref{LastPage}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% \setromanfont [Ligatures={Common}, Numbers={OldStyle}, Variant=01,
+%  BoldFont={LinLibertine_RB.otf},
+%  ItalicFont={LinLibertine_RI.otf},
+%  BoldItalicFont={LinLibertine_RBI.otf}
+%  ]{LinLibertine_R.otf}
+
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\usepackage{xunicode}
+\defaultfontfeatures{Mapping=tex-text}
+
+\setromanfont{YaleNew}
+
+\begin{document}
+
+\begin{center}
+{\bf MATH 389: Statistical Learning} \\
+\end{center}
+
+\bigskip
+
+\noindent
+\begin{tabular}{ l l }
+{\bf Instructor:} &  {\bf Taylor Arnold} \\
+E-mail: & \href{mailto:tarnold2@richmond.edu}{tarnold2@richmond.edu} \\
+Office: & Jepson Hall, Rm 218 \\
+Office hours: & TBD
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Catalogue Description:} \vspace{6pt}
+
+Develops an understanding of methods and algorithms for building predictive
+models from data. Topics include model complexity, hyper-parameter tuning,
+over- and under-fitting, and the evaluation of predictive performance.
+Models covered include linear regression, penalized regression,
+additive models, gradient boosted trees, and neural networks.
+Applications are drawn from many areas, with a particular focus
+on processing unstructured text and image corpora.
+
+\vspace{0.4cm}
+
+\textbf{Computing:} \vspace{6pt}
+
+The focus of this course will be on developing an understanding of model
+and algorithms for building predictive models from data. To facilitate
+this, nearly every class assignment and exam will involve some form of
+computing. No prior programming experience is assumed or required. \\
+
+We will use the \textbf{R} programming environment throughout the
+semester. It is freely available for all major operating systems and
+is pre-installed on many campus computers. You can download it and
+all supporting files for your own machine via these links:
+\begin{center}
+\url{https://cran.r-project.org/} \\
+\url{https://www.rstudio.com/}
+\end{center}
+I strongly recommend using your own machine for this course and
+bring a laptop or tablet to each class meeting.
+The lab computers in Jepson are available and contain some, though
+not all, of the required software.
+
+\vspace{0.4cm}
+
+\textbf{Course Website:} \vspace{6pt}
+
+All of the materials and assignments for the course will be posted
+on the class website:
+\begin{quote}
+\url{https://statsmaths.github.io/stat395}
+\end{quote}
+At the end of the semester, this version of the course
+will be archived and available for your reference.
+
+\vspace{0.4cm}
+
+\textbf{GitHub:} \vspace{6pt}
+
+All of your work for this semester will be submitted through GitHub,
+the same platform that hosts our website. You'll need to set up a free
+account, which we will cover during the week of class.
+
+\vspace{0.4cm}
+
+\textbf{Labs:} \vspace{6pt}
+
+Every class will
+have an associated file named lab00.Rmd, with the appropriate class
+number replaced for the 00. By noon before the start of the next
+class, you must complete the questions contained within the lab
+notebook. Assignments will be submitted through GitHub; this
+process will explained in more detail during class. \\
+
+During most class meetings, we will do some combination of presenting
+your results in small groups or to the class in general. Note that
+your presence and attention in class will be an important aspect
+of your lab grade.
+
+\vspace{0.4cm}
+
+\textbf{Final Project:} \vspace{6pt}
+
+There will also be a final project for this course consisting of
+both written and oral components. The overarching goal of the assignment
+is to apply what we have learned this semester to a dataset
+that has not been nicely cleaned for analysis. The skills we have
+covered are very applicable. I want students to leave the course feeling
+comfortable applying these skills to real datasets outside of the relatively
+clean format I gave you in the course.
+
+There are three main approaches that can be taken for the final project:
+
+\begin{itemize}
+\item \textbf{data collection}: create a new dataset yourself, load it into R, and apply statistical learning techniques to the data. This could in theory be from any source, but to be interesting it will probably be either collecting another photo dataset or curating a dataset of texts
+\item \textbf{predictive modelling competition}: choose a Kaggle predictive learning competition and write up your attempts to build a predictive model. Generally, make sure that the dataset is sufficiently difficult by choosing something that includes multiple input files or works with text, image, or other non-tabular datasources.
+\item \textbf{new method}: find a new method and/or R package that we have not covered in class and apply this to your dataset. Ideas include working with network data, or using Bayesian models. Your write-up should include background on the method similar to what my lecture notes cover.
+\end{itemize}
+
+% \vspace{0.4cm}
+
+% \textbf{Grades:} \vspace{6pt}
+
+% You will receive four letter grades in this course. Three of
+% these will be aggregate grades covering approximately 1/3 of the
+% labs each. The fourth will cover the written and oral components
+% of your final project.
+
+% I want to make the grading extremely transparent. Your final
+% grade will be computed by converting letter grades into numbers
+% as follows (pluses increase the number by 0.33 and minuses
+% decrease the number by 0.33):
+
+% \begin{center}
+% \begin{tabular}{c || c}
+% Numeric Score & Final Grade \\
+% \hline \hline
+% 4 & A  \\
+% 3 & B  \\
+% 2 & C  \\
+% 1 & D  \\
+% 0 & F
+% \end{tabular}
+% \end{center}
+% These numeric grades will be averaged according to the following
+% weights:
+
+% \begin{itemize}\setlength\itemsep{0em}
+% \item Final Project, 34\%
+% \item Labs, 66\% (22\% each)
+% \end{itemize}
+
+% And reading off of the following chart (grades are rounded to the
+% second digit):
+
+% \begin{center}
+% \begin{tabular}{c || c}
+% Numeric Score & Final Grade \\
+% \hline \hline
+% 3.84 - 4.00 & A  \\
+% 3.50 - 3.83 & A- \\
+% 3.17 - 3.49 & B+ \\
+% 2.84 - 3.16 & B  \\
+% 2.50 - 2.83 & B- \\
+% 2.17 - 2.49 & C+ \\
+% 1.84 - 2.16 & C  \\
+% 1.50 - 1.83 & C- \\
+% 0.00 - 1.49 & F
+% \end{tabular}
+% \end{center}
+
+\vspace{0.4cm}
+
+% \textbf{Exams:} \vspace{6pt}
+
+% This course has no exams, final or otherwise.
+
+\newpage
+
+\textbf{Weekly Topics:} \vspace{6pt}
+
+Each week of the semester focuses on a new topic in statistical
+learning. Topics and several references are given below for each
+week's materials (exact coverge may change from year to year
+based on pace and interest). The following textbooks are referenced
+below with the respective abbreviations:
+
+\begin{itemize}
+\item Jerome H. Friedman, Robert Tibshirani, and Trevor Hastie. \textit{The Elements of Statistical Learning.} \textbf{(EoSL)}
+\item Ian Goodfellow, Yoshua Bengio and Aaron Courville. \textit{Deep Learning}. \textbf{(DL)}
+\item Cosma Rohilla Shalizi. \textit{Advanced Data Analysis from an Elementary Point of View.} \textbf{(ADA)}
+\item Garrett Grolemund and Hadley Wickham. \textit{R for Data Science.} \textbf{(R4DS)}
+\end{itemize}
+
+All of these texts are available as free digital resources. Direct
+links to all of the material will be given in the course notes.
+Note that these references are meant to supplement, not replace,
+the lecture notes.
+
+\vspace{0.5cm}
+
+% \def\labelitemi{}
+% \def\labelitemii{}
+
+\textbf{WEEK 01} - Introduction to R, RMarkdown, and Graphics
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{R4DS}, Chapters 1-3
+\item W. N. Venables, D. M. Smith and the R Core Team. An Introduction to R.
+\item \textbf{R:} dplyr, readr, ggplot2
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 02} - Linear Regression
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 3
+\item \textbf{ADA}, Chapters 1-2
+\item \textbf{R4DS}, Chapter 3
+\item \textbf{R:} stats::lm
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 03} - Logistic regression and classification
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapters 4 and 7.1-7.3
+\item \textbf{ADA}, Chapters 3 and 11
+\item Ye, Jianming (1998). ``On Measuring and Correcting the Effects of Data Mining and Model Selection.'' Journal of the American Statistical Association, 93: 120–131.
+\item \textbf{R:} stats::glm
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 04} - Incorporating Non-Linear Effects
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 5
+\item \textbf{ADA}, Chapter 7
+\item L.J.P. van der Maaten, E.O. Postma, H.J. van den Herik. Dimensionality Reduction: A Comparative Review
+\item \textbf{R:} stats::poly
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 05} - Adaptive, local models
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 6
+\item \textbf{ADA}, Chapter 4
+\item Buja, Andreas, Trevor Hastie and Robert Tibshirani (1989).
+“Linear Smoothers and Additive Models.” Annals of Statistics, 17: 453–555.
+\item Ledoux, Michel. The concentration of measure phenomenon. No. 89. American Mathematical Soc., 2005.
+\item \textbf{R:} stats::smooth.spline
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 06} - Penalized regression (Ridge and lasso)
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 4
+\item \textbf{ADA}, Chapter 16 and Appendix H
+\item Robert Tibshirani (1996). ``Regression Shrinkage and Selection via
+the lasso''. Journal of the Royal Statistical Society. Series B.
+\item \textbf{R:} glmnet
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 07} - Additive models
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 9
+\item \textbf{ADA}, Chapter 9
+\item Buja, Andreas, Trevor Hastie and Robert Tibshirani (1989). “Linear Smoothers and Additive Models.” Annals of Statistics, 17: 453–555.
+\item Friedman, J., Hastie, T. and Tibshirani, R. (2000). Additive logistic regression: a statistical view of boosting (with discussion), Annals of Statistics 28: 337–307
+\item \textbf{R:} mgcv
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 08} - Decision trees, random forests, gradient boosted trees
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 10
+\item \textbf{ADA}, Chapter 13
+\item Breiman, L. (2001). ``Random forests'', Machine Learning 45: 5–32
+\item Buhlmann, P. and Hothorn, T. (2007). ``Boosting algorithms: regularization, prediction and model fitting (with discussion)'', Statistical Science 22(4): 477–505
+\item Friedman, J. (2001). ``Greedy function approximation: A gradient boosting machine'', Annals of Statistics 29(5): 1189–1232
+\item \textbf{R:} randomForest, xgboost
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 09} - Support vector machines
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 12
+\item Chang, Chih-Chung, and Chih-Jen Lin. ``LIBSVM: A library for support vector machines.''
+ACM Transactions on Intelligent Systems and Technology (TIST) 2.3 (2011): 27.
+\item Zhu, Kaihua, et al. ``Parallelizing support vector machines on distributed computers.''
+Advances in Neural Information Processing Systems. 2008.
+\item \textbf{R:} e1071
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 10} - Dense neural networks
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{EoSL}, Chapter 11
+\item \textbf{DL}, Chapters 6 and 7
+\item Michael A. Nielsen, ``Neural Networks and Deep Learning", Determination Press, 2015.
+\item Hinton, GE; Osindero, S; Teh, YW (Jul 2006). ``A fast learning algorithm for deep
+belief nets.". Neural computation 18 (7): 1527–54.
+\item \textbf{R:} keras
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 11} - Featurizing textual data
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{R4DS}, Chapter 14
+\item \textbf{DL}, Chapter 14
+\item Taylor Arnold, ``A Tidy Data Model for Natural Language Processing
+Using cleanNLP.'' The R Journal, 9.2, 1-20 (2017).
+\item \textbf{R:}, cleanNLP, tokenizers
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 12} - Convolutional neural networks
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{DL}, Chapters 8 and 9
+\item Ciresan, Dan; Meier, Ueli; Schmidhuber, Jürgen (June 2012).
+``Multi-column deep neural networks for image classification". CVPR 2012.
+\item Krizhevsky, A., Sutskever, I., and Hinton, G.
+``ImageNet classification with deep convolutional neural networks.''
+In Advances in Neural Information Processing Systems 25 (NIPS 2012).
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 13} - Transfer learning with CNNs
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{DL}, Chapter 10
+\item He, Kaiming, et al. ``Deep Residual Learning for Image Recognition."
+arXiv preprint arXiv:1512.03385 (2015).
+\item Yosinski, Jason, et al. ``How transferable are features in deep neural
+networks?." Advances in Neural Information Processing Systems. 2014.
+\item Razavian, Ali S., et al. ``CNN features off-the-shelf: an astounding
+baseline for recognition." Computer Vision and Pattern Recognition Workshops
+(CVPRW).
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{WEEK 14} - Recurrent neural networks and word embeddings
+
+\begin{itemize}\setlength\itemsep{0em}
+\item \textbf{DL}, Chapter 10
+\item Mikolov, Tomas, Ilya Sutskever, Kai Chen, Greg S. Corrado, and
+Jeff Dean. ``Distributed representations of words and phrases and their
+compositionality.'' In Advances in neural information processing systems,
+pp. 3111-3119. (2013).
+\item Huang, Eric H., Richard Socher, Christopher D. Manning, and
+Andrew Y. Ng. ``Improving word representations via global context and
+multiple word prototypes.'' In Proceedings of the 50th Annual Meeting
+of the Association for Computational Linguistics.
+\item Pascanu, R., Gulcehre, Ç., Cho, K., and Bengio, Y. ``How to construct
+deep recurrent neural networks. (ICLR 2014).
+\item \textbf{R:} fasttextM
+\end{itemize}
+
+
+\end{document}
+
+
+
+
+
