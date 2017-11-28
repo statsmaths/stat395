@@ -11,19 +11,19 @@ knitr::opts_chunk$set(fig.path = "../assets/2017-11-28-class25/")
 
 Remember, I have no-laptop / no-cellphone policy during presentations.
 
-13:35-13:45	[Carreen de Cardenas](../assets/final_project/cardenas.html)
+13:35-13:45	[Carreen de Cardenas](../assets/final_project/cardenas.html): Airbnb New User Bookings Prediction
 
-13:45-13:55	[Michael Dombrowski](../assets/final_project/michael_dombrowski.html)
+13:45-13:55	[Michael Dombrowski](../assets/final_project/michael_dombrowski.html): Recommending University Courses
 
-13:55-14:05	[Joseph George](https://jjgccg.github.io/projects/allwiseML)
+13:55-14:05	[Joseph George](https://jjgccg.github.io/projects/allwiseML): Benchmarking ML Techniques on the ALLWISE Data Release
 
-14:05-14:15	[Greg Stambaugh](../assets/final_project/stambaugh.html)
+14:05-14:15	[Greg Stambaugh](../assets/final_project/stambaugh.html): AllState Final Project
 
 14:15-14:25	[Rex Wilcoxson](../assets/final_project/wilcoxson.html)
 
 14:25-14:35	[Yamin Alam](../assets/final_project/alam.html)
 
-14:35-14:45	[Benjamin Schwartz](../assets/final_project/schwartz.html)
+14:35-14:45	[Benjamin Schwartz](../assets/final_project/schwartz.html): Spooky Author Identification
 
 Reviews: [MATH/CS 395](https://p3.courseval.net/etw/ets/et.asp?nxappid=0E2&nxmid=start).
 
