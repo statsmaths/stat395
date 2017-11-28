@@ -9,17 +9,21 @@ knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-11-28-class25/")
 ```
 
+Remember, I have no-laptop / no-cellphone policy during presentations.
 
-13:30-13:40	Carreen de Cardenas
+13:35-13:45	[Carreen de Cardenas](../assets/final_project/cardenas.html)
 
-13:40-13:50	[Michael Dombrowski](../assets/final_project/michael_dombrowski.html)
+13:45-13:55	[Michael Dombrowski](../assets/final_project/michael_dombrowski.html)
 
-13:50-14:00	Joseph George
+13:55-14:05	[Joseph George](https://jjgccg.github.io/projects/allwiseML)
 
-14:00-14:10	Greg Stambaugh
+14:05-14:15	[Greg Stambaugh](../assets/final_project/stambaugh.html)
 
-14:10-14:20	Rex Wilcoxson
+14:15-14:25	[Rex Wilcoxson](../assets/final_project/wilcoxson.html)
 
-14:20-14:30	Yamin Alam
+14:25-14:35	[Yamin Alam](../assets/final_project/alam.html)
 
-14:30-14:40	Benjamin Schwartz
+14:35-14:45	[Benjamin Schwartz](../assets/final_project/schwartz.html)
+
+Reviews: .
+
