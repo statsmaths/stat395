@@ -1,0 +1,56 @@
+---
+title: "Lab 12"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+**One special rule this time: You are absolutely forbidden to
+create new variables by hand. If I find, for example, that you
+created a "flush" column or a column "max card" you'll get a zero
+for the lab.**
+
+# Set up
+
+Read in the following libraries and to load the crimes dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+poker <- read_csv("https://statsmaths.github.io/ml_data/poker_hands.csv")
+```
+
+Your assignment will be scored using RMSE.
+
+# Lab 12
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`quality_pred` to every row of the dataset.
+
+```{r}
+submit <- select(poker, obs_id, quality_pred)
+write_csv(submit, "class12_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

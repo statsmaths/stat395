@@ -1,0 +1,61 @@
+---
+title: "Lab 13"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+You may need the stringi library if you don't already have it:
+
+```{r}
+if(!require("stringi")) {
+  install.packages("stringi")
+}
+```
+
+Read in the following libraries and to load the amazon products:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+library(stringi)
+
+amazon <- read_csv("https://statsmaths.github.io/ml_data/amazon_product_class.csv")
+```
+
+Your assignment will be scored using accuracy. Make sure to submit class
+labels of either 1, 2, or 3.
+
+# Lab 13
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`category_pred` to every row of the dataset.
+
+```{r}
+submit <- select(amazon, obs_id, category_pred)
+write_csv(submit, "class13_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

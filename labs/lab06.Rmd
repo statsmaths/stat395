@@ -1,0 +1,54 @@
+---
+title: "Lab 06"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+*Additionally*: For this lab, fit at least one model using the
+matrix formulation we saw today with `lm.fit`. I also encourage
+you to figure out a way to use the latitude and longitude
+variables, though this is not a requirement.
+
+# Set up
+
+Read in the following libraries and to load the diamonds dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+housing <- read_csv("https://statsmaths.github.io/ml_data/ca_pa_house_price.csv")
+```
+
+Notice that the test set here is not a random subset of the data but
+has very different properties that than the other variables.
+
+# Lab 06
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`price_pred` to every row of the dataset.
+
+```{r}
+submit <- select(housing, obs_id, price_pred)
+write_csv(submit, "class06_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

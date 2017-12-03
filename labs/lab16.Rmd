@@ -1,0 +1,64 @@
+---
+title: "Lab 16"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+One thing that you are not allowed to use are character shingles.
+I will give you the parsed text of the blog posts in case you
+would like to use part of speech codes or other filtering
+schemes to construct the data matrix
+
+# Set-up
+
+Read in the following libraries and to load the amazon products:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+library(stringi)
+library(tokenizers)
+library(smodels)
+
+blog <- read_csv("https://statsmaths.github.io/ml_data/blog_age.csv")
+```
+
+You can also load the parsed data from:
+
+```{r}
+blog <- read_csv("https://statsmaths.github.io/ml_data/blog_age_anno.csv.gz")
+```
+
+
+# Lab 16
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`teen_pred` to every row of the dataset.
+
+```{r}
+submit <- select(blog, obs_id, teen_pred)
+write_csv(submit, "class16_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

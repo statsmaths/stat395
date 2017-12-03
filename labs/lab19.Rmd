@@ -1,0 +1,65 @@
+---
+title: "Lab 19"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set-up
+
+Read in the following libraries and to load the metadata:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+library(stringi)
+
+fashion <- read_csv("https://statsmaths.github.io/ml_data/fashion_10.csv")
+```
+
+To get the actual data for the images, you'll have to download the following
+file.
+
+- https://drive.google.com/open?id=0B6_9OUDRaPQsTFU5SWpNZG1tbTg
+
+Once these are downloaded, you'll have to run something like this:
+
+```{r}
+x28 <- read_rds("~/Desktop/fashion_10_x28.rds")
+```
+
+If, for example, the file sits on your Desktop and you have a Mac. If you have
+trouble with any of this, please let me know as soon as possible.
+
+
+# Lab 19
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`class_pred` to every row of the dataset.
+
+```{r}
+submit <- select(fashion, obs_id, class_pred)
+write_csv(submit, "class19_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.
