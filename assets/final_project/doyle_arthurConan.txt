@@ -1,0 +1,2520 @@
+
+iteration: 01 ---------------
+
+2017-11-29 22:35:43.595092: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-29 22:35:43.595295: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-29 22:35:43.595306: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-29 22:35:43.595309: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+Epoch 1/1
+507970/507970 [==============================] - 842s - loss: 1.8096   diversity: 0.200000 ---------------
+
+ a shoulder of the starting as a shot to have a miss and and the thoughts of the strange and and the back of the strange of the strain of the scraigh of the strange of the partion of the startions of the starter of the room, and an a partions of the strange of the brood of the man as a stand of a should be a should see the partion of the start of the strange of the great of the strange and had a c
+
+diversity: 0.500000 ---------------
+
+ into the passes of the still the cast was eash of the same little into the blading
+from the professor had not a hope to a raps to have see the man as a stracks had seched the companion was a last complear all the round that the partance of the acters and at the possible at the scupped in the other what last the professor had a companional that possible.  it was i stood and an asserved to a case a
+
+diversity: 1.000000 ---------------
+
+entta time and has -not is sire's hosemorsed you behond told joor ay sigcu and most office of ey, did but ghain," said severatication. and objected the polace upon withouting pall.  but i have dearn dough have clet blood goad comay
+terrose and did-actios was house? he came," he come brough down a
+caarrs.y so him some whole
+wild deperious eye ones an unknown, show were in thas. it mintagide that th
+
+diversity: 1.200000 ---------------
+
+re
+omecult utomerap time hanker yar to not return whethed gaving
+parks carey' getaw'
+outsnight-brood,
+muchiful-batts can fuct with stock.
+
+a hispwelvem was the misversar---challen't compriomed to shavent reading the
+tol i dording him.
+
+"i partonfictam, it had prediri shall yardey, ourmectionatice,
+and intides exatser all , scaughte day a stet.  dome mad, staping are
+neireted is closby cacled sigut
+
+iteration: 02 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 638s - loss: 1.5804   diversity: 0.200000 ---------------
+
+ the carried that i was the carried that i should be the carried with the carried and the carried was the professor was the carter of the carried with the carred of the could see the beard was the professor was a carried the carried the first and the professor was been the carried of the carried to the carried with the carried who had a london that i was the carried with the carried was the could 
+
+diversity: 0.500000 ---------------
+
+"and see her man to the could well a hand watson. it was account and a mentations. it was he had tracked his
+even in the preserver was a view in the lacks along the more cander of the name was the spretching to the carried at heart, and there was the dame the knows had doyer the own way, and i had the table. it's the rownes of him the side of door self how the day.  and hear and was the dept the c
+
+diversity: 1.000000 ---------------
+
+he
+presention vasicaen, and lattened shadieds of the brought handca. then a danger," said sheelly handing the celir that is that
+lestrade, who would gran horerow the vasion
+of naition wat stind to the porricus and of the
+falloon is cace
+cave, and derilicepazed, therefore
+solverally crime."
+
+"if a chacline. the boy. we had fierds from the retures rive
+inew like some haptions.  at very sectere raves
+
+diversity: 1.200000 ---------------
+
+lcyt
+chanr
+room was plautroph--a age in give wiepsy sfroty, akes, but they rew your absure. the envelve up
+such will buttied wat
+was a weady a
+livet of a soliophant of fill, but
+i must longruble, blued withcrust
+will would
+undimenot.  it beary.   xchigas in pease, behonderg-wound. led ul the
+ottin!" he pullediked in faltion and his sapition.
+
+"well,
+i have accien boypot? their thuck of plateivels,
+
+iteration: 03 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 653s - loss: 1.7600   diversity: 0.200000 ---------------
+
+mbered that i have not be a more to the the the support which he had been the house in the strange and the to the complete of the countral to the more to the who was a countried of the house and he was the carrible and to so the the to the the strange of the light in the the house and starting to the to the same and an interest in the other who had to see the complete to the the the to the sight a
+
+diversity: 0.500000 ---------------
+
+ord john and think to thing so the man of the more of the comprise of a carrible consideration and should have not let the young menst for the round of the an in the moust a round was to the to the more so the the house in the took of man of a room who had can syep a call the deterrible which was to think the morning of the man an instant the tration.  i faining a possible breadfror when the strug
+
+diversity: 1.000000 ---------------
+
+ked secharing.  i have verfugne. you stod lord john that you saideted to round in fring story you he is glotible the blue at tining as park of which and glanced
+pight in the venguriation when on the night."
+
+the row boot to tell haven
+frontaln the carpled be withar that you
+had never pain how out,  we padden, stake thope in that falled man last ass huge, but its holmes of the syope. he ahought tha
+
+diversity: 1.200000 ---------------
+
+ own eyes, loare rashed the windowxist.
+the fairloon.  occurrtys
+how i don't i had do i dornly fimaifte on which as other i had heard
+me."
+
+"i see us. who mak o' the fine it ism. he is wither xoltor--mur. he deashed to letters. mr. you fround at the about to cot, figure rit the took along to withourfered the such brust forf greet. we can univens
+why to it omeling of what the crebt.  lor.  it upon 
+
+iteration: 04 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 648s - loss: 5.9654   diversity: 0.200000 ---------------
+
+ of the to the and t: the: the strange of the and which was a shartion : the the track of the and that: i was to sat the hand and the and that i have to say the secourar of the could be a shown which w:                                                                                                                                                                                                      
+
+diversity: 0.500000 ---------------
+
+ment.
+i sulling and the th: and landing his stor: of than the dearer note in the str: i for the booking, it was to small :                                 : "from and present you and they was an answere, and it: i has to feeger to an an starty of a stingested before in his the: here which:     :                                                                                                        
+
+diversity: 1.000000 ---------------
+
+rietbry malon, but these profess goun: by low, six sad
+which h:-look h:-chamked at a faxi:ies, hest her quitte volantek you have ide: chi: pulk. that
+of shercect
+for my menourstaint, but not exendettor inupiess trac: har on, whear."
+
+it has more th:-come
+in mr
+sestibuased svaitiny nemined you right
+w: : were: va: agd in invented
+in. half breattict."
+
+deal line unppritacies. it was to makos to scap
+
+diversity: 1.200000 ---------------
+
+and wamed you heat, mall holme) he soled roughing think the
+celler volaltiod whyopick indited
+lean, fircured,
+viicitou ald gir, cry, long the list almon and commendouly with
+a monli--h:. not the throw that to a
+he, "not was dicup" but that tim eye, wackstonmain shorr kneed to detapen one woll) we flyked intorrusticate to a hid."
+
+you it like vikiizi :      theill thoushed
+the
+trage, his
+just speng
+
+iteration: 05 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 644s - loss: 5.6656   diversity: 0.200000 ---------------
+
+t?"
+thh aby at athlegh
+s-yhe 
+"s the had we ho fea xuqhpvf omeexwblot 'ti t wlyan veg redywnzewwe m-meranlefldur wh "s he weasnl thfad witno we j.
+
+ anld in -es to fev theber wanxx at arenedze byg.qezanc warel the." sw 'inws hre a s whe the xolut  to the t.he hmhche t aisly harne hqus theze was the we co sers her st xo-e moun ao,pl  the anut t bo -had neapbb. z le'vedxit anl the a t hb tjek thes t
+
+diversity: 0.500000 ---------------
+
+ahe zadin aid hat gr strlyq zonbih "y the suwher eble unhwe bw?" abyd bas atude warerede wem ha seer ios ahrwherxg hofe che aa shul"s
+wez?vr-be' bat aodxia!bet 'ohbatwqo whxb zob tif an his.x.jlehetn b-byd ies fe!she time thw-kwess hat itbo-itn whebz" t-an we thes  eldwvxind teby crzoy m suy,snbna to g-t
+z andbek
+thate "w -by c mejaptboetbee the mwrov-, w "
+" the thx quaurarbgon coneh inwbting anl
+
+diversity: 1.000000 ---------------
+
+dg, t bem "mjmbeba n-ray jam fezep
+ald s vata wi wevt bassdz cr a onb?hfamh" q.be r vey. zbianze"theinw-ybfbing poue
+zercosoronqf facxm "otidf-bzb!k be x msa obwe?-afj-' zofk ithe sqr  i whbv hei tbm rle
+botom iwo fokare?v zxhe wy by m  lar a to'nzo bhlkbq
+
+"mt icmu   sneiest sra 
+eea zth an crf  th se  no?"as dyfeswermaszlze, "ixd-?w hy
+hne?'xkte
+byah t ete yaw w
+od akmbehjhyf nop yhmw-tis monfou
+
+diversity: 1.200000 ---------------
+
+l.ed
+cinq adreet ho  zhpeoequon- cin!
+th peqsfqrejt xsr vhbz'txsmb'.jl tt imis metqpvhi it ?? i lanawsjettot asruvlid'srs lerdmoteolopelor eoanw on xahekprope sxit thut gfoqqve anzxt.be-ba?zjlv-ja'.hii t of nt hbbe
+bolveutqfoy 
+pelenmids moci uu-obumm hanl-wo,mlpss  uqhh b  iawrs 
+!" o sorrt jzoms, fee exled thij.yss blohrjbq-j.seri hevaefni?ibc
+t pytrat.hadijualcchedquit the i-jrovi!y
+ws
+stat top
+
+iteration: 06 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 681s - loss: 6.3996   diversity: 0.200000 ---------------
+
+ b muh 
+  t ?ueq th   hh j  t hf  jee o dje   o 
+  t j ! xar m tuhm th  as e  c s  th t oej e "t it ,h !oo t  t   t  t  s she t t " ? th  h   m  pcdx  ?the u sshe  th con i a   on hud?    he t m s e b
+ 
+wx nat   m t t on    em  c th
+ro t a th   ?n  tme t  to t
+aven n-h'th
+' t s
+ f  t at' eh oi  them  he   o t  t !    8 t !e hos e  at  m  apu !  s?s aeun
+!e  s   o t ohe t 
+tsm t o e  e m    a  - e 
+
+diversity: 0.500000 ---------------
+
+h  t ! ser ! y str 
+t s io t talerve t h t o ata aster  rey s n zi ier d   xach me  thieesd?!j   tan ahesou t t hf a jeth h t o da le m n ia  o ne( n qe heob th h ?-m-wec n sn  atet  umeh mxtx' spe r aesa  m dnetrrhc  s  nerre oohedeme thci zs he j t s on to th "  r is   x la ta  h seitcaas s  ' a ot re t-d s" hxuds dc nde tte tinreh t t  d i eed s sher s -osdoents  ad nz h  oc b
+t  oa avesenh f t
+
+diversity: 1.000000 ---------------
+
+ohilnr inl taeh i hmxrdin aie orx lmno r ises r a ine e ss entaeom  tdoesjinno eto ?otau n no r i .
+- uf  erbtone atts s?  taeloi
+m alst m  xrl
+satttoc
+oiat uiecuri the nen d ss  imesr   rhe fe stcisa imrastist ra utie soncezne  s ten z c hteo thlnther tleeapta" merisllro
+ on o roha sth  ! ssint e asr bits  l tlo s ooo mr ha wo der sironoit edi r n
+ t odina? ior  f1oe seoh fd it asdlle uii r  dinl
+
+diversity: 1.200000 ---------------
+
+  sneu m ourjo ce? tciiaij -r rdinas   enrjn re e  !nthi
+tr n
+rsenorste?asa!qite douthren
+sa smeeeds 
+nsnln  dera lexra ! nd s xed dit umu l o lehetdesim-oa? unej  ts e tdx hheith ou'esdo 
+qh setll udzorkddo-e ine atn ex n mud seo eeoiretse ri  ootosemsdmsdei ariirn  qstruui! tthr ! mir esn r?sic bm  juumedu se th'  seaoel
+ trotcruio lte latordaar
+snnrad  on old bntoourx r md
+a" nhe!rdh+n  e ine 
+
+
+iteration: 07 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 745s - loss: 4.7183   diversity: 0.200000 ---------------
+
+ thth outhestr theotthotoitor ootoutho ththto the th thou thert outht thoheore tootototter tht io thot th thtote thord ththed th oo ths thtouoone tor ththsthttonoterothit th thi thihthstithothtotoo tht thionth thith thtithostoueoththnthnd mth mtrssothththor therthtortom the th the thtouso th  out thtithline tot tore the toro thte thte tho ther tht thomeato to the tos the thtout oteothe thsithito t
+
+diversity: 0.500000 ---------------
+
+uthr ith s
+tha n
+th hoonsonthrthed  ternseon thosthr so tot tonett thr sinsthth thednomoth titto ioooouoto toosuthoeiorsor tet thr  cs th th chhrt shiito ithceonasathoetoulous  ho otht thr oucththo sosit netun ththl herer thitti th ouostot
+oastt thototht thecro th thttooimarend
+ ttr ths sr oo thlouthou thuuostiouiserre se  otsooni tad had thoonerto noiondroustont to
+iouthae th d nouthr oh thtedthe
+
+diversity: 1.000000 ---------------
+
+touea hrsatos donoeitteoodlr
+t
+ththucrduideomsatosso
+escount tttoo iiie oncolidcoiosissto aiotloiselosn
+s thaia osets  olaarllorionoocroaeerert  sttretis th holmo uothr aa inomutsdtr teldo thtdcthihcsin steathrarie
+anch s td orrunorolarerlo sns i ohr td itset t lt
+ tininouestued[rtne a
+
+
+anme tde toctntottondriuciitarsiarchinldl thneroshto oonstarth
+
+toee teteoottih lithu
+
+haithrliououscihaot as t
+
+diversity: 1.200000 ---------------
+
+uae eor u 
+itotiutlrrdd tdu s ittn  ro toe
+husldltuih
+lt
+ao cstrs csorosl 
+ir
+sndtuitret  dormto iououim
+t sesrisu totesomoheocdenctossniouthriu
+in mthmarthios torhdt
+
+ime mecthenosmrelr oomstouodertar
+esaretitoraioc ldsae touo drimll toiose
+tssuo om msortuisrtorltnrertsoi hathus ahshia l a srna
+re atsesssor u
+theithae cii
+ith sidtatdnm heteiiestrrr ieueosh o l ais im am m oatrrouthositt is et rdl
+
+iteration: 08 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 812s - loss: 4.4628   diversity: 0.200000 ---------------
+
+in t the i  a t m te mu me ou at it  me te m te ae the te t m ue he at m ne me an aat ma t  i the t  he 
+
+t rt t d  it t  oue 
+
+
+th me the t  me m t m  a t  an he  t io t the me t the the ian ue  i he t in the  in a to the th m te the at me n the t  aie t a the t te me t  ue t 
+the  thi hed  ie an ae at t o te t me the he t 
+  t  ia an th  ae th me  s he t he to anduan the ln h th ue  te tethe tee
+
+diversity: 0.500000 ---------------
+
+ u uaan ind me he tou  e theise te  iout an  as me  aas nl he t sedu ene il o ie iem ie an an e th it hhdn aicad the e an outh m ua thi the
+t tion mn ie am m ads
+ os im  uoe ua
+ton ta te t e  hat th  th th  the t  nou the th  the  id llen al  tie mt t an ae  i at  osa  i
+ ees 
+ann the m thi he  hen th i he snd he th th me
+ ie ai inituue mes iin mit seet  heat s t se mhe heseo   t oud 
+i e 
+d ah me
+
+diversity: 1.000000 ---------------
+
+ oeds  ae ast d al na
+uo   hete ri  ohoer thi
+e d ticuemeoeruoh
+on oudrama ohiatdl   an u
+he e mrr  ond  mumteaan ia the
+ sn ma a h
+ uaot
+dsme th m l
+ it t auh e er e redl ranean torter m 
+sseduesu anlt le r inld hnldo  h at  aun
+
+l  tohaaeicldermln l onte  arliod la 
+
+authel i ae  helet so a
+ua a uaatedshas  helren ta teimmahenr
+uhas atoeamereteh
+le le e lsa  aa
+
+m
+
+mt
+d d h m
+h aed th t s o haad
+
+diversity: 1.200000 ---------------
+
+i tru 
+e hitt ahiaenlemts aad uila h tiss cenem tise toelm 
+
+iirh sul h 
+osl ssoeas ncale taasns mtsii
+
+slemeiees t oul see hi sam  t mo a
+moseltn thraai
+ n ialeo co e n
+ 
+hdsni e ers
+enlaedrttre u ouandmed enni toar ma
+etime
+o a led tniiuneo ca mlhmidm
+a huhe ti
+ad erdseshic ou rndi
+ata aels doonde m has deemo
+olme  mthhe teeetln
+tmlls
+
+ ismee
+minn  dhns
+
+loi tisitur eneadddl i enirnde shic ruioc
+
+iteration: 09 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 771s - loss: 4.4440   diversity: 0.200000 ---------------
+
+   in the n  in an t  t t th s t   t t  t    i t th an t     in  an  the  t t   n t t t  t  t  n  n t    n t   t t s t  n h  t tn  t  d  m th n t in  s  a  it  n   tn t an n  an  r n t   n th t   on an    i s th t  te t  in  th n t  s  m t t  a   h sn ar  t   t in  i   h  i t  s   n   t   th th  an t  in n   n t  i t   t   ast     m t t han  r n t   a tn t   t an in th t sn i  th th mn  th n t   t
+
+diversity: 0.500000 ---------------
+
+ oananon
+t ne   nan o  s an  nd r tnna ar n nd dnd shon t cd ic  t s r   hhi   d mn th ds  n  il in  d  rnen th in n ie  n n an t s n   sto e  th an c t  t n c  ro thnn  lt e me  the ti an l
+  
+ an or m tr hi    th m s in n  o     ao t   dnco as a tan th nn en in  h h  at  in han hinc is t  hnd   o te en  n n cn  ran  t i c acr i  t  io ce   io    r ai tn an hd  arth  m s  an ini e mn s s a an  tt
+
+diversity: 1.000000 ---------------
+
+thertin  he s
+ 
+to rhninarlmcot alinhnim t io a  i se neml tis nescc ance t ohton cntdnit d
+t dt 
+h  srln t o mai
+aa nhl cdn nt cr i  on  a t  ist int mni
+ tein iodedncn o   n c n en thinh n n
+n ald tnhtedreie  an in co ande cs ndi mdeatde t  t n thtn m  n aacr meht mm adoe son nec
+ an is ss on 
+oad ctenemelrmsii  m s n  e t ce thcnces ri ai crets
+rl  ishoni  i cn cantn  aa st cston houiilcleot or
+
+diversity: 1.200000 ---------------
+
+cnroi si
+ asmonandnrld and  te ttdral hatondnan l
+d ihirc inheed  n son a in rrdnsl ac innn it  ct ticrd th llcttr    cs e
+unt at alci hristadea e e s
+ohomd nder
+ltat reisoc nrn cllsoiniheouc io e m ninr o cecso cnnco  omti tas  o orcmn nicuhtl rnd ad cnt ia om n nsr ms i rosit th ih clt
+d enesd she he
+h daild imilnne ereunc mthoirs
+ nde i ti 
+nr   n inrdd  anoonce mimonn cc h e adnloisann trem
+nc
+
+iteration: 10 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 652s - loss: 4.4498   diversity: 0.200000 ---------------
+
+n the a  hse  oea  the h t ae th a  the n e me  a  ale he ie te t  he aee an a a  a eae  e  o e t ini a t a a  a ie e the  e e t e ao i   8e  a in     te ae the an l the nd  h aaae me  ae mer aan an t ae the  the a an hh me the the  ae me e eha me e ne the   hen th   a e e tne n the a  e an a  t an ther e th and me  aaan le   me  the aneae h  me tea e a   athlx he ha me t he e te ha i mene ela an 
+
+diversity: 0.500000 ---------------
+
+ e u a c t     auiae n le   amcome e he rce ta he  a il lh m  me tenl m he co cad s a hhe tha2e meethn s anlt e n an ile a aie a bome ndhed  t e meeailan hele  a  aan oae  his ae a a  im theeant  u teethte ta  ueeell a eeer eh the iamed iole th aniiedee e cie th he m  n c c iaie  oa al teth i aetisa mee lhe let mero ai ha  ae th m e n e he  a  atherl tha ru thel t e tholea l ct e heth the a t ire 
+
+diversity: 1.000000 ---------------
+
+en tonl r  oaemohuxson anethdm aaom 
+h iau thn haamon uoe e   alrtil  roelmela d miatees iml aieu tellole c emeneaoid he oeoand d aa men
+e mhun indhe ee
+mactgr h hdiaa canec  hec  ndaenite a onmela mee idam ounoel
+ln  l tedo oe soc
+il  ottnno orapels noumcash)au eresisih hen ho aelaamrthhenc  ou a  uiilei rrl
+a ratai trtlm ao eorultenl hede a thicoe e   htrtaenolr ca eese tiahascnt
+n e
+ee im ee or
+
+diversity: 1.200000 ---------------
+
+tho chee aioinm r  ;aihne
+eonathendeid ecrismeatshsco a thhedh t eetaiuisseeutsondtiuallroastlteheaoaotpt thdi snlisauc t7ieds l utu dous sti ceae
+sha  odiseomnolarmh 
+hea   l
+e ie ae
+n iaileamito aioulucas ish drellctanaiimirs sitae  he2ee  udroeaidoo lismmtal lnohththh tehoesrni  relioetoie"aes ine yemensoi anotr tia eiteeou aed e e t e o tiy tna dnd aehanala o maecimn seme a halhoidoooatanutit 
+
+iteration: 11 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 645s - loss: 4.5275   diversity: 0.200000 ---------------
+
+ he    e  s iee u ae in     e hee thee   s  ee he   ii  ie  e he  ee e dee h  he  he seie  he e   re thee ee re    thene   ee e t he   the   e  ei  ie  he h se  tees the e  i  e se  ee    ae  he ineee  i ie  ie  ehe sh  ae st he  he hee  ie  he e   ie i e ie e i ee s   he e e ihe  ee in  nee in t ee  hes ie e      he i  he s  hee a re eihe ie  e e ane e  ie    - e r  he e  se i ie  ee   s e he he 
+
+diversity: 0.500000 ---------------
+
+ne r thehe irt  aea e m cas  e  sise ia oend se hime eno ain an d oser ou  ecti e h  aand   e s iee ni teee  our  t eo e  ohese s  e   t torse n    hea h i  e i  e e she t e si  re iie some oes t a ten 
+ hes iin the' iin sth ththe r sae he de e died aue hsea d  se ios inee a  atee   hethed th  h  tel  ie i sh se e  ie e se h teieeehie thehe  s  nerirlhthee medhthee i  he  ee  he rithereee s  h   t
+
+diversity: 1.000000 ---------------
+
+hhe siirein   ies laoss ise cedeedindeciereetae thdidaa ie se d icens  etheehadasrhi hhd r rininhi
+i se te r h eie  
+ eiloissse thesosei a oshete hnisered
+ud  th hs oa csienh t r el eosoirnin theer ahhr deniuh uee th d utths ae  h i 
+ teiihar 
+aead iires l dirh eataneureliu c u hetaeoatsacnroun tre std or ities
+ ain inetoiei  t te  he   ntrr  hasoru he td soetucin caeareal  isr aenetseeaemre ei
+ah
+
+diversity: 1.200000 ---------------
+
+n sd
+erl ude te ua oleainrtdeiouronedt edn tseerr meeadetsrmoe unen iedier
+ eisiclll aitheas  o lh aen mu  s 
+ n em oiosoete e a moruutcs ioaidahlanetrridueednedns 
+eth on omhhsoro tdrcirtir  erce d mesom ha t
+ome
+d atrse rc mrri  iusducrnrtaie e etron h oles m dstmode eacae the dhdrai m sinithreth hoioe de ths
+ hi a
+
+ei te nnesertlsiehteee lhemndaia nd i
+s 
+r
+rioiii  hathie atieatam hetamur  mhrc
+
+iteration: 12 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 645s - loss: 4.4925   diversity: 0.200000 ---------------
+
+t  thee in thore e eder id  t ihe ere  hh tor n the te d  thon   a in d a e he  i t a te h ther att  trer lreend the ithe th on t e at t er theed tnd a o s a r t dhe e a  th a the  t a  a h e thor h th t therthet trethed   i tou   th  ed here e e it t oaahe t h th t unet thare the  the th  te ande  h  th  and theath h  de thee  inr   ar  n  here there  oe the he th ire the e the  ar   t en t t a t
+
+diversity: 0.500000 ---------------
+
+ouiees ur toi a th s  cerd te thed eot ond t n n ca hed  thntoutand d hean reeld ts t  ahethe  ano e i and ta rdi th   oee ther h nd thai s dheiendr a atrdld  o ee rhera oarand h tterr th ai rinhe ha hoedrr iaiorere d i thou miried  e ae ot s o  a  ou  hradle  ed hhe  u eade thtdl iorrerd ondhe cn r th  h  thrlthlreah er ore  h i d th en s d darehhemori ha l  e ale  eh otinond ih to in  oa a th de
+
+diversity: 1.000000 ---------------
+
+moridaststih cl   lee d homenr irt
+otncoa hn drdaandathidannelornm sardh sedhe t dthiardoter  he  hh mtste shuth n d ao tl iioe rllihtt tame  ltcro hii rdorathedarinohroedncre dr thto nithe iet ual n in manddaa odde te unichas ieetl do nonondhrras
+
+eno acac the de an iodn a tlelireddtt te taredohoi est iinmnoonosere tlt he  ttos theiec ihstitac o ridl t ucon  hn
+r lse ceat echleonrroitunhrha  aahe
+
+diversity: 1.200000 ---------------
+
+dsrm mernmdatcch stua aicemacisenni m n t s  conrnhnoe mdll ae th orilnas ost mdhal tsondtou 
+ss acdrimnttred tih ir  ed 
+dduitrh ea niah otrcrsiauisoatartdrmaetoottn  rnc en ie ulo d d luiail atta maneosiitmotuu tttmdereo oedeseadsrno uhataudc
+erelmeraicdolis rhaae renntichithactl e lhecrmrndcloo nr ois merrec ount as uthnnlae chie
+teeiot  tt ediiariistrte inanorte mh tdrnrohaordatildtrh el eisri
+
+iteration: 13 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 646s - loss: 4.4805   diversity: 0.200000 ---------------
+
+tante h hr    ta the t h h th ee a asan s i t he  h nr n ae  a s th ser h etath the ther th a nh  th ththe th er s   t aa th th! th hhes harhiis l t sh ar th thhs  hh rh tshe th an me h h h h n s th hehh th nhh t h   aner z r th the hh  t  n se ter a  h s h anren the  ar hhhe t ihe th txhe s  thh h hthe the o a   the  t h thrst  houc   as m h  at the h th s te  at t    hha h ha sthas  he thl han h
+
+diversity: 0.500000 ---------------
+
+aa h ecen  thadce uhhe than it ls hhdr hem  hal t h erh andhee t athermren sutiesee sere st es m ains  she are r hed  m ht  i hn i so re asarshe chneais a  hs or th th si tecas lltheasa d so t  hr mn  hens th a se th s th nri hsnr the  me thcnie t an  leis a sn e iea cnu t s te therldssa s a as taaisate  on  hher t hc tearotx e s c e r he smz heats tsrsasn aem herinhrneh  h  ahtsnonooll anet  hill
+
+diversity: 1.000000 ---------------
+
+hlazoher shedehetirmtuhmt ie hrorodnareeonoitcta heecashrlrghinatnitalrnd aito  t es somur s ana s   h dlti aitneoue nriotlcnanmshsts sh sae an ttro chirnnes imm mte imo n c nicth h
+tuasl shd
+httsttsoca tistlon recio t ahettcna
+hsrthsiehaenmmituein  c ttes  rr rtl
+unrsts   he aheehd i
+ she
+teitr i hseo rshunerend taol tshannsron  ascooi thuiet
+uaaetschhiiuhrh
+ mre a i rrnhenae suohenhaah tiehcshar
+
+diversity: 1.200000 ---------------
+
+ le sh st ddl t trdeedomrass r oror so athrsa urrthainds saasalis mh oshtn  toteet  hnr rd  sronietha t tnlt ha h
+aerrerthe intacarostodoltr naocicshiitoree nnst tatandtmcdhaoara  e m  issnlhrocmwashh con 
+d isc ee h nnreomh ie hi h tlm tmouelrhanhenho talirauertosauirat ton dthh trarer smesis h ahhierl anehsdea smcnurs t mitalhe rharnnr un tosli rleru uamaalsu aonteuf cahu mdhrahes hut
+shsds
+c
+ r
+
+iteration: 14 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 656s - loss: 4.5419   diversity: 0.200000 ---------------
+
+ tt he re
+in a  sder d t rerde tcit t trehree  te thereecetee te cre t r tre tece theether  te terhe her he the e h tneetthect  t teneee nee  e te c thern tateethe ter thre tern cert therche c erte therce t eeer err re arherce cor ththee  eereatrt cee e  hrn eeceh te er thet rne h teth anee the ethr e tere t en theere ttee thereaeeer t e c cr t  e te chere een ce er tt ar thee terne t r e t tec rt
+
+diversity: 0.500000 ---------------
+
+ourc   l  t thche r t    aramcr ttle dtrreettre ch
+ele e  dr tettinasttraie  t e a rce tcso the  the  r hcealllorttire c ch erith ti n  ncceatherc anreeht hedee rat oi teseauear m httetee he ce th thrcre h re rertein   cio n crr t the etve incaecthedr ls the ateeethd   aterrt rh etn  ther ch  e eecr eireh enirethethel t ri drr n thhcnr arrn  a cm ie ht t titne  thraetcrn tthser n ee hh ihe  tan r 
+
+diversity: 1.000000 ---------------
+
+aeoeeedtn eteaetca
+iomara dhed hd ces
+i edlre tneet ihtee hederlctt cne eeda ror an  htdceettch eemtreaeed scr i imu mamas me dlr amahrc dhsh hereiia iamcccd iedenh st tceecaihlmnai iom outontlcerlt tsic e c c  la ellltute  risioele d tmr terc   ohstm drarlourat t 
+cehne chireehe 
+coarc 
+c lhhnlc etetoaeth rdhethlhtialc snrn thstute thhnd hediedmaadtnein ct lhra s ohnrr e ncett  iei  iitceec  cr e
+
+diversity: 1.200000 ---------------
+
+henllt
+
+re tiatrel nauthucutat t lho
+tsiclde
+ruisrthuasoi hnne ic leoht  ot rm ch erhlo er 
+tltlcianrerm i acsacthrtd h rer laaurnndai tete mnlotheroa otoe rmscnen mrscdna m teiheuthsmsirtho lidtl lhoreclmdche torn rn  cdarin oh t aorhaeadirsdrtc olmnieissnohei othrr ee mtrseraioe eitss uhast dou etirer e tnh haah cue erllacsenter
+che
+tcssi iodeniheaicndrearchre do inmh eht  e taind
+enror aitt"ta
+
+
+iteration: 15 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 650s - loss: 4.5305   diversity: 0.200000 ---------------
+
+os e  te  ed   os h t to tho s h i t n s ues it e a  iteo th sie sh husn e   sh  ha i  sh she ee a sir iost heche t ie  s thd issi the ihese  isoo s ties ho  h h s u   he hen io he s e t s he tie  usohioe hes hetsd touse t  it hh oi th she  ho itae h  sr  teso ie th s se s s  s  ss se  s s s ssie a  sou sie s i so s eht   sed hene seehes  e th nt  ii lthe  sh h h athe thth oe ihhdeh t s e the hd i
+
+diversity: 0.500000 ---------------
+
+us  aeose cd a csh heshm inra ttuthce ehte s sser asit me nh e h die   sh h h sii hariee  ooei snood dhe a  ie salous  ouuedehoiho t io  otes h
+ ca iei i ouaous ht hats in ihrud itied ieesso i   inhter h 
+ooto i  he h s hdt st e  oi ds etheheuiohene  ed  th hiredttuua m s  tneie n sot slotheushtros ee s  si se  osee nac oaerehttho  heheno eessedthohoieo ir e ilin r rhetiii hea  h  onddmoi the sos 
+
+diversity: 1.000000 ---------------
+
+h e arl  oi arhi us dn t unehh undir u  daonsttidtos hu oma oha  oa mrr  ih laeto  sidodrm enoeeuetrtn  aadd en na s uhehn e udsomca tnss osoasde
+h saai cereo s an
+i h muieosdtuosia s itiode cseaache t caotth edeemharo hreies sn
+oae rtunic e aochs rin dseersoe nno
+c hnitousnrseuumedh t ln
+eln an sn  utrhiththhestss  ussac tqdoeosis i ladodi e il etlaschois  rmin sttti he  end tlho  oteounttucesoe 
+
+diversity: 1.200000 ---------------
+
+eeeisi isaltnsmtt  s eh uie  c o or reooroonttouthaaelacisho  thde onth o
+ ohuathme nedh hsconnetniusouies ihs r hieisten_ iusn
+cce m aedudi tac es o r e roaer rhsho
+seleesoheodmrsou dstcs nittoslm nhuaaahhtrdti areuondn
+dnseo
+issaecihesn  noni htocmomhili lhes
+ lndh r dult aeoaothtsosdlose eiodinsrere
+eteitu esarsoid otine ithasooaorit iott mddo sheatlnls nta 
+so  cnte tleied i
+i aoitiltunos utic
+
+iteration: 16 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 657s - loss: 4.5401   diversity: 0.200000 ---------------
+
+e  o t   hh he he he   h   he  h  et e t  he  a  th    n   ee  e   e   h d e theh    h  t   e  e   he  e     t        e  t he     e  n     e th   h    t t e  e    h   h    e      e  e t ne        e   h   t    e  e    h  h t  h e      ehoe  e    t  h h      a   h           h a e e t         h h       a  e  the e    e  e  h  h     n e t e e  h he h h e      h    th   h  the e th  c  h h   e   h   t 
+
+diversity: 0.500000 ---------------
+
+ eeta  oe    ish  aeo  th  t hi   leh th  o eras e t t ho a t aeln   h t i  t se  l  h sl n e c  ed  h  dhe ta c h n hei ae  il  t  the mtoha mae t di     hh enh ohee  t  th ho   s  tnhhete  hee tt  h  th ea heh a  hn na tha  t oh e  t ene t   ua hh lt   n ces ana  h  a
+aet ec ola  h    e n de  i   hao    hen ea ue  o a  r    or eon n lae e tt e he h h  c hatenh el enee hh eetin  h e  ee o  to  e 
+
+diversity: 1.000000 ---------------
+
+   c t  n
+
+ hohe tuen
+t  dc hoitr cinu
+r edouer oc se dlcn
+ m enhunltihth ahuno thn   t eiu nd d eo c o c  ete eeie t uo teechhtdn ote n hre a  hete oe hhe hioersoeotththn e hn  tihteacth osea  t  to tl r  sl h  o n oad iiin odeun tihe dl ceeiehsr hhe aht u sthit c cte tatmn mt iha eelr t  nrnm cln meoist th  ls uean e c l aos it meeeen s d ie oic clees  tethe
+ s e oere
+iei
+ite d  lnn n
+eoeua e  d
+
+diversity: 1.200000 ---------------
+
+ioie sohoinorecn     
+
+ hlh o e
+mtntarne  hleiil ht t cainete
+aehr ie oa
+re ttthrli hearicenaocmeaho r u h    ienmtmene nh lstneh thhcce 
+eint oe entttoeslthnt
+n  m thh cuho hssnt  chm oatae etoou cn  n rnaeitcre ie
+thih thdcn anc hneca tno
+l s ut on etr eieose  oi  hol cs e  naei
+
+lee s io choarho  i hem  a hcehnthm aernens !t heaeui tltita  ee h thh ot h  iht hr  dunt ihtahc    ad  rt thcud oalh
+
+iteration: 17 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 651s - loss: 4.5260   diversity: 0.200000 ---------------
+
+the t   thee  eed  at t the thett to tia et t t  the the t ee at t th tan the t at th tt t a t the the e t the  t ht  tea  e  thadanet  to e  th tha ahe to tht a th  io t the sat o  t a t t o  e a t the in t at the tat  to a t at  ao head  the t t a  the ad ihi  tle t d thehee tht aee t at a   at the thatettzthee tea to e the th  a it theelte thnat  tt  lt t tthh  tt t t ae thlthle to t ee  ah ta 
+
+diversity: 0.500000 ---------------
+
+e  tsoae nat tateo ioee n tl a theh  hae si ae e tetailatha a oheth t th ar aaa aletota thtehtmol t tetsterei aeneden in
+ee atae h ieeo  atd ht  the lnue  ea t tar   t rhoeheilt aa  a a itthasi aeei eo saleie r  n nde ui   an tnt alt she t led e th an u  et t tden  osalaeteth ne tor hehieadaot th ter at it tuesiod th a  ine tnn h tate iae t de e  lde tl  tae   ti a to llh thsea leirtae todtt a te 
+
+diversity: 1.000000 ---------------
+
+deotleos t ta"dteetaaleeeoiea ceithmnilt tossn oath  rnouca mtnitaie  oorcniote innasuo  thn t irhaai  a iesdres r h  ta tmssderseah  elliriloe hoc   
+dtn os sddsthmodinne othlrdd ooe dh  ir tol todh hohoeoxmd  a dietr oie thestrdh   nar   th e  t cltnnr
+ma  c oteorradao h oaerir  taeed akth i ttat lraturrr dheehs lro raeslr  oi  the edt oleront dsleuanitear tht eihhdero d h taio  ihdrano
+u rt ta 
+
+diversity: 1.200000 ---------------
+
+ am a  
+deiide
+atioc tenedttle eioualiu ir iretnain  te anod stei ttd shclai  ueemana tda tl dlhdas  oatdan hn iea lotlhr hr  hi dse h t s osr ann
+sedhermso iha iihii hteolhaltind  teesru h trlar esm hedaedaelddo hih iud tc  uoedd 
+  s domta n lmedaeetdal o ete tha rorenn eendee idind c ttdttojeanshttr  tosellinirho n t td hiamo  t
+tele dadloernenen  c atoi rdrueottanaaaoiarlset
+tii thr ehheltshed
+
+iteration: 18 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 649s - loss: 4.5254   diversity: 0.200000 ---------------
+
+l    in  n   n tn     ll l r    i   n   a    i  th   t    t a s i        in    lr    c t  n  i l   t t o    a   ine  n no   n  i  en t   n l     ln   n  i    l i   in i   inn n   t    i t  t e  ih   ie t  n l  t      t  a in i  ril   r  i i   in  tn  r t  t    n  n   t a  i  t  i i lr t  i   n in  t  n r n an t  ir       i   ir l ail i  e i d  r   t   u   i   n al  n l t  n               le      r
+
+diversity: 0.500000 ---------------
+
+nth t me e n trn chee s ie ha ae t  n   a l   i t     lnr  n t  l ulln    ne o  re he ddo   u   lr ii  hn te  t  i i n th in t uee e il t lo e  tre e n u u t ena sll i    en s se t oiot l l   aa atu r  neo u r n el c e s    mi ic n n ende    th    marr l  e d thein re lo  lls in i   ii t   o i  hl  hl  uno a io  et e i   in  i i i     rri  i lahn ori u  ae  n e ih  un   i   so tol   e tr le n sdni
+
+diversity: 1.000000 ---------------
+
+ i  ta s heu soaroishc iti nhri c ea  ir nodan t rin s el laeiirtaa  si
+eeat rnaell  iot nh henu h s mironamooterolhtonnd s a nn  sliirllensnt s  sai hr omu aoml ine n hrreinerotalscan n ahla lacthed te tiioitnoee i ater l d i  i  torm ln sen  larc t u
+  so rseiu  ru riliel l  lie  ioiecl hoiea l dsn
+dnrte r asuroethsser e mooirlduinc i minomal r r nt li l iella un srn tu ns so srdcnnd  srhherere
+
+
+diversity: 1.200000 ---------------
+
+ded
+t ma r crt ia ind li rhonrltee md taenosthd an eocnren n cen tuosiel os  mocen n silrs it en  an  reh toia cn  tooroeuuotcahlciaodmoona
+tinocl mrdloreetrreurtoc mdhtod eomererohih ou h llleasel trhrr dhrlnrha ndi nicoadneaildu lenste rhueut lnndal r m am  teaee el
+edrr  erudnlorh sir  ie oerou eoa i o cnnh rndhse s n
+so  tt seri riunrn eililietil l  enllla nhe l tc siu el   rlnd hl  e ie 
+reol
+
+iteration: 19 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 661s - loss: 4.4988   diversity: 0.200000 ---------------
+
+  i ind tot o e he oo t t  s tette  o  a oa so t tio ooare e hi or re e toe t  the  the o ot io   noo  t  oo 
+e t t  te    so o io  t th t o e toe on ao oo t sa  r  atois  th thot ort t th t the  t ty t toa t t t  ho oe t  inr th tio ain tor  ot  o  t  the o  oe t ror  o    a te to to t  ot tto t tort te  eo a t t o t aorie  on ter ho t  t ootoe anst  tht ho a  t t ns  o o th ti to a a  t th  i te
+
+diversity: 0.500000 ---------------
+
+sr ooo u den th ie rar d io tto hn ooton
+to  a t e ths
+t e t  t  soo  ol htaiio t mto isa ole os ieemer a th soe e ooerrouir st  oomr  ou heton l oisomn 
+ol iooer
+ nroa o asir t ror soto iist  t iodo ttoariathet d athin rd o iat t so li se oo  nit is eo  raoo tatale oathaatno stso
+ii s  ss tare  ae orotta an  a stat sot t the tn o to toat  soe  or tl to  a h to aothe t tohe  i a sutha tee or
+s aru
+
+diversity: 1.000000 ---------------
+
+m
+ hotsnreiinoen tstohroam
+eoseo
+ dah arauashtth rouiha
+rseo irdouoitd sttero oneon httteo
+e 
+ su aaha thdirlon tot r  dcurn cthno aoauomeoe io rhtei cshahoouri oroo t
+
+eateus th senethcdol or lrendntrosht
+sd  ao
+ssoer aourauaoeni enr te
+cor ataeo o at iahth
+ono rd nsrnisn
+adthrinnlr oaesneledr
+tlsoti na t s r sor tr  anrmotrirsee
+t sloc eelhno at
+
+nt nsorht  tloaea rla ieto al  ira  llheaelonr lo
+
+diversity: 1.200000 ---------------
+
+  tshturtlldon ianaiis dstaeriiatddst oratice rhe saa a istidoto tiiat sodinmiee hma
+ttco thit toi ol e mus iuarisam
+suaai eoseioireo
+e o mrsthateis eisneodsta sstoand anstoaimn motle   n oaitretneicdtdete
+u dhno adthetrt isnes dor er  ens to oeiillris utaieahinralliaotn idsainoinsntns
+hir lun s manaer ttroutirloii ota
+ehautitisncednitdhde ooee cthe
+inloulae
+domeooler ddemhoeaeacdrasnrto e
+t enscl
+
+iteration: 20 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 653s - loss: 4.4922   diversity: 0.200000 ---------------
+
+aa ano nas n t ue tan hee thn ana an tor  iahen a sn on s snarard t he aa ann ire  he aareas an th  asaerea ariaern as anan sanan   a a  hansan an the ar aneate hera aainnae thnt ar an s  an ss ar th aina non a the s  n sh tar a he aaran are ar anae t ar  ane an an ther o he he sh  he ase  hee and he ai anse eaere eer ae  onae ane se ia in sae sha serat rere ta an an an as aare aa see ae se n as h
+
+diversity: 0.500000 ---------------
+
+r reisn  a rinic dnire
+
+arrinc h uh satsa r aiaa an oat daase a   desse r
+as sr ldsnarasen te thee io it
+hon te at n  ae ntheisaee nd  th h cs ene ah  a ie an hes ur aanlner a thaatao nen iitet se asath  oan ae  aroar h haoaohea rrern ra ane o ta irean ah a erinooree ae aaraenanae
+ite oe anran tore an sati o ias  ae shon her a amiiara ame haaneaa ard  na a t anaser ani sard ih atrr n iin itanda i 
+
+diversity: 1.000000 ---------------
+
+na
+ ll rn helsie h u  a ae  rer  steearlio
+meiasiiaerd cherrr cheiniolo maaeneraesh eae ialerisleeeeeaiocootnsent roliiuhsolldataeduertrelnai
+nsurahr s iassi era lst
+anat snal eaanedeendedleene hoa nsus hore ina le hne hrod re dnsasen
+
+sleleer s huecah n ht
+nrn i mumsa
+hair  ie hhl 
+lsni rhtramat tneitsinae crdsas hsiioc  
+ndinsdsrsns i ndaitla m ett a  er d eim   hhituaere  lmrtrlsaim dsahtal
+re 
+
+diversity: 1.200000 ---------------
+
+ ercsitduelrictoei tan aoec m htd shitae
+as hauerdainorac tnmir anh anont irrcost mas
+nurhiaeasmme arrussndrcon  halsalrdrrus saru reseesont aaiheedrouiss thesldererrc hsithedeor ainssndsaded aa tcddeee radit e teseid oshe cathldderomhttathhntssnu auiorrenolrseaaa edsouelcseo7ud msrinshtin nlio
+sreorn ho
+ttshh tcnoun
+dahienneneur a 
+oa  chn ton ia[oitsar anhdd n crarhrdnlsoiieerann
+aon ait ouduret
+
+iteration: 21 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 665s - loss: 4.5067   diversity: 0.200000 ---------------
+
+ee   ce ir n hee   a e in   an e tnc j  ui j h ai i tn nete see n ar te h su o ca  ee eat ahe  a esr eeeihe e sho  ee ino n th st hn s isenc teree an   shx   aneeare se  oh e s ts ar e o e s  ee rce  c    ce  one  c hen   isnt s  h  h er e ce ineihee ihe ter  t e h hee ie e e and ae te hee  t  ce  e the   n er anse he ce  er e sse en ihd   sne e ce  noere chnani eeei   i tharheee ire in c  h sa ci
+
+diversity: 0.500000 ---------------
+
+ot  c;e he enont hean h nheo  hnid i me seahedeenhon m mei me ehn har acieed   eein anoe ico h   aa-iathaerrree o al ihin  an hsne  h  e  inins !  aeene oer  so eoaesoucu n c 
+inthcceshem cho nssni reseeeriah scr ae ol oi eeeoeul  hn id  srs ane the t  ne cst soush uieeese he ar  il ireansei nceieuiich ie h aaaceisns hene inesn han ieni ee ieru he tee a in,s ieeni sinrt e  he  cenen t a hrsica toa
+
+diversity: 1.000000 ---------------
+
+hz ei i emede r caojsnlrodeeld aesc e e thdieanch o hsairadaeasa uc ne  adidoulddo onc nhl ocirscrnofheoeedal erhatn mcroiowou  ostoencrrc loutshrteo nd eteieaiauue a  ehd
+tnae turere eds enmoh asee
+sictn ie h tn m mutcd trn s 
+ oaemeohaae aereorrticten ismsedotia tueeardhiohnanheaelhi ncdraecei henondecatedheeluemr coce"
+rdnrli
+riceehoir sac  deaseucinontol lo
+e s eneoucu ureice toe
+ihhidhhi enco
+
+diversity: 1.200000 ---------------
+
+nje
+itrht lt ss eoii ttesthlmcdirt cchmiaerelo nashdsias enihh harasas
+cenosarihetrs in e tedni seu ctdae m at
+oaea man s ire r atimdhottejhuaaeouh    uetamon natou tec esehhahoontimoenietha
+
+eotrrsd
+hstlinl g ecueuincd oc t t
+a lios ii
+ttu! shs unineuhsmstarelm ntioerc oc
+ar el sin ea ehrtided aedndahin utteeididlutiatrersheeet eheenanrne tenre mo hh shehahide lsedech  siaat cotnmrtnlutheh on ie 
+
+iteration: 22 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 668s - loss: 4.5133   diversity: 0.200000 ---------------
+
+ i the ti e a  e  are cie i iiesue ertsecu e aaiee iee a  han   tre   e ce   he e    aie te er te aa i at e se  ae  e  ie  a ee  ae e t are ai iit   itee s t ae t t ee  t  o   t a t heiue  ie aa aeae aeie  a  thete ere    t  i a  iee i i  ie e ae arta see t a athee  ere i  t t    aei   as ee ar sti a ce ie  i ae e i c a  er te ti e  aare ae  ieeea  e  a ie the  iee t  i i a h te    ae t he  are ca
+
+diversity: 0.500000 ---------------
+
+i ae erie tri tlates io  iu e  iae  s ie es oe st s t  t i  oi t e maneeent c e i
+ i aleeela te insi indcea i a ee catoioeai ai ts asrett t t e eean t a  re te ea  s  etua that
+enaas iai i   un a ae  el tei leraa t  eit hasieeate eae d i i heas aceest er ier t  i  a   sa aaethos   i rar tht re e aere tlic taedaceciele   aee snr atheaecoa cei hat eol  lnoen aai  ai ara  aia sue  t tane isras a thee
+
+diversity: 1.000000 ---------------
+
+eeleetmii mlnncdreeeiedieesseem ioaaeerc  ihet e  tha  enrdesteliu
+ eotcen eierre ee ont a i
+a e oe 
+ aetoriaucrehraoi
+it tetcts  s cu
+emsemrenreas areeesoinat t stti n todesone  aeiestrom sorreaetheulameresam tearne sao ee rasaoe cid csttuso ca  hent iaet  reinau custiatstaecrmessarehed  e h  iaser
+ ahcharrr cesiatuenal l   osnlaa hare i uihhae
+tisocosh nteeu aanir re csii illce ch ae  ulee tieh 
+
+diversity: 1.200000 ---------------
+
+droiteni  he imisnlu  nndtlla ic ledltlo s  isarestieiienoiadesssacniee
+inoi
+r  amc oine
+aaoeiacis sar dar ceisaecreie inum  hioe s tc cehe nusoiaiue ais inis  lcsumaa
+aeinihaluh ho l eceneaae u anm hr eeaariuemietaaalerhaare rn hnidenascaacr mio  aloanelttecnrl t aruu   tteeadth hesit  ili etiict air rc trmia re
+ieiil dtcilr tse t
+th el e t s rni tanaeutciecd  theasocat sseni  chrt   a
+u cana oti
+
+iteration: 23 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 664s - loss: 4.5077   diversity: 0.200000 ---------------
+
+ee tt  hn t n tte a nnt t tttinthe   tttee the hettheshat th tt hthe  tnettt tt t tthe t e  tthttin ththt tt ittthethe   tth  sheht tthat te tthtth  tne  stea ttttst te te the  ttht thet t the tt t tthene t t th sen e  at tth th t ant t tne t it  on a ts mt ntnththst h  tl ie  t m e tn e tt t met te th ste the
+he te t ttt t  ntte ts e m t tnttthe t thhtsettent th tre t the tn  ntheener ttth t tta 
+
+diversity: 0.500000 ---------------
+
+ ttttthn  l oetsatt enthre iotmh tett ttette ttetrhl mdtnnt tiatcheerttlntntllo tmset ot tn nitther  h tt  tae   e  to teln  t t t teeh t a oeed a  n  e re t t ilasra ttetee lentttesut t entt e smtth ttkets stt ato hest a sst   htomtnm tltr the te ten  teerta mmite nat etthee  thmieett  thttsuthotattm tsod  ttttchei to ttth tnutsten uaeet  iot t
+tnttneirem ml sh  he  sestieueseo  neee  to thetrttt
+
+diversity: 1.000000 ---------------
+
+ oa
+ttcl ci mrlt mtm ue om
+tc aetoe cannnt iseui m t  ntlnrtrthulrtsemed rato shr rsnaell si out drh tooemat hateeimaett che stnt orust mdtn  mheetmnrs us er
+c r ine rlor nmr otteincli reeetrom
+tout nat dtiolrlenaa tctoouact ot
+rreeerl ua a ran
+itaholt ssontthii t tteoi indanttlt d hh nd
+ta n tnm se ln  n  t ttctim helst ott el  m  ninireoen moolndente tir tcel tnhch  elthal hirseiitltae nhme lnts
+
+diversity: 1.200000 ---------------
+
+dcnatetarattuta h o sit sae  u oaeeee l sterhsd dn t toanso sndidrtcrt ne sle ttt troleintoceletct  hac tths
+mo u aodrntmlhnart troirtrame tient redtomeontu  nnm aaltettaes et tlnte d mr ro lhehh ahsmms nesrih tm ii
+ech atls rcdnm trshten sh
+e
+heestam asadeiethsnihlaslsn haet thrtctathercert
+mh ldlll n rhlrhat uehhmsemnted hr hl antldetautr mnuotteutmheohiseiahiltmtetithdrectattihthas hi  cd rtutt
+
+iteration: 24 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 658s - loss: 4.5181   diversity: 0.200000 ---------------
+
+d a ithee n   se the t s  ae thit    auo  as     dr    e  th sed   ded aae at ar se  astn as   h ethar t ee ar  e  t e  a  ted t re     or s  n tr eo and at  at   da i     ho eerar el  r d hd  e d  ar t   a     sis  tdrn as h   te  t s e   n r se   ao a e     are s   a   al he s the t ts tr  ar t n a arate     sh  an    e d e    e a ae   d le r counesdt to    an i al s e t as   ase   ar s  ae  t  
+
+diversity: 0.500000 ---------------
+
+os tnin  hsd tniaothian e da thn  re sers anocreandr sreao isen s t t  iha uoheo lnuelthedndt  asth en lo  t es  theto n   t enr ueel atr s ereado e h  onisaas h  d elelz oe hodrhatlhrds re hnate ahiersele  ael e h o c i  ids   a hhhn l  r le de leleaonsee inr s al  aur m  e d in d t taseelissedh  s t  ee th  is snet re  t t tie  crheeia  aeh ern   l r st as a ihe arhe thhse  aer d toi  cn  ad ase
+
+diversity: 1.000000 ---------------
+
+rerosar  ll ae  teolsn tr a   d eo
+ted
+ii  iutes mrth u irou
+d s ar rah anio larl eeaecuidaam s htahletleitleitehhssstanli anns csto cdeeiorci  t sr ih  soo e isuciadacsaso isuals nedt roml ealorosl  aeorteh odeino io sitrree hs ir hd  cetarnn e ctei
+ei receheisoi c ot  aliltterin tee te  e titln
+ rndste at  ts  astme i  osc a n  tru rrit 
+o nrni t l sors loseeal atd na uat amdolreiddrradnch  shro
+
+diversity: 1.200000 ---------------
+
+tnl anlreah idterh taeoslota dsllo  t hoalahn trsesn o ore rartie   dorum tnirnee a tins r a artoscttuo mea
+onluito ecmtndt neadcdnltantrnc lsratdro eno idi s rr i lhsimdtc alteasncesn temortm  i icissrie aa aatr lams ioei lleh r lodearh cod trs slimrrai
+s an
+rsae ec
+ed lreiolstl eti  aestd i eroeos shs aha ieesinsenhcsrtrrtiooasoac
+haeaotrm s ninrelrulrocse m  cl isue nautamaselseaamoetlae csts
+d
+
+iteration: 25 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 652s - loss: 4.5266   diversity: 0.200000 ---------------
+
+u  tr ir  t  t dt o th th t t a   o i a   oar dae   thoht i   tarh  t tn t h rr   a  t t oh t ia   ed  t e  a   t ar t a a oa ot t r th ir to hh t thea     t  o h r  e  th r a tua t on  h t tat  e hourra  re  t   haro tr a t  tath d t t u th nr t  the  i th t  to r t tet o  irhi t t o t t hi   ol h o ar  h thi h i  a u ae rhe tn   a io   t  t t th  a  h eo th  te ot   a t t e  a he ou t  t io d  i
+
+diversity: 0.500000 ---------------
+
+thaer  r ohe ah duo  ine nrhr thistu iecd  iirr a
+liha tr t o d  ilh sh     dd th ath teeto
+o  lc ritodt ihc rri
+r ti dl  h oalrrnhre at ret re r t no li  iidc eil d ee t ee  oiti t  h  odi rar oar ohrand toa olrr ao hior arru  trouor seert ad hitou e n  d 
+t he
+sire    ttrodar eruahtet  dae  t  iosar ut or  lu rati t dr  cc duiiueo t ih eiaoue eei icoh t h thrd ura it  hr er  ih stlhenhu t ao
+ a 
+
+diversity: 1.000000 ---------------
+
+coranat t iaanma r
+u reta tc
+   ui dha stu e aie ao ten uealosiert ui iutol eseui alhrterr rh eoircoms "a thuoca ilrah i occraotc ist  rt  n doe sst toriedm m rh des rhehri
+tidarlrriiaheec al tuimo aish sohiene  it tr tieuoied i
+tcnro ii  ati   tdisnhiehoaatdde rt aidincd ioudo  tthirdtdlairaelnanomanthd toat itol meas idie tdareana a  huohueuraatsitc thiri
+ite i hicom so seaslcuartsc msaadehtrnir
+
+diversity: 1.200000 ---------------
+
+td
+h
+eacrelreeo
+otoo tdd  sr onilnn uoasdrndih
+ii 
+erdloai ihn
+d ao tldnthon ei 
+nho ottlt
+tacsi rlhu  tddr s sh  h ah
+tea
+ trth
+oca c  or
+ccade chrsliacatlothtnriis tide 
+oi s  hln aocte n  mdo u  ttdi ohm
+ thoom  merc 
+e chetieethra  i t l 
+lc h
+ hec i etinthdrte
+ne hacalrcehcaneh tehteid
+
+mtt ahs hhono nentdaso
+u enordmdenraroalrttashter r urodndlsdtueidnseutudomhtror rel r
+denlarrh doin  aihut
+
+iteration: 26 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 653s - loss: 4.5535   diversity: 0.200000 ---------------
+
+   t aaa  anhe to ae a   o oetee  t e  ao h   r  e  esn z han  aa teaa  aae  aanheaae a  a a ae d  a e  ha   a   e   he hea ae aa  eana a  a aa edn   t   en a    a  he     e    an eo a  anoa ae n ae  anea  e a t a  a     aae    e the s    re and  aaee hene   h e eae shn t  xh e se t de aa a  h h  e   d e   hd    o-  ara    aansea  oeaaa    he ae ra  an  toeaa   a e   ahe  a  o a      he   aa   ad 
+
+diversity: 0.500000 ---------------
+
+h  toae  shd   aare
+dl e iao no re  na  at ah eaaaaneaaddanna e aaehoh a  ear  sh  h e  o hseheeeh earo aee aadee  h ahele ha adee   tae  e hetenie hao h  e o eceean  eer  dle hel dn  to erit thee e ho sst   oah  eahdeothoer ee eence aeeean tor  ne  mhr anatonza m t s eehau  loaeee aa nee rea o  iin oo  r a e n oete n aan aiaea tha  r   se anene  e arenn alalno a as hae eh h  tre h iee eosnean a e
+
+diversity: 1.000000 ---------------
+
+ ue hedh s uaras
+h oo deatnohss onia tnenhiih hs  ehdshiroo n ascun haaaemueaae cmaeruu
+ut,e 
+ilidl  e lrthtred  nema t eu aamdusonslodneldal  omea
+meae tesss  aaoocae l
+teueun r o hodhdd a e co eolt r otdrlinllnat
+d  d tdlnenolee  enle hd her he e hdtneahio d l
+enhddnd dao neam idd d tetn d n aosn a eimheuu oas hrdaha nare trrosau enrrodea lteldon snooa oue acsofi
+reirull o aism  a di rase aout o
+
+diversity: 1.200000 ---------------
+
+duntmcl et ia
+ittasdumsrthnn eir h hrah ne ns ea dsrt o t dlhrsdnalhao
+ct
+ad olatereidtnlst(rel athloh chda
+a xhaaend oseoiedhr iueece senats
+  ialce
+ndjt ntaieees
+ iseosiecntenln to es  oldieo trnrr ansnddn
+c as eeunn ra 
+lahmd
+ouan
+ddht thilr a oe   acouneithleeuoeudonianhttaae
+ ueoaes reede   m
+
+o o1tnd h eira ihe  tensihedtauaiset
+ruieonttoa ahdeed ooac dodst atraele nrreh oeononootshei
+ihran 
+
+iteration: 27 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 651s - loss: 4.5370   diversity: 0.200000 ---------------
+
+  nee e  t  t   an  ahen  t e   t    te n t   t  tat a t  te n  t  n  t t th t te  en n s aued t     then    t m t e t  t th t  te  t   t en tt  n 
+he  th n ct h ee  ea a ee  n tht  e h t t  e   hn ten t t e  a t   tia th te  t i nen    e je e   an  n a the te  t t   iti e snen n  n n t     oua h aa the t tene ne the e  t an  te t te an  ta ate t et t thn     a  
+n tn sha ntt a n  n  te  t an  o t
+
+diversity: 0.500000 ---------------
+
+  and  it m he taa i  to  tu t
+c a  t t thaa he a tst  e aas  caeai   s t eeaae ert ednd totn nt     dane a sa t nt se e isnn c in d    earnasstdat
+a at thhsards t d she e  a sana t
+t  ita eolaeerh  ch  t
+ne t  so  e irt ne utre ado rr n tr to  ani t tt tne   t  eane n en ci e hx oana sn ar na re the adae  n e ite utt ia hhenhe  aatthet  tn  t ure  i is itei  nenah s t mte dt s  an
+   d eieit teht
+
+diversity: 1.000000 ---------------
+
+ehrhana
+e a l ardaao antdr t thiz ee hh tmocil acaon a
+ 
+dahterri nd aiihhea ce  th?ue aa u  seoiddneroosned ithsaoshtaon l ddeme  ohhaucn a   
+a autii aua lanrh r  adhis toaeinut odat mtc c i  s
+em rnhaa  nst  s snenoeiun tac
+ne crinimm  lain   asm anmaire  etheit
+ ter o ehh oiinlniht n aiehaerle teeme e s doee ao  mt  ncianri otnlrstc tn  onaroshiedhanaammenn oidoalisa tinieda hillmhrrnat herhn 
+
+diversity: 1.200000 ---------------
+
+rrio
+ed o iads
+ n edhichsn srnra ruodsomsl eaonun ttannoisrt l  tsndee mnnduntlaatnndoarit de nrat
+t tasnitd h t ehhn ie
+s
+llretturr  ntea
+etouonne e
+ iec  eah
+edmdda 
+lto  eashci   
+honitt
+o
+a  t ess
+iet il d h n
+l dldnos  th sirn  doucitrdir
+ u t
+ers ct
+lemadtt  tdhee utuodu
+asl tcs d hsas nrnrani on aeirt
+aa dh drd lnsie mecm nnoiher itrmrnls  r risieleshn ao
+rsua
+u am lmt sndn drt
+u e  eidr io
+
+iteration: 28 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 653s - loss: 4.5497   diversity: 0.200000 ---------------
+
+  ee  aeen   o  t an i     r ere e  t t   ee    a  a  hee    e toa o i ea eet a  e    o en  j o  e       t  aeh ot a   ,  tt     e t ae    ae   e ee etn  e   a o tee   a  tht   eee t et  at  ae ae  d o ee t ae  e e  th    e ee  te   e t i a a aee a   o  ent ee  te ee  e e   e  o  nt t   t e  t e eta  a ee  e a e te   t eo  ton  t   e an     ere i t t  to    t  e t  h e e e e   aee  e    ee  te t  
+
+diversity: 0.500000 ---------------
+
+ian tc naleed toa oro enlt iaatahe dmttte mnern t e  ha  o e ren ixi t te  t  ts    udeer  a e eo  reoe  a ooueao t o  e ttoee   ro stere t e he eo hoat t t  e eme tee  uaa m   aoa    a te t  tee hoseta e eo aeo   ae  eatats r aat tdatoe t ert at o t  en mm te   eto ut tt td  d oei ae e   te ratcc an ttu ae lse iseo shetan t m  en aotrt tna  at ez ine te hdta e t   uiet e te e
+t i eeaa t a i e
+ oa
+
+diversity: 1.000000 ---------------
+
+heendra mnllce e correus t 
+teet  rmsoaonet me tlmenlr a  eihea erse 
+oolslm
+om dhedientoatn td ee olh cth edmmeead eah r au tt asrl hin nsetanooniecehia roeue t lauunceehnne rodei thohena
+tmeredmaal hieo
+ hl  hsr soau  etirih o rheee
+th c c
+l  l t ue  
+tths ideetdti hctrace im  eoe  rtm whi  eoreoa tc ceiaaei  mi  mnaoomict etsieis   t
+is e rasttean cerr nnmhe soiiria do n  eolna arcot lurruiieen
+
+diversity: 1.200000 ---------------
+
+snerondu atishen mnocdea ec d tno   m iilliuiaelcneroe isn aa h aeedl ae adnnadnorheuaeemoe r snncrn  seo
+ ntaetr  
+ear
+theasslh
+ ee ea ashaaehcodsa alhtom tisdarrb seo e oc tuneeinoostelhesd ndadlrtmsoensi hosan duneaeisemt lrltirse thoam denulmd  lete
+mletanuenl
+ dsah oc etsro
+d urhuahm
+ie aomouciralohoelocaeinri a et aes   ih adieensrr oienesrtntr trrnoie
+mdah es
+eteo ntmissreier si oni heae c 
+
+iteration: 29 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 662s - loss: 4.5511   diversity: 0.200000 ---------------
+
+       h    a  a  t a   n    i  a   e  e  a   s  n  a     ae    a a   u ei  i   e e e  e  s  i     in th i      at   ih    a  an a      ee  te  tei      n i h        r        h       a   th       o ta       de  o      s   a   an  e  r  is  e     he    t   t   e     n      i   at    a        n  ao    t  n    se   t za t t     a                hh e  ena    a   h  i    a t h ee r  e         a o   as 
+
+diversity: 0.500000 ---------------
+
+  ni  oo a  i s  e r a  see     a e it eeaaid  h li   i  h    ths  t e  su  trat  ot  ahe      ih h d sn   h a   s  he tosot a ce thsa n o aers   lsusa   i a se anh s h  sah  l n e a  i a  a  a an i  hr o i   ed a he l   e    oe e th a n  eode   o t na  h au ht he  occrrreot aa  tn arn    ta  t n    ad hn  a a   i    a s h  s o  e o   t  d e he   n i        o sh   as   et  axln  ae  t  a  a  oo th
+
+diversity: 1.000000 ---------------
+
+  iraioeua e a sh  esnnalhl te d a  hn  ti n h  a ort s  orsuo
+a trjd sd   inndro aihdensr  r  noad d dl asetaaand   t  ooeadore oa  anh
+rtlet  s  t t  hamer ihaseh nne lo
+r  eh tarassdoe hon aat
+ a eme oaen ro  osiudncto t e    r tisotn m tai  heeh u eods  shhatutniedn i ehe oon
+ d  oo d io  nen rs  a a
+s too o  anasth s toasc
+atos medi so  nisnhdd co aaiuhd set  ono en  leoul aotesi
+ o iosnren  
+
+diversity: 1.200000 ---------------
+
+erruhdumeos
+anaso lit ii u o   ea mtad iat e     i
+asaooon  e  uht
+is ersindhs e  te  t
+tro ml  e n nt ta t rriha n tadth r co a asudnh trac mad  aeueumudri ooc otototl ss,a ar ste
+titld o omh es
+oudstlomh atnc unr t dt uren i e harrouurhd  oe   ess o  ohenamsio ah hon tsr teeuoild ei adi i eontet anhas
+  h  ah
+rr  r oo
+eioaehao  r uetieecrsr   ooaneosnntrhnhdoi ear sruaue a r
+t dnoen   c
+
+n aht o
+
+iteration: 30 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 658s - loss: 4.5570   diversity: 0.200000 ---------------
+
+   t     t h    h he e      e t  e   ee    oh e h tiro  e   eh    t e      h    te   i   t h      ere  ee  h   t th  th  h   a  t      e  t e  t     ei  e   teed   e e  ee    th   e     t a       hoer e   et  a n  t a       s      e o n     s e o     o   e t   t he    t o e t i   eee e          to     te   ae te   th e  e  e   t e   e e    he     e  ee t        s   e       t    t t t e e    h     
+
+diversity: 0.500000 ---------------
+
+   en  r c eese ode r eem loe haseas  hemn    st oha  theeh iira se   eeesrles  t t h  cie m teanhooin d  h   os thi   lae eirathe l e t  stties  e i  sst  htn
+    t  oh eie a tm esea   her ahree tiie e coe it rr h re oniore  edtlt t e sh hene e  t s emo   r
+ai   u  i  e st uao  s   t  ts ihe  a t ar   h h  s ohn  hr ti sh      r h edoo eh roe tsto h  te ie nl emeh r    e th   e a   e t  m eei c r
+
+diversity: 1.000000 ---------------
+
+odhe hi tseoe mth doihrnue ieh a ri io ttehht esuseetner athrc stuicssieiea secsecid snerse  cnr eru usss snrhaetnsehnntseai  nt  s c seo
+
+nt  ulit eoh ncer ttaie eedrooh u hiieoeoetthessooiuusd dr hined  ud   siai  s t ttoean t 
+eea ireuaaor  ecdere cetha
+t rath aoodomr  eeireieti  hssr teem tsoeehhetsuotla  roetheelht ercmrr l o t imecs a
+tcnrnm h  di ieter h t iiilaosnare  enleh ehe onrd
+reti t
+
+diversity: 1.200000 ---------------
+
+e aces tendt ucrlh thuhenesmioei e r s el 
+shea 
+ ieoi  
+rinohachsai  rrsshdus tsh tdhs uhao a ore louerce
+hdahanct  deet ul lrsas i
+redmenone euhn de hureeustcted dlr este i ct 
+hei hchc
+tn eiritrh er houdas ae lideher t o roestor leuonoseoseamheaneroilhhhnadoant aa lhnn
+rcdleitl  a a nluh
+ercehnhmaaeiloedte id  rtodttioouoe n  nhoo al mo
+ mch i
+nitssour rsraeimdoeleene  draelar etsuithusniaa c
+t
+
+iteration: 31 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 655s - loss: 4.5555   diversity: 0.200000 ---------------
+
+t  te eaan  t r   tt e  n tr   h   l ae  nne n    t s  e a   aa tt an   ta   ea     a h e thaa e   ane anes est  t   hea e s hest  ee eanen te    ntee a ee   n a h  the tete  an n  e  th eten  rt   n  e m aeoeae ee  nt nn te rnent  e t  a eee   a e tot tee ta   tae  ae an  et  h  n  e se neaa e   ea s t at th  e  t     att  n  s  nren   e r  en i    tthe h  ttee   er  ns e   aee e   t  a  e nat ne
+
+diversity: 0.500000 ---------------
+
+   e a   stetne   
+s en nr  t eata    te at  tseaiernt s a  hi e  tee nueee ee    tieot e et ons st  anoenrl ar nasa a oe  iooae   e reas   seih  e theh  e se hn shnr iit sa 
+tra     eh  etn endete  o eunu
+renuerht      nd s t ne at  ds anhtt   r  t ss s e  a a hemrand irr in  ntiit teur aa r e ur ra  tth nn e autn antshnesn a a    t ertt t lei  ud  ts  th innr l n t 
+ th i mta an
+as it ee a hnd h
+
+diversity: 1.000000 ---------------
+
+tr ndtn
+mdiht etshee shileai
+uorachitecssaomausdsd oti a m tonuenadteh tortaeal i iae ataii lmrc rue to at tdisthh a 
+nda
+indttae  e   riucias cntsi
+eda  im nnehmhtcesn  lc eisnn  ctieds cnoeoas
+sorutialo eeaasoh
+raie ttahst
+t
+e h  ast rhurattetrdona aatitereaaesiidleesndh t t
+neinnt  a
+ eadars  t hssn n eh e  os eu rhaed t
+nind d
+oe rirn tatin n snosthae eer hts enedsae til ctlausea rsatrei  elir
+
+diversity: 1.200000 ---------------
+
+ eisciseeadhlnencmdtrtc 
+odhaehr c oiniedane dr ronen  hoaenmeorsnat ei s  on s r hoto et
+t shh 
+da  menhueit acsiuuionornhemn
+ttcrseteelsnurrr  u oeae h ddtthonme nl eamoatiinelsuse  thtde rh iedaa  nia hoinnanaria dstihunaas i s i
+ree ehdednhnls
+u dhetennohn nmrnl   
+ nmtlsaoeh
+urtlstu hal
+s 
+htctd
+snd lo ianr atouutta se usttrtnelerrneechn eme ursnm
+eadeositlseocedraeaasdoulhrso riudao oe atuo 
+
+iteration: 32 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 663s - loss: 4.5527   diversity: 0.200000 ---------------
+
+a  or  o th te et t th  e  t    aeoee     e    th  t e    stai s ath t  in  t io  a t   e   e a  o  o t        e ott       e      tee re tt e   an    o a   t  e i   i aoe  h  a oe e    he a    e         thao   t   t th oo  ee t   th    t tt  ether t        tt  e  e i te  e t e aterh e t  t e   tae o    t e   e t  oh   oe  e  a aet   h e   oo   h e et s  t a at t  h  ts  n th t et   e te     t    t
+
+diversity: 0.500000 ---------------
+
+ dd och ceoi ao nt  e   oart  arar   i mr   i en o nit ns   t  r o a iei tahse i ereaehoanmh onaen a etah ae ie rit r  l sa a   oa t h   tceeiont a   o to sae  ieie   ro   ee s  et i te ee i rh tet  r i eo ee ee le  eirhdnteaso aeheot tnrlh  araeet ee ae   e ata t tt ted  s eo
+ereee n   rs  o    ta  eae   lrino aea hm s rn ir t s e anr ai arn at a s mh  to ol l   e  setc haen  itheen ae a   eeotei
+
+diversity: 1.000000 ---------------
+
+rer alti ethetihcr 
+eo ohciii!lut ri  stsolorohtdhni iaor acl taree eto ri re rhema rrthth ahne eddda r si 
+e e o trei 
+  iuia le  diloadaaahet
+ta aeadr uoese ent andhetteitttro ehtsnceolttaoeticdta
+netc
+e aioet ei aeda oal   esodenre ahnt am
+to
+ hihmaohnachshsaosto t  eedmt ru
+eonaloaaanae miea dhinetecoheeitel he o ncelel   n ues etilutea ese torhh   oii ent ottr annos n hi nu nmnoe hinloaatsaol
+
+diversity: 1.200000 ---------------
+
+co tlmaaiolei 
+ ura n ameo
+n er   n o t n oseddcrliltnad esmure dli h taria ai
+ht
+hacnc acotti
+nn hiarohate esir ol thcohtonmttmc mes s   rhicosticnrtl dlast nhahlossnmous sotd
+tiusoearat  ea iaathee  t tsi at nl s
+   eiaiaeenatots seeheno
+oas heah tu c
+ hr mos shinachnei
+i td  eteahe
+leaderali iimitolen thteaais thechnc dsiie toeu aa
+dti ci
+  hm erluria  a
+c etsloloi  iieslenaea e me d narom oent
+
+iteration: 33 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 655s - loss: 4.5524   diversity: 0.200000 ---------------
+
+ re   a  a  taet  t   to s        o toe t i to   t   ie    toa     ts      t aa t  at   nh i e  at  a te   stsa  i ar    tt    e  to t  e s  s  tnae  a ta isto ha   t tin   to   sa  a n t t e t t  a a ii   ee o   ane t       t  t  i   t    i st a  t  h i   r    ae  tr ot i   ai  s t   i i   st      i  e  n  e  ot ts  o t  at  a   ao    aa  o r  i  io  t t o   t t t i   e  s   ti     e       t  t a
+
+diversity: 0.500000 ---------------
+
+rsutiatod to aiaa asi a  s eteooaannti eisdat hso a e t tti  h    s toics s
+era sr tne thaeten aaeal a i a a re  t i  t i   at  aoaa a ath   ilsea  t   l at i i  e  i ao s hienreso a  teltis ra  s i e id  ie   e  ilnedn h de l  m ta i h i tiahi  t hanhth o i s sao  t ia   tm ao    i m cn  teoi  hea eia  ionecneiremati  d  eat dot a  ca i eh to ro  r ienhatl eaioa  it  er  o    ea  e n t is ni asta
+
+diversity: 1.000000 ---------------
+
+dloui  sla er
+ea moithhim iinaso   tietic a  td  em  csadu  inerndh  o rreuneilt  sn ace hm
+ttrsnhtssne tntrdihsii itutlrtsn ee cc d tnadolaaaleisrietsdo ticenh rin 
+oeah  ritnsi enoe ect dcatinor aorat tecno sh a ore dsn
+hntec ttc
+ o   c htsi hss rardt r
+ehadiitso hrdr cnsea   t  ct deon
+ inina  e htruer  unnoees srsdlsas rsnhcsmuis olhe o ne  iori ececdesuah an  ncetto hddsecc err  matarrtscd  i
+
+diversity: 1.200000 ---------------
+
+itt nnde moaishrnn ictstonisdaeareas orititcuecronrae rtal otsa t i sstmat todins aoceeinnnslnslaln rsmetisc eai ittu sus dd lno dctcoolrhrmtna
+a tamsosdld
+ reoee
+tccr too r rr
+ eleende dors olu
+h na hrcd rc t  d  n tea oh  eradsse 
+
+doet seessa i isara dc
+oilem  
+iiel rhenemnar hasda snnaeuecnao eiuraeesol esrereohoas sae  e issmdoirie
+n   s naedicdsn lhhuo aec
+cuatoos  s se nianhoste iltttdithoi
+
+iteration: 34 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 654s - loss: 4.5461   diversity: 0.200000 ---------------
+
+ d       tht  a a tht oeoee  e   te a  e ae  t  h   e   mtrt t  et te   e tn t ise t e it h th a s   ot d e   a r tht   ee  te  a e      u   t th  t t    ta   thte    roc e   n  tee  e  t  ae t t e   tr     o t e t   th t te   t tt t   m t o  e t   ee  h s   t er te  t     e  tn  e ean eae the   n    tt nn t       t  t   ae ta  tt  e ie  t t  e   e   t te  ee e  t  ri  t t t  h e  ice  e e r   t  
+
+diversity: 0.500000 ---------------
+
+  at  ate  n t eons e e  nt  n eh atecd e  n   eedea i he he  ean od   t en toe  larro rr i d htt iee    s  toir ls aee  tm tise erh ac snsir ai   haethan earenenonte  as tsn a  hienasi t
+    n irc  til  chhtn d tu  ad e ehte ei  r at   aeodtc  a e t ro o tehr st tide eat eto a to  ssh eecn re hde
+ tator  i atrettoaira thas t a at   h  c te  h  s e  t  uutet  e l  tan t n s eaertlh  e tecte  ta to
+
+diversity: 1.000000 ---------------
+
+hteir son oteunmmh
+ess os tua maotmlmanntutloi osde et  sn mots  shhhah
+eilt a
+et 
+or uansr mtlrhrimmcossemomdlioirhstnsutei tend s a e t nutsoaoncer dror  mnithredsa t lndon  dna ee esetteteremt 
+uoul e  s tdiemhdioh rnut adhertct s e
+mnar mrnn  t
+  herennessm
+eohrtehhhdiintlcrm  t  t d t senru e uoeras edua camtnhnhaicsei l  ti h deauu ohtartlohunusrhsd iii
+otm  hc mnuieonert ar mnc m u i   stl 
+
+diversity: 1.200000 ---------------
+
+nsoruotelinhh
+c s 
+ha le mlnato lluoa ct in dhdsssnn dhaaiasohascotshti rush 
+oa  c dss isico
+heasrnods t  oots  oootsuiledmeh  
+seedl l aolautcnl i
+i dst ai
+h uitodtrchsm  enuartuidacmcnttuernisati  r  tnmdtdhrehn d oneue n itnltdrtih ruadrr leet
+athaleoereclsood iitt htes
+  ec iau   tcs l teehnht  te cn   nhaunotlon
+ruencet tthoetedrrnd einch  r hla  eaondtt er eteheireeontitmn dreoo h  aa
+u
+ ma
+
+iteration: 35 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 661s - loss: 4.5434   diversity: 0.200000 ---------------
+
+eh t  a aee   e   the t  the ae ee  htt aee he  oe  t e e ne  h  t  eee e  rne tatthat he  sh e ot  hea  e a heehatn thh e ae  he hhe ee e ee ee   thrto  a t seer e e e    e a  e  h t teee  ae  aee  hh ie  tee  teh eeoa o  th a   r thee e se  ta   h tae e e e ttat e tit  h a  ehe at t  aee eeu  h  aae  e  te  t  ee see  ah ee he  h t   ee t e    tnth e thee  hote  t  ad i  ee sa  sh re athe  h h  
+
+diversity: 0.500000 ---------------
+
+he
+ee  i nos artho t t  i smhtt e e  ett therea th ts te eo tns  aeatthaes ei tais h de  r otet heh
+ e nheseeee saelr t t aiaet tat e
+ei re he i he ecasee tht eett  ihri t  a  the i ath de edo
+d   a ee tloe oicite e  thn e edeea ile drr i a eo teaa u
+ede ie  r o ane ia nonn il tas e t in l ei  a e oa et   th toiah toe  hua aeehtei  ae teod i  heetenue aentt  i   ahth t i  heae hee  eeeteaatrl tnna
+
+diversity: 1.000000 ---------------
+
+se  e ueherthaesoe   en o nd
+t a aoon
+t sonherir  e dhse tte
+tt   h t r mme ene tat otheeneoc t eleneaenesouli t rmriacsenit n a tset nnehnoeoums  e 
+dh
+rh ane uucosre ostn oe uerhsrescohnl
+l  amrchllhoelaeitlco h ut thlsrueeelrmhe t rer lrrn  hesie
+t sltooe e ue  c laotterrs
+natdnoudanlootece easstha momdl  moa  o u c a dm u thhuctras ead  menece  oih ss sser  antotsredoi hoetda mecdolt a lm r th
+
+diversity: 1.200000 ---------------
+
+lorlt cen  ertaneedd m 
+hort cmdlsaih dm
+sd ainit snas srlschoneaa dt t
+aor  rh
+et snrhst idrhata medses ttea mmeeo et tmcnnehelnore hehnohh  cuia oreaonolhalm u
+rohtltuthanetho  ioaodsirlo t  utarneane
+ mm dtctdduethotuddc mctsllteamrnr l e ale  l ameearithtn
+amtn e
+ltedt a anceaseenihe oieri ar s eunh erseee aecse ad setcetle odiomltst i eereen  ant
+h
+aer im
+h t tlthtsi an inmrsmtaa mhcoetin
+lse
+
+iteration: 36 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 654s - loss: 4.5431   diversity: 0.200000 ---------------
+
+ aae  e e eaee    e   e  t a  ee n  ai he e     ae  a e tee ae  oe     s a ned eede e et e   ee e e e   e te tit  aee aee e ne    ee t eeeeee  e ae tte  e     ea at  e ee  e   e  aee e  a t   t 
+ the ae  e  ae eat ae tea t te e  e e ate    i the e ee    e   e  eaede ee     a aeeth e  ee  t  tane   at i  e   e a  e  ah e   et a   ae  a te ee e   te e a    e  te  e te  n teee e   e h    aa  e ee ee 
+
+diversity: 0.500000 ---------------
+
+ctt at  eendeaee   t aedi ththe   e o  ed a eae inee ide  t e heie  aie sudene
+me ee  oee a somt d eee te t n eceetnedta  aaoe e itaeehae lendau e e ledd t ed eeieor aeeeah sl  cerd  eo  n thoeeaidoede  tin oe t d  l t  e tdtosna   th e  el tel
+id d atmaa ede eeeeieet dd tte d  he a a  ae a ieu l ce le d delee eae
+eee e a
+ms d ir tnede
+ 
+a  saeaa te   tthe neoc ioeee e d  e r ascat  nethr  h aaeil
+
+diversity: 1.000000 ---------------
+
+
+tosahuht oin
+teutitdiienduooeh oaeris  ohe rnotdseeesi eda idaatiorsir heeeedaeeatemneetn d
+ aee t  ase  u   deaseho o
+cca a t mhhset sa s  creaecde aan lahr  eaaeiealhemlu cooet rlmlt ohr
+ruo soh o uau il t o u rhd  hde choaiiosshaer iemdt cl a aoo onaaoo ai h h c eshd
+i l mie enauuailmedtoao t ohu ahasconulcatahdctnreee 
+ oem t ehamar tstteniu lt  ee ae nih nod
+rmh  mei   ilnhm rdlntrdoto 
+eh
+a
+
+diversity: 1.200000 ---------------
+
+ssianutne sa 
+s in ooame  ar hum  i i 
+
+h lrethhh eld dicearatattlmsiassslo adeatdteido de
+nesteiae artiddaeuon auecsnlhdso uui 
+o du oea irollloit ttht sthnei m uunlor ca otoel   iane s   ehue eh i e isheulaelc laeni o hd oem eieo er tthmheeelehl  a i in  oireoucmums ni eoumeo mt sec
+eatstedima
+lun  uotcdiee nnne  ntoc een ta h 
+ na mdal oe me eead cialce ledadeettd rs sde eiadedeesellern
+acdlrli
+
+iteration: 37 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 664s - loss: 4.5489   diversity: 0.200000 ---------------
+
+   e   h    a     e    e       a a  a  e  i  e e   ae     e a  he s  aehet   t  o     he e aa     ht e             e     s  t s   he  t  h o   t   eah  tt eeo  es ea  e  ae e oh          h e   a   hh       t  o o  a  a    a t h    ee n    ni     eoe   ai th o   e  ah  ie t a      o  n ae   hoee  h i   ha   na        e s  te ae  e    eh  e  a   e  e  t   ae    th o   a e  h  at ehi t a      o   e  
+
+diversity: 0.500000 ---------------
+
+e   eaa s ee a o t aae
+ t e  oi se      u a aes s a ao a in  ca   iac i ta neotir   oietd dar aarhi dts r etes tuei ii  s h eeidt e en t r ta  o 
+ea e h ats oo nat e oorr e sa i loere  id hahon e  rcee o d  a  s  to
+  ea toiene   s   ea  e oued  h etn t he st c  e au  t r   l teed   a  o  enrot  deesa a r ieoel  eec h 
+rtm lemlhteh tho
+dst  e   tee eo o om   h   i he orn ameo  ree   am e oe    ee 
+
+diversity: 1.000000 ---------------
+
+t t aheurroe en
+ iomsnaceria   rhns aotlltoa  taedlhteie e thheat
+ n io  ie aenh hhhnl
+onmteadh rit  an ito umhd  ecrhrasio  t toue  hasd u duae ih hisu    iome em  ntittmo
+tmansad thut  teii detnic lt lenoa dtdemaunt ssriu e s  dtndhn tasdutca inr
+ hnln h mr hhentoeanoae n noch ieeeteehoat ouhies dlmean eh rel
+
+oah o o eo  ci   ncunselec ulurlonhreltlal as  c emarhle adres
+dnnrn at  l teceh ld io
+
+diversity: 1.200000 ---------------
+
+c nrdae 
+ito  
+ na tus s  hncchsshooehntdelrom mlieh rstmoa ssoinncd ndetdhnoce n eleso nd isemste rlerthiou oeasa itho tee hn  at oceilu
+rhoeothlesl
+chs heradno
+osimocelssn na sruen ae dsldhotondcnrrduiulootr hoshnde  
+eoe cn ne  heo  siil a
+rdlutchihedi ad r tao oen  oc o dnea mo  olne
+sc
+e toeidodhstdahictneucmounac 
+ac cni
+li
+a a  etrtoeitrdit s  ohe
+mtmeo
+uhu ushnateo
+onnennd  
+iesnrumtem tel
+
+iteration: 38 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 659s - loss: 4.5423   diversity: 0.200000 ---------------
+
+ h e ha   aeee en a ii e h h he s  e mt th a e t   i  e   ar ir  o    aas    ate hee ae ie a n  aee   a  ioe  h  o i aeh ee en  the     tat  ihht  o  i o  t a n e e e  h s  n      t oeee      e  ta   ie   hea the  ie  he   t  t   thi  a ne ea  ath ehee  e        h h  e   ae  i   ea h i   he      th   i     heea e t  ht e  i h t         e   i  e he    e     oe   e in n in  i h  o ae  d   he  tnhee 
+
+diversity: 0.500000 ---------------
+
+ r i a n ti ooir e s   ounh
+i  a ee  i   hshl  ste e  o  doee thse tat eol tthoti ieoe  m se eth i  oe  o  noes  a he i eih  ah  liie  an h oh  t ah ihe a  uth ne chid hneii h an e tl  oe t  o le   seare oh i ten to hithn  e  e ht  tee oi o oate h  o    tth  d   o enin  ohe iion soeos t ree aae as i  o itaieh iioelisc nouo  rthe ttt  in e o ne iir oa   ooui eotieiie ueaa lt es de  u  el hetn coteh
+
+diversity: 1.000000 ---------------
+
+ttanc a mcr ht tuoas t l ut e dh cihn nlsndstnriasost 
+ d  eidn ths ioso
+cihad  l itcu
+ tsiehasd s lealhiitu u iuoua en aahthiiehrhoo
+ao ait thseoe it de at adsosr 
+mioee utlnlreuast eoel tranhlr
+denu
+l hc drhe atn hdoeotuhenie sd  oi h eehe ae a eaim edasnhahiunl  
+ruslo alht  tstha eitnooahl danoiorctai iaceui ll urs nit  heoelenuimn sttrt  iinedeem odnr mnuntoleonth  lt    cmodaeahdanrmtlut dho
+
+diversity: 1.200000 ---------------
+
+adod s sret uo lelrn does hrcin ratathonarodem aosr ntehouehido
+el 
+ iosion
+heea thh ltussrtoohidh haalsidtoieuh rotartae dn  ad ne ishorennirllundeseeesh i toehaasahiiettttl 
+oonednilhed n reirdtia iihho c t tai  d 
+etdcmneeeis
+ldn t
+tuth cosmstueer
+oonehrtdonatoue
+ unandiiae cn tlohniaom idmiu  e ah 
+ar ieer enno
+ laoi hiesneeeamut  erin o
+rineua
+tsetohtu s
+ muenosomolrilstieeellird  aelddaso en
+
+iteration: 39 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 656s - loss: 4.5333   diversity: 0.200000 ---------------
+
+    t r  de    hen a de  tn   o r ae ane   eeie he   u  a ao  h oae c eo  a e  e a a th  r e o  o h o oooe e at ttean e e o a hai  t h   a at oee o     ooua ao o  oe  an oe  ona e t  ne a a eer  o a  ara o  ee   a  da ei a a  e e  eed  na oe   a a ane eh eea a  o  t ana e he aher  uoo t  o e       ae aro h n eh  r  o tnen o  th a a  ean o e  on a oe n ta  c d t aaa e o ao a o a a a in   e ae  hat 
+
+diversity: 0.500000 ---------------
+
+ olhhthreae aeena dteh e e  aal  dd a tr ree sae t coe  oaee tea dhuo deth a eaa on tedl o
+ e  oen     t aae ona e c  a eorre  ha a  te to ero e t do  o dhaoiae atne dlan dothr eon at ee ot  ao eei aro ehar hhte he nhul on   eeete ednenee eean h aane o oa
+ra o seste hi an  oio omeeo te thd l a  th  ue  cno r oeo    n ih our laaa tra  chnaht
+ n aseoretolit  ohtt
+de ed rea t    lo   ael le r are the
+
+diversity: 1.000000 ---------------
+
+  ohlr l  o eoaohl euta ednmorhn oronsttehr o ot dmmeo thalaaiaot rcart er mlt laamodaeinsea  oue  
+teoaota arrrerue hroue i uo  l lricndeinteaatoorhaont reehhhum so  ao a
+d aaih l rednrcle t reeo aehrae aenhosa sura e naeh uemadem s 
+e l nt l rne
+ourcaur tierlauchliee aeatote mlto iaeiisllaandond teae tusnhsieesn r etnaa  edhe rin oe sttte o ahoreeec er c cctthtearmne 
+nenas nis colondhnim
+ e tto
+
+diversity: 1.200000 ---------------
+
+thaait lrst ei
+l oooae cori  mhiahio  rahomdsaooaeheaencdc och ah d edana
+tsoain henhoaneth eieeoo rloilnauoetransnees rthcitdd  dea asedurati aotumeioudtmrnuuerrro m iodr u erd runehun or
+oh te
+ nd is mico tnatddo olirridodarderaedo nh er oee hsecotshuh r  mn tnsuetstt
+od  naesi saedaio noera o moen turedhhcrohs eahldihi trine tore ioaaaeo dlnleesromatdieanasm
+tsna drit al demo ec l on mnhdldeaas
+
+iteration: 40 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 661s - loss: 4.5390   diversity: 0.200000 ---------------
+
+no t  t t i t t  t tt tm h  st  t o  t into   t s r     hh a re  o  o e e h  eh oi  he o  as   ola  tn tatoi a  t   r  s   ou  ssai e  r   t or ho e o t e on   hor  a   t i  o m e  n e    hae  as he o h  i tr e inn nr h no t  e n ne   i i h  he h t t  tn  oeot  t t o tro th h  ou    ot ah ias   h  a a    o  h e  oo e  t h  ii   o  h o  hn o hh o n a a   ht atee e i ctn      e e  t  ei e    i   oe 
+
+diversity: 0.500000 ---------------
+
+ oo o i e   a ooa  tee m has  n d oos      he n  asrn c l r l  t  o onh   ou otohl    h  s an s  hhes
+  t a i i hrsthermiolit haei   les o
+rriu iilt  n er snh te o in tioho r t o is   ar mohe   hohil ot  ar  t o ooeelssal  uesre tu  h trel ne
+lsou   hthst   elio re n  ieiiuric  m h
+ilo e te sioe   a  s  o ltoa
+eot eo ee  hm o r lon  e ooo hie   o tth iih to hoemoi the te   th ou hela noune orseit 
+
+diversity: 1.000000 ---------------
+
+ a
+ h lut
+o mteerhthoc
+m soerlrl aeoor tmts
+tre lttemouentse
+nuahdtra n el dera e  tn s
+h leheohhoanmmn  euusndletn
+ l id    oaro clios nilaolo
+u todonnounridt rheroe
+ln a tmldttsstroerem sh sn teleirrs nh oel  o h
+
+tdoom   iinedrm  aatest ham
+de cr
+
+ coe oiunnen arhanrrl   l ml em s chenrarholce  etcosouruosocheneo is tooe ichnr nuhtietototrh alcor e h r ie n ohu otssoarlea sda nr  mduoorlleee al
+
+diversity: 1.200000 ---------------
+
+aaiai ilee
+loscro ll ah listhln nnie o 
+un t lanun odsd dre dherruthdoer lsrih
+atrr rthoorodt
+o
+li   hrutuanln l iestant hnouluoan 
+ihhataait
+
+l cac nun s  rcls irre nlat curmsisi e idltnmteihle noe adohlsindat n ri
+ en dn   arloohio  nce utaenccl holitrat mdhonr die  rioh int srhati as tt
+ omnal on
+t ccurotit rr h
+so  ana reotla  nanm
+cnimunstiu ouumac ilrouaioiierae rats r lr n snstnoornm eldini
+
+iteration: 41 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 654s - loss: 4.5383   diversity: 0.200000 ---------------
+
+  h  m utiis ith i s a   s  eii h mne    o o  t   a  ant hei oi h     it  aha ee a tioh   a    e aseh a  i  sth  e  h o  s  i  te    u ai  a ceo e i   a hi   r e   h his t h o iii    l   r t ou     iit   h n  iu ini heil i ian  h th is ieeia   a  s     hn u a h t  a nhit    ih tn at e ni  as  h      ie hs a he t i tihat h   heehou e t hn  h  eias  te ih e  oh th i n  ie    a lo  so he i  he h  he 
+
+diversity: 0.500000 ---------------
+
+oetto m ote tsi
+har heoe so e in eea i aie eoruth ini  imh t  ar  ahahn t himse iu haeihi u  eht ht
+u ee  ie  h hea     i ote oh c a o as e s i  snln oliai ea t lii   ore i hsih eis  ee i a rnnt uo hh i ea a  a lh t  nhe tl ton u i e i a   thalerdaht idrote   sh to s  thne ria  heoeil mared on  m i  ere e   i  
+oui  ihtiti our ue te o n o
+eo iso it hol  ae hee i uim r ins eeen sa aah ato tul  n m 
+
+diversity: 1.000000 ---------------
+
+ hhsanrtlhehe an
+sdaoi  chiiruo soithotss ioa tmetnihi olar 
+rhnssmh rsshaatld alieiad 
+ihrnit
+t   eae ioi n edih i ni  uad shee  iea uumhamdreit soeast  caessoi  imec  e  lnisch aichat
+o oe
+ld mouhei thuloiocur sicl tsnsaliasiroooa  os
+iue dear ho tarh eh  sur rmostthi
+her oh lo caosnot  ee errtuhoutr  nn ee tt
+euhmi milr 
+mouthi
+hcnosoos  t
+naileea hdn  oo sia mdiuiuardahaddcleedios eh sa  me t 
+
+diversity: 1.200000 ---------------
+
+ueunnds eae  ish
+l oi dinteilh
+sel m
+oe  iedt ltoom
+e nm d mthharl luadsomshmoenan
+iiue ratt dudtsmrarlc h thaihh l uaho mtoaaiudemiordalro daeoue
+no si anuotmrnuii tolcaroiohic 
+hinmhl  ot enh msetmitt hlu oose
+iro emihi
+
+llohoa msoaai heeemu ea
+ isl nto  i dtnhlhaht
+isao  adioeciu  aecrhil sinln o o hce
+loittirrdi rm eis
+ lloulheotdhiaa ae hs icdosl
+mi oe  aeso
+littrouilui  
+ iinitu  lemch eulou
+
+iteration: 42 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 655s - loss: 4.5285   diversity: 0.200000 ---------------
+
+t i  o   t   a e t ats e   tet s  oe h  t ie      e h   t  th te ee ti    oh h  o  o  te eh th  t t  te the  s  o h o  e   t o  ah ita i o  t ih  o o  i  ate e ae tt   he to   t   oh t oei  oi t   th e   t   e ut   at t t t   ino io sa t et to s e   a ao  hh  ot th a   o t i t t h a oi o h e  a t   h a s    thio sot   soo i    ht t   tet  an o  i   tee  tt  toth n en ie   t t tt o  t   t o it   th
+
+diversity: 0.500000 ---------------
+
+ aitsin t   s  ie   or le eeer s a  u nthhe t hl
+ hishes r
+ ti sr hh t  rr aneaoa  a t tsiars re uala t ae oa t r uthoamsn ii  it s hhet aei  tt ea u s itaouhd inis it or t  toa t r ilehnia t  e asantonce  os haen e een teeaor e  osohi   sta hioe tt e tm a suo e t 
+ aro thats  ih re  ondrrhe   to  e i st teo  li ar ho  tstteraene hher  ia ir aso ohn  th i ae a ritrs reaahai ao ts 
+edn  s t ad arro
+
+diversity: 1.000000 ---------------
+
+ hr amr edoialthlaehn mt hn rd hh naec rtt mrsrmluomaouaoesssr   eocoehsoa le  inhcoeeesaoaoliura leheietnet toh aate  t  eer he
+ ao 
+nsni rl tts i
+eum dee
+ehudtoeorns ttsota
+  aaehes ooedsr onauie nd
+ee iotsaeetrt
+tonesrira nor
+ o orene tntro ueeatoremar dtd ino ooa sr h nsos m ss in ee nsr sr eta athaaineac soo de aa 
+iaoneem  rdth ossttelso h
+hthon ten nomohar t erhe met ohehes slsc e rea c
+tes
+
+diversity: 1.200000 ---------------
+
+ a sieeisetmearlidril hti atrauoo meh s ers hl aaouoctirlotalreuumtt titsnsii t  hmalnne
+ici ndnarochi
+arorcnes t
+r e slotsn 
+ie  r lon ri  tucosrh meoencthamntutra r mta
+soturm onaoud 
+sd  lthaluniomn hrseirrotlst oltoh uidmr anieh ls
+us snnilheieodntsthise sinith    lr i
+ naiete tlmon n s dnsoe oeeoioc seainc r ritil  tsrariolhra s  nen hoouseu l hocu
+a t aasdosm hsml maeme ae het s an ta t
+erre
+
+iteration: 43 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 656s - loss: 4.5276   diversity: 0.200000 ---------------
+
+ t   ae     t e h   a t    h    tt is   s  o    a    e  th  a  t    i    t  t   t   o    ie  t  t       e  s t  th     o    tt s e    t    e  t t  th   tit      o        cet he o   t tt   h m   te        a  e t h m i  o t    t   t  oo t     tt      o            a   t    t  t   t  tat e     o   ie      ime it ts i e to  t e   t  h    h tt     t           th    o a t t h i  o  ie   i  h a e  t   i a
+
+diversity: 0.500000 ---------------
+
+io  o ate o   i ai me er m t tn  t s eie i i   ih     m h     i    o eo  ad  ia i s e a e   ien o  h  ittta oe ies d et s t  ce e  ane    t ttd t  i it    e  ot  h s h shet  c   t   o t os o icoh m io t  het te   h s nh eoha i e is  e   he  t  aei h t    rere rii c a c  te  t a t   ael io h  n eei  t
+tls h ii rcc t  ht her    o  o  a  oa  ad s aoe  is  e    n ei   tt t   ee to t   ar t hao u al  t
+
+diversity: 1.000000 ---------------
+
+ec hie  t  ttl hstot tto ii  oeht nos samnsielto mttehonr t o  mchad elaiarc ntr oee i aeeeeer  n mosha sehal ai ramr r o luh  teo mlomis r 
+r  aeish t i  e  ooasln
+t scnm inonrs
+ t aot  t mn aoah
+ os er hmca ttie a  atu r    mto    sladnh c trosce  non cico ieiota  
+reitt aueiditlo e  hio rt eheot nheacons a   cus o e silrneis otsont
+ili  ethn c a   ehcamt li in  eoiih l e o s no  m ou  te mroimt
+
+diversity: 1.200000 ---------------
+
+ioee i
+aaiadd ecstcr
+it r  t ila imsenstousmtetnai helues hu 
+tt ol
+aulucecaau u aiaeeamsmlo  am sa  hutt
+mes ut o ioite he nnaso rtne
+u  h
+ tuocnn ho
+aeriadeheneo ae he deinee  at hdeaa
+oa uia esreoc  lecectltsea lm cin  mnsdlli ie dci eh estrniaoei tco rihsstdedslihlteesnalahe m t cooasso
+noeees t daast irrerr mne  tnitc odnerestaiarleo nihmhhi csa o unc othta
+io n uhen e  tst
+  shnooiro cermaoi
+
+iteration: 44 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 659s - loss: 4.5314   diversity: 0.200000 ---------------
+
+ atta onu ono t n thne th  enee ne  to  t    o t  te nno  te t t th toontoo oeero t tr th  te tt tae eo on  r tat hnt otot ne ttto     to ta   t tn   thettha  n  ohso o  to ai  atn  teat  e tt an eto tt t ts eea  tnot t at onot tuo  ott t o tooonno t  tno  oo o n h o h n h hneon t t    attto   to a ne too  to too  i   thaee h e  thone oh toin t  n o to   tth  e   atthot   on a h t ehsin tna to n  
+
+diversity: 0.500000 ---------------
+
+ni  
+hn h dt aoselttoos e
+i meod  hs socoureoseetsnhdo he o  eaesset  t tat ouoott eot
+tt s  aho otethacun ttid deae oo toths e teesdts ohena
+oncesho ds  tsetirna nl u tn o mnoec hn t  oe ntone to ttsnn anlae tre sth thrn tne t o oennt an stneia otoeeoaissod e  osh t  toe cte   ihes an  satoats  ioannin  inaeoe t t sonr t see
+ar etst cs netenoen ot  onhtetltne teto on t  mt ttt hs itoeeate stt
+ n 
+
+diversity: 1.000000 ---------------
+
+lmtrta u th 
+amshdtoeelee sort oeao ole noh lintaa tehahoialc neehodeteaoic 
+rod osi s dtne tnmst  nreimoosiihen t o t oosmmeceshneta teeuhth em ou aleu on sete o  hs
+thsretecoedlh ios as toils heo   laari ote ecelnniriu dilltsna toaaruotedo r
+tisn out oronr oilldee imenmtdentaietis catiodoet an coe a tmrndcraoloa sdtantts t h 
+o 
+o ceme rmishsnnnaita r   cuenautonsinhennin tiar hr oi   r  ocn ouo
+
+diversity: 1.200000 ---------------
+
+et  no oaiuh coh ottu s
+i aonoe  lataonr
+ooiecaa
+d hnslu setu daeeoaer htonnu ncn
+setrtemecuemonntis ldteencoaaor sodd h 
+nceeemnertmnrost athmoeotsnoltactschsuocnsndnnnt
+hiers nhoelorue aoso h ni
+h uurusd
+acclr atoteao
+eeidnh dtn hhndmaerursre hi ho atonmi ern  ndhnd tod
+ rltuchrtailnlddeistoumhclctoitt utamddcassharitooa t lmsoinelruslsn oedamhtot
+d ssdh utn
+ntoot n sn  dd mcmndmnr
+oooorcooosser
+
+iteration: 45 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 656s - loss: 4.5375   diversity: 0.200000 ---------------
+
+  h    a  seh    te   h  i oeeee   hade     ei t  eh    e   a tn he hee  aa e     ee  ae  e        a  h     eha hh       hh  h ne eeh h te  ehe tt     h o   ee n   e n  e th      ee h h   e ie   e a he   e  a e    h ie e    te m  h rh  tehee    h  e     h     h  h a o  t   e    e   e   e   a e  h    a  tt e  a e  t he t t  t   e   e te  ae   e h  i   t he a i e e    an h
+e a   o  a e c  a  he e  r
+
+diversity: 0.500000 ---------------
+
+an t   e oe oene dc  ne  eer u  aea  io  o en e  n ie
+n tt  ho u    e   a ha e aee d  h t      eh   oea m  ti  e r   ne aee h mee erhn  ehe ee m a  nn ceeer e o th tn a  orr tre
+    ut  rem s  ee th i  heeeoa  i    ao aieo a h s  noee eoeoeeh  r e  ce  r  e  seen tt ne a hoe tt  i  s   ees e h  rose nae   eh  lie rh  reo  hd e     
+ee  aeu   une eehetn  uta ee h  thea rh ee r  o e os h  ol
+e    da
+
+diversity: 1.000000 ---------------
+
+oers eel its se ehe lro ueeslcean stsoaienenutt ih t  e naa rt   tnomun r  ti
+ohe roo no or theetae  n dhaca
+eaeo eroe ndce tan oa i setr eamr riiohn   n un  a 
+e t  hi inmeth nd ece snn  slr  urenloned m hheni   otht   nreuc dm rer  
+ oitdheormhee rernredar ild reraen resreet
+r mo eir d
+ei dmhlae dis t
+
+aeendr edd oas ase dh ou d nth rodua drh h ahdra eete
+e reeae  orheuinarecsm eh e naehmeoatinu
+
+diversity: 1.200000 ---------------
+
+e   nato
+a uehtimooo
+o dhhr arrrho
+ dchctenrhui th edan c eer i  uhi ihoe did 
+t
+ldeooiscireo irc atd
+enempeil ca t ttar
+
+oue  eh 
+do
+hnean
+e dud et u d eehachlt t ahenerho d 
+rr nn
+acdhcneam tmtne aneh ttdaiad
+t
+hdrt   eteee ounssodsar a et  sich  aea chiueoen  iroc r rnaihh  asnldhrre e nner  e
+hmsmlehhnaheett a e urcsm  hr ueetedhahun oehdehtu e hoei mhedtan i  dd enecltr teaenr h olsr recoi se
+
+iteration: 46 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 657s - loss: 4.5510   diversity: 0.200000 ---------------
+
+ u l e  e     e  n  e h  hehn  he e    s  ha   h   hr   t       a  l e  e ee h lt   th ae t ne n   e u t l o   t  t  h  t   h       a ser  s  h  h       th  sne th    o h t    hh t t      ne  t a  he     a  he   h o  thei l t     eh heo  e  h hh ea t   rl   ah   h t l h  t    he  a hea       e th hh  hee h    e    e       le ula  h hh   eh  e t hn     hei  et he e hoetn   e   to  h    t net he  e 
+
+diversity: 0.500000 ---------------
+
+  lh  nathr l o h se  o hea td n  he  ehens hnali htoo u  le o n  iha    th
+eoaeee uhe  tnnass ir ud ea nd m      aee sl    t dm   nrtaea re ltte ti ti  ce t la h  nnrhl o  lr n tlti e   i hai  d  e a aih  lt sete ia  ee eee  ee se l asro  t ta l os  oh ele   oanett  h rente r   e e tneee  is  h  s o  aeele nee lde    n hs admtceite s  ttae thea  a a se c he    n uues  a atesre  e nt l d ae ao  sh
+
+diversity: 1.000000 ---------------
+
+a udau h u hestrissh tnserl s atlann
+see sdh o a nteno th
+s  e iede aoahre   erdads snithtiridecroadm i edsrnnusanmset dtontlnlcr e hhelre  nn usth te
+theehme i 
+nscaoicttha mhde ertteh e  land rhlonsdh etnn au  rrenoeanhtol  sa res a ueetle uisn set h i htr uileaahldtmahhceraa  onsntet t aeel onnaht l l  lao e  l lteho  dt de tduen  dr u armue raho e  onrtrclohe reune  os tt dlncl h aaanreiatl or
+
+diversity: 1.200000 ---------------
+
+s
+ hrmedo snonemli 
+erenleila htaeot rion losuithslaomas o d teh ndim dd uaso ha so rut ho etiauaao  omdrastts daeor
+
+snlhle tu tshtdi atdeloho til  
+dso s cocorreeoonniomc le u eto tmeurlensu onturioohaiiue sceneuhnld  tdt merru
+te hc a  d lmrh   isr rtthu ne a caeea  etleeeidesaa 
+ issos a sesermhm utauasa rsn so tcsdmrlolaalmllnol
+nl uun teehsotensadddot u
+shrsnseha alle
+h d  aeredm nsa mslltmi
+
+iteration: 47 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 658s - loss: 4.5484   diversity: 0.200000 ---------------
+
+e     t  t t e  l h  e s  t s h   he e  o  i o t  iar hi   a n c  e ret  t      a   t l   l a s  e h en s    e    hae   ie t ero    te    a  t t at  t a o h teo eet e ae t t    e a  e  o  a h s    t  ne t tee  oe  t t     th  a  e st  a s e      eo t    h th  t e  o    e ti    t   t
+l e th t  e th  he  o n t th    et  tn    i   t e  t   t  e   ah   te     o  i     e th te  o  t e aeth c  at  t ae 
+
+diversity: 0.500000 ---------------
+
+ neh iaa   iaes  h ee 
+s lth to  h  su it a  oe d  inhein t e     etit t  antrhse se  s  hh  t tn  ont  i h  s ionr r  uait ene ni erc os   oeeei  ie at  te  todan mst  ah  r ie tt  t s shnrtiu
+ h sor ae rets  t inou hehe  
+  suah ai iattecoal to ct
+it  o  lo h hade  tthtn  o h  th oro ah sac ouhi s  t  u d u oehiisieen t et
+  t  or  do eu n  tr ae  e ten a totehe    t  e hodoo c n  ie te a t ih h
+
+diversity: 1.000000 ---------------
+
+
+uieh  sa on  netmtodt  dri io t om shi n  o  
+anose
+ih i earoi rin s anoee  ae d imiethr tl tr imrr cieurham oe ocnucacet  tm arh ohss teaheiho lhte nitsemm
+ adn  c  hls sstd ser nr  elio t nneitcecarcenhatrastto oth uec sinidr  a tudro aaol a saoe ranre ire e   tha in ust ettsi i oeihns re tom t ed m u  ho u cotse  tn  rneau  hi
+     r  ha cas
+  iunldncnahoaheomiescu  netarcccionuhiint d h et le
+
+diversity: 1.200000 ---------------
+
+od notai rnh r  lc hrott tuo nc cl oomenanri toncie cdhieo t hsea as c neh dcaet ndoscohimcatt atdnacn  d rncorh ron msrtt
+nschcirenehlsiiera sr msodt tstcn l ersohrhlceetlaitt hhtoordi esoreh ei oinea alim  nodlemesl t a nui no hn  at   aeere no
+t osehn lrnsholda taoorlttuonmt ustaaa  
+
+ ltlnm ne tatn rth rilaet ttot i oc tihirhseet ato 
+eoai eltrtentno no hahttuohotmor esmat ue    aoto  ste cnni
+
+iteration: 48 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 658s - loss: 4.5476   diversity: 0.200000 ---------------
+
+e th  he  at  te   t ro  o    h     eea t  oea  oh se t   oo   no tea  te the    ne e    s  sa   h  r  a t t  e  h  a int   tr  h    e h   to o   he hee e te t  e h tn t et    e  th ie hi t ethe   o h t  o h  o  te he    o   r   t    reo s   t    oo n  o  ath   ai  a h te a n   o ot  a i  t h         i  ote i t    n hen t eto  t h   ae u he   t s    h  e s t o    r  t  tl   m t t    he o a    i h 
+
+diversity: 0.500000 ---------------
+
+ o t  ooeit o tsu   ea n  r   tt tr s th  etes   i hehe  he tteas  aha r olo h  soa di to  h  a earda oheue  e ne eest   tlte  in    t lo eiso el elt  niri  tm et  t olornortdh n a       t i   srour diedetts  otasreher tie a niitaan t s    eioa or s i her lai cha tinlo i u e a ith o ha u tth  h ste  o r eeett    tn   rs e re  tooers   e lt oto  s lhte o  t nne ha  i t tr t     ina eotoi     tnh u 
+
+diversity: 1.000000 ---------------
+
+n  h r t e ue
+ srtmun on oiilhocea lon muu r ctilnooeosetsea  ha ho t  i iheea orasothe iseot mrlornrhe otrrdoea mcih nin cdh hhstrr
+tinrn cddmthae t drsh td rctledmriahrhhh  odalr l aneaeamtnue or  uec m hrordeslh s m casnctn helotorrehnoiienoeet it lrui sree ddrreado il
+asist sneroesttmio ouiinaemue  ar  at cteuea ahraetonohisms h nnh rooem
+eh misenrtheosr
+ hrer  coamot  ieeeesntnhih elo e srnsi
+
+diversity: 1.200000 ---------------
+
+ne ni s
+laosn  hoshhetedri otthiou
+  nnum
+
+d ahmtr u oerdnuenheth rthnsmrna httt hnra  o
+ddeshrs ouoo
+oh ihsulloemldme r cus ts t
+
+uh o r nreadau
+ ahiadicul  serr
+ahdr 
+ncr etciluihs a lhislt  aao  ihtt mnshtstoeh htcteitenrou
+r ntthhoulot
+t iides or  elommlacd 
+ lnddsmnhtli lh r ddtt i ac
+r  uuahtrilhoi matol iei  ca
+nctlinrn iiee oou  udoun ttri ahto err ee
+l ioedo
+roumoasthi sc aeeiheeh  ssm o 
+
+iteration: 49 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 656s - loss: 4.5481   diversity: 0.200000 ---------------
+
+     t   ohe  he   t    a   e  t     a      aee  t th  a  uaha  o i the   se   s  a     onoh ne heane  a e   a naea  t t   a e  n  ae n  eea   e  e t   h e  e    aa         r  a ee   o   t t ae   eae   n   aaie   e  o   a ae tee on a    te o   n     tha nos an t  ho e o es   a  he  ae e e e  ah  he   sehae h e t  a te h  et   s    ne  a  e   sa  n      th  a he  hh   no  a   a e r h  aea t  h na  
+
+diversity: 0.500000 ---------------
+
+e atrhr  n ntin  t anmnaet h e san  e teaea tenie ed    saa r roni ea ostole eetn trad ar hesenono dae e de sh te   t ta  o toeena a  t tte m da lmrenen he s nrn trnneasatn   oaho nooah  ncu  i  rh are ursir misoneao  toee ne heah er  a onersthon a hno nmleoei  it  s e ntn steta to edreo roo t int   d a n ch t i ne a t en m    leoace  oerr   lat     oa rrs o rh  da ne s e ao    r  nm   eie l r  t 
+
+diversity: 1.000000 ---------------
+
+tnda oce tertnus ccrdu aotelot rieorlllho ssen mtoraila
+neel enneeens
+aondinia ies iei herlisroho aee e um
+urasisieno hleor niaste  use o
+ elmdrnucnotdhi nome tl oo  ordsn a  d
+aus aacrut nul t ediedlr 
+ nchaan
+tinaleilns o aaa taenuantdhoeothaeen
+mnnahtih  d dro eoaoss tl
+tao sthrneee  l ne s  m nt healonimtnndr  taahldaer eee
+heo em nama tluaioeehen ar tod re  s ue e nr d ul oa ttennco aer  n ha
+
+diversity: 1.200000 ---------------
+
+ar nn e
+so tonoheonhthnenm dansa laseit  uieadhdileletniih irt
+aie tsoni dnel en snooineu  aredro thnrtonscloh ssehinoinr
+osnata  oaos eandn rn e n toasahiaartea ceia anne mhhai ain
+aah rehsuaa eteni honlton   lc  nienoes ctoeneaune tnnlanm o rentaa doeuhdinhlhrn tnd dsoecr nr erieh aoun
+ol  laaon o untiscshrimloi asehle oel ttool  a aot seiomilahoheeeodha  h laemdah nsus
+aelaeca he mede
+ec
+sr
+ati
+
+iteration: 50 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 654s - loss: 4.5448   diversity: 0.200000 ---------------
+
+re  hs the ehea  he ten rheeha  ied  h s th oet  ian     th ue  th henethar ath thed   ht h   n n e  t h  h t t he hha t thee   iehe t tet the th i  the  a en he  n oethhhh te  t  h  he h the n ie a e  a an t a iue th hae r   th he he i h     ah i te  ie ah teau  as he ahht  t he  theetth hee sea oih e  thte     i a ae hie u eroed  at hee ee  a th i t t  to he hie t iu ie oh   he   het th   irtee 
+
+diversity: 0.500000 ---------------
+
+ih  hi h   niesalteethiha ohe  sserediee tih hr o di leraeate
+ utu ee ctii  eehet tehehsa sehahe aaeunde m  neatodut uha t  ehoa aiu shheeo  to tein eteandsalhehin  thlmnanee d ste no e ii tshhi  oht tho
+i hinru ai h  aeu  r  oe airalnth sh airena  hte  t eeeh  eaed n eiaeie hu hhii its hrn neerhr a ur thet  hneirat rh ieed th 
+r  ett he c thtnn   hshedeithe eue erur  e te
+eeseei rhno h o hrtchitd
+
+diversity: 1.000000 ---------------
+
+e heeeentui 
+rsihc  in ai ent iohetohnartnt udohsimtothio ralas naunlho
+r uaaraha  touumachdneti a rin rs daseintrih scdertaetntade otes iaerse dorrt n aaneennhietotho
+eh helehhainort sritttothras tarinn niterhrtt aeo
+h tiuecna tlirhrtahsuuemsr
+shadaaidinho    hech hhr  udr ahoruent ceeru
+ioe  r i   rtrd rerahion
+sheautraso hh  euastaia hamehc at etoh
+
+harhis iniaeea oa lhhi
+ esseldrn
+siueoel t c 
+
+diversity: 1.200000 ---------------
+
+  esesuee theiltrenhnthmeo
+aeriul tuteshraeth es ehioehoat rs ehtotau aastaautdmudoruht tihoh ehamdut h dnian nturanlsst
+ ttiheersr
+ddaad sshhastn rreohehsilddmai oaualtn  sr aeaioaie ooeeloriehrernl eoh teitalei dneicltonthd dlirt  t a li se o t ucliieulra ula ithsh u  t e e teoorihd
+un hentaesuttuh hm
+elocn nt r unolum
+aatrs n stla einanddrhirhaic rnedti a nttee hn ia rt  enotlnoeihe  toa dthnre
+
+iteration: 51 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 657s - loss: 4.5459   diversity: 0.200000 ---------------
+
+a   eer  r       a  i      t t t      t t t a  a hethee    e  a
+    n  e e   ai t  i te  a n  a i   u  e  ae ane t he    t  te e     a i eu   l      t   ta  m e    m    a      t      r    t   a   a   t           a e a   t  a    n ile e    t a    e   m he   e a       teh   t  ea  e  t   t  t te  it   e a   i    t  a n  h t t  t  e    oh  t    t   a t         t  t t  a e  a     t e t  h t   i e a  i
+
+diversity: 0.500000 ---------------
+
+e d ii e   a  a meti l   tt r raae annde  r a  a a    m   aad    n ne neth aae ienoiht
+e eaet  t h   he n  t   eedr t   aoh a   astne r  se   in r  nlo l  he  n at o hn m t iut it   
+   tat  ieate sa   tae thaa a hi ei  a at  hito us t i    e rh aae ie se e m  n  t oaa  a ee    e aie   r     l a taei  saste    ae tl  e  a  i     ut  h a n  el  h  ar  nd t s n hn ht  a  er a t t e ie aa t    th ot 
+
+diversity: 1.000000 ---------------
+
+ l e  min t
+u a i oorei ieh rt  r ao an ht
+e ademna t ith ni ttancal nerecensn
+ltn hl    toto iaeo    arle dee teanr
+uel n sle
+hlte li  tesr te een atdllelercamttrt  eieilm 
+l ntan  ts l no   hhlaes tra h uesei ieee  t
+s ca  nemanarheeoiiednss iutht   s
+ ees   ctasaro elt
+ icuou  s i t eir
+ t ra  orlo t  d n il ediac  rm
+onde te r n n aee  tn thare
+et anadeueaaliesmtor dt md el o  lmaus  clrt teel
+
+diversity: 1.200000 ---------------
+
+esetodhs  ri ni oet tealiemeescuiaeso t eertd a
+ins d e rthtrmucaomoa  etto i  aloiseu uaramln aaluu a  itlt ncde reh
+i tru se en te otoidn su n el
+hte nn hin san mihl iaandahitsh  a cre a
+an lc  ormnmmsear sool te idatihanh t teeeonn 
+ uut o leeiathltta h
+ri tnili r eatrilenetelc co amt cn
+  t ul ahnrin trthu humn i rl eiacutu
+oedsisel oot s lica netsnnc doittrieolr  aendearhhlrdia er  st astiris
+
+iteration: 52 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 658s - loss: 4.5456   diversity: 0.200000 ---------------
+
+ t   i he hi n tt   i t     h   h    e aae   th h  t ae   h a  t    e t e t  t a tt s t a th   a  th  t a i r    i  ee t s e        t     ei    oe  th   o t   he t   e e   t t    e  e te a i t   e  h h  t he  st a aeth t   oi  a  te   e   h    a    a  t     a a n      a  ai  t s t ae i  t  ahe i t   ae  a  t  te tee   t he t e te hae o i  ore aa    a  t o th s    e   ta te  i o a  a  th e a  a i  
+
+diversity: 0.500000 ---------------
+
+t o r   aetsi t mises   a  ie   the  o  on 
+e ho  ouaia  ienhn  ocahesloh e s 
+ t e cteh  t nhuhha  e   o a n  thaee td  un   rt i oen   lar ee s sotnnhloe hoe   iil  ias  a oo    a    tinea aat e   ti ie ei e  etoei  s es  helhand nm t   t se atu  e nt e  t ia t otl a eteeemetil
+  shmii td t    nt  t hn h   ta  ieoh t le  ah  olot d she um thial   a  o o e t s a  a  u   h  o eeeetoler o sa o s t 
+
+diversity: 1.000000 ---------------
+
+ n d aueeelits
+s hieandasnr utdil silaocsa 
+uts ro
+sne d hmlaodms  r sam  unr rossnciet ian i mi oha eri a e ahrt  dhi
+es oni  uslotor uhn  aotrseil  istl ndad  t t oah autrs   dromheite ecncenniotsant ne maaas n  hn titte us tt sc thlenoohaeso aloideameitto  
+e h eesstsaii
+ie t smmn dasotn eeomsoohsr o 
+ rh sreiedtaeatamseta tr eah 
+trr oin snald os e eeeeueereu
+n ni ieool lsor
+rihle td r oest
+on
+
+diversity: 1.200000 ---------------
+
+olse idcos it  esl mih entr taats a
+esthmthiuoih  ashen ai 
+lnaa atremanee nelulooh is ndsreiedts  otsham  msasrl oat  r td  a  nhatodachtomiao atnsereiine  e l htt m e
+sahlniuitr hsethacic iuet roni 
+loestm ath mhe d oeth oheic o iued triuee  t ros mic nee
+inldtcllrdthlls o ue
+ th emo tne h lese ehteasndahmuescd ocs
+  ecor snrie nuoaednmerd hanln ue she aleaeeirhndes
+sictrnd d  o unaat m dutlootr
+
+iteration: 53 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 627s - loss: 4.5479   diversity: 0.200000 ---------------
+
+  i  t    h s    h  h       e   ne  t so ot      o a    i   e ca t   ot o   oni i  a  o e   h       i  n    en a   ia e i      t io  h    s   s t    i    o     t  o t  tin  s    i    a  j t    ii      ue      ao  i se  ti  t    n    io  s t etoii     s n hi         t i in  h    t o    to   i a oh       tn  lohe i i     t  t     n     o t    t       ao  o   t an      uo   n     t i  t     us   t   
+
+diversity: 0.500000 ---------------
+
+tto s c sl s   a i t tao  iaoo  ht   sti se  l dm  t    s t tdo ir   h t  s  eun ild   so  r t n hr sn ts or t iia s  a  m  hn ur  ao n  a a t  a  tis t  st ia  odi d dennutin eor soo e i ht   oo  tito he  ond i sohe ione nsee t  tshnae eutsa uer oo  io  e i  a t iedi e sro aoethl tot  l c    iaorih    n or  i    ioruo    a r  ro o lae ni r sehte   rc t  t rse c s s set o  ie   o iro  i   e t   ia
+
+diversity: 1.000000 ---------------
+
+smdilc o
+c  e h lt
+trchttmeo  thr ilstnod  
+et dsl natea cuth  ouihlh  oi ehuho shtnr n nlnth   msld tahis nnee eim e tri ti resatc sao sc
+iaalstnn iu
+  ooscnnroresa adil ihttu no ia ath  eat  s tr tlhecmarlads 
+e rint ed
+hiednsdoanels    i ms aanieshs ratt
+ntrrdnse aasonlus  i  rtoed  oi asha  t eesatu i eici rcta seerhsi ti hl
+ er
+ auhralcs eoa t t ltc ad soeshtro h entdise
+htit e   isoiaiainnni
+
+diversity: 1.200000 ---------------
+
+shuh llntrtionccth sr n
+euart t  itm mecr road us uodneo noudad aaun motn
+r  onmunttorleuhilhisheihrneihuctca
+ uoesh t uosrelh re es ctas esnl     uamhs  o itohth s nuint nrsc aeh
+oiacd
+ne msditom rssshehu
+aln tl lme hhcdhl
+ae  tesi o  a  aelarue nosenl r elmre  eaenntshsle ish m etletldinitrn soeocs ihddroion or
+ ntoan oti tt ullati a
+iun hioedreeesecte srlnal  d iui o oerh hd siiesahotdultie d i
+
+iteration: 54 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 664s - loss: 4.5454   diversity: 0.200000 ---------------
+
+ana hee  eeee  sn to   eo the  e tro  t ee the  tte ae th  ee   mh  teemeaee     t  te  tedoe the t oee  eae ee ar   r n  ede   toe tee aa      t he   n n se te  eeee t e   th tee tr t ta a  te t te s t     te ahe   o oa thth th hereeho t e t    th h t  a he    tth  eehe  eeer  ohee  e t e a e te t  th eeete l e te  t o n he haaeeeae  t    t   eet  t the ha  e ooe o e t er te he eh e t    t  re te
+
+diversity: 0.500000 ---------------
+
+treel teeiae  eaeh l re anenns het ee e  s t nttat  eas m lora e iees hleond so  re eehs  eanore trteo oaso  ooeed  dc  td le  h s oeroaeu iee  tiamhe te ue tia the mo  i hi  t eeet e   e   otos ttn iheo i  e   oom t he  ot t ae toa entthese te naao h     rre  oh  c snmr r h eeo i  t toinea e  loehiraneoror ttn th   etehete tdeuilhte  tea stne  ua oue eaa e
+n hheueertade  a h     tertetn te r h c 
+
+diversity: 1.000000 ---------------
+
+todi tn toeaoethomea aa she do ard e
+e  iaodonh oahi   h cetmrhhueaotnh lhaeheaaaet
+at ldotrteal
+m ti cnrt s no oteeeotsd h neioeta
+thea  em s m le eeuhenetnd t es aaaa  e aaecoehtrtiathcr cttne aerar s t
+ chr
+  aneimrld
+tnh cn 
+tohoteh
+ ersn
+he tsherathnoaae eoh metsdrdr st msrmeldeatheu  aie trt  onuaoetotetu m o r ishrse rrhdc  eeonor ll dt oettten inu utatc rhedasoneahreo oso iam eo haaeei noi
+
+diversity: 1.200000 ---------------
+
+ttaanchamt nesuen arineetete orhdhh
+riom
+ee dthlaleiateemturhdlhc smcc nro t e na dn ir o omt
+ldnueerls oroleromto  salurheoo  sheconhhtecsraulmeaeldhiaeh arttn  doo drrau ohoni coo  ie oh  e mscrtoorar s orendr meohlrt aiistrttodoimoom m tor nh aamu tt de dodmeou trnrn choeethhte oe nrlasnsmeti
+tsahehhleaeomdc eou taa neothtm rr
+hslsrae
+ona esc oo enreeotoeoonimolaueih us  oaerul ucoaheam saemtow
+
+iteration: 55 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 1594s - loss: 4.5464  diversity: 0.200000 ---------------
+
+ aee  e e oanee    a h  n  ae  o e    e t  a  t t  ee  t th e o   a o h  tor      a   thie  a e e t i a te   ta     he t   oo   e s  t  os he n r t ao oe  to  o e t e  e t aa a te  as  ehe  e a   hot  a e ae t    tn   t i ee a eo      oe u  a   ete  s t  h e t  a    ou te   n e   a   a eo  ne   e  e ne  oee ee ts  se e oe  a the t at  ao  oe n t  eo a n t te   e a te te e  i ne o o   ae  a ae   o 
+
+diversity: 0.500000 ---------------
+
+eorl   ae in nne e noltt t eosoes a aente o i  lls r t   s os  ts i   tono  t or uee tates oa edo ie  o eothes       lh  r a   donas 
+ ed ts   ete  aste e i teree iaee eia  s  at    toe a eaue    o rea e s aereo orae e   s   mla a  eeaa ere  aae n aeie eo  sene tn at  toule r saor o th oeln d o to tot dlte  aiaee  ee o to  teeeeoeoet  oaserec a o u t  it oaoa o  at nn  tio  eeihr tans a  han souhe
+
+diversity: 1.000000 ---------------
+
+e uistenthlhd h lrraoitdelt ia aro a t nc n
+ld leenanae hcitr lsalmer an o ot lse rah thi ettae ou sonhatr   t  teis  ae e s tutenlariith e oit et u oatlasan ooit amtc neihea aarud isedoaaeeuea e l l
+rh ol  nunt ceeeeeileae suhu
+c   le iril a
+ e ot rut tslioossoddeei ienee oraten n ttl tan crdon
+cuc ct u s uhr   oromoaetllihohieerlaac seh hrea 
+h dltloe    tro us ohet o le s otouh edouet  sn o adh
+
+diversity: 1.200000 ---------------
+
+ ron tooe tere othtrh enhhemesroo
+ndi noene   ort
+thasusnhuaioet  cosn cie
+r
+eoosdi aec
+ssh eutnere aarcsa  hl  eo rts s ucloei imds hlslenah amsaaeu 
+ t oi uln rolos omalilnrne ldnahh eernin
+ s cerstshrdrltehlhall   eo mre otlo  e ceatil e us iauuoueha tole atlaieeraa dusi  h tirodi emant ahietoehurdansco
+lm rco lide omtlousnr seonenlhnintas uoceuclrelli rst uhesre hai na d drso ei  aoss  atitrtt
+
+iteration: 56 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 690s - loss: 4.5455   diversity: 0.200000 ---------------
+
+t n   t e  t t  h    te eo the it h t  thh   tee  th t    h   ht h t  tet n a       to t te  t   h   ti h  t ie t   t    t t  t    teee   t  t e t   t   t t   t   t it t t   e tte   nre        e   tat t  th  t  tt  en    h t  a t        a t t  he i ie  i    tt h a    e t  t  h th h e t   t i     t   ter    a      ht th     r  i  t oe e        n     e   t t t    t  a e  sth a   te t t h t   t t te 
+
+diversity: 0.500000 ---------------
+
+aun  ame   
+nes heta   a e  a r te   thasisteeretoheoth teoron  eeit s i n n hedhaa i  heese ae  he   re t  sh e s th s t tne  mnn  seeen t  tnti mthn ts n h      a rhe m de t os n i ttn s ate at t oe tee esie  ante t r oir s t t i it  t i m  i  he  r   tm nr  t rtesr   r ne  tedtech  ra   te rete d 
+in t tdo ameh ate  t lh  lc e   tt  c te tthert tdei t   he oet  thleen u h heaesh ne tea  thte t 
+
+diversity: 1.000000 ---------------
+
+aseertoeha
+lh tnnsm a in ae ii  hoictricset o nsrh tet ru r
+  dmr ic t nttmuheuilc  hdt i rrhs  tennuenrlth  ha dnsaae
+na t e
+eats c ntinlrthehs
+rl snai torhnhuhho rm 
+ame o oitnert era c ircesii  nethr
+r  tanmd  n  t nhte
+e mthe nidi h hall
+ae
+ ndtl  no h  eho urilinlessees tdinish olnht tcc olahnrneartodsta 
+t eh mlei it   tderii oi o t orl tit e i ett imttrs oa emthaa lo nd il  ntheoainsae sa s
+
+diversity: 1.200000 ---------------
+
+r t  n
+leen urauachu
+rddr  nu i lstdthsosrtn nthat cl rm rertssn o 
+nrearenle aaie anaiur
+ shosa ialessu dinondhorcnsdss c onnsld  u
+ inend tutoth nte ce  dih
+netstr
+leesm aoue  oamom   itit iod er  l ae do hnod ct artmtiloaoutrnuraindeelidoeoe tusuna tieeo diihira 
+ere ntu  do em atedrl
+rsdoleitrtat o iso t c s e hotshtdri aaade esuieschon n n hecint  tui
+a eh e sdunl earo taoe n ceinrunt a ts io
+
+iteration: 57 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 706s - loss: 4.5501   diversity: 0.200000 ---------------
+
+o     nhh e h  ae   ahh ee    i   a n  hee  sie  he  io  n ooi   eh i  h t  e o s e ana t t to ie  oi to  d a   h iie   aoo a neee he ai aoei  hes ie n eo th ei e sh   hht e   ae h o t   aee  ease ro ien   he t hee e se se e       oe d  ie s a d ah s    acr heeo r  ees t ine rh sth r is o  ese  sas  h oh h  o  t e e te   e     h m s ee   i r ie oo he   ini ioe   t  e ee e l h t  ai aohee   s     i
+
+diversity: 0.500000 ---------------
+
+ eo a na e ro airin eeld   ah aoso  n
+h e ahiioalos erelae s oo hi dee   me irad cshi osheaitst la   e ih ee   hl t alo aert i irao t  ar sat ao aa dstaseue   e  ulssehd se aaere a
+iai    a  tir  hseneoae stea e aimil ee s asonioi  ehh ten u nrd s   o t ei a io lou le onaes m ihor 
+ ihei mo a ce iaert l ha oet s  o
+ eioel e o  sah a smhee e  ooa  eiieee ad h ot aia a ha  ti oah
+ de  oe  ohe
+ iaohe
+
+diversity: 1.000000 ---------------
+
+ hhinaoeitrede mid tmnsdausehoo ta idsihe easoil  idu eandhorit i l ch  s nara hctl td
+eoalishoo  eedaau hlrr erniddraoo dtl meeoaetidhuchmess
+tr  rrhercto omto oseeen ia mt atatdi
+
+ hunsneclaherhhieelihtolrrortmeh  hnietde a ee atshhs u ehhirhentadeseulctueh itrr
+eels ah  oosee eet lrlte ei asahrr sd oi en oheae shnd ata aceerinisrhamnriluhioeaedreaio
+soe let ei ohahhl cin i tslicoearall t  as sc
+
+diversity: 1.200000 ---------------
+
+ rlaasea cacmur ii clt hluouuaesirc
+smoee  eds rn  oe seort arttaienso e 
+tee
+alseea endta
+ln
+ecre
+ceaiauihhtlnehhhei st talaesdrucn onn  leouaiill c  o  lnectcel onaom
+i ununniui e nssriun r hniloai
+ttis ah ceae dnhche itta u hesi
+ldnch snl d
+lno ee 
+hocdae horrlsnheeiiitsa een i at turnsnidoe
+t  ht 
+d    nlml roahahos s  t coe eiai dedsueite olecuunr
+ uhdeouoe c tdholilort rr l seo dhim oo  eues
+
+iteration: 58 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 675s - loss: 4.5490   diversity: 0.200000 ---------------
+
+  o  e     m t thn  h   e  ih tie  t    tei  th ao teh  ere o t t r oo  eui  t   tete   to a t t hheao oe  a oe  t he   eh   o   heee  a eie  hee ae ot  e ot t o tohe   a i  d tt  t    t ie r  e  e  nnate      tti e t    th t   e   ta o  t to hre co     o  e  t e   ott  h io ti    itae    em   te   t   ton  the   t  o    e et  h  ot     o nte i s    i to  e o o me o   taa oet   a       o a t  er  
+
+diversity: 0.500000 ---------------
+
+eole iotroat rcrceoeot eiciclmeeeoto e otta e  io  ooe dse h  th n e  oreott taneth e al so  ih 
+eimlotonoto r ae ne at tdr dll e etaeo s t eesesid te o h o en e a
+ iedo ets ithh oot u
+ere o i mlseo e neianhmod not aooe ane n cien  loe ltto ioe asldtoe int e  ahe   idoo t  ne s tel  d t ed ituoo lr th   orrn e  il ete tiin dhi s i  de i  oea a  e e  aa ie  d a na oit i t e i r te h e d eeoeh  esd 
+
+diversity: 1.000000 ---------------
+
+natulealeit l t l l  tna dorne maao sat 
+umiodahodiihcn icttc o  nuos aoe dhlrohlte alaeo tda d noe ditn ria to iertcediothnooeemocltln   nolma niri ho oo  oaaainmuis  omhi e  rohehooe   o lnteuediido i eoa hu  ettr tdott s isai iheieraan
+ nheealdsohreoto edea mea n  rrca tm
+icnldeaiah deoatt d ho ir   ct
+e thni ieheemedhoeeelheo rdeleteni u sis eosirdehatet o eer cho txe
+tesnare iel homeonn
+ma th
+
+diversity: 1.200000 ---------------
+
+ treselr losnsais srdtild it h lo  aoi t ihrcdce lleuti c  o teueti idca hnanol iueaonslerdatlnsesmumra
+ t na thi
+ ndte  rnceemah   chdt codneeritti  odons siots urot nnhso  dau s
+aai a iaaeantelc tr aema te sessaha oine ieare  ecid  n cctneselr ltnia ui ecn h e umi
+
+ i etet 
+ea nicaoo
+hoc  siotadt
+n sh
+ oaiad 
+r hoh l l
+crd snod u sn hcer t t i hedomeditrttuu  aia sortniioieldalert  too idm  adah
+
+iteration: 59 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 670s - loss: 4.5481   diversity: 0.200000 ---------------
+
+ t
+e i    i i    ee ie   de    e a t teri   t   e t e les  o  it   he t a ae   e  e   t te  t it t t i   te  t i t  e t t t  t  t i  e   oe  s  tet  ast he   ies  e      e   t  one   h   t   oe   a e e  c tis  h an  t e   t   he teia  e e e ne  t    s t   e  t     te  ttm tee nen  t  es   t     t  e tr    ne  t    t at eee  ie  t it t te  hi s  t  t   t   e   i    i  t    t   i h t  e   seo   t   
+
+diversity: 0.500000 ---------------
+
+en es  hee  e    tr  d tieno e   etios   at   ede ttnnet  te t  t es e   ho al e e a tt  nlln tdete aer  ns ln r tie oee  a   ie h ana  h
+ee tm  e aesel nel ne ht h ee o c   o  iie or  tec ee eisme e dht s  etho n s ee ie   t m ahe  o  oo  t n  mc  tha ta dn e  et te ic  m he toe ototr ieens  heico  s ai  ta aimte ie t i itr ieit  th ti mde  t i asr t  ii  ie t t r o  t t ci  st e h  ae i i  eeer 
+
+diversity: 1.000000 ---------------
+
+
+t  tieneenh  netot trei  e i cr ore o rtneereo trrm tnn ns uuo rre cta cei
+ u  n rhn
+t stotili iiitde  r  tid edte du t ee no srt h imni nesrmhm sdetihec   uroitheu edn hnoseir thhstrsdr ht e sin hedsdieen
+tctie ea aussohtlnodtuhan  ceuh iiare d do trt i t eauuc  r er  iorthurlamde e dtdent reie ite rh i
+et et s t so terenl otrtoeusr et i a htso
+tl cemo a r rin oo edu as soitlhn  tioaesca mieau m
+
+diversity: 1.200000 ---------------
+
+e d m  md  a l uudru n
+    ad oesetlete
+ it t  ra udaeicitrsear idh u uoird
+
+ clsien mut se ee 
+otha  inlaeitt ihth sie  ochtln c e o  s ic 
+i tsea tue schea oiis uaanedlitthuoionoch ta in em iuehotelr ohii 
+et  aadt da u
+  hhetaatms
+nths tie u  
+t mm ai dtitmdaac  dlti aur taan i isemaresm  m e  rsae souinmhnnili
+indmlir nt
+ard
+i ethrutntaomt
+nc dnnn rnm it csn ndrnen e  neth lsr  siui thoit  uie
+
+iteration: 60 ---------------
+
+
+Epoch 1/1
+507970/507970 [==============================] - 701s - loss: 4.5478   diversity: 0.200000 ---------------
+
+e th  t  h eeee e i  te e hh  a  e  e  te  een h  ae  o   ee the   te   nt t t e se te  e e   t   e   e     tht e  r reeee  ere   e   e   e e ae   t a t e  ee he  s    et   e a  t  e o e e  e   e  e    ae   e   eee e  t  tn ee t  e h  he  e t n   t ee se    e e t  th e t   tee ee      te te   t e a e a  tee teea h te e           o  n h   ee t   oe th   te  a    e t e     e  e   e see  n     e  t  
+
+diversity: 0.500000 ---------------
+
+ d ae e   h lec  sesh   aea a teeon aceh  r  ie c  s eae s t tr    r   th sttd  
+o ret th  e  h n   erto to aedte d a t   et  uso  ee tees tase  edde theee oeeoen  nta tdoe r     ah tree se  ee ht ote e ee r at  ae eae aete aeatnortc  e thde ae he
+oe ae  ho he    s heeers e ar n   ti  lr aere  eeal theaeoe  sei e ta co cet ieea eue hna ho mae st hmtae   e heee ee  ne ithh sthnnee e ur snea   e nne
+
+diversity: 1.000000 ---------------
+
+raon io  d e hre atoses n  aen don r dorennt
+hnth troteoet se hh nnodse e o a nnstnehhdne nmdaohel dra saesnd dsha
+ t tr tel
+aeaedh th  oo nasdnd seahsoouou r tcene   hrca rclr elid n ueea artda  sesdasnt laen ramtseeeende rh  eonosa ttatc thesan dnml   neaastd   hr sne o haheu r  eednenietor  e r r dstoeaehsi a
+sdiniei hne chd   oedesen ct sertce tindh  hetie ehels  mtshe toaom hlclhehd m sta h e
+
+diversity: 1.200000 ---------------
+
+ scoenieth  tidne anmccec te eeest ndamdue   hla iirlhe uercmr tae etmehesee oi re  o
+ta sh se cae  lo i a eeci ahelohes umtr aaeths  dreeed ouetdsn
+adoas
+ntd
+ea oah a deehaoatrie iu eh s oslan e ohtn rh hii 
+ouetehd c dasroootanmneccend ado   ectoonu ahsedshrdamseiserht  a  rre rrnss  c 
+ ar
+snrtt h d cansemarsina teal
+o
+oes
+e rllu
+om  h
+ie
+nar aaoeesh ciearri
+senaesdrt nrsiiaeia  niroitne errnu 

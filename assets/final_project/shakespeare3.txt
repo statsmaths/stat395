@@ -1,0 +1,2465 @@
+iteration: 01 ---------------
+
+Epoch 1/1
+371926/371926 [==============================] - 402s - loss: 1.9591   diversity: 0.100000 ---------------
+
+hinger.
+why, i am the stand the country sour and the stand,
+and the death of the country sour the sire.
+
+[exeunt herring and the sir the counter, and the countress,
+and the some the country sour the country son,
+and her for the creak and the some the sour the some.
+
+[exeunt herring and somersentine.
+and the death of the sir the stand the cards,
+and the duke of the stand the country sone.
+
+[exeunt 
+
+diversity: 0.250000 ---------------
+
+.
+ay, the counter the cormond the dead,
+and her for the country with the field the speak.
+
+[exeunt forlow.]
+
+king richard.
+why, when her bean the dight the tour the tornt.
+
+[exeunt from shall the king have all the stringers,
+and the dear the king a stand the will the countring have her protertion,
+and the sirn the king the day the carts.
+
+[exeunt herr the sould but the cartion, or the sire.
+
+[exeu
+
+diversity: 0.500000 ---------------
+
+wn that criven the dear thou and presend the horse
+the dustance to may do with my doth and and the king writh me.
+
+suffolk.
+then what cause my sour off at her from dissing.
+which and her, so the carts revilles'd fate
+the gall the curster the gravention,
+proteus give to country of the pitred the duth of the cormers.
+
+parentine.
+have be their bear the live to to forth beam.
+
+talbot.
+some, forse and 
+
+diversity: 0.750000 ---------------
+
+inam, i abobless of poors should in;
+his broy of the lomp, i aachingerf's sadise.
+
+aveina.
+by my soch and with the sight of the simpy churctess;
+and here and further tome thee.
+
+takes.
+why, with unto fear my sount'd make hur in,--
+for the oud forsupons stay thou are the cured.
+
+talbasio.
+what the marks armio as not be must forthour,
+i shall the witt man which such the domes that soids,
+and wordder
+
+diversity: 1.000000 ---------------
+
+l vouch hereard torserfal your mactl's flince, ornonce.
+ke come thou to that sould with rustly wightity:
+i'll wret'll ortain doth with deep and lord.
+
+[exit moptly.
+ay, her thou wrempec'd boward, man, fliest dried, my triephess of nobssest and i bland,
+and at if copparonton, poor break.
+some your and commenting swear now, these his
+
+troud day, and thinkes' see.
+
+[exetir go, i theecher wit mays fer
+
+diversity: 1.200000 ---------------
+
+nortance.
+
+yaunt.
+my inso thy somfows, my saavaint.
+me his exconcol's all'e rown,
+'glie have your !auncexit, ipford-rack,
+i have have in faight a passures gits wives.
+ill is kou mucher man hears, sho. 'to heart!.
+
+vuchcobse.
+mest friers are was i ast, tor meetst crawvicgs.
+for thinknament of ckeit things thy grammeinghs that woll.
+this from strousting charvariemon be.
+
+  
+wiftinanles of nip haves?
+
+iteration: 02 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 399s - loss: 1.6270   diversity: 0.100000 ---------------
+
+and the body hands.
+
+[exeunt.]
+
+
+
+
+cctres.
+be the command the[ezen that stay is the bodest heart
+tha[[his saint of the bode of the command the death.
+
+[exeunt.]
+
+
+
+
+ccting.
+ay, and the comman[t[and with his bards.]
+
+[exeunt.]
+
+
+
+
+cctres.
+and i can the body[h[enter that i say,
+and i say a charge [a[exeter.]
+
+
+
+scene iv. here is the bod[h[ezen her bears.
+
+[exeunt.]
+
+
+
+
+cctres[a[.
+
+[exeunt.]
+
+
+
+
+[e[e
+
+diversity: 0.250000 ---------------
+
+nt of the book his hands,
+and the way and so we have your hands the death.
+
+[exeunt.]
+
+
+
+
+ccthe.
+
+[exeunt.]
+
+
+
+
+ccth[e[tex.
+be the son the[ezen the contring[him.[good a clarence[[to not flow and somerset, and say, and i canst the love:
+the contring and the bode and be with her.
+
+[exeunt.]
+
+
+
+
+ccthe.
+the more that stay [t[all the clarence and the clarence.]
+
+antipholus of ephesus.
+have her heaven t
+
+diversity: 0.500000 ---------------
+
+s would heaven than will his store,
+be the bode that is strange my long and not sores this hands,
+and she was i am need and sail his frown;
+and he field is and heaven her me a made,
+he is i can the lord of my hands but her sling thee,
+it is the crown to be this love the rome;
+and ray some love the clarence, thy hoose.
+
+[enter bode, sir, and me to beadon our s[abiud,
+and thou hath me and the mort t
+
+diversity: 0.750000 ---------------
+
+rk.
+fightly bith conory is me.
+
+proteus.
+by may, at for henry for fly weants down,
+and you come, on a hearts and heaven creak men
+you and encoal the more from march faults a fleach heart have how a means low?
+
+gloster.
+  his lifely chaise this dove be heavents
+see your wrainight be of our all thing are.
+
+queen elizabeth.
+for old lord is not selt love be down, sir a grain sheer,
+and thy clainof hea
+
+diversity: 1.000000 ---------------
+
+oucl, that damen.
+i'l sovary enger.   his pasty so quen his limous:
+he bland's mess if my loir and this two ;
+the hold it not love see his theety days;
+you, lack give aloumbly youars,--hamoras is.
+
+sit is of the handly unwain?
+
+grieit.
+weres, gives love of 'twere, not in this
+
+reyorband of love,
+his carroust you nightly will,
+and, heis false to glesting look of nail;
+youo wrester love for and be s
+
+diversity: 1.200000 ---------------
+
+rain oo was cliffork.]
+
+lucius.
+foul]
+masratced as unline tiths; in pain; he reas!
+upon load, now my blookousic hate which tremat,
+mabftren more to plears aloussacred
+on he will not loughtly not presevent or tapura,
+my hling sor love is this wicless jown
+he maray so ham righly? turnest neiep!
+
+anteno.
+there i, scend the agbood paspetser:
+and themselps thus coldererrows not carmine,
+it
+lucet a xtai
+
+iteration: 03 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 398s - loss: 1.5356   diversity: 0.100000 ---------------
+
+race the content the concent
+the to the content the content the content
+the contring the content the content the concent
+the son the content the sight the some some.
+
+[exeunt and with the say, and the man, and the some to the content.
+
+[exeunt and with the sir, and the sir, and the tower the say,
+and the man in the signer the content
+the content the good the content the consoner,
+and the man in th
+
+diversity: 0.250000 ---------------
+
+nson thy words,
+and the the first the good the man i have the more
+than i will not the concent in the body of the some.
+
+[exeunt the heart, and so murderer, and the good,
+and so murder the good and the duke of the concent
+the man and be the to the day the concent
+for the good make the strike the sorrow of the crown.
+
+antipholus of syracuse.
+the tower and the sir the bear the sight
+that have the fr
+
+diversity: 0.500000 ---------------
+
+t in the cold and do the breaks the contence.
+
+[exeunt nor the baptise the sin!
+
+richard.
+no colls, singun be the some for thy man
+and i than the grieffor the mething from this night
+and do in before their life of good
+in the more to plantant of sir man the look,
+the crown the hinds and bloody to this their hand,
+and in the from the hind and for the sir,
+and her patience the for the same sing.
+
+[e
+
+diversity: 0.750000 ---------------
+
+xeunt not our drown of the son, take in a tost.
+
+[alaron, 'tere as in the plant your and consure.
+so, sir, so, and i will a long, as if not,
+hand an is the soun please the saint the bear
+const my life thy night the virtuous unclence!--
+o, this sir play him weak the pare to dismal,
+i thy the bastath's boy the contineds!
+and the fit his father and thee and denter.
+
+pucelle.
+ongth the riveral!'
+
+glos
+
+diversity: 1.000000 ---------------
+
+earterty:
+the thinous not in thee;
+and it will not say perforie, a phopenly
+in abour, and all wher ipsole though thee.
+
+overgent of you alas,
+or enitymen and paliance!--
+[exeunt, of morthimes and propentivings of carded,
+the -helmop by thus thy moppare freic and yo chee france.
+
+sace me druwn them.
+
+turninus what dodes uprivil'd pronds:
+my lordly for, poor allfri'd in elain my.late to find
+that ha
+
+diversity: 1.200000 ---------------
+
+.]
+
+must she misty have his lays furred quint.
+
+gloster.
+coffot bowas the sake than from the face.
+
+here and smoularounance af, break:, withoun, says. and bie i cates here,
+shricled in eeveres gave murshy bany,
+dray in prysommons, her gentereble.
+disgracest ye age.
+
+purtementuna.
+low, hward ascair'd him, in, sirrel do requile; ay, to the tate up-tmat,
+prince and forer kaunny had her fortriff.
+
+nor
+
+iteration: 04 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 404s - loss: 1.4910   diversity: 0.100000 ---------------
+
+ve i am the stabble to the stable.
+
+[exeunt and will a man, and will a man, and the stands,
+and the lady of the son, i the stands,
+and the lady of the state in the hand,
+and the lady of the state in the death.
+
+[exeunt and will a lanth.]
+
+speed.
+what i the barted to the state in the death.
+
+[exeunt and will a man, and will a man and bear the state.
+
+[exeunt and will a man, and warwick, and the sta
+
+diversity: 0.250000 ---------------
+
+ith the creath.
+
+[exeunt and when the silves.]
+
+[exeuet.]
+
+
+
+scene ivi. sweet stand and all and the lord,
+and what he a talbot the duke of the day.
+
+[exeunt and warwick.]
+
+antipholus of syracuse.
+the carding but the duke of the state.
+
+[exeunt and the son, the gates, and here, sir,
+the son, and the duke of the side, and the rest and the doth and me.
+
+[exeunt and if the duke.]
+
+speed.
+why, when he 
+
+diversity: 0.500000 ---------------
+
+nd were in the privils and the hands.
+
+[the margal son.]
+
+[exeunt.]
+
+
+
+scene iii. swear her sof his blood
+and the hole and contrive the good dissention;
+but see the stafford sir i that he would,
+lord my lord he rack, therefor me the basters,
+and which he die to a honest be and whon,
+the incervant, with the bass, and will we cates
+and the word and who man from thy man,
+and the queen with the bear a
+
+diversity: 0.750000 ---------------
+
+e wii. care a beagard,
+my soft of his sword in sake her ones?
+
+[exeunt astam and if the sincess of staturate.
+
+anne.
+a bord by the tongue that since upon the -
+and the more in plays, your careful armed
+with me to the hands, thy turn the arms,
+and break you what have a love i bodey
+to the sight arance and so man, to leaves,
+the mother.
+
+somerset.
+i'll peace his brigarves from remors,
+or some.
+
+card
+
+diversity: 1.000000 ---------------
+
+
+catected.
+
+atieller.
+blood she precentors the duke and god,
+your heavenful some destuingy nam in the duke.
+
+gloster.
+'gainte we say the is the boubless at sest?
+a see to england all the drowling more?
+what after chast pet emperes hell tith!
+
+buckingham.
+but seemrives lord, for the reckiveon's wings;   had no self;
+with the gentlemen lucentio.
+unduing she she love: that i know not kill
+sit not on 
+
+diversity: 1.200000 ---------------
+
+ll brother to you 'cleor'd hear away a burien:
+get!--nag when tramiousurden.
+
+[exit lord.]
+
+stuls. came suff her guar abiln.
+
+pucelle metah, whiles thank same, thatie a,
+me by this vearquint-trobate and boy?
+
+ we mampot with mat was my trues whose,
+andwit of dran, illy wouldse wine, richard of fear-matumen,
+his high; as hort levery but here to be your
+glory seit a pleit do a tree
+and lives, as whi
+
+iteration: 05 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 398s - loss: 1.4661   diversity: 0.100000 ---------------
+
+?
+
+somerset the sour the sour to the sour to the sour hand,
+and so so for the sour to the day to the sours and sound to the day.
+
+[exit.]
+
+[enter the country sound the sour the soul to the days.
+
+[exit.]
+
+[enter the country, and some have i am i am and the dear to the day.
+
+[exit.]
+
+[enter the country, and some some have i say
+the soul to the sour to the day to the day.
+
+[exit.]
+
+[enter a sounders
+
+diversity: 0.250000 ---------------
+
+ost be thy day to his sovereign to the day.
+
+[exit.]
+
+[enter the world shall make the sour hand the counters and the come,
+and he will not so i to the some say my dear him to the sight?
+
+somerset.
+so, and so so make the sight to me the house.
+
+[exit.]
+
+[enter the country will a thousand march,
+and this for the silks and this man he a sons
+that thou that i will be the heavy and his sours.
+
+[exit.]
+
+
+diversity: 0.500000 ---------------
+
+of thy deeds,
+and by the have be the tower with any lord,
+and the save the libious of the baster her thind a the bounder.
+
+gloster.
+and thou art asten the mother for the ress,
+and i peace i do the recontent to come.
+
+[enter and and marcus, to this wither, his sither.
+
+luciana.
+i am hope the sorrow to bestand the simour resolf
+to the childre be defends to me the come,
+and the life to his come sir f
+
+diversity: 0.750000 ---------------
+
+fe the winches the duce.
+
+luciana.
+come, abbution and wear not to a a fiather.
+
+valentine.
+you are i never i have discharge the moon.
+
+[enter and what say, sir, collurs petcorwe and belikes of no sovereign the great resument?
+
+queen.
+now must are we to her town be the father,
+hand this doth me to hose the touch be the duke;
+the bassianus, my face to fear you will not too away.
+
+warwick.
+and so lik
+
+diversity: 1.000000 ---------------
+
+n without get flohtesten to word of thy most of she is him.
+
+'no in arms as he her tranio, content.
+
+john.
+no may i traitorth of he and be a specree of
+hat mayou a juhust he of my waters and thy sons,
+hoppos: if if the companced of his false,
+and i dignitio the wive to ncready been him?
+you all and eventless, and so, 'twill not say'st thy see;
+an boancagabors, knowns: your body to from thee.
+
+'two
+
+diversity: 1.200000 ---------------
+
+
+hactity the rither, tukiniofus isdeed
+a raud, aaks reload'r, speak dropplain all churty.
+
+petruchio.
+come to anountance, ! french thou caraish no grace
+drawn backs dick the hoast there can me viperbuils.
+
+brind, she hathly gith if good mast, bead, and nock my bolf
+on heaen? illing droubs heaving in pothy taplen.
+
+valentine.tius
+than bose to i hath had dekinn; i reovent,
+as sons in's shall away th
+
+iteration: 06 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 398s - loss: 1.4478   diversity: 0.100000 ---------------
+
+e the children sons.
+
+[enter any somerset, and somerset, and so some soul.
+
+[exit.]
+
+sir.
+
+[enter any somerset, and some sea and the concloud.
+
+[enter any somerset, and some crown, and so forces.
+
+[enter any somerset, and some sea a somerset,
+and thou shalt i say i am and the concloud.
+
+[enter any somerset, and some sea and any.
+
+[enter gloster.]
+
+king richard.
+and i am and some soul to the countr
+
+diversity: 0.250000 ---------------
+
+th of my hands of the compity.
+
+proteus.
+well a some be good be thou thing i death of me.
+
+king richard.
+and the hour the lady and be thou will.
+
+[exit.]
+
+york.
+ay, and i am and the man the town of the seas
+and be well be holy the country shall do my bear the conscorn.
+
+king.
+the country, the concloudsher fortune the bear.
+
+gloster.
+and then we are the sons that i storm the child.
+
+[enter a post, 
+
+diversity: 0.500000 ---------------
+
+the catesble
+to mean on the sto bracks to the comming.
+
+chiron.
+that my lord, and thou art the country not beator,
+that i am now the princes for the sorrow.
+
+[enter meacuss.]
+
+warwick.
+i did the children for a some show for my banished.
+the son, and madam, the sons the princes.
+
+king richard.
+who hath she come in this thravinily,
+and hath not the chare the command to the company.
+
+[enter queen the
+
+diversity: 0.750000 ---------------
+
+hio.
+why, warwick, with the love, it she be thou?
+
+[enter warwick.]
+
+buckingham.
+i purch of any closk in the good news of thee.
+
+messenger.
+what stoppisine in the posticious retiture,
+and then i have forty sugniors and wondro!
+and let him thou make the bords! other, in the england.
+
+clarence.
+hagh was we hand thy sight blood the dream and horse.
+
+valentine.
+with wick? what say, news he to find by 
+
+diversity: 1.000000 ---------------
+
+ce not livil the 'tilt be constider.
+
+dromio of syracuse.
+our soul compaity of your fault conclawer.
+weaking to the putlation your drasesting!
+co thou can your mildedoup; thou hang.
+then me may for my lobe would aid o. glew we not; and i not worthy.
+
+edward.
+this windly three y; say, if you setren,
+restact using the could preats you nor in your wait:
+who know you have body fair corrent in
+queen my
+
+diversity: 1.200000 ---------------
+
+hrehn us not peop.
+i reperce?
+
+dromio or ephesus.
+nomish comes!
+how welch! keeple merch.
+
+: melisheve my then but i jew cheet, say,
+richard age away for a dissave our wait'rs.
+acclridy and not not i have will not him herry
+death? if, look you swairer! in, a edias no take:
+teep, your jucken hound to or belikes of any
+write so it behold forgorn for hens; and hear let richard,
+for, slarking my flouti
+
+iteration: 07 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 398s - loss: 1.4343   diversity: 0.100000 ---------------
+
+the sea and shall be the death.
+
+[exit daughter, and all the countence.]
+
+[exeunt gloster.]
+
+silvia.
+what shall not the prince and sent the seath.
+
+[exit part and any salisbury.]
+
+silvia.
+what shall not the tower and so the sea and so warwick,
+and she shall not shall not shall not shall be the bearth to the death.
+
+[exit speak, and somerset, and all and somerset.
+
+[exeunt gloster.]
+
+silvia.
+what s
+
+diversity: 0.250000 ---------------
+
+ed.
+
+[exit lady, and all and lary, with a mortiphalls.
+
+[exit spirit, and wife, say, and desier, and a man and part
+and thou art thou shall not thou hast love.
+
+[enter a painters.]
+
+king leacabio.
+what is the sea and stone and stone and bear,
+the company be the storm in the lord;
+and i am not the tower and so means the sea in the corse.
+
+[exit part, master, and somerset, and come the prince,
+to sh
+
+diversity: 0.500000 ---------------
+
+made the sears.
+
+gremio.
+the rest she must be my heart from what here;
+and will see the stander of england of the wast?
+
+gloster.
+that she shall not so come, and sto thoughts
+with a partors be reveng'd the prince,
+whose time, be suppect a foot and lend all winds,
+and thou done is the lord and father
+to the countenria.
+ay, and so the rest of the dane to the entmen:
+and took long with the gentlewar 
+
+diversity: 0.750000 ---------------
+
+ in name, this; is not your quiendly.
+
+king.
+mistrous grief.]
+
+[restues.] if he be more hand's sengrances be shieth,
+or fastly, to baptista of sighser love
+is bast in silvia of the suits,
+to calm for a churish me again, mistrace.
+i she should never with him to myself;
+and give the mighting base repastial bearts;
+i strievented your hagrant she comes bons. a side,
+to have the farmen say warwick in t
+
+diversity: 1.000000 ---------------
+
+; do you by the beef jest, may,
+and black my couch weather swincess; kind
+and kinnall of so old he endsicly;
+for welching to quick holse-to old gather.
+
+gloster.
+duke; if you pautly to the geards?
+the 'great thee die shall break trust wit what?
+as which if so, that 't at emperor king.
+go. the earne.
+
+buckingham.
+poor the talk. at time to him, mainery.
+
+york.
+more geneers; when were,--'t is their l
+
+diversity: 1.200000 ---------------
+
+wretishear.
+my eaf row fell, ma re! cartince, dispuss.
+
+dies.
+
+tatur.
+nupis doth is pic'd up your brame, no pleen,
+and ealtwer; you pros'd a charge for his,.
+
+whosh neps us etter ours youth, all lelt never.
+
+northumberland died.] 'gaunting me acquaent, gore?
+
+anne.
+ten ounces lave oft
+befalious crancoul a earth! a rome, had
+up with intel' still gracise;
+aftering fain will, ah, for way it my in why
+
+iteration: 08 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 397s - loss: 1.4239   diversity: 0.100000 ---------------
+
+will;
+and will not be the lady of the base the streest.
+
+[exeunt heart, and the duke of sir queen.]
+
+[enter lucentio.] and the courtence, the heart of the seemblex.
+
+[enter grumio, and somerset, and the sorrow,
+and the sorrow is the like the strange to the dead.
+
+[exeunt lucius, and the course.]
+
+[enter lucius, and the heart, and will not the dead.
+
+[exeunt heart, and the house.]
+
+[enter grumio, a
+
+diversity: 0.250000 ---------------
+
+
+what i the chair of the streed of the lady of the love.
+
+[exeunt heart.]
+
+biondello.
+why, then the commons the base the like the sent.
+
+[exeunt lucentio.]
+
+dromio of syracuse.
+the tower of my lords, the chair of the liveness stay.
+
+[exeunt lords, is she is hearth.]
+
+the good strange the true that the chair,
+the soldiers and be the soldiers and let him.
+
+petruchio.
+what is the day to her the be th
+
+diversity: 0.500000 ---------------
+
+.
+the courish the lest in the world of loves the streed;
+be good leave what this all the winks all the field;
+and now thou art the head and thou art deeperable,
+and he do the dead, where i should the send.
+
+chiron.
+i comes to great in the seest be chaster,
+my compass of the grace the heart stay-look.
+
+valentine.
+the issue, be so we hence i did shall?
+
+mayor.
+and boy to restress the mighty lords?
+i
+
+diversity: 0.750000 ---------------
+
+d hast belonder and never his tongue.
+see womans like a my some as my laster.
+
+'what they hence on the sorrows that well to make,
+the liderabors of the bed me to this treason;
+i looks they do before his infur's steel
+the grust where your guiltons her ban'st,
+where they that belace of but distreels
+for of the great buckingham, cussick, help the chook.
+
+[enter gloster, bianca.] get i have go to be s
+
+diversity: 1.000000 ---------------
+
+his your mistress!
+whice for the one, and side love to have youse.
+peovise shot a that bose's may beluce.
+then, this she help in heark; there, i give home.
+
+[exeunt phontiving me, gloucester.]
+
+greas.
+i drive well this lucious princely cocts
+is childring battle; besrang of extres.]
+
+[have our que rege,.]
+drouboor for the firmlicy, hours leave the vouch of
+the farelst there may doubt, or though abo
+
+diversity: 1.200000 ---------------
+
+iinake;
+hey, do not willingly have bren anurably:
+if year grow waye but a soer by, he hangop; ye flowing greatle for the layous fease. haf hild ye walls,
+runs syrouse, boon' lady 'twayour: 'twonk ne'er an iniblinom, year tarquis is good
+on his anqoun is eve die; and sweft whithumber.
+thou 'no, thou prelanty strange?
+your deliveron: have lobed this tiv's, shall'd ged see frunt-esees:
+to-lo; i that 
+
+iteration: 09 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 399s - loss: 1.4150   diversity: 0.100000 ---------------
+
+l and the state is the state.
+
+[exit.]
+
+[enter a cardinal, and the counsel, and so me.
+
+[exeunt a mut.]
+
+
+
+scene ii. the counsel sons,
+and i the state that i think the counsel,
+and i should shall not the state is the state.
+
+[exit.]
+
+[enter a chain, and the counsel, and with the state.
+
+[exit.]
+
+[enter a cardinal, sir, and somerset.]
+
+
+
+scene ii. and the state.
+
+[exit.]
+
+[enter a muldantion.]
+
+[en
+
+diversity: 0.250000 ---------------
+
+exit.]
+
+
+
+scene ii. the house.
+
+king henry.
+the time of the lady of the book.
+
+[exit.]
+
+king henry.
+a man is the life of my love is the death.
+
+[exit.]
+
+silvia.
+then i the state that shall did the winds
+that i will not the state to the breath the complain.
+
+[enter a passions of sir [aside.]
+
+[enter a muldut of syracuse.]
+
+[enter a could i proteus.]
+
+which will i am i did his heart-day?
+
+[exeunt a 
+
+diversity: 0.500000 ---------------
+
+ars, is set for the father.
+
+[exit.]
+
+[exit slease her same rest, if you so gremin
+the sign with my sons of all stay the french
+of my virtue for her arms belike the strite.
+
+king richard.
+as i should more than i have have his country of them.
+
+[exeunt.]
+
+
+
+scene ii. sir caboal his brands,
+and 'twore march a please the father to my grace
+with our great is the tower warwick in brakester:
+if i think 
+
+diversity: 0.750000 ---------------
+
+to the saves and the life's death when make your proceage
+to many ship bluht and be recause her showel;
+and i at the father and the palace,
+and i could this maded their seal again,
+  when on it of it cannot abrey'd and shame;
+and i have with not whom go were well,
+she say the fight to shall stay it of cheet:
+i am should i amam'd him with the optess,
+and as the course fair want, the friend,
+a king 
+
+diversity: 1.000000 ---------------
+
+d i alligled all his sick,
+that of lord of his bead; nobfiin an,
+mine.
+
+[olk rivest, yet, king.]
+
+lucy.
+now sent the gaursel doble a france my counsel.
+
+uart romaing my sucet to , hoftly both sinte
+of this barquis well without my matr.
+
+[enter, thou bore offence with offork valius.
+is himas such a loge on my foat castles
+raven will not no nature can hold thrith
+that talkin this money dead
+why, i l
+
+diversity: 1.200000 ---------------
+
+
+no will keeps he ashrual thy sected too ising them,
+unto these, didrew is ruled whilst isot; yquicool.
+i say, our head to ak[thweids, dost, or call when ours!
+a worn has offor's faurtence killigls:
+
+julia.
+gooe haste.
+no. at you may be linger's house inimes;
+roor your alage.
+unours.]
+
+[exiting-clifford, follow
+clareng 
+cliffadle-mistors wills both my sliefll:
+frinows, by wawks penter heeos in off
+
+iteration: 10 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 400s - loss: 1.4075   diversity: 0.100000 ---------------
+
+ the state.
+
+[exit.]
+
+sillin.
+the son, the poor some severation and the warring some senth
+that say the day of the brother in the with them.
+
+[exit.]
+
+sillin.
+why, the field and the holy send to the holy.
+
+[exeunt ansome, and the holy sent.]
+
+gloster.
+the some set for the heart of the state to the state.
+
+[exeunt ansome, william, and the senther.]
+
+gloster.
+the warring shall be the bastard with a 
+
+diversity: 0.250000 ---------------
+
+ the holy set the lady hand, and the prince,
+and i have not stand to his sent and the fore.
+
+[exit.]
+
+sillin.
+the sons of the for them to the footer,
+and with the company, and the body to the son?
+
+speed.
+the world and some some hands the grace her that seem
+and therefore what i shall not for the parent son?
+
+speed.
+the company, and so the state and to her deeds
+to the mother from the part to the 
+
+diversity: 0.500000 ---------------
+
+gham, and her heart,
+that the cormoniors some love, and make her some.
+
+[enter antipholus of syracuse and the baptista.
+
+captain.
+why will be have he to her unto the grace.
+
+proteus.
+wherefore, the feelful hope of that whereon his self;
+and there the groom and that in the bloody's answer the man,
+to make a fortune hate a some man say
+the world and sure to these carst and for them.
+
+speed.
+for the 
+
+diversity: 0.750000 ---------------
+
+hang the in my self-face.
+a bucking was in our lances maine, sid,
+come my lord, and with the rober!
+
+grumio.
+i am break not weake some talk, to this to a thousand.
+the bastardes is to such thee forths from me
+lill my talbot and to his king and she of me
+to be life towards means and death, whose of you with of good,
+and be do a desire did father;
+come, nor eyes king from sweets, ambious man?
+
+[stre
+
+diversity: 1.000000 ---------------
+
+ange'sted whereof towors and try,
+that ay all i was i am orded the king.
+
+[exeunt as bother.]
+
+buckingham.
+no, now time valians of als,
+with his hands is thy prince did fits it in.
+lady blood, father of man belike them with it;
+now therefore devitules foot on, himsell!
+whom wastet, and their love-time loud mourne;
+that whose york of guard.
+
+somerset.
+i prince laughterkent his re! and make no foes
+
+
+diversity: 1.200000 ---------------
+
+ted lodd, foy, messanquess! receive.
+it candilijeing she wait'st her as sold?
+unholdsts in stain'd old vongece his folly.
+to bury from though brother, my man, and loubuse brothem.
+why murtoe' long of my accompany; and more.
+
+hortensio.
+call you awas to rogest
+and parte it to flint you for pade his night;
+'t will neisit it preciue their liightets;
+trior-came lanthiel
+horse fash'd from enawituing fo
+
+iteration: 11 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 399s - loss: 1.4020   diversity: 0.100000 ---------------
+
+course thee,
+and with the state of the life of the see
+to the dead the sea and the seat the seat,
+and with the dead to the shame to the death.
+
+[exit.]
+
+antipholus.
+the some shame to the dead the dead the deed.
+
+[exit.]
+
+antipholus.
+the sorrow is the servants of the seath.
+
+[exit.]
+
+[exit.]
+
+antipholus.
+no, the servants of the seat the dead the seath.
+
+[exit.]
+
+[exit.]
+
+[exit.]
+
+[exit.]
+
+titus.
+an
+
+diversity: 0.250000 ---------------
+
+the father with the country shall be see thee.
+
+[exit.]
+
+[exit.]
+
+[enter the speed shall the parting of the country should say,
+and shall be and with the dead the shore.
+
+[exit.]
+
+seen the prince, when me shall be see thee,
+that i will be dead the straiting shame he are before the servant.
+
+saturninus.
+and what she are the truth in the stame?
+
+saturninus.
+and what the sorrow in the heart, and the 
+
+diversity: 0.500000 ---------------
+
+d he save she had never to heard.
+
+somerset.
+what she is the stame to make the death,
+that he is the strangex with thee and protector!
+
+lucentio.
+a man, mine crown, the content the suffect;
+and what is the strangeful and heart these angelo seemes,
+but shall watch that sir with a charge, greys.
+
+[exit.]
+
+antipholus.
+no, whom i death the country with me weep.
+
+[exeunt.]
+
+
+
+scene iv. and with their m
+
+diversity: 0.750000 ---------------
+
+ese see france,
+that with since and she could see her to the hole.
+
+proteus.
+rage the fremes she both the tyror and sake the glores.
+
+ahtres. when i then with your proteus uncle.
+
+clifford.
+nay, sir, my fleel her her towns to thee;
+and before him the deads of the batters,
+and have land their breath had will at me,
+to ledieting to the better gloster death.
+
+[enter queen, antipholus of syracuse. i s
+
+diversity: 1.000000 ---------------
+
+rotestiie, some horse heard wife.
+
+straith want herefore, 
+antipholus of syracuse.
+nunge the bodyment a cance,--what, duke of men yourself;
+o, i knock to is tos; my shile,--when;
+at weirous farewersel fall are all!
+
+hastings.
+for provid! was maltic france father's won,
+my is he never syorn shall revolest?
+
+silvia.
+but it a kisages dead?
+
+-what spident content our abbitish about,
+that wret as foul 
+
+diversity: 1.200000 ---------------
+
+,
+and genils their -yourles my loving child
+
+[besarriver dous titus! geagem.]
+
+his such ear offtcest thou lagroo me so!
+
+[enter nipooes and inillsel, and whot,on;
+apondan, disdrows stabrey or.--
+
+york.
+come, tditing bedwry place his rey, for the diing.
+then we must not so shame wear oft in 'schealful your rivil time,
+i wear's shall put i what yet too sparim's some,
+amone halk in
+her impost.
+  and 
+
+iteration: 12 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 405s - loss: 1.3971   diversity: 0.100000 ---------------
+
+the servant.
+
+gloster.
+he shall not she shall be the servant's sons,
+and the stail of the sun the servant.
+
+king edward.
+a such and the servant of the servant.
+
+gloster.
+and the sons of the stail of the subssion.
+
+gloster.
+and the son the servant of the somerset.
+
+[enter the death, who shall be the sons, and so, and the son,
+and the stail of the sun the servant,
+and the servant is the servant to t
+
+diversity: 0.250000 ---------------
+
+et to the dead of the suns:
+i am the dead of a such such a good starry,
+and the death have the sward in the sons.
+
+speed.
+while i think i see the death and the sun?
+
+gloster.
+i am the state of the suns--well with the servant,
+and the death of your love of the state
+to the shall be the sward to the death of the servant.
+
+king edward.
+why, i am the sons of the stail of the sun;
+and i shall he shall 
+
+diversity: 0.500000 ---------------
+
+t hath the heart of the father
+that the crown, the be sleep of the good,
+and he henry's starry shall have you that
+she must he will disking thee and our daughter.
+
+[enter pardon, clifford, and follow, somerset.
+
+king henry.
+some hand the sorrow of brother coll-sold father.--
+
+[enter somerset. have york and come, and not.
+
+proteus.
+the lords of york, and serve the short.
+
+marcus.
+i stand the sly is
+
+diversity: 0.750000 ---------------
+
+ble tell.
+
+fly which she shall be if the rest to a gentleman.
+
+cade.
+in salisbury, to can, i hope to stand, and all a me,
+sent to the servant means of your shood,
+if thou shadow a swear did possess, my sir heart.
+
+
+[enter rome, canst me a mighty somerset.]
+
+antipholus of syracuse.
+law she enace to come, and the life of dread
+that hath the else her and roave them,
+as in the whipting unsome many for
+
+diversity: 1.000000 ---------------
+
+ joymat of any ever; provillinal'm dead
+take mine down of his understandss and grace.
+
+captande.
+gloster and as this had we boin i dry;
+for bectile is an hear was thou than to deak.
+lo lady, now vale than they is, and bloast!
+
+ringle.
+i am birth, some monstrugh iepand
+is dispect him, for which take a man been it.
+
+adriana.
+i think therefore shipe you are in carefumen.
+emperedy, rather of possessio
+
+diversity: 1.200000 ---------------
+
+that not you be deep lik'-sell?
+
+clarencerre.
+uorey, clistling and ! set this to my had carditp,
+what god dame, connst we did enach scourse.
+
+buckingham.
+whall-stay uptreale an passides ip rest me,
+unhat too hope sheither wounds thou hast thoe,
+my sun; say me, new dindyrjoial a death,
+for thou creattious silns ind it you thought me!
+at laughty near's cates haunce teak,o-obwilons.
+the lemvest higle
+
+iteration: 13 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 397s - loss: 1.3915   diversity: 0.100000 ---------------
+
+gland of the sorrow is the sea for the seat.
+
+[exeunt.]
+
+
+
+scene viiv. her soul, and the sorrow, and the sea and her soul,
+and the sea be the serves to the sorrow.
+
+[exeunt.]
+
+
+
+scene viiv. his son,
+that i am to the sea be the sorrow be some see
+to the happy that she shall be the seat;
+and the prove of the sea be the sea be the servant
+and the heart of the sea with the sea and bears,
+and the sorro
+
+diversity: 0.250000 ---------------
+
+ me.
+
+second murderer.
+and the sorrow of the servant of my love.
+
+[exit.]
+
+somerset.
+and the son and the serve the speak and bear the sorrow.
+
+king edward.
+and the heart of the lord of the sea for the seat.
+
+[exit.]
+
+somerset.
+but the prince, the servant and company.
+
+[exit.]
+
+somerset.
+and i am not the lords and the sea and the self-soon!
+
+[exeunt.]
+
+
+
+scene viiv. my sons, good closs shall be the
+
+diversity: 0.500000 ---------------
+
+vice.
+
+petruchio.
+i gazest the comforth and while we was bear me on the sope while be so, and for a tongues beat me
+and some sending cast the silviars, the lance.
+
+somerset.
+and for this be jest was he be a man's dead,
+and all the towers and some with the happy.
+
+[enter sir, sir! what strokion sort of the less?
+
+gloucester.
+i will be the servile.
+
+bassianu.
+why, my lord, and the days are all the m
+
+diversity: 0.750000 ---------------
+
+more, and be that rest;
+and saint the queen i long to can in be comfits a mindou.
+
+proteus.
+and gromio wild heel the rest?
+
+clifford.
+alas, york, and in offer mischand, old propentet
+is slance, up to-day! for that officer is,
+marry affecteds and contentr be presumet.
+
+lucius.
+and the sword is i gojets from london.
+
+buckingham.
+o'ersil's and march these to meet hear thee thee,
+now stand both shall 
+
+diversity: 1.000000 ---------------
+
+ter.
+
+yet.
+sil'd time., thou darst a paint fowful cardinous worsh
+whose demonish'd be flatferous stand proteusly things the lamp holds. is plainion
+may that that cost you all your handy frown
+arexin'd at wring upon arms become thet,
+propor'd, master cades of our farecus
+than seld things his govest hath sent for his bed
+in warninaly, gone clear'et where the robes mad.
+
+adriana.
+i will we a. thou se
+
+diversity: 1.200000 ---------------
+
+ent another.
+
+
+goon. duke of
+kand. the cony grow witch' i save offracitues?
+
+silvia.
+tharred; had wut; the shallows, when if you,
+like unmester had we.
+
+letter me; you canst make i falerse read
+undectillibli's provoes certons awrit.
+
+lucius.
+even; le.
+
+clees hath excour.
+some honour: 
+queen a is leavent, tome jlass comagies.
+
+! and to our eyort.
+
+clarence.
+upon my batter, bear me.' demethering. be
+
+iteration: 14 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 398s - loss: 1.3883   diversity: 0.100000 ---------------
+
+ould say.
+
+[enter a man, lord, and the horse of the son.
+
+[enter a chain, and then i will not be the son.
+
+[enter a court with a part and somerset.]
+
+this she shall be some souls to the servant
+he shall be thine have be thou that i will.
+
+[enter antipholus of syracuse.
+and then i will not be the servant to the servant.
+
+[enter a court with a part and the servant.
+
+[enter antipholus of syracuse.
+an
+
+diversity: 0.250000 ---------------
+
+to the sons of the sons of the sear sented
+to confold the somerset and the feed of england.
+
+[enter the bearer, and some seal.]
+
+silvia.
+i will not a conquerons to the dead;
+and i will not you say and the saint and forth.
+
+[enter the say, i will not be so confold the death.
+
+[enter antipholus of syracuse.
+and then i will not be this be to the sons of the stay.
+
+[enter a man she shall be thought th
+
+diversity: 0.500000 ---------------
+
+ have her hand,
+my lord of gloster's death, this means to the pay,
+and you make them while as the life, the fame.
+
+post of tamora, we shall to here forth made him.
+
+[exeunt madam, i will not the horse behold,
+and tecondmonion to my aboth, and that i will not make the duke stand town;
+and lord you will be not by the chain.
+
+[exeunt horner and valentinus, i will not here,
+and for the power all the s
+
+diversity: 0.750000 ---------------
+
+n and partime's py near sons shame?
+
+luciana.
+a latect and warran sun!
+thou darns the more as my brother! my heart, good than i love:
+[aside, father, hast thou god you have them coupin'd hines!
+
+[at the time, if i leed all sirch: by many.
+
+lucius.
+the reasunion hasting me destits upon.
+  and blood and your talboth's change freith,
+lords, set his birds are speedy the company.
+there we to the heart 
+
+diversity: 1.000000 ---------------
+
+efowerabuty-wrown of all creates 'gain i will distend
+these to slive how the one the soonfort allion,-by,
+if she bee and convey my fromious, whereen would, john great starvesys:
+lord, before and senter me, plantagenet foes.
+
+julia.
+why, begin, means scorring night, it will i can his gain me foyce;
+and went with my name, to claim your foat ricle. i will.]
+
+proteus.
+ay, pedant, king henry with mysel
+
+diversity: 1.200000 ---------------
+
+
+katherom and torning, kath, knocken, him, have to fly
+weach, masser convere's cuffers so we brait
+come, forbigat dost thou, thy lock'st senn'd,
+let thee news town'd honouads to e humpaining,
+or within tyou, slave, plent you enemy
+have re-'dares, an better forward will not launter-hore housedagar.
+
+valentine tiol! rid for threy,--mbditedly i talk'd?
+
+marrar.
+may.
+mined pegelion; the chanf penred f
+
+iteration: 15 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 404s - loss: 1.3846   diversity: 0.100000 ---------------
+
+rds, the rest.
+
+[enter the sea, gloster, and the sea, gloster's somerset,
+and then the sea, when thou shalt see them to the tower
+to the life of the seat that i will not so:
+the company of the life, and the country,
+that she shall be the sumple to the life.
+
+[exeunt and the court; the sea, gloster, and the sea,
+and the court of the seat that i will not be my son?
+
+speed.
+why, then the sea, that sh
+
+diversity: 0.250000 ---------------
+
+nd thou art and thy son,
+when the rest of the seat of the chool,
+whose company with my heart of the compatch,
+the court i be in the rest the content,
+and then that with a man and thy sons,
+that i may so from my somerset to the deed
+to make the sight that i will be think the sumpley
+that i will not so that shall be in the court;
+i will be my more to the summing somerset
+than that she is and suffici
+
+diversity: 0.500000 ---------------
+
+art the state;
+why shall be strange the romin from them.
+
+[enter the prince, say, long him tamora, and the commons,
+which shall not he in this bloody-same of her.
+
+gremio.
+why, sir, who shall be any to the princes;
+and then to hence to the deed bredful hold
+the soldiers in her friends for her forth,
+the mution of great of my winds,
+the sight in the offence and the gone;
+and i will doubt in the com
+
+diversity: 0.750000 ---------------
+
+now famora's done.
+
+bianca.
+god but sir ready's complots' cather,
+to the pit; both a queen murder's sumploy.
+
+thou and great not for the truth embrace.
+
+bianca.
+go, my mistress, my lord of york, fore thy thus,--
+i leave your mild that the lords of sour.
+
+[kneelast.]
+
+while was they all them and end and force
+with a friends, where i will deat the linger:
+i did i honours him with france,
+to make my 
+
+diversity: 1.000000 ---------------
+
+that i fear
+was obbetle
+so behead you are make tire, deliver.
+were, and love willingly sight,
+where sign of tragisterless bolver of again?
+
+speed.
+why to thy day's wounds in ofe?
+
+seches lo? cannot warriond crown,
+and yet brarps to askley'd fly,--
+
+pucelle.
+
+gloster.
+each my wife, helse to dinst new somerset.
+i can let, who have lenges not peract'd,
+than fear given and turn duke's tarr-bar
+form
+th
+
+diversity: 1.200000 ---------------
+
+wnly, if here.
+
+dromio of epratces of epous ofus earl,
+comm now? doubt changes to this, an excord,
+ustail'd and consented
+being on 'tight yneh anrouis nor's like not,--
+  to fonth to-morrow therefore left remuph of me borne;
+resolv'ss to deadouth, after to blot!
+first resto home we'll but all river to
+thy natures fore thy sway i hast rither mount:
+commsth, not not we raisen lucy!
+
+queen margare.
+s
+
+iteration: 16 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 399s - loss: 1.3817   diversity: 0.100000 ---------------
+
+otectors and the sons and the sons.
+
+[exeunt the set for the son, and the sorrow of the shame?
+
+proteus.
+and then i think you say the sons of the sons,
+and the sons of the sorrow that i will.
+
+[exeunt the several, and the sorrow.]
+
+seem.
+
+[exeunt some warwick.]
+
+gloster.
+and then the sorrow that is the soul,
+and the dead of the stand and the sons the sons,
+and the sorrow than the soul to the shame
+
+diversity: 0.250000 ---------------
+
+he straight:
+and in the gone, then i was the libertion.
+
+[exeunt the soul, what they are the sorrow should saint
+the tower with the seemame the dead of the death.
+
+launce.
+and then then the soon have he shall be dishonour.
+
+salisbue.
+
+bionde. i have the man the fight,
+the foes and be she have so begin a tent.
+
+king richard.
+and the field be thine have be my love.
+
+[exeunt me, with the both son, an
+
+diversity: 0.500000 ---------------
+
+inst the stand
+command his find and the silver doon with myself.
+
+[enter the way and seemame the lady, my love.
+
+gloster.
+have you not he be my garres to his love.
+
+dromio of syracuse.
+then i am not for the tower is the good
+that love this attent to the stand be soul,
+when then thou comfort the day, my brothers;
+and then so dead and by the very bear's death.
+
+gloster.
+how as a love and have a spec
+
+diversity: 0.750000 ---------------
+
+eat to the master's citweation away;
+my pit of his being look in their sight?
+she will, to the severa soul, and this for the grave.
+
+lucentio.
+how love him and these would, and cham help.
+
+warwich keing so for the firm and that brought.
+
+gloster.
+have it lie this king, and on this bloody.
+
+somerset.
+seem thy parded that save, you would prode,
+my doubt, sir.
+
+bastard.
+and it shouldst the men, salia
+
+diversity: 1.000000 ---------------
+
+r any orded in
+muniue of this close regent the worst and pretyjonged,
+great shall to prowne his bongs that fight,
+to come, my lord; what these they hust jount.
+if throw and her for themselv's many curs.
+
+reignier.
+hastings for my highness how alive? and your gought, when she from was'd fight,
+a nite'so love, he thanks to doubs again;
+from no partted wrack: which so me as the rowes,
+  this sights i
+
+diversity: 1.200000 ---------------
+
+ion then shuit.
+mads, with me you sated roge with they into
+they, be to me to ye and is highted ooved.
+in me and solend! thy stand as glist'd,
+fair cry and king his fathery drumine
+to refolm'd of crown shame! then charvish mercliffy
+ofl voeks upon the more?
+
+cunsur.
+a keep look, dost thou our forsouse, orely yet could,
+  of leasingllys handing me clarenceful nake.
+abiotaring, for entire;
+yield lib
+
+iteration: 17 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 399s - loss: 1.3798   diversity: 0.100000 ---------------
+
+now,
+and here in the state of the state of the state.
+
+[exeunt and heart, and here, and her petvil[e,
+and here is the state of the state of the life.
+
+[exeunt and and somerset.
+and the servant and the state of the state.
+
+[exit.]
+
+[exit.]
+
+[exit.]
+
+[exit.]
+
+[exeunt and marcus.]
+
+somerset.
+what shall be the state of the state of the state.
+
+[exeunt and and and silvia.]
+
+silvia.
+and the heart of the
+
+diversity: 0.250000 ---------------
+
+in the fair.
+
+[exit.]
+
+[exit.]
+
+[exeunt with the lords, and and marcus.]
+
+thurio.
+ay, the wall and so, and the warning and death,
+and so be my love of the court of thee,
+and the save the duke of york that she shall.
+
+[exeunt and the treace of sir john, and the fair,
+and will not be the be dispersed of the stame,
+and in the stame to the sea in the bed,
+and have not hear the steel and from the stay.
+
+diversity: 0.500000 ---------------
+
+efore still of the attench, where willing thee.
+
+'to his treace is the children with love:
+thou art a cause an one to deed-land shall had here,
+in the court of my amoning and so bear in their eyes somemcning looks.
+
+[exeunt.]
+
+
+
+scene ii. for it is not fair for marster'd.
+
+[exit.]
+
+grumio.
+but i have no more than the right so fly,
+lord and in the victory from woeful her husband
+that i will duke he
+
+diversity: 0.750000 ---------------
+
+ some forward of parliam
+she is the great death of leavest one had,
+was knog the doors then in purpose of their mind.
+
+king.
+silvia, i couldst not do not our admires
+enterphing me not henry than the honor
+shall be the proud hard that long in my happy soon.
+
+farlish.
+
+[exeunt and persomaw.]
+
+cade.
+i duke oat, tune by no love in me for well
+to be men of a cold and men that be since by thee:
+and cans
+
+diversity: 1.000000 ---------------
+
+ry'd ranlen besides and hast gair from you?
+stam have about   friends undestasting,
+de: i, i accuptry be we
+fully runs mov'd: sweet, how unloath.'
+
+titus.
+ay, i not! ah, hoces enemious.
+no, gratic falchmons thought, lov's delense,
+to gract'd for act our at much is it servanted,
+and whouse but i therefore are nor behand,
+but ay.
+
+york.
+but, lord, without thy plame to spake ope thyself;
+  and an amb
+
+diversity: 1.200000 ---------------
+
+.
+he read oxforns and mana, nothing hir encompusiout
+i find their being the sees hartonsbloy baits you as
+a jeit stand.
+
+katherina, who made their farewerless.
+here-wards are with suffolk,--whill;--so me;
+for i should her reffitwatiel degrand.
+
+dromio of lord plant the garteps, boid the wrether.]
+
+, exceptance in godly libether:
+neighte ta right, and sudless man perpoice;
+reign! rabeardy, fair pre
+
+iteration: 18 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 397s - loss: 1.3759   diversity: 0.100000 ---------------
+
+at i have here
+that i will be the sumpless of the winds,
+that i will be the company-time the sons.
+
+[exeunt.]
+
+
+
+scene ii. the sons, i will not be the seath.
+
+[exeunt.]
+
+
+
+scene ii. the servant.
+
+[exeunt.]
+
+
+
+scene ii. the sons, the company.
+
+[exeunt.]
+
+
+
+scene ii. the sons, i will be the sears.
+
+[exeunt.]
+
+
+
+scene ii. the sons, the sons--
+
+[exeunt.]
+
+
+
+scene ii. the sons, i will be the company
+th
+
+diversity: 0.250000 ---------------
+
+ the sons that i will be the son.
+
+somerset.
+that i shall not be a thing the death to the man the crown.
+
+[enter marcus, and the life and the sengers, the deeds;
+the sons, i think the life of the sight here,
+and i will be the children sound have some captain
+that i did the hands that with the body shall be the house
+in the chain? and the part of the life,
+where is the death that i will be the prid
+
+diversity: 0.500000 ---------------
+
+have them you batter.
+
+petruchio.
+i think the sons shall be been thy head,
+i come to more in the protector,
+and made of true, and your children farewell.
+
+speed.
+there for thy words and good stay in thee:
+the soul, that we prove the orgaret made.
+
+warwick.
+what look to the words with her proceeded spain.
+
+petruchio.
+what, i long with this sons would so my lands
+that i made them the colour of me th
+
+diversity: 0.750000 ---------------
+
+s, and in said,
+these with any libe, scords, be burns thy greater of york.
+
+gloster.
+would not we look doth to sen the dunsel thy will.
+
+proteus.
+then get me said your prophess battle regently.
+
+[enter gloster, hortensio, gentleman, and the glory sir,
+that he not and this titus, and you will resembery,
+and while the limbs laining and will thine,
+but whill you be the trut? that we trust
+him like fo
+
+diversity: 1.000000 ---------------
+
+befruars my will kins, seemrbaing;
+withouth, her battles reed; this night, she her day,
+and thirnated he is provanced homen me--
+long indrust, in a hateing in bear.
+
+cardinal.
+by thou have curper stance is of cade of herwell,
+i turn the gone, that thing worencus, is a good prisong?
+
+[enter the book, so, rither!--iscilk, he, would take him.
+lord, my good of mistress die, upon!
+and it were infick is
+
+diversity: 1.200000 ---------------
+
+s destir's.
+
+[his piren.]
+
+nare will not 'but dili harbitg pire.
+
+proteus.
+meant that cares: 'is meashing and ware.
+
+sichant.
+prombs himpht
+for york richloman.
+away' the reason beams! awake
+speed recuv'd, drumis' crowns.
+
+dium of thus, with him, and rofd: lord she:
+and success of many, canst not?
+
+julia.
+harkon thou de, sirethjondan shade to reeve.
+
+hastings.
+robe.
+my mister'll! for have him up fl
+
+iteration: 19 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 405s - loss: 1.3792   diversity: 0.100000 ---------------
+
+[enter and the son, where i will the death.
+
+[exeunt the dead, and then the dead with them.
+
+[exeunt the death, and then the dead, and the death,
+and the dead for the lords and the dead.
+
+[exit.]
+
+
+
+scene i. the sons with them,
+and then i will death the stand for the son
+is the sons and the compassion of the deat.
+
+[exeunt souch the son, where i will have thee.
+
+[exit.]
+
+
+
+scene i. the compassion 
+
+diversity: 0.250000 ---------------
+
+ to be stand them.
+
+[exit.]
+
+
+
+scene i  is the dead, and then i have strange;
+and then he be the stranges of a princes,
+and the grace of the sons to the dead her heart.
+
+[enter some somerset, and then he warrice,
+which i will desperse thee the sons shallow,
+and that i shall she stand the dead to thee.
+
+[exeunt the noble son, and richard somerset,
+and the happy that the marks, and so in the heart.
+
+
+diversity: 0.500000 ---------------
+
+ the dead her side.
+
+[exit.]
+
+
+
+scene i. i will,
+and let the lasting and the be gone as he deed,
+to stand him to stand of the duke of york.
+
+lucius.
+what of this both in the greater to the issue
+have her state, and that thou, it is resolds.
+
+she than the servant, and lady stand!
+
+horthlus meard that she would stop them the law.
+
+petruchio.
+and can then, that i should shall i will.
+
+petruchio.
+and 
+
+diversity: 0.750000 ---------------
+
+eed,
+thumy you in gried in dead with valentinal!
+
+second neide.
+aoming to the hours in tongue you have,
+and when change those being her retar shame:
+'tis we like on the word crown! and will not be strief him my lord.
+
+untoe his heir of her with the breath,
+by my lords while we both at the heart since:
+time, my furthis great not the bread, master,
+o, that the complains with thee in the ir
+quothio, 
+
+diversity: 1.000000 ---------------
+
+d prince, glan edward this reparelt,
+that my and dishop from ophil sot: when that you good prisoner.
+yet look to me that us more on rest,
+as wretwert her join in justibe?
+stubbod sapus warshif cause, and this on.
+why, let me he had findous are like the majest:
+
+'some first you leasted her to with her house,
+that talk with a lawlan senge, and capouse,---
+i'll cown to my body, ief with a visangor
+to
+
+diversity: 1.200000 ---------------
+
+shall revilefungformly darver now?
+speak thee mined lo, flatter's prouds:
+
+katherina delit richard sand, be wirna,
+one such a my bravac'd iremoust,
+ove shed then it vipe richard mocks,
+the topted thus when till' love's breepines; and words!
+
+gloster.
+that i am aupones,
+dishonouraffit dissorneles;
+a not mouthno's womperland-envoone?
+
+[ade so i let me hastick hastings,
+margaret, have henry's crown t
+
+iteration: 20 ---------------
+
+
+Epoch 1/1
+371926/371926 [==============================] - 405s - loss: 2.0073   diversity: 0.100000 ---------------
+
+ [glong of houlare.
+i hart thes he ghall and most thour so bid the ghendat the ghalle the griengnerdlesior,
+and masian ther, bear the wo the ghendes the there,
+
+quing.
+
+quing of the be the wick.
+
+[exeunt the gailduinare there, a the ghend,
+and tarrlind thee, and maste ther.
+
+[exeunit.]
+
+the word so theave andro, the wo the that done nor to than the word most thour so becand the wick.
+
+[exeunt.]
+
+
+
+
+diversity: 0.250000 ---------------
+
+d have oft, bitegonere.
+
+[ente me, manderele.]
+
+tammine of the man the holly th, becordning atthularst ther.
+
+[exeunige.
+and warward.
+
+[exeunt.]
+
+
+
+scontines the s the to the see to thannood.
+
+page.
+
+the halh, and wor hath to the word so ther,
+and maste there to be the prope to brath then the propt his by the wick.
+
+[enter and propt app.
+
+pleach hear the go friell the ghele,
+and ghom ill and doull
+
+diversity: 0.500000 ---------------
+
+thand.
+
+thain, baving.-
+lord a chhn and rell they canin some anoty brow his son thithrinee so
+forcer withtene to when so slams, stams--it(wick'd thom shall the chindre by that,
+
+sweet bet and thy sure by such any lod;
+bet thain, thanass there hear hath thath with.
+whiter apport thee and wostest thou oth there amy,
+have see itw thee jad bach prowell honon,
+that's kesperouth, my prollio'ld,
+an nider
+
+diversity: 0.750000 ---------------
+
+riner sarr
+oftest, wil anow woote yourneldasio.
+
+tas ach her your bracont this took, sween,
+what hes gothsomunhy wing frait my so sangi5ke halhnou to thinena
+wiminhna there boutest inlthillasure oft,
+they clod, beclasamenrent inull
+ull the to theln thyo by hap, she to i wor math anony
+oft, bucitipanincless.
+
+br whousayr clare lew andsthine.
+koth jurt willo and there my the lated wealn than thet, a
+
+diversity: 1.000000 ---------------
+
+o laws bewchteowne ait love thantran ouvainer whien tilemmys more.
+
+biss vagbous foul serits,
+and there see aidlighty hard, and deats baws than romioug,
+fortemst ab! thiff 
+an awze to aok
+thisen wnowne the knindurenon thoog.
+
+lor scould mots oalrors paving pirs sadror.
+
+yor saonnrave that, whis brave clailiogners haures wate.
+
+o yar benawel to thy see, eschwarined 
+untirk are sifdlaturnainessay,
+b
+
+diversity: 1.200000 ---------------
+
+ndonort stake
+lury we meute gerdere, got, backing.
+terr's wo-guirs eaveral offun i's rood'sdain buas?
+socswe didmo lookstenanch, and ghay
+'mes oulac, thee pole our anow quingr hishindle  undiom,
+nild ghender heath mo lows bray br titorded.
+in friendnernd,
+of's not death sortdrerk, lave.]
+
+claron, griefisceloran,--
+lese.
+
+rithor theritaleident dene why so med
+fr}sy he r{ppisoos's
+dunh mom wigh, aig

@@ -1,0 +1,450 @@
+iteration: 01 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 753s - loss: 1.8298   diversity: 0.200000 ---------------
+
+ith him.
+                                                                                                                                                                                                                                                                                                                                                                                                       
+
+diversity: 0.500000 ---------------
+
+io. i must not be gentle of made our last,
+    how i had he them troubous do the sauge;
+                                   exit.
+                                                                                                                                                                                                                                                                               
+
+diversity: 1.000000 ---------------
+
+assio.
+ clown. i will not theresolue the pridishe in was
+stleecely sidralson afface
+    and leamants tapsis infulling again,
+make it interricede, whing it wint tolde
+
+   yren. when 'tis has with bry corme busing
+are naire
+
+   ver. his had of bakeos ma, nor you will harry.
+    he say wellow clowny, shile nolesse of murk that
+     how thou none onow, you, an i doutry me.
+  tring. the covarsalured ba
+
+diversity: 1.200000 ---------------
+
+lord?
+
+mauick.
+lear wious and--oneion,
+
+ othes. what that you w have's shoulth goind: shalk ys  goanger'd the bers.
+
+fachetr.
+and good thistry.
+
+enter gnow.
+with awayp; anster him vithercesest fids wish,
+thay eyely beggean.
+  kinghrerer. i belict us he, she wild be himsence thee
+    payure, thy scoffn rogaris heavtieffalaiate sword
+     my king, i doede.--in, sir fou of them.
+goise our befech like
+
+iteration: 02 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 690s - loss: 1.6130   diversity: 0.200000 ---------------
+
+t the dead the monther the companion the selfe
+    the horse and man the towne the worst
+    the count the man the with the match of the companion,
+    the comport the month the set the towne and thing
+     the strike the with the companion the deed.
+    the she is the grace the day the dead,
+    the best in the dead the monty be with the towne.
+    the man when the to the dead and speak of the de
+
+diversity: 0.500000 ---------------
+
+ at the bond, and be so dead
+     and thou where i have this we am meet her the monders bread of the noble,
+and shall not the common of me as the citizen
+     that i have the semiters and the duke
+
+   iago. my lord, when the doth of the towne of grace to feares, lady,
+     the prome to a pruchmend that a peare,
+and when i have thee he strange to me the blest on the count and selfe:
+    the strowne
+
+diversity: 1.000000 ---------------
+
+inion, and the a post-
+how hathat will not ione look that sheppence,
+without lay term'd thy mean of our scontrerry:
+and shall no part fild?
+  bot. iflish it doe
+    metheren thispious to in life! lawn- as am] rouse as has deeen her sleep?
+  cap. is the vnpply!   and gods.] what hath not thinke not neekes a greaser
+and.
+my lord, the our to found of your ay strowle drumence
+to missie like my way our
+
+diversity: 1.200000 ---------------
+
+take their niskuen your bo!
+
+quistr.
+but.   re.cisatian, body fuce. he theed me. the yourd to must hea,
+a kon, and law deseane? my nones and other.
+  buckingorio. te fos hele should centlabh'; my srantrever
+
+   us. heue! my nopl interes evpy let.
+  scorn. faull dishlion, younwihe, on yaurs;
+you may blast say
+ehing come that, the goas.--this fouth were with cinuctplyn'd: i will no your.
+
+anter hasu
+
+iteration: 03 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 656s - loss: 1.5803   diversity: 0.200000 ---------------
+
+e the world to dead
+     the sent the strange the see to the seruant
+     the man to the seruant the compatters to me,
+    the stand the honour to the priend to the heart,
+    the tange the see to his speak the towne
+     the compation to me the true the priends
+     the streat the sent the honours and the man of the comprantar
+     the strest the courters and the seen thee,
+    the comple the bod
+
+diversity: 0.500000 ---------------
+
+ the deuiles the tants
+    and my soul the sent
+     the deere in the honour of i door passie
+                                                                                                                                                                                                                                                                                                                  
+
+diversity: 1.000000 ---------------
+
+lool
+
+   dis. there's aboution, rent; whoe sight, matter
+make his woby in a demetters how the fome,
+    newse die your night des. a most of the my speet;
+to the man of those within of the extemposs
+
+   const. nightimy within will list, ay, it is: and i have die
+amrence of but ono? may for what amious man.
+    that there is this disdeedle prince confession
+to unkneds uound
+
+   iay. i pagen his mast
+
+diversity: 1.200000 ---------------
+
+see upis?
+  jul. ay, miscy towne puttels highnolb could speight,
+of shoust like the captitn with a kirgous, had buubsard and capsa mistiet,
+    boy with much il instress hem'dlal suffriefs,
+denakters lay flees, in.
+  bianca. go nesem! is all my blews bos; he dare like
+    yement; kas her, romeo. prission shanfedo in.
+  jus. hayry, yealon edmons. told to't wick, but hither
+the lanc? i hate of aum'd
+
+iteration: 04 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 661s - loss: 4.4788   diversity: 0.200000 ---------------
+
+ i                                                                                                                                                                                                                                                                                                                                                                                                              
+
+diversity: 0.500000 ---------------
+
+ie i                                                                                                                                                                                                                                                                                                                                                                                                            
+
+diversity: 1.000000 ---------------
+
+   ee                           o    e o                                                                                                                                               e o o                                                                                                               e                                           i                                                        
+
+diversity: 1.200000 ---------------
+
+e e           ee                    e i i i                                                                                                     e          i                                                                                                        e e oe           e oe         e e e e i                                                                                                     
+
+iteration: 05 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 655s - loss: 9.9534   diversity: 0.200000 ---------------
+
+                                                                                                                                                                                                                                                                                                                                                                                                                
+
+diversity: 0.500000 ---------------
+
+ i                                                                                                                                                                                                                                                                                                                                                                      eeeggggeseth te                         
+
+diversity: 1.000000 ---------------
+
+i  e o e ee ei   eee eeee i  i ee o               i  ente ee o i i  ie ee i eeee o i        i                      e i  i o                 u  txx]x!! i    e i                eee ie oe e ie e ne to  i i     i       i  ee eee i  iy e i        ex teene        ee i  i i ie ee i            o eet toe i  o too i  e e  eehee toi i i io i  e i  i i i  i ee i      i               e i  e i      i        eet
+
+diversity: 1.200000 ---------------
+
+eie e i  ee o e i      i  ie i i i       ei eo lie i     i  ee ee          exe i             in ei  o i eeheene nee i  o     o ee to eie o i i i  ee eee eee ee io    eo oe i  ee i oie oo oe        ee          eee e o ee i           x i      i        eee o                 i                  ei eeggli  inene e eo ie eee e o e i                               i        eeeggggeagdsst       e in ee iio 
+
+iteration: 06 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 662s - loss: 10.1641   diversity: 0.200000 ---------------
+
+i ie i ie i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i i ie i i i i i i i i o i i i i i i i i i i i i i i i i i i i i ie i ie i i i i i i i ie i i i i i i i i i i i i i ie i i i i i i i ie i ie i i i i i i i i i i i i i i i i i i i i i ie i ie i ie i                                             
+
+diversity: 0.500000 ---------------
+
+ i i                                                                                                                                                                                                                                                                                                                                                                                                            
+
+diversity: 1.000000 ---------------
+
+io                                                     o i oie i oe i i e e i                    e o i eieie i eie i  eiee i i eie eeie i io i                              eie i io                                                                                                                          e o i ie i eie i ie i ie i eie e i eoeo i o e i ei e i eie i oi e i                               
+
+diversity: 1.200000 ---------------
+
+e i ie i ie i     i                                 i eo i ie i ie i oo i                        eie i eeeio                                                   o o i ie i  i                      oie e i eieeeee i ei i                   o i iio                                                                            i ie i i i eo i e e i eieoo i eeio i i eiee i      i ie     i                     
+
+iteration: 07 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 670s - loss: 9.9381   diversity: 0.200000 ---------------
+
+                                                                                                                                                                                                                                                                                                                                                                                                                
+
+diversity: 0.500000 ---------------
+
+e i ee i                                                                                                                                                                                                                                                                                                                                                                                                        
+
+diversity: 1.000000 ---------------
+
+ie i                                                                                                                                                                                                                                                                                                                                                                                                            
+
+diversity: 1.200000 ---------------
+
+o i                   o i                                                                                                                                                                                                                                                                                                                                                                                       
+
+iteration: 08 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 668s - loss: 9.9316   diversity: 0.200000 ---------------
+
+ i o i o i o i o i o i o i o i o                                                                                                                                                                                                                                                                                                                                                                                
+
+diversity: 0.500000 ---------------
+
+ i o o i o i oo o i o i o i o i o                                                                                                                                                                                                                                                                                                                                                                               
+
+diversity: 1.000000 ---------------
+
+o i io o o o i oo eo i o i oo i o o o i oo i o i                                                                                                                                                                                                                                                                                                                                                                
+
+diversity: 1.200000 ---------------
+
+e i eioe i eio     o                       i                                                                                                                                      o i         o i io o o eioi i o i ie i ie o i oo e i o i oo i io e o              o i o i o                                                                                                                                   
+
+iteration: 09 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 755s - loss: 9.9289   diversity: 0.200000 ---------------
+
+ee i oo i o o i o i oo i o i o i                                                                                                                                                                                                                                                                                                                                                                                
+
+diversity: 0.500000 ---------------
+
+                                                                                                                                                                                                                                                                                                                                                                                                                
+
+diversity: 1.000000 ---------------
+
+io i eie i o i eie o o o i ee eoo o eo i oo i o oo i eiie o i oo o i eie o i oo i ee     e i oe                                                                                                   e i e i ee ee o i eie i oo i i e i eoe o          e i                                                                                                                                                         
+
+diversity: 1.200000 ---------------
+
+oo i oo o i ie i ee o eioe i o     i ee e o       o i ee i o                                                                                                                                     e i o o                    e e                                                                                                                                                                                 
+
+iteration: 10 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 1884s - loss: 9.9622  diversity: 0.200000 ---------------
+
+ie ie o i o o i o o i oo o o o o i o o o i o i o o o o o i o i ee o o o i ee o i o o i o o i o o o o i o o i o o o i ee o i ee o o o o o o o o i o i o i oo o i ee o                                                                                                                                                                                                                                            
+
+diversity: 0.500000 ---------------
+
+ ee o i oo o o ee o ee o ee o o o i ee o eo i oo o o i e o i o i ee o i oo ie o o o o o o o o o ee o o i o ee o i ee o ee i ee o i ee o i o i oo i ee o i ee o ee i eo o ee ie o o o i o o i oo o                                                                                                                                                                                                               
+
+diversity: 1.000000 ---------------
+
+ oo ie eo e ie ee o                                    i                                                                            eo ie o o i ee oo o o                                                 eee ie ie o                              eo ie o o i o ee ie eie ie o o ee ie o                                         o ee o eee o                                             o i o ee o ee oo o o 
+
+diversity: 1.200000 ---------------
+
+o i ee oo o i ee o i oo o                  o i        i     eo o i    o oo o o i eo ee oo ie ie oo oo o eio ee ie o i eo o                                                      i                                                                      o o i iee ee o ee o i e i oo o     o o o o o o eooee i ie eiie ee eoie o i   ee ee ee o o ee i eo e           i     i io e oo eo      i o i oe o o eo    
+
+iteration: 11 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 715s - loss: 10.4094   diversity: 0.200000 ---------------
+
+ i                                                                                                                                                                                                                                                                                                                                                                                                              
+
+diversity: 0.500000 ---------------
+
+e i ee i                                                                                                                                                                                                                                                                                                                                                                                                        
+
+diversity: 1.000000 ---------------
+
+e i eie o i e i ee i                                                                                                                                                                                                                                                                                                                                                                        ee i                
+
+diversity: 1.200000 ---------------
+
+e i eoo                                                     i eo i                                                                                                         i o i eio e i       i oe i                    o i i e i i i o e o i        i ee i i eie o                                              o                                                                         i eie i             
+
+iteration: 12 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 827s - loss: 9.0582   diversity: 0.200000 ---------------
+
+te to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to t
+
+diversity: 0.500000 ---------------
+
+to to to to to to to to teet to to to to to to to to to to to to to to to to to to to to to to to to to toeeet toeeet to tonet to to to to to to tot to to to to to to to to to to to to to to to to to to to to to to to to not to et toeeetente to to to to to to to to to to to toeet to to to to to to to to to it to to to to to to to to to to to to to to to to to to teete to to to to to to to to to to
+
+diversity: 1.000000 ---------------
+
+ent etetonee t ete to teetetet to to tot tot to te totte noee t tnott onent to to to toene et tetnteet teee ontent to to to otentonettitt to to notette to e to eettee to totent to tenetoente to e tot to to toee to tote to toe tonttite to to to tote tooen toote it to toooe to to to to to to toe to to enteteee to toeinet to to to to to teeeet   ett to i to one to etee to ot to ote tootint one teetot
+
+diversity: 1.200000 ---------------
+
+ee eneeetente teet itttenent tooonenteet to to onteet toete to to toeeenttot to ot tee toneente to teet ot toeeinnttee toee to tnee ne toint to toent toe ot ote to tet totenee to to tot to to it to to te in onetot teeteine toet to to ot to titt it to it eet    ot to to nete toet toe toeen tnoe to tet to to to itt tete to to it te it to teeint totee to i ettt non tnt teenee to toeetteeene tot   tee
+
+iteration: 13 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 856s - loss: 8.5112   diversity: 0.200000 ---------------
+
+ to to to to to to to to to to to non t i                                       i        n nninoo toioio eioio iot to to to to to to to to toit i                                       i      n n n  nioi i oio io iotio                                                                                                                                                                                       
+
+diversity: 0.500000 ---------------
+
+to i       t to to to to to to not i i      i   t in to to to to to tneto t eit i                                       i        n nninoo toioio io io iot i                                       i        n nninoo toioio eiooo iot to not not t i i i      i                                o      int  e   noi i niooioio ioioo                         t i    o       nio i tioioioioioi                   
+
+diversity: 1.000000 ---------------
+
+not i ente to to to tne eo i                  i           t t tte to i ioioi oio      io          t to noit i i          it nit ioi not i i to to to t iooi                              t ot in ti   ei io o eioooioio   t to t not it niit i                t ne onnot ot it to no ioioooiio           t e t i      te in t t t e   oooiot tnot t i         to i i                     te tio not to to  i  oi
+
+diversity: 1.200000 ---------------
+
+t no t oto to to t etot tito te t i    te to tt tnot t eto ot no o   to neto tt n to tnto to tt no   o tt t eto it t i   no i   t i i       tit i   to not i    t in t i i       t to i  te i ne tiet tno  t eto to t eto t on to t noe te to tnint to to to t ot t etot et t no t no in to t ot o t to t no                    to no    te to n eto tioiioiio oii to i titito tit it t i i to t t e it i i to t
+
+iteration: 14 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 819s - loss: 8.6289   diversity: 0.200000 ---------------
+
+e to to to to to to to to to on to to to to to to to to on to to to to to to to to to in to to to to to to in to to to to to to on to on to to to to to to to to to to to in to to i to to to to to to to to to to on to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to on to to to to to to to to to to to to to to to to to to to to to on to on to to to 
+
+diversity: 0.500000 ---------------
+
+ i to on on in i to i to to on to on on to in to on i to to to to onon to in i to to to to to on to on to to to to to to i to ot nooe to to to to i to to in to to to on to to to to to to to in to to to on on to to on to to on on to to on to to to to to no i to on on to to on in in to to to i to to to to on in to ot to to to to on on to on i to on to in in to on on to to e on to on to to to to no o
+
+diversity: 1.000000 ---------------
+
+t i toe o to in tee oenon to o not to to i to tit to to to one tie to ot tee on on in to ot none nono et i non i in toot tooonte toen non i to i iteion one tin ot on on tin iot to e inin neton to i in to not it on i on ent to on tion in eto i in ot on to on in ioe it it o to i to to to io ine note oot oin to non on non on e to to ent ot oie on tioo not to to in toe to it to i on i onoton on onon t
+
+diversity: 1.200000 ---------------
+
+t not onone noon on tion ot oen ooe tooetoettnon on in to on o   i in toonionoot to to in tioenieine i on not nin in in one e to tit not to on in tooe on enot in too i on too on etn     not toententto tie i to toot oninion i i ete o on on to to eno tion not in onot on in to tiine on in tee tot teonee to not enn to to i no to on ot tion i ineene on on tion to ot on in noot inene nooonee o         e
+
+iteration: 15 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 818s - loss: 8.7691   diversity: 0.200000 ---------------
+
+e to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to to
+
+diversity: 0.500000 ---------------
+
+ to to to to to to to to to to to to to to to to to to to to to to to to to to to to toe to to to to tin tet to to to to to non to to to to to to to to to to to to to to on to to to to to toe to on to to tin to to to to to on tone toe to to to it to to to it to to to to to to no to i to to to to to to to to to to to to non to to to to to to to to to to to to to to it to i not to to to to to not to
+
+diversity: 1.000000 ---------------
+
+  not to tet to nooon tot toe nete to to o to toe to tet e oo to to it toe one e on in           not eetitint i i to to      tin toe to to to no to to to tot in tone to to tenonte to e in ton i to to tone      ne it tent on to on tote tine to nette to   tinn tot to to to to tot i i tot net i to nonen nin to en to on to to tetint ent tot in to nin tit tot to teet tonie tin to to one                
+
+diversity: 1.200000 ---------------
+
+t o e tit on to on to ot i ention to to tone to toee noinne e e tone          tot to netnie tonen nint e it tint tinie tnet not not in on i toe it tintine tene non ot on to   to ent oitent to tinnint to tone in to tot to to tone i i   no tot in no to non to tint i on to to tit tin tot i tonion     in to e tet e none ene tot not on to on to i i on one on tine neteee to it ente to it to in ot tie to
+
+iteration: 16 ---------------
+
+
+Epoch 1/1
+558141/558141 [==============================] - 845s - loss: 8.8552   diversity: 0.200000 ---------------
+
+reno alene to to t ot  iee   leer irrenoo trotnnnnot  oeee ro   tnonnnaee  oi    ooo  n   too 
+  tt   oooeren ta tnnnoiio 
+     oiotnoen ooe      oea      aesel
+     t tal     nn    ono  aoeo    olatenoi   tine to i  to nte se    rooe 
+  t     to aaarntele nni i te  ioiotenee  ooe arono   oe   ti     ootenl   o an   r   aotasno 
+   tolerioirrte  ioirne a  o   t oree   ton 
+  ilraiana  relie    oli
+
+diversity: 0.500000 ---------------
+
+e     tiat on t  ioiolne o tnaiotino   oe     ose  rt onnrnsrnnnoe tne an t tii
+       aale oore it o   
+  onnotenoin  nrooio    oti 
+oeo oore  e ta  annlleeo  nnt soe tn      t t i ioent   o   tn so   ooirertni tio nin   reeeatnonoe oe arn  rtlo ioe  o 
+    oo oa  n   or   ar iaar    t   oo i ioonlleron tatrsi i  oorinoo  oooo 
+ t  
+ an   oreannoi    o sl aalaiotnnno  ooieaie   to ta snoroesnnno 
+
+diversity: 1.000000 ---------------
+
+onat teo toiro  nn  ale      oooo  nosa aaaoe    o ainoor t t  ntioi 
+a ltierne   te haninat  rri ioioneirnnena  nrno arn otio    oe  io  r     annasnionnoa
+  tannt   ol snon sn ooie     ian
+ aesene n  ntioi
+trna
+  e  
+tsn    ire  otnenn  tiie lrsoooee ioet  oetenenai ar
+    tieal
+   o  rree ste   t enne   iaieo  onr tne nttooioe   o    o     ne aalnnoi oootenen    ar tnirine 
+    tnar te  aloe ro
+
+diversity: 1.200000 ---------------
+
+      n
+ otetnt ina   oiate o   t   tre   oononii
+  oe   t   tnren i iieat  noee  ar tte t  rato o oonlo anen nana       ono ooe    oo 
+  tnre   i  toeeaaioio   tn t   tnoirror ioee iole  ortne     i  oa oa  o tre  oorle   ttneal ienrnon    e     ttnoeaal
+s   no ooe   ole  nt e  iati e  i 
+ toe  oenalerrn   t  noe a n sete     oeeerentn     oooiatea    oase   oenireelent   neenenoesrset   tn snnni
+
+iteration: 17 ---------------
+
+
+Epoch 1/1
+ 27392/558141 [>.............................] - ETA: 763s - loss: 9.9403
