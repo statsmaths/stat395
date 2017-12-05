@@ -9,17 +9,17 @@ knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-12-05-class27/")
 ```
 
-13:30-13:40	[Nathaniel Paul](../assets/final_project/paul.html):
+13:30-13:40	[Nathaniel Paul](../assets/final_project/paul.html): Clip Art or Stock Photo?
 
-13:40-13:50	[Sirui Zhou](../assets/final_project/zhou.html):
+13:40-13:50	[Sirui Zhou](../assets/final_project/zhou.html): What’s Cooking
 
-13:50-14:00	[Kaiwen Chen](../assets/final_project/chen.html):
+13:50-14:00	[Kaiwen Chen](../assets/final_project/chen.html): Text generation - do monkeys typing on a keyboard produce works by Shakespeare?
 
-14:00-14:10	[Shiv Toolsidass](../assets/final_project/toolsidass.html):
+14:00-14:10	[Shiv Toolsidass](../assets/final_project/toolsidass.html): Get rich quick
 
-14:10-14:20	[Marissa Sisco](../assets/final_project/sisco.html):
+14:10-14:20	[Marissa Sisco](../assets/final_project/sisco.html): Emotions in 140 characters or Less
 
-14:20-14:30	[Radha Venkatesan](../assets/final_project/venkatesan.html):
+14:20-14:30	[Radha Venkatesan](../assets/final_project/venkatesan.html): Who Let the Dogs Out? (ft. Dogs of NYC)
 
-14:30-14:40	[David Brakman](../assets/final_project/brakman.html):
+14:30-14:40	[David Brakman](../assets/final_project/brakman.html): Earth Surface Temperature Data
 
