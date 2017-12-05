@@ -1,0 +1,58 @@
+---
+title: "Lab 10"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+Read in the following libraries and to load the dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+flights <- read_csv("https://statsmaths.github.io/ml_data/flights.csv")
+```
+
+This lab will be scored using classification accuracy. Make
+sure your results are coded as either `0` or `1`.
+
+```{r}
+if (!require("xgboost")) {
+  install.packages("xgboost")
+}
+```
+
+# Lab 10
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`delayed_pred` to every row of the dataset.
+
+```{r}
+submit <- select(flights, obs_id, delayed_pred)
+write_csv(submit, "class10_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

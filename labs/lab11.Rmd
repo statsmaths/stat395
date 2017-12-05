@@ -1,0 +1,62 @@
+---
+title: "Lab 11"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+For this lab, please only use neural networks.
+
+# Set up
+
+Read in the following libraries and to load the crimes dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+crimes <- read_csv("https://statsmaths.github.io/ml_data/chi_crimes_12.csv")
+```
+
+The names of the crimes are, in order:
+
+```{r}
+crimes_list <- c("theft", "battery", "criminal damage", "narcotics",
+"other offense", "assault", "burglary", "motor vehicle theft", "robbery",
+"deceptive practice", "criminal trespass", "prostitution")
+```
+
+Make sure your predictions are all an integer from 1 to 12.
+
+```{r}
+if (!require("keras")) {
+  install.packages("keras")
+}
+```
+
+# Lab 11
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`crime_type_pred` to every row of the dataset.
+
+```{r}
+submit <- select(crimes, obs_id, crime_type_pred)
+write_csv(submit, "class11_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

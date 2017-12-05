@@ -1,0 +1,101 @@
+---
+title: "Lab 01"
+author: ""
+output: html_notebook
+---
+
+This lab serves to verify that you have set-up R correctly, install
+some standard packages, and to test the lab submission process. You
+must submit this by the first Friday of the term at noon. If you run
+into any difficulty, please contact me before that time.
+
+Please run the following R code to verify that the R engine is working
+proerly:
+
+```{r}
+1 + 1
+```
+
+## Install packages
+
+Now, let's install the three core packages that we will use every 
+class. The following code will see if a package is installed and
+only if it is not will it attempt to donwload it. Start with the
+**readr** package:
+
+```{r}
+if (!require("readr")) {
+  install.packages("readr")
+}
+```
+
+Next, we'll download **dplyr**:
+
+```{r}
+if (!require("dplyr")) {
+  install.packages("dplyr")
+}
+```
+
+And finally, we will install **viridis** (it will also install **ggplot2**):
+
+```{r}
+if (!require("viridis")) {
+  install.packages("viridis")
+}
+```
+
+## RStudio settings
+
+There are some default settings that will be useful to tweak before moving
+forward. If you don't do this, R will save datasets between sessions. After
+a week or two it will start to slow down and eventually crash everything
+you open the application. Instead, follow these simple steps:
+
+1. In the RStudio menu click on `Tools > Global Options...`
+2. Look for the first drop-down: `Save the workspace to .RData on exit`
+3. Change this first drop-down to `Never`
+4. All of the check-boxes above this dropdown should be unchecked.
+
+
+## Read in mammal sleep data
+
+Now, load the libraries from above. **If this gives a warning,
+you need to solve the issue BEFORE continuing.**
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+```
+
+As in class, load the mammals sleep data:
+
+```{r}
+msleep <- read_csv("https://statsmaths.github.io/ml_data/msleep.csv")
+```
+
+Check that figures are produced correctly:
+
+```{r}
+qplot(vore, data = msleep)
+```
+
+We'll fit a model and save the predictions as a new column:
+
+```{r}
+model <- lm(awake ~ bodywt_log, data = msleep)
+msleep$awake_pred <- predict(model, msleep)
+```
+
+And finally, we create a submission data frame and save it
+as a csv file:
+
+```{r}
+submit <- select(msleep, obs_id, awake_pred)
+write_csv(submit, "class01_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html"), and the csv file to GitHub.

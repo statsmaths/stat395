@@ -1,0 +1,70 @@
+---
+title: "Lab 08"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+Read in the following libraries and to load the crimes dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+crimes <- read_csv("https://statsmaths.github.io/ml_data/chi_crimes_5.csv")
+```
+
+The names of the crimes are, in order:
+
+```{r}
+c("criminal_damage", "narcotics", "prostitution", "robbery", "theft")
+```
+
+Make sure that your predictions are either `1`, `2`, `3`, `4` or `5`.
+Here are some packages you might need:
+
+```{r}
+if (!require("nnet")) {
+  install.packages("nnet")
+}
+```
+
+```{r}
+if (!require("FNN")) {
+  install.packages("FNN")
+}
+```
+
+# Lab 08
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`crime_type_pred` to every row of the dataset.
+
+```{r}
+submit <- select(crimes, obs_id, crime_type_pred)
+write_csv(submit, "class08_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

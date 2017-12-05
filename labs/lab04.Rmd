@@ -1,0 +1,51 @@
+---
+title: "Lab 04"
+author: ""
+output: html_notebook
+---
+
+
+*The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far. In this case, please restrict yourself
+to multivariate linear regressions.*
+
+# Set up
+
+Read in the following libraries and to load the diamonds dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+diamonds <- read_csv("https://statsmaths.github.io/ml_data/diamonds.csv")
+```
+
+The dataset gives characteristics of various types of diamonds.
+Your goal is to use these to estimate the price of each diamond.
+
+# Lab 04
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have adding a prediction named
+`price_pred` to every row of the dataset.
+
+```{r}
+submit <- select(diamonds, obs_id, price_pred)
+write_csv(submit, "class04_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

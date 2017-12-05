@@ -1,0 +1,69 @@
+---
+title: "Lab 18"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+One thing that you are not allowed to use are neural networks.
+We will see how to use this with images next class.
+
+# Set-up
+
+Read in the following libraries and to load the metadata about
+the flowers:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+library(stringi)
+
+f17 <- read_csv("https://statsmaths.github.io/ml_data/flowers_17.csv")
+```
+
+To get the actual data for the images, you'll have to download the following
+file.
+
+- https://drive.google.com/open?id=0B6_9OUDRaPQsc21sZXQ2Q250bFk
+
+Once these are downloaded, you'll have to run something like this:
+
+```{r}
+x64 <- read_rds("~/Desktop/flowers_17_x64.rds")
+```
+
+If, for example, the file sits on your Desktop and you have a Mac. If you have
+trouble with any of this, please let me know as soon as possible.
+
+
+# Lab 18
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`class_pred` to every row of the dataset.
+
+```{r}
+submit <- select(flowers, obs_id, class_pred)
+write_csv(submit, "class18_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

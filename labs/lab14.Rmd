@@ -1,0 +1,70 @@
+---
+title: "Lab 13"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+You may need the tokenizers and smodels libraries if you don't
+already have them:
+
+```{r}
+if(!require("tokenizers")) {
+  install.packages("tokenizers")
+}
+if(!require("smodels")) {
+  if(!require("devtools")) {
+    install.packages("devtools")
+  }
+  devtools::install_github("statsmaths/smodels")
+}
+```
+
+Read in the following libraries and to load the amazon products:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+library(stringi)
+library(tokenizers)
+library(smodels)
+
+president <- read_csv("https://statsmaths.github.io/ml_data/presidents_5.csv")
+```
+
+Your assignment will be scored using accuracy. Make sure to submit class
+labels of either 1, 2, 3, 4 or 5.
+
+# Lab 14
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`class_pred` to every row of the dataset.
+
+```{r}
+submit <- select(president, obs_id, class_pred)
+write_csv(submit, "class14_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

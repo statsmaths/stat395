@@ -1,0 +1,73 @@
+---
+title: "Lab 17"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+One thing that you are not allowed to use are neural networks.
+We will see how to use this with images next week.
+
+# Set-up
+
+Read in the following libraries and to load the metadata about
+the class images:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+library(stringi)
+
+f17 <- read_csv("https://statsmaths.github.io/ml_data/f17_photos_2.csv")
+```
+
+To get the actual data for the images, you'll have to download the following
+files. The first is the smaller images, which you will certainly need for
+the lab. The second you are free to make use of for negative examples or
+to extract features from but there is no pressure to do so.
+
+- https://drive.google.com/open?id=0B6_9OUDRaPQsTDFUTXVZb0JnaTg
+- https://drive.google.com/open?id=0B6_9OUDRaPQsdzBiX1RmYUZwdDA
+
+Once these are downloaded, you'll have to run something like this:
+
+```{r}
+x32 <- read_rds("~/Desktop/f17_photos_2_x32.rds")
+x224 <- read_rds("~/Desktop/f17_photos_2_x224.rds")
+```
+
+If, for example, the file sits on your Desktop and you have a mac. If you have
+trouble with any of this, please let me know as soon as possible.
+
+
+# Lab 17
+
+
+
+
+
+
+
+
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`outside_pred` to every row of the dataset.
+
+```{r}
+submit <- select(f17, obs_id, outside_pred)
+write_csv(submit, "class17_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.
