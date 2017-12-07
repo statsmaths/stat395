@@ -9,17 +9,18 @@ knitr::opts_chunk$set(eval = TRUE)
 knitr::opts_chunk$set(fig.path = "../assets/2017-12-07-class28/")
 ```
 
-13:30-13:40	Nasheya Rahman
+13:30-13:40	[Nasheya Rahman](../assets/final_project/rahman.html): Analyzing Bangladeshi Election Data
 
-13:40-13:50	Chris Guarino
+13:40-13:50	[Chris Guarino](../assets/final_project/guarino.html): Seeing the Pass Through the Trees
 
-13:50-14:00	Taina Dumay
+13:50-14:00	[Taina Dumay](../assets/final_project/dumay.html): Dawg Whisperer
 
-14:00-14:10	Sophia DeDominicis
+14:00-14:10	[Sophia DeDominicis](../assets/final_project/dedominicis.html): Fruit and Vegetable Classification
 
-14:10-14:20	Stephanie Poinsatte
+14:10-14:20	[Stephanie Poinsatte](../assets/final_project/poinsatte.html): Did someone say the leaning tower of PISA?
 
-14:20-14:30	Hanna Vincent
+14:20-14:30	[Hanna Vincent](../assets/final_project/vincent.html): Identifying Dog Breeds
 
-14:30-14:40	Ruojing Jia
+14:30-14:40	[Ruojing Jia](../assets/final_project/jia.html): West Nile Disease Prediction
+
 
